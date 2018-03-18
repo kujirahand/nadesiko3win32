@@ -1,0 +1,122 @@
+{
+  "name": "nadesiko3",
+  "version": "3.0.37",
+  "description": "Japanese Programming Language",
+  "main": "src/index.js",
+  "bin": {
+    "cnako3": "src/cnako3.js",
+    "nako3server": "src/nako3server.js",
+    "nako3edit": "tools/nako3edit/run.js"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node src/nako3server.js",
+    "server": "lite-server --config=demo/bs-config.json",
+    "nako3edit": "cnako3 tools/nako3edit/index.nako3",
+    "nako3edit:run": "node tools/nako3edit/run.js",
+    "electron": "electron src/enako3.js",
+    "build": "webpack",
+    "build:command": "cnako3 batch/build_command.nako3",
+    "build:electron": "asar pack src/enako3.js release/enako3.asar",
+    "build:win32": "cnako3 installer/make-win32.nako3",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kujirahand/nadesiko3.git"
+  },
+  "keywords": [
+    "script"
+  ],
+  "files": [
+    "bin",
+    "demo",
+    "doc",
+    "src",
+    "test",
+    "tools",
+    "release"
+  ],
+  "author": "kujirahand",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kujirahand/nadesiko3/issues"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "ie >= 11",
+              "last 1 version",
+              "last 2 Safari versions",
+              "last 2 iOS versions"
+            ],
+            "useBuiltIns": true
+          }
+        }
+      ],
+      "react"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "env": {
+      "mocha": true,
+      "browser": true
+    },
+    "rules": {
+      "no-console": "off"
+    },
+    "plugins": [
+      "react"
+    ]
+  },
+  "homepage": "https://github.com/kujirahand/nadesiko3#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.23.0",
+    "date-utils": "^1.2.21",
+    "eslint": "^4.17.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.6.1",
+    "eslint-plugin-standard": "^3.0.1",
+    "lite-server": "^2.3.0",
+    "mocha": "^5.0.0",
+    "nadesiko3-hoge": "0.0.2",
+    "prop-types": "^15.6.0",
+    "pump": "^3.0.0",
+    "source-map": "^0.7.0",
+    "uuid": "^3.2.1",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "commander": "^2.14.1",
+    "express": "^4.16.2",
+    "form-data": "^2.3.1",
+    "fs-extra": "^5.0.0",
+    "iconv-lite": "^0.4.19",
+    "moment-timezone": "^0.5.14",
+    "node-fetch": "^2.0.0",
+    "npm": "^5.7.1",
+    "opener": "^1.4.3",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "sleep": "^5.1.1",
+    "whatwg-fetch": "^2.0.3"
+  }
+}
