@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>なでしこ3(Node版)エディタ - ファイル一覧</title>
+  <link href="/html/nako3edit.css" rel="stylesheet" type="text/css" />
+  <script defer type="text/javascript" src="/release/wnako3.js"></script>
+  <script defer type="text/javascript" src="/html/edit_plugin.js"></script>
+  <script type="なでしこ">
+#-----------
+APPKEY=""
+HREF=WINDOW["location"]["href"]
+P=HREFをURLパラメータ解析
+APPKEY=P["appkey"]
+Pを表示。
+ファイル一覧取得処理
+
+●ファイル一覧取得処理
+  「/files」へAJAX送信した時には
+    HTML=「<li><a href="/html/edit.html?file=new&appkey={APPKEY}"><span class="newfile">→新規作成</span></a></li>」
+    一覧=対象をJSONデコード
+    一覧を反復
+      F=それ
+      F2 = FをHTML変換
+      F3 = FをURLエンコード
+      HTML=HTML&「<li><a href="/html/edit.html?file={F3}&appkey={APPKEY}">{F2}</a></li>」
+    ここまで
+    「#files_ul」にHTMLをDOM_HTML設定。
+  ここまで。
+  # ---
+  AJAX失敗した時には(err)
+    errをHTML変換してERRに代入。
+    S=「<p style='color: red;'>サーバとの通信に失敗しました。<br />」＆_
+      「サーバ設定かブラウザの設定を確認してください。</p><p>{ERR}</p>」
+    「#files_ul」にSをDOM_HTML設定。
+  ここまで
+ここまで。
+#-----------
+  </script>
+</head>
+<body>
+  <h1>なでしこ3(Node版) - ファイル一覧</h1>
+  <div id="filesbox">
+    <ul id="files_ul"><li>現在読み込み中です。少々お待ちください。</li></ul>
+  </div>
+</body>
+</html>

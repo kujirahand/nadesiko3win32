@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>なでしこ3(Node版)エディタ</title>
+  <link href="/html/nako3edit.css" rel="stylesheet" type="text/css" />
+  <script defer type="text/javascript" src="/release/wnako3.js?run&v=1"></script>
+  <script defer type="text/javascript" src="/html/edit_plugin.js"></script>
+  <script type="なでしこ">
+#-----------
+APPKEY=""
+HREF=WINDOW["location"]["href"]
+P=HREFをURLパラメータ解析
+APPKEY=P["appkey"]
+Pを表示。
+FNAME="無題.nako3"
+もし、P["file"]ならば、FNAME=P["file"]
+エディタ初期化。
+
+●エディタ初期化
+  「エディタ初期化」を表示。
+  「#run_btn」の「onclick」に「P実行処理」をDOMイベント設定。
+  「#save_btn」の「onclick」に「P保存処理」をDOMイベント設定。
+  もし、FNAME=「new」ならば
+    FNAME="無題.nako3"
+  ここまで。
+  「#name」にFNAMEをDOMテキスト設定
+  FILE2 = FNAMEをURLエンコード。
+  「/load?file={FILE2}&appkey={APPKEY}」へGET送信した時には
+    「#body」に対象をDOMテキスト設定。
+  ここまで。
+  # 戻るリンクをAPPKEYを入れて初期化
+  BACKLINK=「#backlink」のDOM要素取得
+  BACKLINK["href"] = "/html/files.html?appkey={APPKEY}"
+ここまで。
+
+●P実行処理
+  「実行」を表示。
+  S=「#body」のDOMテキスト取得
+  「/run」へ{
+    "file": 「#name」のDOMテキスト取得,
+    "body": 「#body」のDOMテキスト取得,
+    "appkey": APPKEY
+  }をPOST送信した時には
+    H＝対象をHTML変換して改行を「<br />」に置換。
+    「#result」にHをDOMテキスト設定。
+  ここまで。
+ここまで
+
+●P保存処理
+  「保存」を表示。
+  S=「#body」のDOMテキスト取得
+  「/save」へ{
+    "file": 「#name」のDOMテキスト取得,
+    "body": 「#body」のDOMテキスト取得,
+    "appkey": APPKEY
+  }をPOST送信した時には
+    H=対象をHTML変換
+    「#result」にHをDOMテキスト設定。
+  ここまで。
+ここまで
+
+#-----------
+  </script>
+</head>
+<body>
+  <h1>なでしこ3(Node版)エディタ</h1>
+  <div class="editbox">
+    <div class="namebox">file: <input type="text" id="name" size="40" /></div>
+    <div><textarea id="body" rows="15" cols="60"></textarea></div>
+    <div class="cmd_btn">
+      <button id="run_btn">実行(cnako3)</button>
+      <button id="save_btn">保存</button>
+    </div>
+    <div id="result"></div>
+  </div>
+  <hr />
+  <div><a id="backlink" href="#">→ファイル一覧へ</a></div>
+</body>
+</html>
