@@ -1,6 +1,6 @@
 # 日本語プログラミング言語「なでしこ3」
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Maintainability](https://api.codeclimate.com/v1/badges/5572db59aa6164217d30/maintainability)](https://codeclimate.com/github/kujirahand/nadesiko3/maintainability)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 ## 「なでしこ3」とは？
 
@@ -27,30 +27,9 @@
 
 ### Windowsで利用する
 
-[配布パッケージ](https://github.com/kujirahand/nadesiko3win32/releases)より、「Source code(zip)」をダウンロードし解凍してください。
-Node.jsや必要なモジュール一式を梱包したものです。
+以下のリンクを開いて、「Source code(zip)」をクリックしてダウンロードします。
+これは、Node.jsや必要なモジュール一式を梱包したものです。
+
+- [配布パッケージ](https://github.com/kujirahand/nadesiko3win32/releases)
 
 解凍したら「nako3edit.vbs」(PC版)または「start.bat」(Web版)をクリックして、なでしこエディタを起動できます。
-
-### macOS/Linuxで利用する
-
-先に、Node.jsをインストールし、次いで、コマンドラインから以下のコマンドを実行します。
-
-```
-# npmでなでしこ3をインストールする
-$ npm install -g nadesiko3
-```
-
-すると、cnako3というコマンドで、なでしこを利用できます。
-また、以下のコマンドを実行すると、ブラウザ上になでしこの簡易エディタが起動します。
-
-```
-# なでしこエディタ(PC版)を起動
-$ nako3edit
-# なでしこエディタ(WEB版)を起動
-$ nako3server
-```
-
-## なでしこ3の開発環境をセットアップ
-
-なでしこ3自身を開発するために、開発環境を整えようという方は、 [doc/SETUP.md](doc/SETUP.md) をご覧ください。
