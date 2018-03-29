@@ -4483,6 +4483,29 @@ DOMの要素をクエリqで取得して返す
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/DOM要素全取得
+■ DOM要素全取得 (DOMようそぜんしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || Qの|Qを
+説明 || DOMの要素をクエリqで全部取得して返す
+}}}
+
+#page(plugin_browser/DOM要素全取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/DOM要素全取得/解説
+●『[[DOM要素全取得:plugin_browser/DOM要素全取得/解説]]』の詳しい解説
+
+DOMの要素をクエリqで全部取得して返す
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/タグ一覧取得
 ■ タグ一覧取得 (たぐいちらんしゅとく)
 {{{#csv(flag=||)
@@ -4598,6 +4621,273 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/クリック時
+■ クリック時 (くりっくしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMをクリックした時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/クリック時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/クリック時/解説
+●『[[クリック時:plugin_browser/クリック時/解説]]』の詳しい解説
+
+無名関数FでDOMをクリックした時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/読込時
+■ 読込時 (よみこんだとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMを読み個だ時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/読込時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/読込時/解説
+●『[[読込時:plugin_browser/読込時/解説]]』の詳しい解説
+
+無名関数FでDOMを読み個だ時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/フォーム送信時
+■ フォーム送信時 (ふぉーむそうしんしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数Fでフォームを送信した時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/フォーム送信時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/フォーム送信時/解説
+●『[[フォーム送信時:plugin_browser/フォーム送信時/解説]]』の詳しい解説
+
+無名関数Fでフォームを送信した時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/押キー
+■ 押キー (『キー押した時』『キー離した時』のイベントで設定されるキーが設定される // @おされたきー)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || ''
+}}}
+
+#page(plugin_browser/押キー/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/押キー/解説
+●『[[押キー:plugin_browser/押キー/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/キー押時
+■ キー押時 (きーおしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/キー押時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/キー押時/解説
+●『[[キー押時:plugin_browser/キー押時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/キー離時
+■ キー離時 (きーはなしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/キー離時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/キー離時/解説
+●『[[キー離時:plugin_browser/キー離時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/キータイピング時
+■ キータイピング時 (きーたいぴんぐしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/キータイピング時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/キータイピング時/解説
+●『[[キータイピング時:plugin_browser/キータイピング時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/マウスX
+■ マウスX (『マウス押した時』『マウス移動した時』『マウス離した時』のイベントで設定される // @まうすX)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || 0
+}}}
+
+#page(plugin_browser/マウスX/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/マウスX/解説
+●『[[マウスX:plugin_browser/マウスX/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/マウスY
+■ マウスY (『マウス押した時』『マウス移動した時』『マウス離した時』のイベントで設定される // @まうすY)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || 0
+}}}
+
+#page(plugin_browser/マウスY/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/マウスY/解説
+●『[[マウスY:plugin_browser/マウスY/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/マウス押時
+■ マウス押時 (まうすおしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/マウス押時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/マウス押時/解説
+●『[[マウス押時:plugin_browser/マウス押時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/マウス移動時
+■ マウス移動時 (まうすいどうしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/マウス移動時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/マウス移動時/解説
+●『[[マウス移動時:plugin_browser/マウス移動時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/マウス離時
+■ マウス離時 (まうすはなしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを
+説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+}}}
+
+#page(plugin_browser/マウス離時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/マウス離時/解説
+●『[[マウス離時:plugin_browser/マウス離時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/DOMテキスト設定
 ■ DOMテキスト設定 (DOMてきすとせってい)
 {{{#csv(flag=||)
@@ -4685,6 +4975,98 @@ DOMにHTML文字列を設定
 ●『[[DOM_HTML取得:plugin_browser/DOM_HTML取得/解説]]』の詳しい解説
 
 DOMのHTML文字列を取得
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/テキスト設定
+■ テキスト設定 (てきすとせってい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || DOMにVを|DOMの|DOMへ
+説明 || DOMのテキストにVを設定
+}}}
+
+#page(plugin_browser/テキスト設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/テキスト設定/解説
+●『[[テキスト設定:plugin_browser/テキスト設定/解説]]』の詳しい解説
+
+DOMのテキストにVを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/テキスト取得
+■ テキスト取得 (てきすとしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || DOMの|DOMから
+説明 || DOMのテキストを取得
+}}}
+
+#page(plugin_browser/テキスト取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/テキスト取得/解説
+●『[[テキスト取得:plugin_browser/テキスト取得/解説]]』の詳しい解説
+
+DOMのテキストを取得
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/HTML設定
+■ HTML設定 (HTMLせってい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || DOMにVを|DOMの|DOMへ
+説明 || DOMのHTMLにVを設定
+}}}
+
+#page(plugin_browser/HTML設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/HTML設定/解説
+●『[[HTML設定:plugin_browser/HTML設定/解説]]』の詳しい解説
+
+DOMのHTMLにVを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/HTML取得
+■ HTML取得 (HTMLしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || DOMの|DOMから
+説明 || DOMのテキストを取得
+}}}
+
+#page(plugin_browser/HTML取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/HTML取得/解説
+●『[[HTML取得:plugin_browser/HTML取得/解説]]』の詳しい解説
+
+DOMのテキストを取得
 
 {{{
 # 準備中
@@ -4897,6 +5279,207 @@ DOMの要素PAの子から要素ELを削除してPAを返す
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/DOM親要素
+■ DOM親要素 (DOM要素を追加する対象 // @DOMおやようそ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 定数
+初期値 || ''
+}}}
+
+#page(plugin_browser/DOM親要素/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/DOM親要素/解説
+●『[[DOM親要素:plugin_browser/DOM親要素/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/DOM生成個数
+■ DOM生成個数 (DOM要素を追加した数を記録 // @DOMせいせいこすう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 定数
+初期値 || 0
+}}}
+
+#page(plugin_browser/DOM生成個数/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/DOM生成個数/解説
+●『[[DOM生成個数:plugin_browser/DOM生成個数/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/DOM親要素設定
+■ DOM親要素設定 (DOMおやようそせってい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || ELに|ELへ
+説明 || 「ボタン作成」「エディタ作成」などのDOM要素を追加する対象を指定(デフォルトはdocument)して親要素のDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/DOM親要素設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/DOM親要素設定/解説
+●『[[DOM親要素設定:plugin_browser/DOM親要素設定/解説]]』の詳しい解説
+
+「ボタン作成」「エディタ作成」などのDOM要素を追加する対象を指定(デフォルトはdocument)して親要素のDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/ボタン作成
+■ ボタン作成 (ぼたんさくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || LABELの
+説明 || ラベルlabelを持つbutton要素を追加しDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/ボタン作成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/ボタン作成/解説
+●『[[ボタン作成:plugin_browser/ボタン作成/解説]]』の詳しい解説
+
+ラベルlabelを持つbutton要素を追加しDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/エディタ作成
+■ エディタ作成 (えでぃたさくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || TEXTの
+説明 || textの値を持つテキストボックス(input[type='text'])の要素を追加しDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/エディタ作成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/エディタ作成/解説
+●『[[エディタ作成:plugin_browser/エディタ作成/解説]]』の詳しい解説
+
+textの値を持つテキストボックス(input[type='text'])の要素を追加しDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/テキストエリア作成
+■ テキストエリア作成 (てきすとえりあさくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || TEXTの
+説明 || textの値を持つtextarea要素を追加しDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/テキストエリア作成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/テキストエリア作成/解説
+●『[[テキストエリア作成:plugin_browser/テキストエリア作成/解説]]』の詳しい解説
+
+textの値を持つtextarea要素を追加しDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/ラベル作成
+■ ラベル作成 (らべるさくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || TEXTの
+説明 || textの値を持つラベル(span要素)を追加しDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/ラベル作成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/ラベル作成/解説
+●『[[ラベル作成:plugin_browser/ラベル作成/解説]]』の詳しい解説
+
+textの値を持つラベル(span要素)を追加しDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/改行作成
+■ 改行作成 (かいぎょうさくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || 
+説明 || 改行(br要素)を追加しDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/改行作成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/改行作成/解説
+●『[[改行作成:plugin_browser/改行作成/解説]]』の詳しい解説
+
+改行(br要素)を追加しDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/チェックボックス作成
+■ チェックボックス作成 (ちぇっくぼっくすさくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || TEXTの
+説明 || textのラベルを持つチェックボックス(input[type='checkbox'])要素を追加しDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/チェックボックス作成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/チェックボックス作成/解説
+●『[[チェックボックス作成:plugin_browser/チェックボックス作成/解説]]』の詳しい解説
+
+textのラベルを持つチェックボックス(input[type='checkbox'])要素を追加しDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/HTML変換
 ■ HTML変換 (HTMLへんかん)
 {{{#csv(flag=||)
@@ -4994,8 +5577,8 @@ URLパラメータを解析してハッシュで返す
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[ローカルストレージ:plugin_browser/ローカルストレージ]]
 種類 || 関数
-引数 || KEYにVを|KEYへ
-説明 || ブラウザのlocalStorageのKにVを保存
+引数 || VをKEYに|KEYへ
+説明 || ブラウザのlocalStorageのキーKに文字列Vを保存
 }}}
 
 #page(plugin_browser/保存/解説)
@@ -5006,7 +5589,7 @@ URLパラメータを解析してハッシュで返す
 ###PAGE###:c:plugin_browser/保存/解説
 ●『[[保存:plugin_browser/保存/解説]]』の詳しい解説
 
-ブラウザのlocalStorageのKにVを保存
+ブラウザのlocalStorageのキーKに文字列Vを保存
 
 {{{
 # 準備中
