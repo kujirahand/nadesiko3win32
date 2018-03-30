@@ -4335,7 +4335,7 @@ Ajax命令でエラーが起きたとき
 }}}
 
 ###PAGE###:w:plugin_browser/AJAXオプション
-■ AJAXオプション (Ajax関連のオプションを指定 // @AJAXおぷしょん)
+■ AJAXオプション (AJAXおぷしょん)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
 種類 || 定数
@@ -4378,7 +4378,7 @@ Ajax命令でオプションを設定
 }}}
 
 ###PAGE###:w:plugin_browser/DOCUMENT
-■ DOCUMENT (ブラウザdocumentオブジェクト // @DOCUMENT)
+■ DOCUMENT (DOCUMENT)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 定数
@@ -4398,7 +4398,7 @@ Ajax命令でオプションを設定
 }}}
 
 ###PAGE###:w:plugin_browser/WINDOW
-■ WINDOW (ブラウザwindowオブジェクト // @WINDOW)
+■ WINDOW (WINDOW)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 定数
@@ -4418,7 +4418,7 @@ Ajax命令でオプションを設定
 }}}
 
 ###PAGE###:w:plugin_browser/NAVIGATOR
-■ NAVIGATOR (ブラウザnavigatorオブジェクト // @NAVIGATOR)
+■ NAVIGATOR (NAVIGATOR)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 定数
@@ -4691,7 +4691,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 }}}
 
 ###PAGE###:w:plugin_browser/押キー
-■ 押キー (『キー押した時』『キー離した時』のイベントで設定されるキーが設定される // @おされたきー)
+■ 押キー (おされたきー)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 定数
@@ -4716,7 +4716,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを
-説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『押されたキー』が設定される。
 }}}
 
 #page(plugin_browser/キー押時/解説)
@@ -4727,7 +4727,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/キー押時/解説
 ●『[[キー押時:plugin_browser/キー押時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『押されたキー』が設定される。
 
 {{{
 # 準備中
@@ -4739,7 +4739,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを
-説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『押されたキー』が設定される。
 }}}
 
 #page(plugin_browser/キー離時/解説)
@@ -4750,7 +4750,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/キー離時/解説
 ●『[[キー離時:plugin_browser/キー離時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『押されたキー』が設定される。
 
 {{{
 # 準備中
@@ -4762,7 +4762,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを
-説明 || 無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定
+説明 || 無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定。『押されたキー』が設定される。
 }}}
 
 #page(plugin_browser/キータイピング時/解説)
@@ -4773,14 +4773,14 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/キータイピング時/解説
 ●『[[キータイピング時:plugin_browser/キータイピング時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定
+無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定。『押されたキー』が設定される。
 
 {{{
 # 準備中
 }}}
 
 ###PAGE###:w:plugin_browser/マウスX
-■ マウスX (『マウス押した時』『マウス移動した時』『マウス離した時』のイベントで設定される // @まうすX)
+■ マウスX (まうすX)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 定数
@@ -4800,7 +4800,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 }}}
 
 ###PAGE###:w:plugin_browser/マウスY
-■ マウスY (『マウス押した時』『マウス移動した時』『マウス離した時』のイベントで設定される // @まうすY)
+■ マウスY (まうすY)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 定数
@@ -4825,7 +4825,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを
-説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 }}}
 
 #page(plugin_browser/マウス押時/解説)
@@ -4836,7 +4836,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/マウス押時/解説
 ●『[[マウス押時:plugin_browser/マウス押時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 
 {{{
 # 準備中
@@ -4848,7 +4848,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを
-説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 }}}
 
 #page(plugin_browser/マウス移動時/解説)
@@ -4859,7 +4859,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/マウス移動時/解説
 ●『[[マウス移動時:plugin_browser/マウス移動時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを押した時に実行するイベントを設定
+無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 
 {{{
 # 準備中
@@ -4871,7 +4871,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを
-説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 }}}
 
 #page(plugin_browser/マウス離時/解説)
@@ -4882,7 +4882,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/マウス離時/解説
 ●『[[マウス離時:plugin_browser/マウス離時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを離した時に実行するイベントを設定
+無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 
 {{{
 # 準備中
@@ -5280,7 +5280,7 @@ DOMの要素PAの子から要素ELを削除してPAを返す
 }}}
 
 ###PAGE###:w:plugin_browser/DOM親要素
-■ DOM親要素 (DOM要素を追加する対象 // @DOMおやようそ)
+■ DOM親要素 (DOMおやようそ)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
 種類 || 定数
@@ -5300,7 +5300,7 @@ DOMの要素PAの子から要素ELを削除してPAを返す
 }}}
 
 ###PAGE###:w:plugin_browser/DOM生成個数
-■ DOM生成個数 (DOM要素を追加した数を記録 // @DOMせいせいこすう)
+■ DOM生成個数 (DOMせいせいこすう)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
 種類 || 定数
@@ -7197,7 +7197,7 @@ IDを指定して操作対象となるカメを変更する
 }}}
 
 ###PAGE###:w:plugin_node/母艦パス
-■ 母艦パス (スクリプトのあるディレクトリ // @ぼかんぱす)
+■ 母艦パス (ぼかんぱす)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_node]] > [[フォルダ取得:plugin_node/フォルダ取得]]
 種類 || 定数
@@ -7895,7 +7895,7 @@ Shift_JISのバイナリバッファを文字列に変換
 }}}
 
 ###PAGE###:w:plugin_express/GETデータ
-■ GETデータ (URLパラメータ(GET) // @WEBサーバクエリ)
+■ GETデータ (WEBサーバクエリ)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
 種類 || 定数
@@ -7915,7 +7915,7 @@ Shift_JISのバイナリバッファを文字列に変換
 }}}
 
 ###PAGE###:w:plugin_express/POSTデータ
-■ POSTデータ (URLパラメータ(POST) // @WEBサーバクエリ)
+■ POSTデータ (WEBサーバクエリ)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
 種類 || 定数

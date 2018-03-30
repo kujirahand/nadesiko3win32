@@ -5,6 +5,7 @@ describe('calc_test.js', () => {
   const nako = new NakoCompiler()
   // nako.debug = true
   // nako.debugParser = true
+  // nako.debugLexer = true
   const cmp = (code, res) => {
     if (nako.debug) {
       console.log('code=' + code)
@@ -38,6 +39,9 @@ describe('calc_test.js', () => {
   })
   it('ネスト配列', () => {
     cmp('a=[[1,2,3], [4,5,6]];a[1][1]を表示', '5')
+  })
+  it('ネスト配列で、マイナスを含むときのバグ修正 (#276)', () => {
+    cmp('a=[[-1, -1], [1, -1]];a[0][0]を表示', '-1')
   })
   it('オブジェクト', () => {
     cmp('a={};a[\'a\']=30;a[\'a\']を表示', '30')
