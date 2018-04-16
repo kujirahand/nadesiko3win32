@@ -329,6 +329,7 @@
 - [[四角描画:plugin_browser/四角描画]] --- [x, y, w, h]で矩形を描画する
 - [[描画クリア:plugin_browser/描画クリア]] --- [x, y, w, h]の範囲を描画クリア
 - [[円描画:plugin_browser/円描画]] --- [x, y]へrの円を描画する
+- [[楕円描画:plugin_browser/楕円描画]] --- [x, y, x幅, y幅, 回転, 開始角, 終了角, 左回転か]に楕円を描画する
 - [[多角形描画:plugin_browser/多角形描画]] --- 座標配列vを指定して多角形を描画する
 - [[画像描画:plugin_browser/画像描画]] --- [x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す
 - [[描画フォント設定:plugin_browser/描画フォント設定]] --- 描画フォントを指定する(CSSのフォント設定と同じ 例「36px Aria」)

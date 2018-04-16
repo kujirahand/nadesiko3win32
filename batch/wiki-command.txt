@@ -6006,6 +6006,29 @@ vに線の太さ設定
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/楕円描画
+■ 楕円描画 (だえんびょうが)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[描画:plugin_browser/描画]]
+種類 || 関数
+引数 || ARGSへ|ARGSに|ARGSの
+説明 || [x, y, x幅, y幅, 回転, 開始角, 終了角, 左回転か]に楕円を描画する
+}}}
+
+#page(plugin_browser/楕円描画/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/楕円描画/解説
+●『[[楕円描画:plugin_browser/楕円描画/解説]]』の詳しい解説
+
+[x, y, x幅, y幅, 回転, 開始角, 終了角, 左回転か]に楕円を描画する
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/多角形描画
 ■ 多角形描画 (たかっけいびょうが)
 {{{#csv(flag=||)
