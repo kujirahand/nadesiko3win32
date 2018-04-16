@@ -3,7 +3,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__varslist[0]['ナデシコバージョン'] = '3.0.40'
+      sys.__v0['ナデシコバージョン'] = '3.0.41'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) return def
@@ -1265,26 +1265,49 @@ const PluginSystem = {
     type: 'func',
     josi: [['を'], []],
     fn: function (f, n, sys) {
+      // 文字列で指定された関数をオブジェクトに変換
       if (typeof f === 'string') f = sys.__findVar(f)
+      // 1回限りのタイマーをセット
       const timerId = setTimeout(() => {
+        // 使用中リストに追加したIDを削除
         const i = sys.__timeout.indexOf(timerId)
-        sys.__timeout.splice(i, 1)
-        f(sys)
+        if (i >= 0) sys.__timeout.splice(i, 1)
+        f(timerId, sys)
       }, parseFloat(n) * 1000)
       sys.__timeout.unshift(timerId)
     }
   },
-  '秒毎': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する // @びょうごと
+  '秒毎': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる) // @びょうごと
     type: 'func',
     josi: [['を'], []],
     fn: function (f, n, sys) {
+      // 文字列で指定された関数をオブジェクトに変換
       if (typeof f === 'string') f = sys.__findVar(f)
+      // タイマーをセット
       const timerId = setInterval(() => {
-        const i = sys.__interval.indexOf(timerId)
-        sys.__interval.splice(i, 1)
-        f(sys)
+        f(timerId, sys)
       }, parseFloat(n) * 1000)
+      // タイマーIDを追加
       sys.__interval.unshift(timerId)
+    }
+  },
+  '秒タイマー開始時': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『秒毎』と同じ) // @びょうたいまーかいししたとき
+    type: 'func',
+    josi: [['を'], []],
+    fn: function (f, n, sys) {
+      sys.__exec('秒毎', [f, n, sys])
+    }
+  },
+  'タイマー停止': { // @『秒毎』や『秒タイマー開始』で開始したタイマーを停止する // @たいまーていし
+    type: 'func',
+    josi: [['の', 'で']],
+    fn: function (timerId, sys) {
+      clearInterval(timerId)
+      const i = sys.__interval.indexOf(timerId)
+      if (i >= 0) {
+        sys.__interval.splice(i, 1)
+        sys.__interval.unshift(timerId)
+      }
     }
   },
 
