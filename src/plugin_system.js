@@ -3,7 +3,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['ナデシコバージョン'] = '3.0.41'
+      sys.__v0['ナデシコバージョン'] = '3.0.42'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) return def
@@ -197,7 +197,7 @@ const PluginSystem = {
     }
   },
 
-  'ナデシコ': { // @なでしこのコードSを実行する // @なでしこする
+  'ナデシコ': { // @なでしこのコードCODEを実行する // @なでしこする
     type: 'func',
     josi: [['を', 'で']],
     fn: function (code, sys) {
@@ -206,7 +206,7 @@ const PluginSystem = {
       return sys.__varslist[0]['表示ログ']
     }
   },
-  'ナデシコ続': { // @なでしこのコードSを実行する // @なでしこつづける
+  'ナデシコ続': { // @なでしこのコードCODEを実行する // @なでしこつづける
     type: 'func',
     josi: [['を', 'で']],
     fn: function (code, sys) {
@@ -814,6 +814,123 @@ const PluginSystem = {
       return hiraToKana(s)
     }
   },
+  '英数全角変換': {// @文字列Sの半角英数文字を全角に変換 // @えいすうぜんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s) {
+      return String(s).replace(/[A-Za-z0-9]/g, function (v) {
+        return String.fromCharCode(v.charCodeAt(0) + 0xFEE0)
+      })
+    }
+  },
+  '英数半角変換': {// @文字列Sの全角英数文字を半角に変換 // @えいすうはんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s) {
+      return String(s).replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (v) {
+        return String.fromCharCode(v.charCodeAt(0) - 0xFEE0)
+      })
+    }
+  },
+  '英数記号全角変換': {// @文字列Sの半角英数記号文字を全角に変換 // @えいすうきごうぜんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s) {
+      return String(s).replace(/[\x20-\x7F]/g, function (v) {
+        return String.fromCharCode(v.charCodeAt(0) + 0xFEE0)
+      })
+    }
+  },
+  '英数記号半角変換': {// @文字列Sの記号文字を半角に変換 // @えいすうきごうはんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s) {
+      return String(s).replace(/[\uFF00-\uFF5F]/g, function (v) {
+        return String.fromCharCode(v.charCodeAt(0) - 0xFEE0)
+      })
+    }
+  },
+  'カタカナ全角変換': {// @文字列Sの半角カタカナを全角に変換 // @かたかなぜんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s) {
+      // 半角カタカナ
+      const zen1 = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンァィゥェォャュョッ、。ー「」'
+      const han1 = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｬｭｮｯ､｡ｰ｢｣ﾞﾟ'
+      const zen2 = 'ガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ'
+      const han2 = 'ｶﾞｷﾞｸﾞｹﾞｺﾞｻﾞｼﾞｽﾞｾﾞｿﾞﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ'
+      let str = ''
+      let i = 0
+      while (i < s.length) {
+        // 濁点の変換
+        const c2 = s.substr(i, 2)
+        const n2 = han2.indexOf(c2)
+        if (n2 >= 0) {
+          str += zen2.charAt(Math.floor(n2 / 2))
+          i += 2
+          continue
+        }
+        // 濁点以外の変換
+        const c = s.charAt(i)
+        const n = han1.indexOf(c)
+        if (n >= 0) {
+          str += zen1.charAt(n)
+          i++
+          continue
+        }
+        str += c
+        i++
+      }
+      return str
+    }
+  },
+  'カタカナ半角変換': {// @文字列Sの全角カタカナを半角に変換 // @かたかなはんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s) {
+      // 半角カタカナ
+      const zen1 = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンァィゥェォャュョッ、。ー「」'
+      const han1 = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｬｭｮｯ､｡ｰ｢｣ﾞﾟ'
+      const zen2 = 'ガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ'
+      const han2 = 'ｶﾞｷﾞｸﾞｹﾞｺﾞｻﾞｼﾞｽﾞｾﾞｿﾞﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ'
+      let str = ''
+      for (let i = 0; i < s.length; i++) {
+        let c = s.charAt(i)
+        const n = zen1.indexOf(c)
+        if (n >= 0) {
+          str += han1.charAt(n)
+          continue
+        }
+        const n2 = zen2.indexOf(c)
+        if (n2 >= 0) {
+          str += han2.charAt(n2 * 2) + han2.charAt(n2 * 2 + 1)
+          continue
+        }
+        str += c
+      }
+      return str
+    }
+  },
+  '全角変換': { // @文字列Sの半角文字を全角に変換 // @ぜんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s, sys) {
+      let result = s
+      result = sys.__exec('カタカナ全角変換', [result, sys])
+      result = sys.__exec('英数記号全角変換', [result, sys])
+      return result
+    }
+  },
+  '半角変換': { // @文字列Sの全角文字を半角に変換 // @はんかくへんかん
+    type: 'func',
+    josi: [['の', 'を']],
+    fn: function (s, sys) {
+      let result = s
+      result = sys.__exec('カタカナ半角変換', [result, sys])
+      result = sys.__exec('英数記号半角変換', [result, sys])
+      return result
+    }
+  },
 
   // @JSON
   'JSONエンコード': { // @オブジェクトVをJSON形式にエンコードして返す // @JSONえんこーど
@@ -1319,18 +1436,23 @@ const PluginSystem = {
       throw new Error(s)
     }
   },
-  'システム関数一覧取得': {
+  'システム関数一覧取得': { // @システム関数の一覧を取得 // @しすてむかんすういちらんしゅとく
     type: 'func',
     josi: [],
     fn: function (sys) {
       const f = []
-      for (const key in sys.__varslist[0]) {
-        const ff = sys.__varslist[0][key]
-        if (typeof ff === 'function') {
-          f.push(key)
-        }
+      for (const key in sys.__v0) {
+        const ff = sys.__v0[key]
+        if (typeof ff === 'function') f.push(key)
       }
       return f
+    }
+  },
+  'システム関数存在': { // @文字列で関数名を指定してシステム関数が存在するかを調べる // @しすてむかんすうそんざい
+    type: 'func',
+    josi: [['が', 'の']],
+    fn: function (fname, sys) {
+      return (typeof sys.__v0[fname] !== 'undefined')
     }
   },
   'プラグイン一覧取得': { // @利用中のプラグイン一覧を得る // @ぷらぐいんいちらんしゅとく
