@@ -20,6 +20,7 @@
 - [[空:plugin_system/空]] --- 定数
 - [[NULL:plugin_system/NULL]] --- 定数
 - [[undefined:plugin_system/undefined]] --- 定数
+- [[未定義:plugin_system/未定義]] --- 定数
 - [[エラーメッセージ:plugin_system/エラーメッセージ]] --- 定数
 - [[対象:plugin_system/対象]] --- 定数
 - [[対象キー:plugin_system/対象キー]] --- 定数
@@ -31,6 +32,7 @@
 - [[表示ログ:plugin_system/表示ログ]] --- 定数
 - [[表示ログクリア:plugin_system/表示ログクリア]] --- 表示ログを空にする
 - [[言:plugin_system/言]] --- Sを表示
+- [[コンソール表示:plugin_system/コンソール表示]] --- Sをコンソール表示する(console.log)
 
 ● [[四則演算:plugin_system]]
 - [[足:plugin_system/足]] --- AとBを足す
@@ -48,8 +50,8 @@
 ● [[特殊命令:plugin_system]]
 - [[JS実行:plugin_system/JS実行]] --- JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを参照できる)
 - [[JSオブジェクト取得:plugin_system/JSオブジェクト取得]] --- なでしこで定義した関数や変数nameのJavaScriptオブジェクトを取得する
-- [[ナデシコ:plugin_system/ナデシコ]] --- なでしこのコードSを実行する
-- [[ナデシコ続:plugin_system/ナデシコ続]] --- なでしこのコードSを実行する
+- [[ナデシコ:plugin_system/ナデシコ]] --- なでしこのコードCODEを実行する
+- [[ナデシコ続:plugin_system/ナデシコ続]] --- なでしこのコードCODEを実行する
 
 ● [[型変換:plugin_system]]
 - [[変数型確認:plugin_system/変数型確認]] --- 変数Vの型を返す
@@ -214,6 +216,8 @@
 
 ● [[デバッグ支援:plugin_system]]
 - [[エラー発生:plugin_system/エラー発生]] --- 故意にエラーSを発生させる
+- [[システム関数一覧取得:plugin_system/システム関数一覧取得]] --- システム関数の一覧を取得
+- [[システム関数存在:plugin_system/システム関数存在]] --- 文字列で関数名を指定してシステム関数が存在するかを調べる
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
 - [[タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
@@ -292,7 +296,6 @@
 - [[DOM属性設定:plugin_browser/DOM属性設定]] --- DOMの属性Sに値Vを設定
 - [[DOM属性取得:plugin_browser/DOM属性取得]] --- DOMの属性Sを取得
 - [[DOMスタイル設定:plugin_browser/DOMスタイル設定]] --- DOMのスタイルAに値Bを設定
-- [[DOMスタイル一括設定:plugin_browser/DOMスタイル一括設定]] --- DOMに(辞書型で)STYLEを一括設定
 - [[DOMスタイル取得:plugin_browser/DOMスタイル取得]] --- DOMのSTYLEの値を取得
 - [[DOMスタイル一括取得:plugin_browser/DOMスタイル一括取得]] --- DOMのSTYLE(配列で複数指定)の値を取得
 - [[DOM要素作成:plugin_browser/DOM要素作成]] --- DOMにTAGの新規要素を作成

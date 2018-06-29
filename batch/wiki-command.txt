@@ -378,6 +378,26 @@
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/未定義
+■ 未定義 (みていぎ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[システム定数:plugin_system/システム定数]]
+種類 || 定数
+初期値 || undefined
+}}}
+
+#page(plugin_system/未定義/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/未定義/解説
+●『[[未定義:plugin_system/未定義/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/エラーメッセージ
 ■ エラーメッセージ (えらーめっせーじ)
 {{{#csv(flag=||)
@@ -565,6 +585,29 @@ Sを表示
 ●『[[言:plugin_system/言/解説]]』の詳しい解説
 
 Sを表示
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/コンソール表示
+■ コンソール表示 (こんそーるひょうじ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[標準出力:plugin_system/標準出力]]
+種類 || 関数
+引数 || Sを|Sと
+説明 || Sをコンソール表示する(console.log)
+}}}
+
+#page(plugin_system/コンソール表示/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/コンソール表示/解説
+●『[[コンソール表示:plugin_system/コンソール表示/解説]]』の詳しい解説
+
+Sをコンソール表示する(console.log)
 
 {{{
 # 準備中
@@ -875,7 +918,7 @@ JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを
 カテゴリ || [[plugin_system]] > [[特殊命令:plugin_system/特殊命令]]
 種類 || 関数
 引数 || CODEを|CODEで
-説明 || なでしこのコードSを実行する
+説明 || なでしこのコードCODEを実行する
 }}}
 
 #page(plugin_system/ナデシコ/解説)
@@ -886,7 +929,7 @@ JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを
 ###PAGE###:c:plugin_system/ナデシコ/解説
 ●『[[ナデシコ:plugin_system/ナデシコ/解説]]』の詳しい解説
 
-なでしこのコードSを実行する
+なでしこのコードCODEを実行する
 
 {{{
 # 準備中
@@ -898,7 +941,7 @@ JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを
 カテゴリ || [[plugin_system]] > [[特殊命令:plugin_system/特殊命令]]
 種類 || 関数
 引数 || CODEを|CODEで
-説明 || なでしこのコードSを実行する
+説明 || なでしこのコードCODEを実行する
 }}}
 
 #page(plugin_system/ナデシコ続/解説)
@@ -909,7 +952,7 @@ JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを
 ###PAGE###:c:plugin_system/ナデシコ続/解説
 ●『[[ナデシコ続:plugin_system/ナデシコ続/解説]]』の詳しい解説
 
-なでしこのコードSを実行する
+なでしこのコードCODEを実行する
 
 {{{
 # 準備中
@@ -3948,6 +3991,52 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/システム関数一覧取得
+■ システム関数一覧取得 (しすてむかんすういちらんしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
+種類 || 関数
+引数 || 
+説明 || システム関数の一覧を取得
+}}}
+
+#page(plugin_system/システム関数一覧取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/システム関数一覧取得/解説
+●『[[システム関数一覧取得:plugin_system/システム関数一覧取得/解説]]』の詳しい解説
+
+システム関数の一覧を取得
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/システム関数存在
+■ システム関数存在 (しすてむかんすうそんざい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
+種類 || 関数
+引数 || FNAMEが|FNAMEの
+説明 || 文字列で関数名を指定してシステム関数が存在するかを調べる
+}}}
+
+#page(plugin_system/システム関数存在/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/システム関数存在/解説
+●『[[システム関数存在:plugin_system/システム関数存在/解説]]』の詳しい解説
+
+文字列で関数名を指定してシステム関数が存在するかを調べる
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/プラグイン一覧取得
 ■ プラグイン一覧取得 (ぷらぐいんいちらんしゅとく)
 {{{#csv(flag=||)
@@ -5389,29 +5478,6 @@ DOMの属性Sを取得
 ●『[[DOMスタイル設定:plugin_browser/DOMスタイル設定/解説]]』の詳しい解説
 
 DOMのスタイルAに値Bを設定
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_browser/DOMスタイル一括設定
-■ DOMスタイル一括設定 (DOMすたいるいっかつせってい)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
-種類 || 関数
-引数 || DOMにVを|DOMへ
-説明 || DOMに(辞書型で)STYLEを一括設定
-}}}
-
-#page(plugin_browser/DOMスタイル一括設定/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser]]
-
-###PAGE###:c:plugin_browser/DOMスタイル一括設定/解説
-●『[[DOMスタイル一括設定:plugin_browser/DOMスタイル一括設定/解説]]』の詳しい解説
-
-DOMに(辞書型で)STYLEを一括設定
 
 {{{
 # 準備中
