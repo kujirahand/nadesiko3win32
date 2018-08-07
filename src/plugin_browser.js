@@ -271,7 +271,10 @@ const PluginBrowser = {
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom.onclick = func
+      dom.onclick = (e) => {
+        sys.__v0['対象'] = e.target
+        return func(e, sys)
+      }
     },
     return_none: true
   },
@@ -281,7 +284,10 @@ const PluginBrowser = {
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['onload'] = func
+      dom.onload = (e) => {
+        sys.__v0['対象'] = e.target
+        return func(e, sys)
+      }
     },
     return_none: true
   },
@@ -291,7 +297,10 @@ const PluginBrowser = {
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['onsubmit'] = func
+      dom.onsubmit = (e) => {
+        sys.__v0['対象'] = e.target
+        return func(e, sys)
+      }
     },
     return_none: true
   },
@@ -303,6 +312,7 @@ const PluginBrowser = {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom['onkeydown'] = (e) => {
+        sys.__v0['対象'] = e.target
         sys.__v0['押キー'] = e.key
         return func(e, sys)
       }
@@ -316,6 +326,7 @@ const PluginBrowser = {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom['onkeyup'] = (e) => {
+        sys.__v0['対象'] = e.target
         sys.__v0['押キー'] = e.key
         return func(e, sys)
       }
@@ -329,6 +340,7 @@ const PluginBrowser = {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom['onkeypress'] = (e) => {
+        sys.__v0['対象'] = e.target
         sys.__v0['押キー'] = e.key
         return func(e, sys)
       }
@@ -348,7 +360,8 @@ const PluginBrowser = {
         const box = e.target.getBoundingClientRect()
         sys.__v0['マウスX'] = e.clientX - box.left
         sys.__v0['マウスY'] = e.clientY - box.top
-        func(e, sys)
+        sys.__v0['対象'] = e.target
+        return func(e, sys)
       }
     },
     return_none: true
@@ -363,7 +376,8 @@ const PluginBrowser = {
         const box = e.target.getBoundingClientRect()
         sys.__v0['マウスX'] = e.clientX - box.left
         sys.__v0['マウスY'] = e.clientY - box.top
-        func(e, sys)
+        sys.__v0['対象'] = e.target
+        return feunc(e, sys)
       }
     },
     return_none: true
@@ -378,7 +392,8 @@ const PluginBrowser = {
         const box = e.target.getBoundingClientRect()
         sys.__v0['マウスX'] = e.clientX - box.left
         sys.__v0['マウスY'] = e.clientY - box.top
-        func(e, sys)
+        sys.__v0['対象'] = e.target
+        return func(e, sys)
       }
     },
     return_none: true
@@ -393,6 +408,14 @@ const PluginBrowser = {
       const tag = dom.tagName.toUpperCase()
       if (tag === 'INPUT' || tag === 'TEXTAREA') {
         dom.value = text
+      } else if (tag === 'SELECT') {
+        for (let i = 0; i < dom.options.length; i++) {
+          const v = dom.options[i].value
+          if (String(v) === text) {
+            dom.selectedIndex = i
+            break
+          }
+        }
       } else {
         dom.innerHTML = text
       }
@@ -409,6 +432,10 @@ const PluginBrowser = {
       const tag = dom.tagName.toUpperCase()
       if (tag === 'INPUT' || tag === 'TEXTAREA') {
         return dom.value
+      } else if (tag === 'SELECT') {
+        const idx = dom.selectedIndex
+        if (idx < 0) return null
+        return dom.options[idx].value
       }
       return dom.innerHTML
     }
@@ -445,6 +472,8 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の', 'から']],
     fn: function (dom, sys) {
+      console.log(dom)
+      console.log(sys)
       return sys.__exec('DOMテキスト取得', [dom, sys])
     }
   },
@@ -696,6 +725,23 @@ const PluginBrowser = {
       parent.appendChild(span)
       sys.__v0['DOM生成個数']++
       return inp
+    }
+  },
+  'セレクトボックス作成': { // @配列optionsの選択肢を持つselect要素を追加しDOMオブジェクトを返す // @せれくとぼっくすさくせい
+    type: 'func',
+    josi: [['の']],
+    fn: function (options, sys) {
+      const parent = sys.__v0['DOM親要素']
+      const dom = document.createElement('select')
+      dom.id = 'nadesi-dom-' + (sys.__v0['DOM生成個数']++)
+      for (let i = 0; i < options.length; i++) {
+        const item = document.createElement('option')
+        item.value = options[i]
+        item.appendChild(document.createTextNode(options[i]))
+        dom.appendChild(item)
+      }
+      parent.appendChild(dom)
+      return dom
     }
   },
 
