@@ -5799,6 +5799,29 @@ textのラベルを持つチェックボックス(input[type='checkbox'])要素�
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/セレクトボックス作成
+■ セレクトボックス作成 (せれくとぼっくすさくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM部品操作:plugin_browser/DOM部品操作]]
+種類 || 関数
+引数 || OPTIONSの
+説明 || 配列optionsの選択肢を持つselect要素を追加しDOMオブジェクトを返す
+}}}
+
+#page(plugin_browser/セレクトボックス作成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/セレクトボックス作成/解説
+●『[[セレクトボックス作成:plugin_browser/セレクトボックス作成/解説]]』の詳しい解説
+
+配列optionsの選択肢を持つselect要素を追加しDOMオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/HTML変換
 ■ HTML変換 (HTMLへんかん)
 {{{#csv(flag=||)
@@ -6955,6 +6978,29 @@ IDを指定して操作対象となるカメを変更する
 ●『[[カメ表示:plugin_turtle/カメ表示/解説]]』の詳しい解説
 
 非表示にしたカメを表示する。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_turtle/カメクリック時
+■ カメクリック時 (かめくりっくしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_turtle]] > [[タートルグラフィックス/カメ操作:plugin_turtle/タートルグラフィックス/カメ操作]]
+種類 || 関数
+引数 || FUNCを
+説明 || 操作対象のカメをクリックした時のイベントを設定する
+}}}
+
+#page(plugin_turtle/カメクリック時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_turtle]]
+
+###PAGE###:c:plugin_turtle/カメクリック時/解説
+●『[[カメクリック時:plugin_turtle/カメクリック時/解説]]』の詳しい解説
+
+操作対象のカメをクリックした時のイベントを設定する
 
 {{{
 # 準備中

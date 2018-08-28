@@ -1,6 +1,6 @@
 {
   "name": "nadesiko3",
-  "version": "3.0.46",
+  "version": "3.0.47",
   "description": "Japanese Programming Language",
   "main": "src/index.js",
   "bin": {
@@ -124,7 +124,6 @@
     "opener": "^1.4.3",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "sleep": "^5.2.3",
     "ssri": "^6.0.0",
     "whatwg-fetch": "^2.0.4"
   }

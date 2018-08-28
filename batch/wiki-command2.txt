@@ -606,6 +606,7 @@
 - [[ラベル作成:plugin_browser/ラベル作成]] --- textの値を持つラベル(span要素)を追加しDOMオブジェクトを返す
 - [[改行作成:plugin_browser/改行作成]] --- 改行(br要素)を追加しDOMオブジェクトを返す
 - [[チェックボックス作成:plugin_browser/チェックボックス作成]] --- textのラベルを持つチェックボックス(input[type='checkbox'])要素を追加しDOMオブジェクトを返す
+- [[セレクトボックス作成:plugin_browser/セレクトボックス作成]] --- 配列optionsの選択肢を持つselect要素を追加しDOMオブジェクトを返す
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
@@ -717,6 +718,7 @@
 - [[カメ全消去:plugin_turtle/カメ全消去]] --- 表示しているカメと描画内容を全部消去する
 - [[カメ非表示:plugin_turtle/カメ非表示]] --- カメの画像を非表示にする。描画に影響しない。
 - [[カメ表示:plugin_turtle/カメ表示]] --- 非表示にしたカメを表示する。
+- [[カメクリック時:plugin_turtle/カメクリック時]] --- 操作対象のカメをクリックした時のイベントを設定する
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_turtle:plugin_turtle]]
