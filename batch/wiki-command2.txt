@@ -72,6 +72,7 @@
 - [[環境変数:plugin_node/環境変数]]
 - [[圧縮・解凍:plugin_node/圧縮・解凍]]
 - [[Nodeプロセス:plugin_node/Nodeプロセス]]
+- [[クリップボード:plugin_node/クリップボード]]
 - [[コマンドライン:plugin_node/コマンドライン]]
 - [[テスト:plugin_node/テスト]]
 - [[Ajax:plugin_node/Ajax]]
@@ -581,6 +582,7 @@
 - [[HTML取得:plugin_browser/HTML取得]] --- DOMのテキストを取得
 - [[DOM属性設定:plugin_browser/DOM属性設定]] --- DOMの属性Sに値Vを設定
 - [[DOM属性取得:plugin_browser/DOM属性取得]] --- DOMの属性Sを取得
+- [[DOM和スタイル:plugin_browser/DOM和スタイル]] --- 定数
 - [[DOMスタイル設定:plugin_browser/DOMスタイル設定]] --- DOMのスタイルAに値Bを設定
 - [[DOMスタイル取得:plugin_browser/DOMスタイル取得]] --- DOMのSTYLEの値を取得
 - [[DOMスタイル一括取得:plugin_browser/DOMスタイル一括取得]] --- DOMのSTYLE(配列で複数指定)の値を取得
@@ -824,6 +826,17 @@
 - [[秒待:plugin_node/秒待]] --- NodeでN秒待つ
 - [[OS取得:plugin_node/OS取得]] --- OSプラットフォームを返す
 - [[OSアーキテクチャ取得:plugin_node/OSアーキテクチャ取得]] --- OSアーキテクチャを返す
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+
+###PAGE###:w:plugin_node/クリップボード
+■ [[plugin_node]]/[[クリップボード:plugin_node/クリップボード]]
+このカテゴリの命令
+
+▲ カテゴリの命令一覧
+
+- [[クリップボード:plugin_node/クリップボード]] --- クリップボードを取得設定（『クリップボード＝値』で書換が可能）
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_node:plugin_node]]

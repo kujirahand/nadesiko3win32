@@ -5460,6 +5460,26 @@ DOMの属性Sを取得
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/DOM和スタイル
+■ DOM和スタイル (DOMわすたいる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || 
+}}}
+
+#page(plugin_browser/DOM和スタイル/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/DOM和スタイル/解説
+●『[[DOM和スタイル:plugin_browser/DOM和スタイル/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/DOMスタイル設定
 ■ DOMスタイル設定 (DOMすたいるせってい)
 {{{#csv(flag=||)
@@ -8033,6 +8053,29 @@ OSプラットフォームを返す
 ●『[[OSアーキテクチャ取得:plugin_node/OSアーキテクチャ取得/解説]]』の詳しい解説
 
 OSアーキテクチャを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_node/クリップボード
+■ クリップボード (くりっぷぼーど)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[クリップボード:plugin_node/クリップボード]]
+種類 || 関数
+引数 || Vを
+説明 || クリップボードを取得設定（『クリップボード＝値』で書換が可能）
+}}}
+
+#page(plugin_node/クリップボード/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/クリップボード/解説
+●『[[クリップボード:plugin_node/クリップボード/解説]]』の詳しい解説
+
+クリップボードを取得設定（『クリップボード＝値』で書換が可能）
 
 {{{
 # 準備中

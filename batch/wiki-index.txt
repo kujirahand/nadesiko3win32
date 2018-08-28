@@ -295,6 +295,7 @@
 - [[HTML取得:plugin_browser/HTML取得]] --- DOMのテキストを取得
 - [[DOM属性設定:plugin_browser/DOM属性設定]] --- DOMの属性Sに値Vを設定
 - [[DOM属性取得:plugin_browser/DOM属性取得]] --- DOMの属性Sを取得
+- [[DOM和スタイル:plugin_browser/DOM和スタイル]] --- 定数
 - [[DOMスタイル設定:plugin_browser/DOMスタイル設定]] --- DOMのスタイルAに値Bを設定
 - [[DOMスタイル取得:plugin_browser/DOMスタイル取得]] --- DOMのSTYLEの値を取得
 - [[DOMスタイル一括取得:plugin_browser/DOMスタイル一括取得]] --- DOMのSTYLE(配列で複数指定)の値を取得
@@ -438,6 +439,9 @@
 - [[秒待:plugin_node/秒待]] --- NodeでN秒待つ
 - [[OS取得:plugin_node/OS取得]] --- OSプラットフォームを返す
 - [[OSアーキテクチャ取得:plugin_node/OSアーキテクチャ取得]] --- OSアーキテクチャを返す
+
+● [[クリップボード:plugin_node]]
+- [[クリップボード:plugin_node/クリップボード]] --- クリップボードを取得設定（『クリップボード＝値』で書換が可能）
 
 ● [[コマンドライン:plugin_node]]
 - [[コマンドライン:plugin_node/コマンドライン]] --- 定数
