@@ -46,7 +46,8 @@ var affordances = {
   'rm': 'uninstall',
   'r': 'uninstall',
   'rum': 'run-script',
-  'sit': 'cit'
+  'sit': 'cit',
+  'urn': 'run-script'
 }
 
 // these are filenames in .

@@ -200,6 +200,7 @@ function prettyView (packument, manifest) {
     })
     const unpackedSize = manifest.dist.unpackedSize &&
       byteSize(manifest.dist.unpackedSize)
+    const licenseField = manifest.license || manifest.licence || 'Proprietary'
     const info = {
       name: color.green(manifest.name),
       version: color.green(manifest.version),
@@ -208,7 +209,9 @@ function prettyView (packument, manifest) {
       description: manifest.description,
       deprecated: manifest.deprecated,
       keywords: (packument.keywords || []).map(color.yellow),
-      license: manifest.license || manifest.licence || 'Proprietary',
+      license: typeof licenseField === 'string'
+        ? licenseField
+        : (licenseField.type || 'Proprietary'),
       deps: Object.keys(manifest.dependencies || {}).map((dep) => {
         return `${color.yellow(dep)}: ${manifest.dependencies[dep]}`
       }),
@@ -273,7 +276,7 @@ function prettyView (packument, manifest) {
 
     console.log('')
     console.log('dist')
-    console.log('.tarball', info.tarball)
+    console.log('.tarball:', info.tarball)
     console.log('.shasum:', info.shasum)
     info.integrity && console.log('.integrity:', info.integrity)
     info.unpackedSize && console.log('.unpackedSize:', info.unpackedSize)

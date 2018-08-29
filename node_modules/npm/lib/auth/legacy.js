@@ -6,10 +6,10 @@ const npm = require('../npm.js')
 const output = require('../utils/output.js')
 const pacoteOpts = require('../config/pacote')
 const fetchOpts = require('../config/fetch-opts')
-const opener = require('opener')
+const openUrl = require('../utils/open-url')
 
 const openerPromise = (url) => new Promise((resolve, reject) => {
-  opener(url, { command: npm.config.get('browser') }, (er) => er ? reject(er) : resolve())
+  openUrl(url, 'to complete your login please visit', (er) => er ? reject(er) : resolve())
 })
 
 const loginPrompter = (creds) => {
@@ -52,7 +52,7 @@ function login (conf) {
     })
     .catch((err) => {
       if (err.code !== 'EOTP') throw err
-      return read.otp('Authenticator provided OTP:').then((otp) => {
+      return read.otp('Enter one-time password from your authenticator app: ').then((otp) => {
         conf.auth.otp = otp
         const u = conf.creds.username
         const p = conf.creds.password

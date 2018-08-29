@@ -763,7 +763,8 @@ Installer.prototype.printInstalled = function (cb) {
     })
   }
   return Bluebird.try(() => {
-    return this.auditSubmission && this.auditSubmission.catch(() => null)
+    if (!this.auditSubmission) return
+    return Bluebird.resolve(this.auditSubmission).timeout(10000).catch(() => null)
   }).then((auditResult) => {
     // maybe write audit report w/ hash of pjson & shrinkwrap for later reading by `npm audit`
     if (npm.config.get('json')) {
@@ -833,6 +834,9 @@ Installer.prototype.printInstalledForHuman = function (diffs, auditResult) {
   if (removed) actions.push('removed ' + packages(removed))
   if (updated) actions.push('updated ' + packages(updated))
   if (moved) actions.push('moved ' + packages(moved))
+  if (auditResult && auditResult.metadata.totalDependencies) {
+    actions.push('audited ' + packages(auditResult.metadata.totalDependencies))
+  }
   if (actions.length === 0) {
     report += 'up to date'
   } else if (actions.length === 1) {

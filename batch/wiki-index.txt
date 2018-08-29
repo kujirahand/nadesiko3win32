@@ -437,7 +437,7 @@
 - [[終:plugin_node/終]] --- Nodeでプログラム実行を強制終了する
 - [[終了:plugin_node/終了]] --- Nodeでプログラム実行を強制終了する
 - [[秒待:plugin_node/秒待]] --- NodeでN秒待つ
-- [[OS取得:plugin_node/OS取得]] --- OSプラットフォームを返す
+- [[OS取得:plugin_node/OS取得]] --- OSプラットフォームを返す(darwin
 - [[OSアーキテクチャ取得:plugin_node/OSアーキテクチャ取得]] --- OSアーキテクチャを返す
 
 ● [[クリップボード:plugin_node]]
@@ -467,6 +467,10 @@
 - [[SJIS取得:plugin_node/SJIS取得]] --- Shift_JISのバイナリバッファを文字列に変換
 - [[エンコーディング変換:plugin_node/エンコーディング変換]] --- 文字列SをCODEへ変換してバイナリバッファを返す
 - [[エンコーディング取得:plugin_node/エンコーディング取得]] --- バイナリバッファBUFをCODEから変換して返す
+
+● [[マウスとキーボード操作:plugin_node]]
+- [[キー送信:plugin_node/キー送信]] --- Sのキーを送信
+- [[窓アクティブ:plugin_node/窓アクティブ]] --- Sの窓をアクティブにする
 
 ■ [[plugin_express]]
 

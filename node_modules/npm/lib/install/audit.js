@@ -4,6 +4,7 @@ exports.generateFromInstall = generateFromInstall
 exports.submitForInstallReport = submitForInstallReport
 exports.submitForFullReport = submitForFullReport
 exports.printInstallReport = printInstallReport
+exports.printParseableReport = printParseableReport
 exports.printFullReport = printFullReport
 
 const Bluebird = require('bluebird')
@@ -23,6 +24,7 @@ const npa = require('npm-package-arg')
 const uuid = require('uuid')
 const ssri = require('ssri')
 const cloneDeep = require('lodash.clonedeep')
+const pacoteOpts = require('../config/pacote.js')
 
 // used when scrubbing module names/specifiers
 const runId = uuid.v4()
@@ -40,7 +42,14 @@ function submitForInstallReport (auditData) {
       // we don't care about the response so destroy the stream if we can, or leave it flowing
       // so it can eventually finish and clean up after itself
       fetchAudit(url.resolve(reg, '/-/npm/v1/security/audits/quick'))
-        .then(_ => _.body.destroy ? _.body.destroy() : _.body.resume(), _ => {})
+        .then(_ => {
+          _.body.on('error', () => {})
+          if (_.body.destroy) {
+            _.body.destroy()
+          } else {
+            _.body.resume()
+          }
+        }, _ => {})
     })
     perf.emit('time', 'audit submit')
     return fetchAudit('/-/npm/v1/security/audits/quick', body).then(response => {
@@ -68,16 +77,20 @@ function submitForFullReport (auditData) {
       return response.json()
     }).then(result => {
       perf.emit('timeEnd', 'audit body')
+      result.runId = runId
       return result
     })
   })
 }
 
 function fetchAudit (href, body) {
+  const opts = pacoteOpts()
   return registryFetch(href, {
     method: 'POST',
     headers: { 'Content-Encoding': 'gzip', 'Content-Type': 'application/json' },
     config: npm.config,
+    npmSession: opts.npmSession,
+    projectScope: npm.projectScope,
     log: log,
     body: body
   })
@@ -94,7 +107,16 @@ function printInstallReport (auditResult) {
 function printFullReport (auditResult) {
   return auditReport(auditResult, {
     log: output,
-    reporter: 'detail',
+    reporter: npm.config.get('json') ? 'json' : 'detail',
+    withColor: npm.color,
+    withUnicode: npm.config.get('unicode')
+  }).then(result => output(result.report))
+}
+
+function printParseableReport (auditResult) {
+  return auditReport(auditResult, {
+    log: output,
+    reporter: 'parseable',
     withColor: npm.color,
     withUnicode: npm.config.get('unicode')
   }).then(result => output(result.report))
@@ -196,8 +218,9 @@ function scrubSpec (name, spec) {
   }
 }
 
-function scrub (value) {
-  return ssri.fromData(runId + ' ' + value, {algorithms: ['sha256']}).hexDigest()
+module.exports.scrub = scrub
+function scrub (value, rid) {
+  return ssri.fromData((rid || runId) + ' ' + value, {algorithms: ['sha256']}).hexDigest()
 }
 
 function generateMetadata () {

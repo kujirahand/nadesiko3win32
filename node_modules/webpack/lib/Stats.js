@@ -8,11 +8,18 @@ const RequestShortener = require("./RequestShortener");
 const SizeFormatHelpers = require("./SizeFormatHelpers");
 const formatLocation = require("./formatLocation");
 const identifierUtils = require("./util/identifier");
+const compareLocations = require("./compareLocations");
 
 const optionsOrFallback = (...args) => {
 	let optionValues = [];
 	optionValues.push(...args);
-	return optionValues.find(optionValue => typeof optionValue !== "undefined");
+	return optionValues.find(optionValue => optionValue !== undefined);
+};
+
+const compareId = (a, b) => {
+	if (a < b) return -1;
+	if (a > b) return 1;
+	return 0;
 };
 
 class Stats {
@@ -56,8 +63,8 @@ class Stats {
 	formatFilePath(filePath) {
 		const OPTIONS_REGEXP = /^(\s|\S)*!/;
 		return filePath.includes("!")
-			? `${filePath.replace(OPTIONS_REGEXP, "")} (${filePath})\n`
-			: `${filePath}\n`;
+			? `${filePath.replace(OPTIONS_REGEXP, "")} (${filePath})`
+			: `${filePath}`;
 	}
 
 	hasWarnings() {
@@ -98,26 +105,28 @@ class Stats {
 		}
 
 		const optionOrLocalFallback = (v, def) =>
-			typeof v !== "undefined"
-				? v
-				: typeof options.all !== "undefined"
-					? options.all
-					: def;
+			v !== undefined ? v : options.all !== undefined ? options.all : def;
 
 		const testAgainstGivenOption = item => {
 			if (typeof item === "string") {
 				const regExp = new RegExp(
 					`[\\\\/]${item.replace(
+						// eslint-disable-next-line no-useless-escape
 						/[-[\]{}()*+?.\\^$|]/g,
 						"\\$&"
 					)}([\\\\/]|$|!|\\?)`
-				); // eslint-disable-line no-useless-escape
+				);
 				return ident => regExp.test(ident);
 			}
-			if (item && typeof item === "object" && typeof item.test === "function")
+			if (item && typeof item === "object" && typeof item.test === "function") {
 				return ident => item.test(ident);
-			if (typeof item === "function") return item;
-			if (typeof item === "boolean") return () => item;
+			}
+			if (typeof item === "function") {
+				return item;
+			}
+			if (typeof item === "boolean") {
+				return () => item;
+			}
 		};
 
 		const compilation = this.compilation;
@@ -260,10 +269,9 @@ class Stats {
 
 		const formatError = e => {
 			let text = "";
-			if (typeof e === "string")
-				e = {
-					message: e
-				};
+			if (typeof e === "string") {
+				e = { message: e };
+			}
 			if (e.chunk) {
 				text += `chunk ${e.chunk.name || e.chunk.id}${
 					e.chunk.hasRuntime()
@@ -284,13 +292,23 @@ class Stats {
 				text += this.formatFilePath(
 					e.module.readableIdentifier(requestShortener)
 				);
+				if (typeof e.loc === "object") {
+					const locInfo = formatLocation(e.loc);
+					if (locInfo) text += ` ${locInfo}`;
+				}
+				text += "\n";
 			}
 			text += e.message;
-			if (showErrorDetails && e.details) text += `\n${e.details}`;
-			if (showErrorDetails && e.missing)
+			if (showErrorDetails && e.details) {
+				text += `\n${e.details}`;
+			}
+			if (showErrorDetails && e.missing) {
 				text += e.missing.map(item => `\n[${item}]`).join("");
+			}
 			if (showModuleTrace && e.origin) {
-				text += `\n @ ${e.origin.readableIdentifier(requestShortener)}`;
+				text += `\n @ ${this.formatFilePath(
+					e.origin.readableIdentifier(requestShortener)
+				)}`;
 				if (typeof e.originLoc === "object") {
 					const locInfo = formatLocation(e.originLoc);
 					if (locInfo) text += ` ${locInfo}`;
@@ -392,11 +410,13 @@ class Stats {
 						}
 						if (chunk.name) {
 							assetsByFile[asset].chunkNames.push(chunk.name);
-							if (obj.assetsByChunkName[chunk.name])
+							if (obj.assetsByChunkName[chunk.name]) {
 								obj.assetsByChunkName[chunk.name] = []
 									.concat(obj.assetsByChunkName[chunk.name])
 									.concat([asset]);
-							else obj.assetsByChunkName[chunk.name] = asset;
+							} else {
+								obj.assetsByChunkName[chunk.name] = asset;
+							}
 						}
 					}
 				}
@@ -500,6 +520,23 @@ class Stats {
 			}
 			if (showReasons) {
 				obj.reasons = module.reasons
+					.sort((a, b) => {
+						if (a.module && !b.module) return -1;
+						if (!a.module && b.module) return 1;
+						if (a.module && b.module) {
+							const cmp = compareId(a.module.id, b.module.id);
+							if (cmp) return cmp;
+						}
+						if (a.dependency && !b.dependency) return -1;
+						if (!a.dependency && b.dependency) return 1;
+						if (a.dependency && b.dependency) {
+							const cmp = compareLocations(a.dependency.loc, b.dependency.loc);
+							if (cmp) return cmp;
+							if (a.dependency.type < b.dependency.type) return -1;
+							if (a.dependency.type > b.dependency.type) return 1;
+						}
+						return 0;
+					})
 					.map(reason => {
 						const obj = {
 							moduleId: reason.module ? reason.module.id : null,
@@ -513,21 +550,26 @@ class Stats {
 								? reason.module.readableIdentifier(requestShortener)
 								: null,
 							type: reason.dependency ? reason.dependency.type : null,
+							explanation: reason.explanation,
 							userRequest: reason.dependency
 								? reason.dependency.userRequest
 								: null
 						};
 						if (reason.dependency) {
 							const locInfo = formatLocation(reason.dependency.loc);
-							if (locInfo) obj.loc = locInfo;
+							if (locInfo) {
+								obj.loc = locInfo;
+							}
 						}
 						return obj;
-					})
-					.sort((a, b) => a.moduleId - b.moduleId);
+					});
 			}
 			if (showUsedExports) {
-				if (module.used === true) obj.usedExports = module.usedExports;
-				else if (module.used === false) obj.usedExports = false;
+				if (module.used === true) {
+					obj.usedExports = module.usedExports;
+				} else if (module.used === false) {
+					obj.usedExports = false;
+				}
 			}
 			if (showProvidedExports) {
 				obj.providedExports = Array.isArray(module.buildMeta.providedExports)
@@ -591,9 +633,9 @@ class Stats {
 					names: chunk.name ? [chunk.name] : [],
 					files: chunk.files.slice(),
 					hash: chunk.renderedHash,
-					siblings: Array.from(siblings).sort(),
-					parents: Array.from(parents).sort(),
-					children: Array.from(children).sort(),
+					siblings: Array.from(siblings).sort(compareId),
+					parents: Array.from(parents).sort(compareId),
+					children: Array.from(children).sort(compareId),
 					childrenByOrder: childIdByOrder
 				};
 				if (showChunkModules) {
@@ -661,12 +703,13 @@ class Stats {
 				const obj = new Stats(child).toJson(childOptions, forToString);
 				delete obj.hash;
 				delete obj.version;
-				if (child.name)
+				if (child.name) {
 					obj.name = identifierUtils.makePathsRelative(
 						context,
 						child.name,
 						compilation.cache
 					);
+				}
 				return obj;
 			});
 		}
@@ -744,7 +787,9 @@ class Stats {
 			const rows = array.length;
 			const cols = array[0].length;
 			const colSizes = new Array(cols);
-			for (let col = 0; col < cols; col++) colSizes[col] = 0;
+			for (let col = 0; col < cols; col++) {
+				colSizes[col] = 0;
+			}
 			for (let row = 0; row < rows; row++) {
 				for (let col = 0; col < cols; col++) {
 					const value = `${getText(array, row, col)}`;
@@ -758,11 +803,18 @@ class Stats {
 					const format = array[row][col].color;
 					const value = `${getText(array, row, col)}`;
 					let l = value.length;
-					if (align[col] === "l") format(value);
-					for (; l < colSizes[col] && col !== cols - 1; l++) colors.normal(" ");
-					if (align[col] === "r") format(value);
-					if (col + 1 < cols && colSizes[col] !== 0)
+					if (align[col] === "l") {
+						format(value);
+					}
+					for (; l < colSizes[col] && col !== cols - 1; l++) {
+						colors.normal(" ");
+					}
+					if (align[col] === "r") {
+						format(value);
+					}
+					if (col + 1 < cols && colSizes[col] !== 0) {
 						colors.normal(splitter || "  ");
+					}
 				}
 				newline();
 			}
@@ -980,21 +1032,26 @@ class Stats {
 				colors.magenta(" [prefetched]");
 			}
 			if (module.failed) colors.red(" [failed]");
-			if (module.warnings)
+			if (module.warnings) {
 				colors.yellow(
 					` [${module.warnings} warning${module.warnings === 1 ? "" : "s"}]`
 				);
-			if (module.errors)
+			}
+			if (module.errors) {
 				colors.red(
 					` [${module.errors} error${module.errors === 1 ? "" : "s"}]`
 				);
+			}
 		};
 
 		const processModuleContent = (module, prefix) => {
 			if (Array.isArray(module.providedExports)) {
 				colors.normal(prefix);
-				if (module.providedExports.length === 0) colors.cyan("[no exports]");
-				else colors.cyan(`[exports: ${module.providedExports.join(", ")}]`);
+				if (module.providedExports.length === 0) {
+					colors.cyan("[no exports]");
+				} else {
+					colors.cyan(`[exports: ${module.providedExports.join(", ")}]`);
+				}
 				newline();
 			}
 			if (module.usedExports !== undefined) {
@@ -1057,6 +1114,10 @@ class Stats {
 					if (reason.loc) {
 						colors.normal(" ");
 						colors.normal(reason.loc);
+					}
+					if (reason.explanation) {
+						colors.normal(" ");
+						colors.cyan(reason.explanation);
 					}
 					newline();
 				}
@@ -1280,7 +1341,9 @@ class Stats {
 			);
 		}
 
-		while (buf[buf.length - 1] === "\n") buf.pop();
+		while (buf[buf.length - 1] === "\n") {
+			buf.pop();
+		}
 		return buf.join("");
 	}
 
@@ -1351,13 +1414,18 @@ class Stats {
 	static getChildOptions(options, idx) {
 		let innerOptions;
 		if (Array.isArray(options.children)) {
-			if (idx < options.children.length) innerOptions = options.children[idx];
+			if (idx < options.children.length) {
+				innerOptions = options.children[idx];
+			}
 		} else if (typeof options.children === "object" && options.children) {
 			innerOptions = options.children;
 		}
-		if (typeof innerOptions === "boolean" || typeof innerOptions === "string")
+		if (typeof innerOptions === "boolean" || typeof innerOptions === "string") {
 			innerOptions = Stats.presetToOptions(innerOptions);
-		if (!innerOptions) return options;
+		}
+		if (!innerOptions) {
+			return options;
+		}
 		const childOptions = Object.assign({}, options);
 		delete childOptions.children; // do not inherit children
 		return Object.assign(childOptions, innerOptions);

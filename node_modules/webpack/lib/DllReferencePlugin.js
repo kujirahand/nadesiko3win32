@@ -4,11 +4,14 @@
 */
 "use strict";
 
+const parseJson = require("json-parse-better-errors");
 const DelegatedSourceDependency = require("./dependencies/DelegatedSourceDependency");
 const DelegatedModuleFactoryPlugin = require("./DelegatedModuleFactoryPlugin");
 const ExternalModuleFactoryPlugin = require("./ExternalModuleFactoryPlugin");
 const DelegatedExportsDependency = require("./dependencies/DelegatedExportsDependency");
 const NullFactory = require("./NullFactory");
+const makePathsRelative = require("./util/identifier").makePathsRelative;
+const WebpackError = require("./WebpackError");
 
 const validateOptions = require("schema-utils");
 const schema = require("../schemas/plugins/DllReferencePlugin.json");
@@ -42,9 +45,23 @@ class DllReferencePlugin {
 					params.compilationDependencies.add(manifest);
 					compiler.inputFileSystem.readFile(manifest, (err, result) => {
 						if (err) return callback(err);
-						params["dll reference " + manifest] = JSON.parse(
-							result.toString("utf-8")
-						);
+						// Catch errors parsing the manifest so that blank
+						// or malformed manifest files don't kill the process.
+						try {
+							params["dll reference " + manifest] = parseJson(
+								result.toString("utf-8")
+							);
+						} catch (e) {
+							// Store the error in the params so that it can
+							// be added as a compilation error later on.
+							const manifestPath = makePathsRelative(
+								compiler.options.context,
+								manifest
+							);
+							params[
+								"dll reference parse error " + manifest
+							] = new DllManifestError(manifestPath, e.message);
+						}
 						return callback();
 					});
 				} else {
@@ -56,6 +73,12 @@ class DllReferencePlugin {
 		compiler.hooks.compile.tap("DllReferencePlugin", params => {
 			let manifest = this.options.manifest;
 			if (typeof manifest === "string") {
+				// If there was an error parsing the manifest
+				// file, exit now because the error will be added
+				// as a compilation error in the "compilation" hook.
+				if (params["dll reference parse error " + manifest]) {
+					return;
+				}
 				manifest = params["dll reference " + manifest];
 			}
 			const name = this.options.name || manifest.name;
@@ -77,6 +100,32 @@ class DllReferencePlugin {
 				extensions: this.options.extensions
 			}).apply(normalModuleFactory);
 		});
+
+		compiler.hooks.compilation.tap(
+			"DllReferencePlugin",
+			(compilation, params) => {
+				let manifest = this.options.manifest;
+				if (typeof manifest === "string") {
+					// If there was an error parsing the manifest file, add the
+					// error as a compilation error to make the compilation fail.
+					let e = params["dll reference parse error " + manifest];
+					if (e) {
+						compilation.errors.push(e);
+					}
+				}
+			}
+		);
+	}
+}
+
+class DllManifestError extends WebpackError {
+	constructor(filename, message) {
+		super();
+
+		this.name = "DllManifestError";
+		this.message = `Dll manifest ${filename}\n${message}`;
+
+		Error.captureStackTrace(this, this.constructor);
 	}
 }
 

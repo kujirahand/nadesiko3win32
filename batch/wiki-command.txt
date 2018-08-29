@@ -8013,12 +8013,12 @@ NodeでN秒待つ
 }}}
 
 ###PAGE###:w:plugin_node/OS取得
-■ OS取得 (OSしゅとく)
+■ OS取得 (win32)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_node]] > [[Nodeプロセス:plugin_node/Nodeプロセス]]
 種類 || 関数
 引数 || 
-説明 || OSプラットフォームを返す
+説明 || OSプラットフォームを返す(darwin
 }}}
 
 #page(plugin_node/OS取得/解説)
@@ -8029,7 +8029,7 @@ NodeでN秒待つ
 ###PAGE###:c:plugin_node/OS取得/解説
 ●『[[OS取得:plugin_node/OS取得/解説]]』の詳しい解説
 
-OSプラットフォームを返す
+OSプラットフォームを返す(darwin
 
 {{{
 # 準備中
@@ -8455,6 +8455,52 @@ Shift_JISのバイナリバッファを文字列に変換
 ●『[[エンコーディング取得:plugin_node/エンコーディング取得/解説]]』の詳しい解説
 
 バイナリバッファBUFをCODEから変換して返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_node/キー送信
+■ キー送信 (きーそうしん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[マウスとキーボード操作:plugin_node/マウスとキーボード操作]]
+種類 || 関数
+引数 || Sを|Sの
+説明 || Sのキーを送信
+}}}
+
+#page(plugin_node/キー送信/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/キー送信/解説
+●『[[キー送信:plugin_node/キー送信/解説]]』の詳しい解説
+
+Sのキーを送信
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_node/窓アクティブ
+■ 窓アクティブ (まどあくてぃぶ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[マウスとキーボード操作:plugin_node/マウスとキーボード操作]]
+種類 || 関数
+引数 || Sを|Sの
+説明 || Sの窓をアクティブにする
+}}}
+
+#page(plugin_node/窓アクティブ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/窓アクティブ/解説
+●『[[窓アクティブ:plugin_node/窓アクティブ/解説]]』の詳しい解説
+
+Sの窓をアクティブにする
 
 {{{
 # 準備中

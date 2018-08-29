@@ -44,8 +44,9 @@ const webpack = (options, callback) => {
 		throw new Error("Invalid argument: options");
 	}
 	if (callback) {
-		if (typeof callback !== "function")
+		if (typeof callback !== "function") {
 			throw new Error("Invalid argument: callback");
+		}
 		if (
 			options.watch === true ||
 			(Array.isArray(options) && options.some(o => o.watch))
@@ -68,6 +69,7 @@ webpack.WebpackOptionsApply = WebpackOptionsApply;
 webpack.Compiler = Compiler;
 webpack.MultiCompiler = MultiCompiler;
 webpack.NodeEnvironmentPlugin = NodeEnvironmentPlugin;
+// @ts-ignore Global @this directive is not supported
 webpack.validate = validateSchema.bind(this, webpackOptionsSchema);
 webpack.validateSchema = validateSchema;
 webpack.WebpackOptionsValidationError = WebpackOptionsValidationError;
@@ -122,6 +124,9 @@ exportPlugins(exports, {
 	UmdMainTemplatePlugin: () => require("./UmdMainTemplatePlugin"),
 	WatchIgnorePlugin: () => require("./WatchIgnorePlugin")
 });
+exportPlugins((exports.dependencies = {}), {
+	DependencyReference: () => require("./dependencies/DependencyReference")
+});
 exportPlugins((exports.optimize = {}), {
 	AggressiveMergingPlugin: () => require("./optimize/AggressiveMergingPlugin"),
 	AggressiveSplittingPlugin: () =>
@@ -133,6 +138,10 @@ exportPlugins((exports.optimize = {}), {
 	ModuleConcatenationPlugin: () =>
 		require("./optimize/ModuleConcatenationPlugin"),
 	OccurrenceOrderPlugin: () => require("./optimize/OccurrenceOrderPlugin"),
+	OccurrenceModuleOrderPlugin: () =>
+		require("./optimize/OccurrenceModuleOrderPlugin"),
+	OccurrenceChunkOrderPlugin: () =>
+		require("./optimize/OccurrenceChunkOrderPlugin"),
 	RuntimeChunkPlugin: () => require("./optimize/RuntimeChunkPlugin"),
 	SideEffectsFlagPlugin: () => require("./optimize/SideEffectsFlagPlugin"),
 	SplitChunksPlugin: () => require("./optimize/SplitChunksPlugin")

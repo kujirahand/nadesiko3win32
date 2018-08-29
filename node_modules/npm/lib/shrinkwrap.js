@@ -19,7 +19,7 @@ const npm = require('./npm.js')
 const path = require('path')
 const readPackageTree = BB.promisify(require('read-package-tree'))
 const ssri = require('ssri')
-const stringifyPackage = require('./utils/stringify-package')
+const stringifyPackage = require('stringify-package')
 const validate = require('aproba')
 const writeFileAtomic = require('write-file-atomic')
 const unixFormatPath = require('./utils/unix-format-path.js')
@@ -107,13 +107,9 @@ function shrinkwrapDeps (deps, top, tree, seen) {
   if (seen.has(tree)) return
   seen.add(tree)
   sortModules(tree.children).forEach(function (child) {
-    if (child.fakeChild) {
-      deps[moduleName(child)] = child.fakeChild
-      return
-    }
     var childIsOnlyDev = isOnlyDev(child)
     var pkginfo = deps[moduleName(child)] = {}
-    var requested = child.package._requested || getRequested(child) || {}
+    var requested = getRequested(child) || child.package._requested || {}
     pkginfo.version = childVersion(top, child, requested)
     if (requested.type === 'git' && child.package._from) {
       pkginfo.from = child.package._from
@@ -173,6 +169,10 @@ function childRequested (top, child, requested) {
     return 'file:' + unixFormatPath(path.relative(top.path, child.package._resolved || requested.fetchSpec))
   } else if (!isRegistry(requested) && !child.fromBundle) {
     return child.package._resolved || requested.saveSpec || requested.rawSpec
+  } else if (requested.type === 'tag') {
+    // tags are not ranges we can match against, so we invent a "reasonable"
+    // one based on what we actually installed.
+    return npm.config.get('save-prefix') + child.package.version
   } else if (requested.saveSpec || requested.rawSpec) {
     return requested.saveSpec || requested.rawSpec
   } else if (child.package._from || (child.package._requested && child.package._requested.rawSpec)) {
