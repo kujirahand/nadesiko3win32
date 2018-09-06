@@ -27,6 +27,7 @@ class NakoCompiler {
     this.__module = {} // requireなどで取り込んだモジュールの一覧
     this.funclist = {} // プラグインで定義された関数
     this.pluginfiles = {} // 取り込んだファイル一覧
+    this.isSetter = false // 代入的関数呼び出しを管理(#290)
     // 必要なオブジェクトを覚えておく
     this.prepare = prepare
     this.lexer = lexer
@@ -212,7 +213,7 @@ class NakoCompiler {
     }
   }
 
-   /**
+  /**
     * プラグイン・オブジェクトを追加(ブラウザ向け)
     * @param objName オブジェクト名
     * @param po 関数リスト
@@ -272,7 +273,6 @@ class NakoCompiler {
   getFunc (key) {
     return this.funclist[key]
   }
-
 }
 
 module.exports = NakoCompiler
