@@ -354,6 +354,23 @@
 - [[位置情報監視時:plugin_browser/位置情報監視時]] --- 位置情報を監視してIDを返す。引数に指定したコールバック関数内で変数「対象」に配列で[緯度,経度]を返す
 - [[位置情報監視停止:plugin_browser/位置情報監視停止]] --- 『位置情報監視時』で開始した監視を停止する
 
+● [[音声合成:plugin_browser]]
+- [[話:plugin_browser/話]] --- 音声合成APIを使って、Sを発話する
+- [[話終時:plugin_browser/話終時]] --- 音声合成APIを使って、Sを発話し発話した後でcallbackを実行
+- [[話者一覧取得:plugin_browser/話者一覧取得]] --- 音声合成APIの話者一覧を得る
+- [[話者設定:plugin_browser/話者設定]] --- 音声合成APIの話者を指定する
+- [[話者速度:plugin_browser/話者速度]] --- 定数
+- [[話者声高:plugin_browser/話者声高]] --- 定数
+- [[話者音量:plugin_browser/話者音量]] --- 定数
+- [[話者詳細設定:plugin_browser/話者詳細設定]] --- 音声合成APIの話者の設定をJSON形式で設定する。key=(速度
+
+● [[WebSocket:plugin_browser]]
+- [[WS接続完了時:plugin_browser/WS接続完了時]] --- WebSocketでサーバに接続完了した時に実行されるイベントを指定
+- [[WS受信時:plugin_browser/WS受信時]] --- WebSocketでサーバからメッセージを受信した時に実行されるイベントを指定
+- [[WSエラー発生時:plugin_browser/WSエラー発生時]] --- WebSocketでエラーが発生した時に実行されるイベントを指定
+- [[WS接続:plugin_browser/WS接続]] --- WebSocketサーバsに接続する
+- [[WS送信:plugin_browser/WS送信]] --- アクティブなWebSocketへsを送信する
+
 ■ [[plugin_turtle]]
 
 ● [[タートルグラフィックス/カメ操作:plugin_turtle]]
@@ -427,7 +444,7 @@
 - [[環境変数一覧取得:plugin_node/環境変数一覧取得]] --- 環境変数の一覧を返す
 
 ● [[圧縮・解凍:plugin_node]]
-- [[圧縮解凍ツールパス変更:plugin_node/圧縮解凍ツールパス変更]] --- 圧縮解凍に使うツールを変更する
+- [[圧縮解凍ツールパス変更:plugin_node/圧縮解凍ツールパス変更]] --- 圧縮解凍に使うツールを取得変更する
 - [[解凍:plugin_node/解凍]] --- (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https://goo.gl/LmKswH)
 - [[解凍時:plugin_node/解凍時]] --- 解凍処理を行い、処理が完了したときにcallback処理を実行
 - [[圧縮:plugin_node/圧縮]] --- (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https://goo.gl/LmKswH)
@@ -474,7 +491,7 @@
 
 ■ [[plugin_express]]
 
-● [[Webサーバ(Exoress):plugin_express]]
+● [[Webサーバ(Express):plugin_express]]
 - [[GETデータ:plugin_express/GETデータ]] --- 定数
 - [[POSTデータ:plugin_express/POSTデータ]] --- 定数
 - [[WEBサーバ名前設定:plugin_express/WEBサーバ名前設定]] --- Webサーバの名前を変更する
@@ -488,3 +505,16 @@
 - [[WEBサーバDELETE時:plugin_express/WEBサーバDELETE時]] --- URIにPOSTメソッドがあった時の処理を指定
 - [[WEBサーバ出力:plugin_express/WEBサーバ出力]] --- クライアントにSを出力
 - [[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト]] --- URLにリダイレクトする
+
+■ [[plugin_websocket]]
+
+● [[WebSocketサーバ:plugin_websocket]]
+- [[GETデータ:plugin_websocket/GETデータ]] --- 定数
+- [[POSTデータ:plugin_websocket/POSTデータ]] --- 定数
+- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+- [[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時]] --- WSサーバ起動が成功した時にcallbackを実行
+- [[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時]] --- WSサーバ起動が失敗した時にcallbackを実行
+- [[WSサーバ接続時:plugin_websocket/WSサーバ接続時]] --- WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
+- [[WSサーバ受信時:plugin_websocket/WSサーバ受信時]] --- WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
+- [[WSサーバ全送信:plugin_websocket/WSサーバ全送信]] --- WSサーバで全員にメッセージSを送信する
+- [[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得]] --- WSサーバに接続しているクライアントの一覧を返す

@@ -6506,6 +6506,296 @@ vに線の太さ設定
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/話
+■ 話 (はなす)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 関数
+引数 || Sと|Sを|Sの
+説明 || 音声合成APIを使って、Sを発話する
+}}}
+
+#page(plugin_browser/話/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話/解説
+●『[[話:plugin_browser/話/解説]]』の詳しい解説
+
+音声合成APIを使って、Sを発話する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/話終時
+■ 話終時 (はなしおわったとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 関数
+引数 || CALLBACKでSと|Sを|Sの
+説明 || 音声合成APIを使って、Sを発話し発話した後でcallbackを実行
+}}}
+
+#page(plugin_browser/話終時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話終時/解説
+●『[[話終時:plugin_browser/話終時/解説]]』の詳しい解説
+
+音声合成APIを使って、Sを発話し発話した後でcallbackを実行
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/話者一覧取得
+■ 話者一覧取得 (わしゃいちらんしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 関数
+引数 || 
+説明 || 音声合成APIの話者一覧を得る
+}}}
+
+#page(plugin_browser/話者一覧取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話者一覧取得/解説
+●『[[話者一覧取得:plugin_browser/話者一覧取得/解説]]』の詳しい解説
+
+音声合成APIの話者一覧を得る
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/話者設定
+■ 話者設定 (わしゃせってい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 関数
+引数 || Vに|Vへ
+説明 || 音声合成APIの話者を指定する
+}}}
+
+#page(plugin_browser/話者設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話者設定/解説
+●『[[話者設定:plugin_browser/話者設定/解説]]』の詳しい解説
+
+音声合成APIの話者を指定する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/話者速度
+■ 話者速度 (わしゃそくど)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 定数
+初期値 || 1.0
+}}}
+
+#page(plugin_browser/話者速度/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話者速度/解説
+●『[[話者速度:plugin_browser/話者速度/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/話者声高
+■ 話者声高 (わしゃこわだか)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 定数
+初期値 || 1.0
+}}}
+
+#page(plugin_browser/話者声高/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話者声高/解説
+●『[[話者声高:plugin_browser/話者声高/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/話者音量
+■ 話者音量 (わしゃこおんりょう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 定数
+初期値 || 1.0
+}}}
+
+#page(plugin_browser/話者音量/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話者音量/解説
+●『[[話者音量:plugin_browser/話者音量/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/話者詳細設定
+■ 話者詳細設定 (声高)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
+種類 || 関数
+引数 || OBJで|OBJに|OBJへ
+説明 || 音声合成APIの話者の設定をJSON形式で設定する。key=(速度
+}}}
+
+#page(plugin_browser/話者詳細設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/話者詳細設定/解説
+●『[[話者詳細設定:plugin_browser/話者詳細設定/解説]]』の詳しい解説
+
+音声合成APIの話者の設定をJSON形式で設定する。key=(速度
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/WS接続完了時
+■ WS接続完了時 (WSせつぞくかんりょうしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[WebSocket:plugin_browser/WebSocket]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WebSocketでサーバに接続完了した時に実行されるイベントを指定
+}}}
+
+#page(plugin_browser/WS接続完了時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/WS接続完了時/解説
+●『[[WS接続完了時:plugin_browser/WS接続完了時/解説]]』の詳しい解説
+
+WebSocketでサーバに接続完了した時に実行されるイベントを指定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/WS受信時
+■ WS受信時 (WSじゅしんしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[WebSocket:plugin_browser/WebSocket]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WebSocketでサーバからメッセージを受信した時に実行されるイベントを指定
+}}}
+
+#page(plugin_browser/WS受信時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/WS受信時/解説
+●『[[WS受信時:plugin_browser/WS受信時/解説]]』の詳しい解説
+
+WebSocketでサーバからメッセージを受信した時に実行されるイベントを指定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/WSエラー発生時
+■ WSエラー発生時 (WSえらーはっせいじ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[WebSocket:plugin_browser/WebSocket]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WebSocketでエラーが発生した時に実行されるイベントを指定
+}}}
+
+#page(plugin_browser/WSエラー発生時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/WSエラー発生時/解説
+●『[[WSエラー発生時:plugin_browser/WSエラー発生時/解説]]』の詳しい解説
+
+WebSocketでエラーが発生した時に実行されるイベントを指定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/WS接続
+■ WS接続 (WSせつぞく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[WebSocket:plugin_browser/WebSocket]]
+種類 || 関数
+引数 || Sに|Sへ|Sの
+説明 || WebSocketサーバsに接続する
+}}}
+
+#page(plugin_browser/WS接続/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/WS接続/解説
+●『[[WS接続:plugin_browser/WS接続/解説]]』の詳しい解説
+
+WebSocketサーバsに接続する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/WS送信
+■ WS送信 (WSそうしん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[WebSocket:plugin_browser/WebSocket]]
+種類 || 関数
+引数 || Sを|Sと
+説明 || アクティブなWebSocketへsを送信する
+}}}
+
+#page(plugin_browser/WS送信/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/WS送信/解説
+●『[[WS送信:plugin_browser/WS送信/解説]]』の詳しい解説
+
+アクティブなWebSocketへsを送信する
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_turtle/カメ作成
 ■ カメ作成 (かめさくせい)
 {{{#csv(flag=||)
@@ -7834,7 +8124,7 @@ IDを指定して操作対象となるカメを変更する
 カテゴリ || [[plugin_node]] > [[圧縮・解凍:plugin_node/圧縮・解凍]]
 種類 || 関数
 引数 || Vに|Vへ
-説明 || 圧縮解凍に使うツールを変更する
+説明 || 圧縮解凍に使うツールを取得変更する
 }}}
 
 #page(plugin_node/圧縮解凍ツールパス変更/解説)
@@ -7845,7 +8135,7 @@ IDを指定して操作対象となるカメを変更する
 ###PAGE###:c:plugin_node/圧縮解凍ツールパス変更/解説
 ●『[[圧縮解凍ツールパス変更:plugin_node/圧縮解凍ツールパス変更/解説]]』の詳しい解説
 
-圧縮解凍に使うツールを変更する
+圧縮解凍に使うツールを取得変更する
 
 {{{
 # 準備中
@@ -8509,7 +8799,7 @@ Sの窓をアクティブにする
 ###PAGE###:w:plugin_express/GETデータ
 ■ GETデータ (WEBサーバクエリ)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 定数
 初期値 || ''
 }}}
@@ -8529,7 +8819,7 @@ Sの窓をアクティブにする
 ###PAGE###:w:plugin_express/POSTデータ
 ■ POSTデータ (WEBサーバクエリ)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 定数
 初期値 || ''
 }}}
@@ -8549,7 +8839,7 @@ Sの窓をアクティブにする
 ###PAGE###:w:plugin_express/WEBサーバ名前設定
 ■ WEBサーバ名前設定 (WEBさーばなまえへんこう)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || NAMEに|NAMEへ
 説明 || Webサーバの名前を変更する
@@ -8572,7 +8862,7 @@ Webサーバの名前を変更する
 ###PAGE###:w:plugin_express/WEBサーバ起動
 ■ WEBサーバ起動 (WEBさーばきどう)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || CALLBACKまでPORTNOの|PORTNOで
 説明 || ポートPORTNOでWebサーバを起動して成功したら『WEBサーバ起動成功した時』を実行する
@@ -8595,7 +8885,7 @@ Webサーバの名前を変更する
 ###PAGE###:w:plugin_express/WEBサーバ起動成功時
 ■ WEBサーバ起動成功時 (WEBさーばきどうせいこうしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || CALLBACKを
 説明 || WEBサーバ起動が成功した時にcallbackを実行
@@ -8618,7 +8908,7 @@ WEBサーバ起動が成功した時にcallbackを実行
 ###PAGE###:w:plugin_express/WEBサーバ起動失敗時
 ■ WEBサーバ起動失敗時 (WEBさーばきどうしっぱいしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || CALLBACKを
 説明 || WEBサーバ起動が失敗した時にcallbackを実行
@@ -8641,7 +8931,7 @@ WEBサーバ起動が失敗した時にcallbackを実行
 ###PAGE###:w:plugin_express/WEBサーバ静的パス指定
 ■ WEBサーバ静的パス指定 (WEBさーばせいてきぱすしてい)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || URLをPATHに|PATHへ
 説明 || サーバのHTMLや画像などを配置する静的パスを指定する
@@ -8664,7 +8954,7 @@ WEBサーバ起動が失敗した時にcallbackを実行
 ###PAGE###:w:plugin_express/WEBサーバGET時
 ■ WEBサーバGET時 (WEBさーばGETしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || CALLBACKをURIに|URIへ
 説明 || URIにGETメソッドがあった時の処理を指定
@@ -8687,7 +8977,7 @@ URIにGETメソッドがあった時の処理を指定
 ###PAGE###:w:plugin_express/WEBサーバPOST時
 ■ WEBサーバPOST時 (WEBさーばPOSTしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || CALLBACKをURIに|URIへ
 説明 || URIにPOSTメソッドがあった時の処理を指定
@@ -8710,7 +9000,7 @@ URIにPOSTメソッドがあった時の処理を指定
 ###PAGE###:w:plugin_express/WEBサーバPUT時
 ■ WEBサーバPUT時 (WEBさーばPUTしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || CALLBACKをURIに|URIへ
 説明 || URIにPOSTメソッドがあった時の処理を指定
@@ -8733,7 +9023,7 @@ URIにPOSTメソッドがあった時の処理を指定
 ###PAGE###:w:plugin_express/WEBサーバDELETE時
 ■ WEBサーバDELETE時 (WEBさーばDELETEしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || CALLBACKをURIに|URIへ
 説明 || URIにPOSTメソッドがあった時の処理を指定
@@ -8756,7 +9046,7 @@ URIにPOSTメソッドがあった時の処理を指定
 ###PAGE###:w:plugin_express/WEBサーバ出力
 ■ WEBサーバ出力 (WEBさーばしゅつりょく)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || Sを|Sと
 説明 || クライアントにSを出力
@@ -8779,7 +9069,7 @@ URIにPOSTメソッドがあった時の処理を指定
 ###PAGE###:w:plugin_express/WEBサーバリダイレクト
 ■ WEBサーバリダイレクト (WEBさーばりだいれくと)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_express]] > [[Webサーバ(Exoress):plugin_express/Webサーバ(Exoress)]]
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
 引数 || URLへ|URLに
 説明 || URLにリダイレクトする
@@ -8794,6 +9084,207 @@ URIにPOSTメソッドがあった時の処理を指定
 ●『[[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト/解説]]』の詳しい解説
 
 URLにリダイレクトする
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/GETデータ
+■ GETデータ (WEBサーバクエリ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 定数
+初期値 || ''
+}}}
+
+#page(plugin_websocket/GETデータ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/GETデータ/解説
+●『[[GETデータ:plugin_websocket/GETデータ/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/POSTデータ
+■ POSTデータ (WEBサーバクエリ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 定数
+初期値 || ''
+}}}
+
+#page(plugin_websocket/POSTデータ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/POSTデータ/解説
+●『[[POSTデータ:plugin_websocket/POSTデータ/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ起動
+■ WSサーバ起動 (WSさーばきどう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || PORTNOの|PORTNOで
+説明 || ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+}}}
+
+#page(plugin_websocket/WSサーバ起動/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ起動/解説
+●『[[WSサーバ起動:plugin_websocket/WSサーバ起動/解説]]』の詳しい解説
+
+ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ起動成功時
+■ WSサーバ起動成功時 (WSさーばきどうせいこうしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WSサーバ起動が成功した時にcallbackを実行
+}}}
+
+#page(plugin_websocket/WSサーバ起動成功時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ起動成功時/解説
+●『[[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時/解説]]』の詳しい解説
+
+WSサーバ起動が成功した時にcallbackを実行
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ起動失敗時
+■ WSサーバ起動失敗時 (WSさーばきどうしっぱいしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WSサーバ起動が失敗した時にcallbackを実行
+}}}
+
+#page(plugin_websocket/WSサーバ起動失敗時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ起動失敗時/解説
+●『[[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時/解説]]』の詳しい解説
+
+WSサーバ起動が失敗した時にcallbackを実行
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ接続時
+■ WSサーバ接続時 (WSさーばせつぞくしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
+}}}
+
+#page(plugin_websocket/WSサーバ接続時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ接続時/解説
+●『[[WSサーバ接続時:plugin_websocket/WSサーバ接続時/解説]]』の詳しい解説
+
+WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ受信時
+■ WSサーバ受信時 (WSさーばじゅしんしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKで
+説明 || WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
+}}}
+
+#page(plugin_websocket/WSサーバ受信時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ受信時/解説
+●『[[WSサーバ受信時:plugin_websocket/WSサーバ受信時/解説]]』の詳しい解説
+
+WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ全送信
+■ WSサーバ全送信 (WSさーばぜんそうしん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || Sを
+説明 || WSサーバで全員にメッセージSを送信する
+}}}
+
+#page(plugin_websocket/WSサーバ全送信/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ全送信/解説
+●『[[WSサーバ全送信:plugin_websocket/WSサーバ全送信/解説]]』の詳しい解説
+
+WSサーバで全員にメッセージSを送信する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSクライアント一覧取得
+■ WSクライアント一覧取得 (WSくらいあんといちらんしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || Sを
+説明 || WSサーバに接続しているクライアントの一覧を返す
+}}}
+
+#page(plugin_websocket/WSクライアント一覧取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSクライアント一覧取得/解説
+●『[[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得/解説]]』の詳しい解説
+
+WSサーバに接続しているクライアントの一覧を返す
 
 {{{
 # 準備中
