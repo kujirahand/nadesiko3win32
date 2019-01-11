@@ -19,6 +19,12 @@ path = _
 env.Item("NAKO_HOME") = home
 env.Item("PATH") = path
 
+rem --- install check ---
+if not fso.FolderExists(home & "\node_modules\fs-extra") then
+  call shell.Run("npm install --production", 1, True)
+end if
+
+
 node = """" & home & "\nodejs\node" & """"
 cnako = """" & home & "\src\cnako3.js" & """"
 nako3edit = """" & home & "\tools\nako3edit\index.nako3" & """"
