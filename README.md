@@ -30,7 +30,7 @@ Windows版をダウンロードするには、以下のリンクを開いて、�
 
 - [配布パッケージ](https://github.com/kujirahand/nadesiko3win32/releases)
 
-解凍したら「nakopad.vbs」(PC版)または、「nako3server.vbs」(Web版)をクリックして、なでしこエディタを起動できます。
+解凍したら「nakopad.vbs」(PC版)または、「start.vbs」(Web版)をクリックして、なでしこエディタを起動できます。
 
 ## より詳しい情報
 
