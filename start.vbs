@@ -10,6 +10,14 @@ dim home
 dim path
 
 home = fso.getParentFolderName(WScript.ScriptFullName)
+
+rem --- check setup ---
+if not fso.FolderExists(home & "\node_modules\fs-extra") then
+  call shell.Run(home & "\setup.vbs", 1, True)
+end if
+
+
+rem --- register path ---
 path = _
   home & "\bin;" & _
   home & "\nodejs;" & _
@@ -17,9 +25,5 @@ path = _
 
 env.Item("NAKO_HOME") = home
 env.Item("PATH") = path
-
-if not fso.FolderExists(home & "\node_modules\fs-extra") then
-  call shell.Run("npm install --production", 1, True)
-end if
 
 shell.Run("node " & home & "\src\nako3server.js")
