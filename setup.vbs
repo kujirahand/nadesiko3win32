@@ -10,7 +10,9 @@ dim home
 dim path
 home = fso.getParentFolderName(WScript.ScriptFullName)
 
-MsgBox "これから、なでしこ3のセットアップを始めます。"
+MsgBox "これから、なでしこ3のセットアップを始めます。" & _
+       "この後、コマンドプロンプト画面が二回表示されます。" & _
+       "セットアップは初回だけですので、少々、お待ちください。"
 
 rem --- nodejs.7zの解凍 ---
 if not fso.FolderExists(home & "\nodejs") then
@@ -37,5 +39,5 @@ if not fso.FolderExists(home & "\node_modules\fs-extra") then
          "もし、ネットワークパス上で実行する場合、" & _
          "一度、Cドライブにコピーしてから実行してください。"
 else
-  MsgBox "完了です。start.vbsをクリックすると始まります。"
+  MsgBox "セットアップ完了です。"
 end if
