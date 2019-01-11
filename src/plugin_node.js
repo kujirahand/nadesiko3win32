@@ -16,14 +16,10 @@ const PluginNode = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['コマンドライン'] = process.argv
-      sys.__v0['ナデシコランタイムパス'] = process.argv[0]
-      sys.__v0['ナデシコランタイム'] = path.basename(process.argv[0])
-      sys.__v0['母艦パス'] = sys.__exec('母艦パス取得', [])
-      sys.__v0['AJAX:ONERROR'] = null
+      const path = require('path')
       sys.__getBinPath = (tool) => {
         let fpath = tool
-        if (process.platform === 'win32') {
+        if (process.platform === 'win32')
           if (!fileExists(tool)) {
             const nodeDir = path.dirname(process.argv[0])
             const root = path.resolve(path.join(nodeDir, '..'))
@@ -31,9 +27,24 @@ const PluginNode = {
             if (fileExists(fpath)) return `"${fpath}"`
             return tool
           }
-        }
+
         return fpath
       }
+      sys.__getBokanPath = () => {
+        let nakofile
+        const cmd = path.basename(process.argv[1])
+        if (cmd.indexOf('cnako3') < 0)
+          nakofile = process.argv[1]
+         else
+          nakofile = process.argv[2]
+
+        return path.dirname(path.resolve(nakofile))
+      }
+      sys.__v0['コマンドライン'] = process.argv
+      sys.__v0['ナデシコランタイムパス'] = process.argv[0]
+      sys.__v0['ナデシコランタイム'] = path.basename(process.argv[0])
+      sys.__v0['母艦パス'] = sys.__getBokanPath()
+      sys.__v0['AJAX:ONERROR'] = null
     }
   },
   // @ファイル入出力
@@ -63,11 +74,11 @@ const PluginNode = {
     josi: [['を'], ['へ', 'に']],
     fn: function (s, f) {
       // Buffer?
-      if (s instanceof String) {
+      if (s instanceof String)
         fs.writeFileSync(f, s, 'utf-8')
-      } else {
+       else
         fs.writeFileSync(f, s)
-      }
+
     },
     return_none: true
   },
@@ -84,11 +95,11 @@ const PluginNode = {
     josi: [['を']],
     fn: function (s) {
       exec(s, (err, stdout, stderr) => {
-        if (err) {
+        if (err)
           console.error(stderr)
-        } else {
+         else
           if (stdout) console.log(stdout)
-        }
+
       })
     }
   },
@@ -97,11 +108,11 @@ const PluginNode = {
     josi: [['で'], ['を']],
     fn: function (callback, s, sys) {
       exec(s, (err, stdout, stderr) => {
-        if (err) {
+        if (err)
           throw new Error(stderr)
-        } else {
+         else
           callback(stdout)
-        }
+
       })
     }
   },
@@ -126,12 +137,10 @@ const PluginNode = {
           ? mask1 + '$' : '(' + mask1.replace(/;/g, '|') + ')$'
         const maskRE = new RegExp(mask2, 'i')
         const list = fs.readdirSync(searchPath)
-        const list2 = list.filter((n) => maskRE.test(n))
-        return list2
-      } else {
-        const list = fs.readdirSync(s)
-        return list
-      }
+        return list.filter((n) => maskRE.test(n))
+      } else
+        return fs.readdirSync(s)
+
     }
   },
   '全ファイル列挙': { // @パスS以下の全ファイル名を取得する。ワイルドカード可能。「*.jpg;*.png」のように複数の拡張子を指定可能。 // @ぜんふぁいるれっきょ
@@ -350,15 +359,8 @@ const PluginNode = {
   '母艦パス取得': { // @スクリプトのあるディレクトリを返す // @ぼかんぱすしゅとく
     type: 'func',
     josi: [],
-    fn: function () {
-      let nakofile
-      const cmd = path.basename(process.argv[1])
-      if (cmd.indexOf('cnako3') < 0) {
-        nakofile = process.argv[1]
-      } else {
-        nakofile = process.argv[2]
-      }
-      return path.dirname(path.resolve(nakofile))
+    fn: function (sys) {
+      return sys.__getBokanPath()
     }
   },
   // @環境変数
@@ -377,7 +379,7 @@ const PluginNode = {
     }
   },
   // @圧縮・解凍
-  '圧縮解凍ツールパス': { type: 'const', value: '7z' },
+  '圧縮解凍ツールパス': {type: 'const', value: '7z'},
   '圧縮解凍ツールパス変更': { // @圧縮解凍に使うツールを取得変更する // @あっしゅくかいとうつーるぱすへんこう
     type: 'func',
     josi: [['に', 'へ']],
@@ -479,8 +481,10 @@ const PluginNode = {
     type: 'func',
     josi: [['を']],
     fn: function (v, sys) {
-      const ncp = require('copy-paste')
+      const ncp = require('copy-paste-win32fix')
+      // copy
       if (sys && sys['isSetter']) return ncp.copy(v)
+      // paste
       return ncp.paste()
     }
   },
@@ -508,6 +512,37 @@ const PluginNode = {
     fn: function (a, b, sys) {
       const assert = require('assert')
       assert.equal(a, b)
+    }
+  },
+  // @ネットワーク
+  '自分IPアドレス取得': { // @ネットワークアダプターからIPアドレス(IPv4)を取得して配列で返す // @じぶんIPあどれすしゅとく
+    type: 'func',
+    josi: [],
+    fn: function (sys) {
+      const os = require('os')
+      const nif = os.networkInterfaces()
+      const result = []
+      for (let dev in nif)
+        nif[dev].forEach((detail) => {
+          if (detail.family === 'IPv4') result.push(detail.address)
+        })
+
+      return result
+    }
+  },
+  '自分IPV6アドレス取得': { // @ネットワークアダプターからIPアドレス(IPv6)を取得して配列で返す // @じぶんIPV6あどれすしゅとく
+    type: 'func',
+    josi: [],
+    fn: function (sys) {
+      const os = require('os')
+      const nif = os.networkInterfaces()
+      const result = []
+      for (let dev in nif)
+        nif[dev].forEach((detail) => {
+          if (detail.family === 'IPv6') result.push(detail.address)
+        })
+
+      return result
     }
   },
   // @Ajax
@@ -570,9 +605,9 @@ const PluginNode = {
     josi: [['の'], ['まで', 'へ', 'に'], ['を']],
     fn: function (callback, url, params, sys) {
       const fd = new FormData()
-      for (var key in params) {
+      for (let key in params)
         fd.set(key, params[key])
-      }
+
       let options = {
         method: 'POST',
         headers: {
@@ -597,7 +632,7 @@ const PluginNode = {
       sys.__v0['AJAX:ONERROR'] = callback
     }
   },
-  'AJAXオプション': { type: 'const', value: '' }, // @Ajax関連のオプションを指定 // @AJAXおぷしょん
+  'AJAXオプション': {type: 'const', value: ''}, // @Ajax関連のオプションを指定 // @AJAXおぷしょん
   'AJAXオプション設定': { // @Ajax命令でオプションを設定 // @AJAXおぷしょんせってい
     type: 'func',
     josi: [['に', 'へ', 'と']],

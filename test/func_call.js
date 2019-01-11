@@ -3,19 +3,18 @@ const NakoCompiler = require('../src/nako3')
 
 describe('関数呼び出しテスト', () => {
   const nako = new NakoCompiler()
-  // nako.debugParser = true
-  // nako.debug = true
+  nako.debugParser = false
+  nako.debug = false
   const cmp = (code, res) => {
-    if (nako.debug) {
+    if (nako.debug)
       console.log('code=' + code)
-    }
+
     assert.equal(nako.runReset(code).log, res)
   }
   const cmd = (code) => {
     if (nako.debug) console.log('code=' + code)
     nako.runReset(code)
   }
-
   beforeEach(() => {
     cmd('「Asia/Tokyo」でタイムゾーン設定')
   })
@@ -30,11 +29,11 @@ describe('関数呼び出しテスト', () => {
     cmp('３が１以上。もしそうならば「真」と表示。', '真')
   })
   it('後方で定義した関数を前方で使う1', () => {
-    cmp('HOGE(3,4)を表示;●(A,B)HOGEとは、それはA+B;', '7')
-    cmp('「姫」と「殿」が出会って表示;●(AとBが)出会うとは、それはA&B;', '姫殿')
+    cmp('HOGE(3,4)を表示;●(A,B)HOGEとは;それはA+B;ここまで;', '7')
+    cmp('「姫」と「殿」が出会って表示;●(AとBが)出会うとは;それはA&B;ここまで;', '姫殿')
   })
   it('後方で定義した関数を前方で使う2', () => {
-    cmp('Nとは変数=30;HOGE(3,4)を表示;●(A,B)HOGEとは;それはA+B+N;', '37')
+    cmp('Nとは変数=30;HOGE(3,4)を表示;●(A,B)HOGEとは;それはA+B+N;ここまで;', '37')
   })
   it('代入と表示', () => {
     cmp('A=今日;もし(今日=A)ならば「1」と表示', '1')
@@ -56,13 +55,33 @@ describe('関数呼び出しテスト', () => {
   it('連続文後の=代入', () => {
     cmp('対象日=1504191600を日時変換して「 」まで切り取る。対象日を表示。', '2017/09/01')
   })
-  // 代入的呼び出し(#290)
   it('関数の代入的呼び出し(#290)その1', () => {
     cmp('INTに3.5を代入;それを表示;', '3')
   })
   it('関数の代入的呼び出し(#290)その2', () => {
     cmp('INT=3.5;それを表示;', '3')
     cmp('INTは3.5;それを表示;', '3')
+  })
+  it('引数の順番を入れ替えて呼び出す(#342)その1', () => {
+    cmp('『abc』の『a』を「*」に置換。表示', '*bc')
+    cmp('『a』を「*」に『abc』の置換。表示', '*bc')
+    cmp('「*」へ『a』から『abc』の置換。表示', '*bc')
+    cmp('「abcdefg」の1から3だけ文字削除して表示。', 'defg')
+    cmp('「abcdefg」の1から3を文字削除して表示。', 'defg')
+    cmp('1から3を「abcdefg」の文字削除して表示。', 'defg')
+    cmp('3を「abcdefg」の1から文字削除して表示。', 'defg')
+    cmp('3だけ「abcdefg」の1から文字削除して表示。', 'defg')
+  })
+  it('引数の順番を入れ替えて呼び出す(#342)その2', () => {
+    cmp('[8,3,4]の配列カスタムソートには(a,b)\nそれは(a > b)\nここまで。それをJSONエンコードして表示', '[3,4,8]')
+    cmp('[8,3,4]を配列カスタムソートには(a,b)\nそれは(a > b)\nここまで。それをJSONエンコードして表示', '[3,4,8]')
+    cmp('[8,3,4]の配列カスタムソートには(a,b)\nそれは(INT(a) > INT(b))\nここまで。それをJSONエンコードして表示', '[3,4,8]')
+  })
+  it('引数の順番を入れ替えて呼び出す(#342)その3', () => {
+    cmp('[8,3,4]の配列カスタムソートには(a,b)\naと255のXORをAに代入。bと255のXORをBに代入。それは(a>b)\nここまで。それをJSONエンコードして表示', '[3,4,8]')
+  })
+  it('関数の引数に関数呼び出しがある場合', () => {
+    cmp('A=「ab」;「abcd」の1から(Aの文字数)だけ文字削除。それを表示。', 'cd')
   })
   // ---
 })

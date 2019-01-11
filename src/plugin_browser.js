@@ -87,8 +87,23 @@ const PluginBrowser = {
     type: 'func',
     josi: [['で', 'の', 'と', 'を']],
     fn: function (s) {
-      const r = window.confirm(s)
-      return r
+      return window.confirm(s)
+    }
+  },
+
+  // @ブラウザ操作
+  'ブラウザ移動': { // @任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する) // @ぶらうざいどう
+    type: 'func',
+    josi: [['に', 'へ']],
+    fn: function (url) {
+      window.location.href = url
+    }
+  },
+  'ブラウザ戻': { // @任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する) // @ぶらうざもどる
+    type: 'func',
+    josi: [],
+    fn: function () {
+      window.history.back(-1)
     }
   },
 
@@ -152,9 +167,9 @@ const PluginBrowser = {
     josi: [['の'], ['まで', 'へ', 'に'], ['を']],
     fn: function (callback, url, params, sys) {
       const fd = new FormData()
-      for (var key in params) {
+      for (let key in params)
         fd.set(key, params[key])
-      }
+
       let options = {
         method: 'POST',
         headers: {
@@ -179,7 +194,7 @@ const PluginBrowser = {
       sys.__v0['AJAX:ONERROR'] = callback
     }
   },
-  'AJAXオプション': { type: 'const', value: '' }, // @AJAXおぷしょん
+  'AJAXオプション': {type: 'const', value: ''}, // @AJAXおぷしょん
   'AJAXオプション設定': { // @Ajax命令でオプションを設定 // @AJAXおぷしょんせってい
     type: 'func',
     josi: [['に', 'へ', 'と']],
@@ -190,9 +205,9 @@ const PluginBrowser = {
   },
 
   // @DOM操作
-  'DOCUMENT': { type: 'const', value: '' }, // @DOCUMENT
-  'WINDOW': { type: 'const', value: '' }, // @WINDOW
-  'NAVIGATOR': { type: 'const', value: '' }, // @NAVIGATOR
+  'DOCUMENT': {type: 'const', value: ''}, // @DOCUMENT
+  'WINDOW': {type: 'const', value: ''}, // @WINDOW
+  'NAVIGATOR': {type: 'const', value: ''}, // @NAVIGATOR
   'DOM要素ID取得': { // @DOMの要素をIDを指定して取得 // @DOMようそIDしゅとく
     type: 'func',
     josi: [['の', 'を']],
@@ -225,9 +240,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
     fn: function (dom, event, funcStr, sys) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       dom[event] = sys.__findVar(funcStr, null)
     },
     return_none: true
@@ -236,9 +251,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
     fn: function (dom, event, funcStr, sys) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       dom.addEventListener(event, sys.__findVar(funcStr, null))
     },
     return_none: true
@@ -247,9 +262,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の'], ['から'], ['を']],
     fn: function (dom, event, funcStr, sys) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       dom.removeEventListener(event, sys.__findVar(funcStr, null))
     },
     return_none: true
@@ -258,10 +273,19 @@ const PluginBrowser = {
     type: 'func',
     josi: [['で'], ['の'], ['が']],
     fn: function (callback, dom, event, sys) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       dom.addEventListener(event, callback)
+    },
+    return_none: true
+  },
+  '対象イベント': {type:'const', value: ''}, // @たいしょういべんと
+  'DOMイベント処理停止': { // @キーイベントやマウスイベントで、元々ブラウザが行う処理を中止する // @DOMいべんとしょりていし
+    type: 'func',
+    josi: [['を', 'の']],
+    fn: function (event, sys) {
+      event.preventDefault()
     },
     return_none: true
   },
@@ -273,12 +297,13 @@ const PluginBrowser = {
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom.onclick = (e) => {
         sys.__v0['対象'] = e.target
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
     return_none: true
   },
-  '読込時': { // @無名関数FでDOMを読み個だ時に実行するイベントを設定 // @よみこんだとき
+  '読込時': { // @無名関数FでDOMを読み込んだ時に実行するイベントを設定 // @よみこんだとき
     type: 'func',
     josi: [['で'], ['を']],
     fn: function (func, dom, sys) {
@@ -286,6 +311,7 @@ const PluginBrowser = {
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom.onload = (e) => {
         sys.__v0['対象'] = e.target
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
@@ -293,27 +319,29 @@ const PluginBrowser = {
   },
   'フォーム送信時': { // @無名関数Fでフォームを送信した時に実行するイベントを設定 // @ふぉーむそうしんしたとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を', 'の']],
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom.onsubmit = (e) => {
         sys.__v0['対象'] = e.target
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
     return_none: true
   },
-  '押キー': { type: 'const', value: '' }, // @おされたきー
+  '押キー': {type: 'const', value: ''}, // @おされたきー
   'キー押時': { // @無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『押されたキー』が設定される。 // @きーおしたとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を', 'の']],
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom['onkeydown'] = (e) => {
         sys.__v0['対象'] = e.target
         sys.__v0['押キー'] = e.key
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
@@ -321,13 +349,14 @@ const PluginBrowser = {
   },
   'キー離時': { // @無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『押されたキー』が設定される。 // @きーはなしたとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を', 'の']],
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom['onkeyup'] = (e) => {
         sys.__v0['対象'] = e.target
         sys.__v0['押キー'] = e.key
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
@@ -335,23 +364,24 @@ const PluginBrowser = {
   },
   'キータイピング時': { // @無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定。『押されたキー』が設定される。 // @きーたいぴんぐしたとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を', 'の']],
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
       dom['onkeypress'] = (e) => {
         sys.__v0['対象'] = e.target
         sys.__v0['押キー'] = e.key
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
     return_none: true
   },
-  'マウスX': { type: 'const', value: 0 }, // @まうすX
-  'マウスY': { type: 'const', value: 0 }, // @まうすY
+  'マウスX': {type: 'const', value: 0}, // @まうすX
+  'マウスY': {type: 'const', value: 0}, // @まうすY
   'マウス押時': { // @無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。 // @まうすおしたとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を', 'の']],
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
@@ -361,6 +391,7 @@ const PluginBrowser = {
         sys.__v0['マウスX'] = e.clientX - box.left
         sys.__v0['マウスY'] = e.clientY - box.top
         sys.__v0['対象'] = e.target
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
@@ -368,7 +399,7 @@ const PluginBrowser = {
   },
   'マウス移動時': { // @無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。 // @まうすいどうしたとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を', 'の']],
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
@@ -377,6 +408,7 @@ const PluginBrowser = {
         sys.__v0['マウスX'] = e.clientX - box.left
         sys.__v0['マウスY'] = e.clientY - box.top
         sys.__v0['対象'] = e.target
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
@@ -384,7 +416,7 @@ const PluginBrowser = {
   },
   'マウス離時': { // @無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。 // @まうすはなしたとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を', 'の']],
     fn: function (func, dom, sys) {
       if (typeof (dom) === 'string') dom = document.querySelector(dom)
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
@@ -393,6 +425,7 @@ const PluginBrowser = {
         sys.__v0['マウスX'] = e.clientX - box.left
         sys.__v0['マウスY'] = e.clientY - box.top
         sys.__v0['対象'] = e.target
+        sys.__v0['対象イベント'] = e
         return func(e, sys)
       }
     },
@@ -402,13 +435,13 @@ const PluginBrowser = {
     type: 'func',
     josi: [['に', 'の', 'へ'], ['を']],
     fn: function (dom, text) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       const tag = dom.tagName.toUpperCase()
-      if (tag === 'INPUT' || tag === 'TEXTAREA') {
+      if (tag === 'INPUT' || tag === 'TEXTAREA')
         dom.value = text
-      } else if (tag === 'SELECT') {
+       else if (tag === 'SELECT')
         for (let i = 0; i < dom.options.length; i++) {
           const v = dom.options[i].value
           if (String(v) === text) {
@@ -416,9 +449,9 @@ const PluginBrowser = {
             break
           }
         }
-      } else {
+       else
         dom.innerHTML = text
-      }
+
     },
     return_none: true
   },
@@ -426,13 +459,13 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の', 'から']],
     fn: function (dom) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       const tag = dom.tagName.toUpperCase()
-      if (tag === 'INPUT' || tag === 'TEXTAREA') {
+      if (tag === 'INPUT' || tag === 'TEXTAREA')
         return dom.value
-      } else if (tag === 'SELECT') {
+       else if (tag === 'SELECT') {
         const idx = dom.selectedIndex
         if (idx < 0) return null
         return dom.options[idx].value
@@ -444,9 +477,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['に', 'の', 'へ'], ['を']],
     fn: function (dom, text) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       dom.innerHTML = text
     },
     return_none: true
@@ -455,9 +488,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の', 'から']],
     fn: function (dom) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       return dom.innerHTML
     }
   },
@@ -495,9 +528,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
     fn: function (dom, s, v) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       dom[s] = v
     },
     return_none: true
@@ -506,13 +539,14 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の', 'から'], ['を']],
     fn: function (dom, s) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       return dom[s]
     }
   },
-  'DOM和スタイル': { type: 'const', // @DOMわすたいる
+  'DOM和スタイル': {
+    type: 'const', // @DOMわすたいる
     value: {
       '幅': 'width',
       '高さ': 'height',
@@ -545,7 +579,7 @@ const PluginBrowser = {
     },
     return_none: true
   },
-  'DOMスタイル一括設定': { // @DOMに(辞書型で)スタイルシート(CSS)を一括設定 // @DOMすたいるいっかつせってい
+  'DOMスタイル一括設定': { // @DOMに(オブジェクト型で)スタイル情報を一括設定 // @DOMすたいるいっかつせってい
     type: 'func',
     josi: [['に', 'へ'], ['を']],
     uses: ['DOM和スタイル'],
@@ -572,9 +606,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の'], ['を']],
     fn: function (dom, style) {
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       if (!dom) return ''
       return dom.style[style]
     }
@@ -584,13 +618,13 @@ const PluginBrowser = {
     josi: [['の'], ['を']],
     fn: function (dom, style) {
       const res = {}
-      if (typeof (dom) === 'string') {
+      if (typeof (dom) === 'string')
         dom = document.querySelector(dom)
-      }
+
       if (!dom) return res
-      if (style instanceof String) {
+      if (style instanceof String)
         style = [style]
-      }
+
       if (style instanceof Array) {
         for (let i = 0; i < style.length; i++) {
           const key = style[i]
@@ -598,11 +632,11 @@ const PluginBrowser = {
         }
         return res
       }
-      if (style instanceof Object) {
-        for (let key in style) {
+      if (style instanceof Object)
+        for (let key in style)
           res[key] = dom.style[key]
-        }
-      }
+
+
       return dom.style[style]
     }
   },
@@ -632,8 +666,8 @@ const PluginBrowser = {
     }
   },
   // @DOM部品操作
-  'DOM親要素': { type: 'const', value: '' }, // @DOMおやようそ
-  'DOM生成個数': { type: 'const', value: 0 }, // @DOMせいせいこすう
+  'DOM親要素': {type: 'const', value: ''}, // @DOMおやようそ
+  'DOM生成個数': {type: 'const', value: 0}, // @DOMせいせいこすう
   'DOM親要素設定': { // @「ボタン作成」「エディタ作成」などのDOM要素を追加する対象を指定(デフォルトはdocument)して親要素のDOMオブジェクトを返す // @DOMおやようそせってい
     type: 'func',
     josi: [['に', 'へ']],
@@ -785,8 +819,7 @@ const PluginBrowser = {
         const line2 = line + '='
         const kv = line2.split('=')
         const k = decodeURIComponent(kv[0])
-        const v = decodeURIComponent(kv[1])
-        res[k] = v
+        res[k] = decodeURIComponent(kv[1])
       }
       return res
     }
@@ -851,9 +884,9 @@ const PluginBrowser = {
     josi: [[]],
     fn: function (key) {
       const keys = []
-      for (const key in window.localStorage) {
+      for (const key in window.localStorage)
         keys.push(key)
-      }
+
       return keys
     },
     return_none: false
@@ -879,10 +912,9 @@ const PluginBrowser = {
     type: 'func',
     josi: [['の', 'へ', 'で']],
     fn: function (cv, sys) {
-      if (typeof cv === 'string') {
-        cv = document.querySelector(cv) ||
-             document.getElementById(cv)
-      }
+      if (typeof cv === 'string')
+        cv = document.querySelector(cv) || document.getElementById(cv)
+
       if (!cv) throw new Error('『描画開始』でCanvasを取得できませんでした。')
       sys.__canvas = cv
       sys.__ctx = cv.getContext('2d')
@@ -890,7 +922,7 @@ const PluginBrowser = {
     },
     return_none: true
   },
-  '描画中キャンバス': { type: 'const', value: null }, // @ びょうがちゅうきゃんばす
+  '描画中キャンバス': {type: 'const', value: null}, // @ びょうがちゅうきゃんばす
   '線色設定': { // @Canvasの線の描画色(lineStyle)を指定する   // @ せんいろしてい
     type: 'func',
     josi: [['に', 'へ']],
@@ -1008,13 +1040,13 @@ const PluginBrowser = {
     fn: function (xy, img, sys) {
       if (!sys.__ctx) throw new Error(errMsgCanvasInit)
       const drawFunc = (im, ctx) => {
-        if (xy.length === 2) {
+        if (xy.length === 2)
           ctx.drawImage(im, xy[0], xy[1])
-        } else if (xy.length === 4) {
+         else if (xy.length === 4)
           ctx.drawImage(im, xy[0], xy[1], xy[2], xy[3])
-        } else if (xy.length === 6) {
+         else if (xy.length === 6)
           ctx.drawImage(im, xy[0], xy[1], xy[2], xy[3], xy[4], xy[5])
-        }
+
       }
       if (typeof img === 'string') {
         const image = new window.Image()
@@ -1055,9 +1087,9 @@ const PluginBrowser = {
     fn: function (func, sys) {
       let cb = func
       if (typeof cb === 'string') cb = sys.__findVar(cb)
-      if (!('geolocation' in navigator)) {
+      if (!('geolocation' in navigator))
         throw new Error('関数『位置情報取得時』は使えません。')
-      }
+
       navigator.geolocation.getCurrentPosition((position) => {
         sys.__v0['対象'] = [
           position.coords.latitude,
@@ -1074,17 +1106,16 @@ const PluginBrowser = {
     fn: function (func, sys) {
       let cb = func
       if (typeof cb === 'string') cb = sys.__findVar(cb)
-      if (!('geolocation' in navigator)) {
+      if (!('geolocation' in navigator))
         throw new Error('関数『位置情報監視時』は使えません。')
-      }
-      const wid = navigator.geolocation.watchPosition((position) => {
+
+      return navigator.geolocation.watchPosition((position) => {
         sys.__v0['対象'] = [
           position.coords.latitude,
           position.coords.longitude
         ]
         cb(position)
       })
-      return wid
     },
     return_none: false
   },
@@ -1132,6 +1163,7 @@ const PluginBrowser = {
       msg.volume = sys.__v0['話者音量']
       msg.onend = (e) => {
         console.log('#話終時')
+        sys.__v0['対象イベント'] = e
         callback(sys)
       }
       window.speechSynthesis.speak(msg)
@@ -1144,9 +1176,9 @@ const PluginBrowser = {
     josi: [],
     fn: function (sys) {
       // 対応している？
-      if (!('SpeechSynthesisUtterance' in window)) {
+      if (!('SpeechSynthesisUtterance' in window))
         throw new Error('音声合成APIに対応していません')
-      }
+
       return window.speechSynthesis.getVoices()
     }
   },
@@ -1155,14 +1187,14 @@ const PluginBrowser = {
     josi: [['に', 'へ']],
     fn: function (v, sys) {
       // 対応している？
-      if (!('SpeechSynthesisUtterance' in window)) {
+      if (!('SpeechSynthesisUtterance' in window))
         throw new Error('音声合成APIに対応していません')
-      }
+
       // 文字列で値を指定
       if (typeof v === 'string') {
         // 話者を特定する
         const voices = window.speechSynthesis.getVoices()
-        for (const i of voices) {
+        for (const i of voices)
           if (i.lang.indexOf(v) >= 0 || i.name === v) {
             const msg = new SpeechSynthesisUtterance()
             msg.voice = i
@@ -1171,7 +1203,7 @@ const PluginBrowser = {
             console.log('#話者:', i.name)
             return i
           }
-        }
+
       }
       // 話者一覧取得で得たオブジェクトを直接指定した場合
       if (typeof v === 'object') {
@@ -1184,7 +1216,7 @@ const PluginBrowser = {
   '話者速度': {type: 'const', value: 1.0}, // @わしゃそくど
   '話者声高': {type: 'const', value: 1.0}, // @わしゃこわだか
   '話者音量': {type: 'const', value: 1.0}, // @わしゃこおんりょう
-  '話者詳細設定': { // @音声合成APIの話者の設定をJSON形式で設定する。key=(速度|声高|ピッチ|音量) // @わしゃしょうさいせってい
+  '話者詳細設定': { // @音声合成APIの話者の設定をオブジェクト形式で設定する。『速度,声高,ピッチ,音量』を指定 // @わしゃしょうさいせってい
     type: 'func',
     josi: [['で', 'に', 'へ']],
     fn: function (obj, sys) {
@@ -1240,6 +1272,7 @@ const PluginBrowser = {
         console.log('WSエラー', err)
       }
       ws.onmessage = (e) => {
+        console.log(e.data)
         sys.__v0['対象'] = e.data
         const cbMsg = sys.__v0['WS:ONMESSAGE']
         if (cbMsg) cbMsg(sys)
@@ -1254,6 +1287,14 @@ const PluginBrowser = {
     fn: function (s, sys) {
       const ws = sys.__v0['WS:SOCKET']
       ws.send(s)
+    }
+  },
+  'WS切断': { // @アクティブなWebSocketを閉じる // @WSせつだん
+    type: 'func',
+    josi: [],
+    fn: function (sys) {
+      const ws = sys.__v0['WS:SOCKET']
+      ws.close()
     }
   }
 }

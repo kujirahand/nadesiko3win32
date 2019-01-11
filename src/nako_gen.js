@@ -5,11 +5,11 @@
 
 class NakoGenError extends Error {
   constructor (msg, line) {
-    if (line) {
+    if (line)
       msg = '[文法エラー](' + line + ') ' + msg
-    } else {
+     else
       msg = '[文法エラー] ' + msg
-    }
+
     super(msg)
   }
 }
@@ -113,13 +113,19 @@ class NakoGen {
     return `__print(${node});`
   }
 
+  static convRequire (node) {
+    const moduleName = node.value
+    return NakoGen.convLineno(node.line) +
+      `__module['${moduleName}'] = require('${moduleName}');\n`
+  }
+
   reset () {
     // this.nako_func = {}
     // 初期化メソッド以外の関数を削除
     const uf = {}
-    for (const key in this.used_func) {
+    for (const key in this.used_func)
       if (key.match(/^!.+:初期化$/)) uf[key] = this.used_func[key]
-    }
+
     this.used_func = uf
     //
     this.loop_id = 1
@@ -137,11 +143,11 @@ class NakoGen {
     for (const key in this.used_func) {
       const f = this.__varslist[0][key]
       const name = `this.__varslist[0]["${key}"]`
-      if (typeof (f) === 'function') {
+      if (typeof (f) === 'function')
         code += name + '=' + f.toString() + ';\n'
-      } else {
+       else
         code += name + '=' + JSON.stringify(f) + ';\n'
-      }
+
     }
     return code
   }
@@ -164,20 +170,20 @@ class NakoGen {
         `__v1["${key}"]=${f};\n;` +
         `//[/DEF_FUNC name='${key}']\n`
     }
-    if (nakoFuncCode !== '') {
+    if (nakoFuncCode !== '')
       code += '__v0.line=0;// なでしこの関数定義\n' + nakoFuncCode
-    }
+
     // プラグインの初期化関数を実行する
     let pluginCode = ''
     for (const name in this.__module) {
       const initkey = `!${name}:初期化`
-      if (this.__varslist[0][initkey]) {
+      if (this.__varslist[0][initkey])
         pluginCode += `__v0["!${name}:初期化"](__self);\n` // セミコロンがないとエラーになったので注意
-      }
+
     }
-    if (pluginCode !== '') {
+    if (pluginCode !== '')
       code += '__v0.line=0;// プラグインの初期化\n' + pluginCode
-    }
+
     // それを初期化
     code += '__vars["それ"] = \'\';\n'
     return code
@@ -197,7 +203,7 @@ class NakoGen {
 
   /**
    * プラグイン・オブジェクトを追加(ブラウザ向け)
-   * @param objName オブジェクト名
+   * @param name オブジェクト名
    * @param po 関数リスト
    */
   addPluginObject (name, po) {
@@ -246,9 +252,9 @@ class NakoGen {
    * 関数を先に登録してしまう
    */
   registerFunction (ast) {
-    if (ast.type !== 'block') {
+    if (ast.type !== 'block')
       throw new NakoGenError('構文解析に失敗しています。構文は必ずblockが先頭になります')
-    }
+
     for (let i = 0; i < ast.block.length; i++) {
       const t = ast.block[i]
       if (t.type === 'def_func') {
@@ -287,11 +293,8 @@ class NakoGen {
         }
         break
       case 'comment':
-        code += NakoGen.convLineno(node)
-        code += '/*' + node.value + '*/\n'
-        break
       case 'eol':
-        code += ';' + NakoGen.convLineno(node) + '// ' + node.value + '\n'
+        code += this.convComment(node)
         break
       case 'break':
         code += this.convCheckLoop(node, 'break')
@@ -329,10 +332,9 @@ class NakoGen {
         code += '((' + this.convGen(node.value) + ')?0:1)'
         break
       case 'func':
-        code += this.convFunc(node, true)
-        break
+      case 'func_pointer':
       case 'calc_func':
-        code += this.convFunc(node, false)
+        code += this.convFunc(node)
         break
       case 'if':
         code += this.convIf(node)
@@ -383,7 +385,7 @@ class NakoGen {
         code += this.convTryExcept(node)
         break
       case 'require':
-        code += this.convRequire(node)
+        code += NakoGen.convRequire(node)
         break
       default:
         throw new Error('System Error: unknown_type=' + node.type)
@@ -393,16 +395,16 @@ class NakoGen {
 
   findVar (name) {
     // __vars ? (ローカル変数)
-    if (this.__vars[name] !== undefined) {
+    if (this.__vars[name] !== undefined)
       return {i: this.__varslist.length - 1, 'name': name, isTop: true}
-    }
+
     // __varslist ?
     for (let i = this.__varslist.length - 2; i >= 0; i--) {
       const vlist = this.__varslist[i]
       if (!vlist) continue
-      if (vlist[name] !== undefined) {
+      if (vlist[name] !== undefined)
         return {'i': i, 'name': name, isTop: false}
-      }
+
     }
     return null
   }
@@ -410,9 +412,9 @@ class NakoGen {
   genVar (name, line) {
     const res = this.findVar(name)
     const lno = line
-    if (res === null) {
+    if (res === null)
       return `__vars["${name}"]/*?:${lno}*/`
-    }
+
     const i = res.i
     // システム関数・変数の場合
     if (i === 0) {
@@ -420,18 +422,18 @@ class NakoGen {
       if (!pv) return `__vars["${name}"]/*err:${lno}*/`
       if (pv.type === 'const' || pv.type === 'var') return `__varslist[0]["${name}"]`
       if (pv.type === 'func') {
-        if (pv.josi.length === 0) {
+        if (pv.josi.length === 0)
           return `(__varslist[${i}]["${name}"]())`
-        }
+
         throw new NakoGenError(`『${name}』が複文で使われました。単文で記述してください。(v1非互換)`, line)
       }
       throw new NakoGenError(`『${name}』は関数であり参照できません。`, line)
     }
-    if (res.isTop) {
+    if (res.isTop)
       return `__vars["${name}"]`
-    } else {
+     else
       return `__varslist[${i}]["${name}"]`
-    }
+
   }
 
   convGetVar (node) {
@@ -439,11 +441,17 @@ class NakoGen {
     return this.genVar(name, node.line)
   }
 
+  convComment (node) {
+    let commentSrc = String(node.value)
+    commentSrc = commentSrc.replace(/\n/g, '¶')
+    return '; ' + NakoGen.convLineno(node) + '// ' + commentSrc + '\n'
+  }
+
   convReturn (node) {
     // 関数の中であれば利用可能
-    if (typeof (this.__vars['!関数']) === 'undefined') {
+    if (typeof (this.__vars['!関数']) === 'undefined')
       throw new NakoGenError('『戻る』がありますが、関数定義内のみで使用可能です。', node.line)
-    }
+
     const lno = NakoGen.convLineno(node)
     let value
     if (node.value) {
@@ -464,7 +472,7 @@ class NakoGen {
     return NakoGen.convLineno(node.line) + cmd + ';'
   }
 
-  convDefFuncCommon (node, name, args) {
+  convDefFuncCommon (node, name) {
     let code = '(function(){\n'
     code += '' +
       'try {\n' +
@@ -507,20 +515,19 @@ class NakoGen {
       `    ${popcode}\n` +
       `  }\n` +
       `})`
-    if (name) {
+    if (name)
       this.nako_func[name]['fn'] = code
-    }
+
     this.__vars = this.__varslist.pop()
-    if (name) {
+    if (name)
       this.__varslist[1][name] = code
-    }
+
     return code
   }
 
   convDefFunc (node) {
     const name = NakoGen.getFuncName(node.name.value)
-    const args = node.args
-    this.convDefFuncCommon(node, name, args)
+    this.convDefFuncCommon(node, name)
     // ★この時点では関数のコードを生成しない★
     // プログラム冒頭でコード生成時に関数定義を行う
     // return `__vars["${name}"] = ${code};\n`;
@@ -528,9 +535,7 @@ class NakoGen {
   }
 
   convFuncObj (node) {
-    const args = node.args
-    const code = this.convDefFuncCommon(node, '', args)
-    return code
+    return this.convDefFuncCommon(node, '')
   }
 
   convJsonObj (node) {
@@ -623,11 +628,11 @@ class NakoGen {
 
   convForeach (node) {
     let target
-    if (node.target === null) {
+    if (node.target === null)
       target = this.sore
-    } else {
+     else
       target = this.convGen(node.target)
-    }
+
     const block = this.convGenLoop(node.block)
     const id = this.loop_id++
     const key = '__v0["対象キー"]'
@@ -674,10 +679,8 @@ class NakoGen {
     const falseBlock = (node.false_block === null)
       ? ''
       : 'else {' + this.convGen(node.false_block) + '};\n'
-    const code =
-      NakoGen.convLineno(node) +
+    return NakoGen.convLineno(node) +
       `if (${expr}) {\n  ${block}\n}` + falseBlock + ';\n'
-    return code
   }
 
   convFuncGetArgsCalcType (funcName, func, node) {
@@ -688,9 +691,9 @@ class NakoGen {
       if (i === 0 && arg === null) {
         args.push(this.sore)
         opts['sore'] = true
-      } else {
+      } else
         args.push(this.convGen(arg))
-      }
+
     }
     return [args, opts]
   }
@@ -704,10 +707,9 @@ class NakoGen {
   /**
    * 関数の呼び出し
    * @param node
-   * @param  isNakoType
    * @returns string コード
    */
-  convFunc (node, isNakoType) {
+  convFunc (node) {
     const funcName = NakoGen.getFuncName(node.name)
     let funcNameS
     const res = this.findVar(funcName)
@@ -719,49 +721,53 @@ class NakoGen {
     if (res.i === 0) { // plugin function
       func = this.funclist[funcName]
       funcNameS = `__v0["${funcName}"]`
-      if (func.type !== 'func') {
+      if (func.type !== 'func')
         throw new NakoGenError(`『${funcName}』は関数ではありません。`, node.line)
-      }
+
     } else {
       func = this.nako_func[funcName]
-      if (func === undefined) {
+      if (func === undefined)
         // throw new NakoGenError(`『${funcName}』は関数ではありません。`, node.line)
         // 無名関数の可能性
         func = {return_none: false}
-      }
+
       funcNameS = `__varslist[${res.i}]["${funcName}"]`
     }
-    // 関数定義より助詞を一つずつ調べる
-    const argsInfo = this.convFuncGetArgsCalcType(funcName, func, node)
-    const args = argsInfo[0]
-    const argsOpts = argsInfo[1]
-    // function
-    if (typeof (this.used_func[funcName]) === 'undefined') {
-      this.used_func[funcName] = true
-    }
-    // 関数呼び出しで、引数の末尾にthisを追加する-システム情報を参照するため
-    args.push('__self')
-    let funcBegin = ''
-    let funcEnd = ''
-    // setter?
-    if (node['setter']) {
-      funcBegin = ';__self.isSetter = true;'
-      funcEnd = ';__self.isSetter = false;'
-    }
-    // 変数「それ」が補完されていることをヒントとして出力
-    if (argsOpts['sore']) {
-      funcBegin += '/*[sore]*/'
-    }
-    // 関数呼び出しコードの構築
-    let argsCode = args.join(',')
-    let code = `${funcNameS}(${argsCode})`
-    if (func.return_none) {
-      code = `${funcBegin}${code};${funcEnd}\n`
-    } else {
-      code = `(function(){ ${funcBegin}const tmp=${this.sore}=${code}; return tmp;${funcEnd}; }).call(this)`
-      // ...して
-      if (node.josi === 'して') {
-        code += ';\n'
+    let code = funcNameS
+    // 関数の参照渡しでない場合
+    if (node.type !== 'func_pointer') {
+      // 関数定義より助詞を一つずつ調べる
+      const argsInfo = this.convFuncGetArgsCalcType(funcName, func, node)
+      const args = argsInfo[0]
+      const argsOpts = argsInfo[1]
+      // function
+      if (typeof (this.used_func[funcName]) === 'undefined')
+        this.used_func[funcName] = true
+
+      // 関数呼び出しで、引数の末尾にthisを追加する-システム情報を参照するため
+      args.push('__self')
+      let funcBegin = ''
+      let funcEnd = ''
+      // setter?
+      if (node['setter']) {
+        funcBegin = ';__self.isSetter = true;'
+        funcEnd = ';__self.isSetter = false;'
+      }
+      // 変数「それ」が補完されていることをヒントとして出力
+      if (argsOpts['sore'])
+        funcBegin += '/*[sore]*/'
+
+      // 関数呼び出しコードの構築
+      let argsCode = args.join(',')
+      code += `(${argsCode})`
+      if (func.return_none)
+        code = `${funcBegin}${code};${funcEnd}\n`
+       else {
+        code = `(function(){ ${funcBegin}const tmp=${this.sore}=${code}; return tmp;${funcEnd}; }).call(this)`
+        // ...して
+        if (node.josi === 'して')
+          code += ';\n'
+
       }
     }
     return code
@@ -796,9 +802,9 @@ class NakoGen {
       right = `parseFloat(${right})`
     }
     // 階乗
-    if (op === '^') {
+    if (op === '^')
       return '(Math.pow(' + left + ',' + right + '))'
-    }
+
     // 一般的なオペレータに変換
     if (OP_TBL[op]) op = OP_TBL[op]
     //
@@ -820,21 +826,21 @@ class NakoGen {
     } else {
       isTop = res.isTop
       // 定数ならエラーを出す
-      if (this.__varslist[res.i].meta) {
+      if (this.__varslist[res.i].meta)
         if (this.__varslist[res.i].meta[name]) {
-          if (this.__varslist[res.i].meta[name].readonly) {
+          if (this.__varslist[res.i].meta[name].readonly)
             throw new NakoGenError(
-              `定数『${name}』に値を代入することはできません。`,
+              `定数『${name}』は既に定義済みなので、値を代入することはできません。`,
               node.line)
-          }
+
         }
-      }
+
     }
-    if (isTop) {
+    if (isTop)
       code = `__vars["${name}"]=${value};`
-    } else {
+     else
       code = `__varslist[${res.i}]["${name}"]=${value};`
-    }
+
     return ';' + NakoGen.convLineno(node) + code + '\n'
   }
 
@@ -843,17 +849,17 @@ class NakoGen {
     const name = node.name.value
     const vtype = node.vartype // 変数 or 定数
     // 二重定義？
-    if (this.__vars[name] !== undefined) {
+    if (this.__vars[name] !== undefined)
       throw new NakoGenError(
         `${vtype}『${name}』の二重定義はできません。`,
         node.line)
-    }
+
     //
     this.__vars[name] = true
     if (vtype === '定数') {
-      if (!this.__vars.meta) {
+      if (!this.__vars.meta)
         this.__vars.meta = {}
-      }
+
       if (!this.__vars.meta[name]) this.__vars.meta[name] = {}
       this.__vars.meta[name].readonly = true
     }
@@ -886,12 +892,6 @@ class NakoGen {
       '__varslist[0]["エラーメッセージ"] = e.message;\n' +
       ';\n' +
       `${errBlock}}\n`
-  }
-
-  convRequire (node) {
-    const moduleName = node.value
-    return NakoGen.convLineno(node.line) +
-    `__module['${moduleName}'] = require('${moduleName}');\n`
   }
 }
 

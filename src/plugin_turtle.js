@@ -24,11 +24,11 @@ const PluginTurtle = {
             document.body.removeChild(tt.canvas)
           }
           me.list = []
-          if (me.canvas !== null) {
+          if (me.canvas !== null) 
             me.ctx.clearRect(0, 0,
               me.canvas.width,
               me.canvas.height)
-          }
+          
           me.target = -1
           me.flagSetTimer = false
         },
@@ -53,14 +53,14 @@ const PluginTurtle = {
             tt.ctx.translate(-tt.cx, -tt.cy)
             tt.ctx.drawImage(tt.img, 0, 0)
             tt.ctx.restore()
-          } else {
+          } else 
             tt.ctx.drawImage(tt.img, 0, 0)
-          }
+          
         },
         getCur: function () {
-          if (this.list.length === 0) {
+          if (this.list.length === 0) 
             throw Error('最初に『カメ作成』命令を呼び出してください。')
-          }
+          
           return this.list[this.target]
         },
         flagSetTimer: false,
@@ -74,9 +74,9 @@ const PluginTurtle = {
           }, 1)
         },
         line: function (tt, x1, y1, x2, y2) {
-          if (tt) {
+          if (tt) 
             if (!tt.flagDown) return
-          }
+          
           const ctx = this.ctx
           ctx.beginPath()
           ctx.lineWidth = tt.lineWidth
@@ -172,11 +172,11 @@ const PluginTurtle = {
           const me = this
           const wait = sys.__getSysValue('カメ速度', 100)
           let hasNext = this.doMacroAll(wait)
-          if (wait <= 0) {
-            while (hasNext) {
+          if (wait <= 0) 
+            while (hasNext) 
               hasNext = this.doMacroAll(wait)
-            }
-          } else if (hasNext) {
+            
+           else if (hasNext) {
             setTimeout(() => me.play(), wait)
             return
           }
@@ -232,8 +232,7 @@ const PluginTurtle = {
           // 描画先をセットする
           let canvasId = sys.__getSysValue('カメ描画先', 'turtle_cv')
           if (typeof canvasId === 'string') {
-            canvasId = document.getElementById(canvasId) ||
-                       document.querySelector(canvasId)
+            canvasId = document.getElementById(canvasId) || document.querySelector(canvasId)
             sys.__v0['カメ描画先'] = canvasId
           }
           console.log('カメ描画先=', canvasId)
@@ -270,8 +269,7 @@ const PluginTurtle = {
     josi: [],
     fn: function (sys) {
       const imageUrl = sys.__getSysValue('カメ画像URL', 'turtle.png')
-      const id = sys._turtle.createTurtle(imageUrl, sys)
-      return id
+      return sys._turtle.createTurtle(imageUrl, sys)
     }
   },
   'ゾウ作成': { // @ゾウの画像でタートルグラフィックスを開始してIDを返す // @ぞうさくせい
@@ -279,8 +277,7 @@ const PluginTurtle = {
     josi: [],
     fn: function (sys) {
       const imageUrl = 'turtle-elephant.png'
-      const id = sys._turtle.createTurtle(imageUrl, sys)
-      return id
+      return sys._turtle.createTurtle(imageUrl, sys)
     }
   },
   'パンダ作成': { // @パンダの画像でタートルグラフィックスを開始してIDを返す // @ぱんださくせい
@@ -288,8 +285,7 @@ const PluginTurtle = {
     josi: [],
     fn: function (sys) {
       const imageUrl = 'turtle-panda.png'
-      const id = sys._turtle.createTurtle(imageUrl, sys)
-      return id
+      return sys._turtle.createTurtle(imageUrl, sys)
     }
   },
   'カメ操作対象設定': { // @IDを指定して操作対象となるカメを変更する // @かめそうさたいしょうせってい
@@ -465,6 +461,6 @@ const PluginTurtle = {
 module.exports = PluginTurtle
 
 // scriptタグで取り込んだ時、自動で登録する
-if (typeof (navigator) === 'object') {
+if (typeof (navigator) === 'object') 
   navigator.nako3.addPluginObject('PluginTurtle', PluginTurtle)
-}
+

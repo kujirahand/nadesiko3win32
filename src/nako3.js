@@ -43,6 +43,10 @@ class NakoCompiler {
     return s
   }
 
+  static getHeader () {
+    return NakoGen.getHeader()
+  }
+
   /**
    * コードを単語に分割する
    * @param code なでしこのプログラム
@@ -53,10 +57,6 @@ class NakoCompiler {
   tokenize (code, isFirst, line = 0) {
     const code2 = this.prepare.convert(code)
     return this.lexer.setInput(code2, isFirst, line)
-  }
-
-  static getHeader () {
-    return NakoGen.getHeader()
   }
 
   /**
@@ -108,12 +108,12 @@ class NakoCompiler {
     parser.debug = this.debug
     // 単語に分割
     const tokens = this.tokenize(code, true)
-    for (let i = 0; i < tokens.length; i++) {
+    for (let i = 0; i < tokens.length; i++) 
       if (tokens[i]['type'] === 'code') {
         tokens.splice(i, 1, ...this.tokenize(tokens[i]['value'], false, tokens[i]['line']))
         i--
       }
-    }
+    
     if (this.debug && this.debugLexer) {
       console.log('--- lex ---')
       console.log(JSON.stringify(tokens, null, 2))
@@ -134,8 +134,7 @@ class NakoCompiler {
    */
   compile (code) {
     const ast = this.parse(code)
-    const js = this.generate(ast)
-    return js
+    return this.generate(ast)
   }
 
   _run (code, isReset) {
@@ -193,31 +192,31 @@ class NakoCompiler {
   addPlugin (po) {
     // 変数のメタ情報を確認
     const __v0 = this.__varslist[0]
-    if (__v0.meta === undefined) {
+    if (__v0.meta === undefined) 
       __v0.meta = {}
-    }
+    
     // プラグインの値をオブジェクトにコピー
     for (const key in po) {
       const v = po[key]
       this.funclist[key] = v
-      if (v.type === 'func') {
+      if (v.type === 'func') 
         __v0[key] = v.fn
-      } else if (v.type === 'const' || v.type === 'var') {
+       else if (v.type === 'const' || v.type === 'var') {
         __v0[key] = v.value
         __v0.meta[key] = {
           readonly: (v.type === 'const')
         }
-      } else {
+      } else 
         throw new Error('プラグインの追加でエラー。', null)
-      }
+      
     }
   }
 
   /**
-    * プラグイン・オブジェクトを追加(ブラウザ向け)
-    * @param objName オブジェクト名
-    * @param po 関数リスト
-    */
+   * プラグイン・オブジェクトを追加(ブラウザ向け)
+   * @param objName オブジェクト名
+   * @param po 関数リスト
+   */
   addPluginObject (objName, po) {
     this.__module[objName] = po
     this.pluginfiles[objName] = '*'
@@ -239,9 +238,9 @@ class NakoCompiler {
    */
   addPluginFile (objName, path, po) {
     this.addPluginObject(objName, po)
-    if (this.pluginfiles[objName] === undefined) {
+    if (this.pluginfiles[objName] === undefined) 
       this.pluginfiles[objName] = path
-    }
+    
   }
 
   /**

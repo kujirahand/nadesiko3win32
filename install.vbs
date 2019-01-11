@@ -18,8 +18,7 @@ path = _
 env.Item("NAKO_HOME") = home
 env.Item("PATH") = path
 
-if not fso.FolderExists(home & "\node_modules\fs-extra") then
-  call shell.Run("npm install --production", 1, True)
-end if
+MsgBox "なでしこ3のインストールを始めます。"
+call shell.Run("npm install --production", 1, True)
+MsgBox "完了です。start.vbsをクリックすると始まります。"
 
-shell.Run("node " & home & "\src\nako3server.js")

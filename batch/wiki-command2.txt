@@ -37,6 +37,7 @@
 - [[色定数:plugin_browser/色定数]]
 - [[システム:plugin_browser/システム]]
 - [[ダイアログ:plugin_browser/ダイアログ]]
+- [[ブラウザ操作:plugin_browser/ブラウザ操作]]
 - [[Ajax:plugin_browser/Ajax]]
 - [[DOM操作:plugin_browser/DOM操作]]
 - [[DOM部品操作:plugin_browser/DOM部品操作]]
@@ -77,6 +78,7 @@
 - [[クリップボード:plugin_node/クリップボード]]
 - [[コマンドライン:plugin_node/コマンドライン]]
 - [[テスト:plugin_node/テスト]]
+- [[ネットワーク:plugin_node/ネットワーク]]
 - [[Ajax:plugin_node/Ajax]]
 - [[文字コード:plugin_node/文字コード]]
 - [[マウスとキーボード操作:plugin_node/マウスとキーボード操作]]
@@ -91,17 +93,6 @@
 ▲ プラグインで使える命令のカテゴリ
 
 - [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
-
-▲ 参考
-- [[命令一覧/機能順]]
-
-###PAGE###:w:plugin_websocket
-■ plugin_websocket - なでしこv3 プラグイン
-なでしこv3のプラグイン。
-
-▲ プラグインで使える命令のカテゴリ
-
-- [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
 
 ▲ 参考
 - [[命令一覧/機能順]]
@@ -136,6 +127,8 @@
 - [[対象:plugin_system/対象]] --- 定数
 - [[対象キー:plugin_system/対象キー]] --- 定数
 - [[回数:plugin_system/回数]] --- 定数
+- [[CR:plugin_system/CR]] --- 定数
+- [[LF:plugin_system/LF]] --- 定数
 - [[空配列:plugin_system/空配列]] --- 空の配列を返す
 
 ▲ 参考
@@ -185,6 +178,7 @@
 
 - [[JS実行:plugin_system/JS実行]] --- JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを参照できる)
 - [[JSオブジェクト取得:plugin_system/JSオブジェクト取得]] --- なでしこで定義した関数や変数nameのJavaScriptオブジェクトを取得する
+- [[JS関数実行:plugin_system/JS関数実行]] --- JavaScriptの関数NAMEを引数ARGS(配列)で実行する
 - [[ナデシコ:plugin_system/ナデシコ]] --- なでしこのコードCODEを実行する
 - [[ナデシコ続:plugin_system/ナデシコ続]] --- なでしこのコードCODEを実行する
 
@@ -431,6 +425,7 @@
 - [[配列取出:plugin_system/配列取出]] --- 配列AのI番目(0起点)からCNT個の応訴を取り出して返す。Aの内容を書き換える
 - [[配列ポップ:plugin_system/配列ポップ]] --- 配列Aの末尾を取り出して返す。Aの内容を書き換える。
 - [[配列追加:plugin_system/配列追加]] --- 配列Aの末尾にBを追加して返す。Aの内容を書き換える。
+- [[配列複製:plugin_system/配列複製]] --- 配列Aを複製して返す。
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
@@ -483,7 +478,7 @@
 - [[システム関数存在:plugin_system/システム関数存在]] --- 文字列で関数名を指定してシステム関数が存在するかを調べる
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
-- [[タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+- [[タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
@@ -540,6 +535,18 @@
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
 
+###PAGE###:w:plugin_browser/ブラウザ操作
+■ [[plugin_browser]]/[[ブラウザ操作:plugin_browser/ブラウザ操作]]
+このカテゴリの命令
+
+▲ カテゴリの命令一覧
+
+- [[ブラウザ移動:plugin_browser/ブラウザ移動]] --- 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
+- [[ブラウザ戻:plugin_browser/ブラウザ戻]] --- 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+
 ###PAGE###:w:plugin_browser/Ajax
 ■ [[plugin_browser]]/[[Ajax:plugin_browser/Ajax]]
 このカテゴリの命令
@@ -574,8 +581,10 @@
 - [[DOMイベント追加:plugin_browser/DOMイベント追加]] --- DOMのEVENTになでしこ関数名funcStrのイベントを追加
 - [[DOMイベント削除:plugin_browser/DOMイベント削除]] --- DOMのEVENTからなでしこ関数名funcStrのイベントを削除
 - [[DOMイベント発火時:plugin_browser/DOMイベント発火時]] --- DOMのEVENTが発火した時にCALLBACKを実行するように設定
+- [[対象イベント:plugin_browser/対象イベント]] --- 定数
+- [[DOMイベント処理停止:plugin_browser/DOMイベント処理停止]] --- キーイベントやマウスイベントで、元々ブラウザが行う処理を中止する
 - [[クリック時:plugin_browser/クリック時]] --- 無名関数FでDOMをクリックした時に実行するイベントを設定
-- [[読込時:plugin_browser/読込時]] --- 無名関数FでDOMを読み個だ時に実行するイベントを設定
+- [[読込時:plugin_browser/読込時]] --- 無名関数FでDOMを読み込んだ時に実行するイベントを設定
 - [[フォーム送信時:plugin_browser/フォーム送信時]] --- 無名関数Fでフォームを送信した時に実行するイベントを設定
 - [[押キー:plugin_browser/押キー]] --- 定数
 - [[キー押時:plugin_browser/キー押時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『押されたキー』が設定される。
@@ -596,8 +605,8 @@
 - [[HTML取得:plugin_browser/HTML取得]] --- DOMのテキストを取得
 - [[DOM属性設定:plugin_browser/DOM属性設定]] --- DOMの属性Sに値Vを設定
 - [[DOM属性取得:plugin_browser/DOM属性取得]] --- DOMの属性Sを取得
-- [[DOM和スタイル:plugin_browser/DOM和スタイル]] --- 定数
 - [[DOMスタイル設定:plugin_browser/DOMスタイル設定]] --- DOMのスタイルAに値Bを設定
+- [[DOMスタイル一括設定:plugin_browser/DOMスタイル一括設定]] --- DOMに(オブジェクト型で)スタイル情報を一括設定
 - [[DOMスタイル取得:plugin_browser/DOMスタイル取得]] --- DOMのSTYLEの値を取得
 - [[DOMスタイル一括取得:plugin_browser/DOMスタイル一括取得]] --- DOMのSTYLE(配列で複数指定)の値を取得
 - [[DOM要素作成:plugin_browser/DOM要素作成]] --- DOMにTAGの新規要素を作成
@@ -719,7 +728,7 @@
 - [[話者速度:plugin_browser/話者速度]] --- 定数
 - [[話者声高:plugin_browser/話者声高]] --- 定数
 - [[話者音量:plugin_browser/話者音量]] --- 定数
-- [[話者詳細設定:plugin_browser/話者詳細設定]] --- 音声合成APIの話者の設定をJSON形式で設定する。key=(速度
+- [[話者詳細設定:plugin_browser/話者詳細設定]] --- 音声合成APIの話者の設定をオブジェクト形式で設定する。『速度,声高,ピッチ,音量』を指定
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
@@ -735,6 +744,7 @@
 - [[WSエラー発生時:plugin_browser/WSエラー発生時]] --- WebSocketでエラーが発生した時に実行されるイベントを指定
 - [[WS接続:plugin_browser/WS接続]] --- WebSocketサーバsに接続する
 - [[WS送信:plugin_browser/WS送信]] --- アクティブなWebSocketへsを送信する
+- [[WS切断:plugin_browser/WS切断]] --- アクティブなWebSocketを閉じる
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
@@ -854,9 +864,9 @@
 ▲ カテゴリの命令一覧
 
 - [[圧縮解凍ツールパス変更:plugin_node/圧縮解凍ツールパス変更]] --- 圧縮解凍に使うツールを取得変更する
-- [[解凍:plugin_node/解凍]] --- (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https://goo.gl/LmKswH)
+- [[解凍:plugin_node/解凍]] --- (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https:
 - [[解凍時:plugin_node/解凍時]] --- 解凍処理を行い、処理が完了したときにcallback処理を実行
-- [[圧縮:plugin_node/圧縮]] --- (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https://goo.gl/LmKswH)
+- [[圧縮:plugin_node/圧縮]] --- (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https:
 - [[圧縮時:plugin_node/圧縮時]] --- 圧縮処理を行い完了したときにcallback処理を指定
 
 ▲ 参考
@@ -909,6 +919,18 @@
 ▲ カテゴリの命令一覧
 
 - [[ASSERT等:plugin_node/ASSERT等]] --- mochaによるテストで、ASSERTでAとBが正しいことを報告する
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+
+###PAGE###:w:plugin_node/ネットワーク
+■ [[plugin_node]]/[[ネットワーク:plugin_node/ネットワーク]]
+このカテゴリの命令
+
+▲ カテゴリの命令一覧
+
+- [[自分IPアドレス取得:plugin_node/自分IPアドレス取得]] --- ネットワークアダプターからIPアドレス(IPv4)を取得して配列で返す
+- [[自分IPV6アドレス取得:plugin_node/自分IPV6アドレス取得]] --- ネットワークアダプターからIPアドレス(IPv6)を取得して配列で返す
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
@@ -979,23 +1001,4 @@
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_express:plugin_express]]
-
-###PAGE###:w:plugin_websocket/WebSocketサーバ
-■ [[plugin_websocket]]/[[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-このカテゴリの命令
-
-▲ カテゴリの命令一覧
-
-- [[GETデータ:plugin_websocket/GETデータ]] --- 定数
-- [[POSTデータ:plugin_websocket/POSTデータ]] --- 定数
-- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
-- [[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時]] --- WSサーバ起動が成功した時にcallbackを実行
-- [[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時]] --- WSサーバ起動が失敗した時にcallbackを実行
-- [[WSサーバ接続時:plugin_websocket/WSサーバ接続時]] --- WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
-- [[WSサーバ受信時:plugin_websocket/WSサーバ受信時]] --- WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
-- [[WSサーバ全送信:plugin_websocket/WSサーバ全送信]] --- WSサーバで全員にメッセージSを送信する
-- [[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得]] --- WSサーバに接続しているクライアントの一覧を返す
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket:plugin_websocket]]
 

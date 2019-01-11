@@ -5,9 +5,9 @@ describe('plugin_system_test', () => {
   const nako = new NakoCompiler()
   // nako.debug = true;
   const cmp = (code, res) => {
-    if (nako.debug) {
+    if (nako.debug)
       console.log('code=' + code)
-    }
+      
     assert.equal(nako.runReset(code).log, res)
   }
   const cmd = (code) => {
@@ -88,6 +88,7 @@ describe('plugin_system_test', () => {
   it('文字削除', () => {
     cmp('「abcd」の1から2だけ文字削除。それを表示。', 'cd')
     cmp('「abcd」の2から2だけ文字削除。それを表示。', 'ad')
+    cmp('A=「ab」;「abcd」の1から(Aの文字数)だけ文字削除。それを表示。', 'cd')
   })
   it('置換', () => {
     cmp('「a,b,c」の「,」を「-」に置換して表示。', 'a-b-c')
@@ -152,6 +153,10 @@ describe('plugin_system_test', () => {
   })
   it('配列切り取', () => {
     cmp('A=[0,1,2,3];Aの2を配列切り取る。C=それ。Aを「:」で配列結合。表示。Cを表示', '0:1:3\n2')
+  })
+  it('配列複製', () => {
+    cmp('A=[1,2,3];B=Aを配列複製。B[0]=100。Bを「:」で配列結合。表示。', '100:2:3')
+    cmp('A=[1,2,3];B=Aを配列複製。B[0]=100。Aを「:」で配列結合。表示。', '1:2:3')
   })
   it('日時', () => {
     cmp('「2017/03/06」の曜日。それを表示', '月')
@@ -250,5 +255,32 @@ describe('plugin_system_test', () => {
     cmp('「ｱｶﾞﾍﾟ123」をカタカナ全角変換して表示', 'アガペ123')
     cmp('「アガペ#!１２３」を半角変換して表示', 'ｱｶﾞﾍﾟ#!123')
     cmp('「ｱｶﾞﾍﾟ#!123」を全角変換して表示', 'アガペ＃！１２３')
+  })
+  it('CSV取得', () => {
+    cmp('a=「1,2,3\n4,5,6」のCSV取得。a[1][2]を表示', '6')
+    cmp('a=「"a",b,c\n""a,b,c\na,""b,c\na,b,c""\n"a,\nb",c,d\na,"b,\nc",d\na,b,"c,\nd"」のCSV取得。a[5][1]を表示', 'b,\nc')
+    cmp('a=「1,"a""a",2」のCSV取得。a[0][1]を表示', 'a"a')
+    cmp('a=「1,"2""2",3\n4,5,6」のCSV取得。a[0][1]を表示', '2"2')
+    cmp('a=「1,,3\n4,5,6」のCSV取得。a[0][2]を表示', '3')
+  })
+  it('TSV取得', () => {
+    cmp('a=「1\t2\t3\n4\t5\t6」のTSV取得。a[1][2]を表示', '6')
+    cmp('a=「"a"\tb\tc\n""a\tb\tc\na\t""b\tc\na\tb\tc""\n"a\t\nb"\tc\td\na\t"b\t\nc"\td\na\tb\t"c\t\nd"」のTSV取得。a[5][1]を表示', 'b\t\nc')
+    cmp('a=「1\t"a""a"\t2」のTSV取得。a[0][1]を表示', 'a"a')
+    cmp('a=「1\t"2""2"\t3\n4\t5\t6」のTSV取得。a[0][1]を表示', '2"2')
+    cmp('a=「1\t\t3\n4\t5\t6」のTSV取得。a[0][2]を表示', '3')
+  })
+  it('表CSV変換', () => {
+    cmp('[[1,2,3],[4,5,6]]を表CSV変換して表示', '1,2,3\r\n4,5,6')
+    cmp('[[1,2,"3\r\n,"],[4,5,6]]を表CSV変換して表示', '1,2,"3\r\n,"\r\n4,5,6')
+  })
+  it('表TSV変換', () => {
+    cmp('[[1,2,3],[4,5,6]]を表TSV変換して表示', '1\t2\t3\r\n4\t5\t6')
+    cmp('[[1,2,"3\r\n\t"],[4,5,6]]を表TSV変換して表示', '1\t2\t"3\r\n\t"\r\n4\t5\t6')
+  })
+  it('JS関数実行', () => {
+    cmp('"Math.floor"を[3.14]でJS関数実行して表示', '3')
+    cmp('"Math.floor"を3.14でJS関数実行して表示', '3')
+    cmp('F="Math.floor"でJS実行;Fを[3.14]でJS関数実行して表示', '3')
   })
 })

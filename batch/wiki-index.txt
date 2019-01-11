@@ -25,178 +25,182 @@
 - [[対象:plugin_system/対象]] --- 定数
 - [[対象キー:plugin_system/対象キー]] --- 定数
 - [[回数:plugin_system/回数]] --- 定数
+- [[CR:plugin_system/CR]] --- 定数
+- [[LF:plugin_system/LF]] --- 定数
 - [[空配列:plugin_system/空配列]] --- 空の配列を返す
 
 ● [[標準出力:plugin_system]]
-- [[表示:plugin_system/表示]] --- Sを表示
+- [[(Sを|Sと)表示:plugin_system/表示]] --- Sを表示
 - [[表示ログ:plugin_system/表示ログ]] --- 定数
 - [[表示ログクリア:plugin_system/表示ログクリア]] --- 表示ログを空にする
-- [[言:plugin_system/言]] --- Sを表示
-- [[コンソール表示:plugin_system/コンソール表示]] --- Sをコンソール表示する(console.log)
+- [[(Sを|Sと)言:plugin_system/言]] --- Sを表示
+- [[(Sを|Sと)コンソール表示:plugin_system/コンソール表示]] --- Sをコンソール表示する(console.log)
 
 ● [[四則演算:plugin_system]]
-- [[足:plugin_system/足]] --- AとBを足す
-- [[引:plugin_system/引]] --- AからBを引く
-- [[掛:plugin_system/掛]] --- AにBを掛ける
-- [[倍:plugin_system/倍]] --- AのB倍を求める
-- [[割:plugin_system/割]] --- AをBで割る
-- [[割余:plugin_system/割余]] --- AをBで割った余りを求める
-- [[以上:plugin_system/以上]] --- AがB以上か
-- [[以下:plugin_system/以下]] --- AがB以下か
-- [[未満:plugin_system/未満]] --- AがB未満か
-- [[超:plugin_system/超]] --- AがB超か
-- [[等:plugin_system/等]] --- AがBと等しいか
+- [[(AにBを|Aと)足:plugin_system/足]] --- AとBを足す
+- [[(AからBを)引:plugin_system/引]] --- AからBを引く
+- [[(AにBを|Aと)掛:plugin_system/掛]] --- AにBを掛ける
+- [[(AのBを)倍:plugin_system/倍]] --- AのB倍を求める
+- [[(AをBで)割:plugin_system/割]] --- AをBで割る
+- [[(AをBで)割余:plugin_system/割余]] --- AをBで割った余りを求める
+- [[(Aが)以上:plugin_system/以上]] --- AがB以上か
+- [[(Aが)以下:plugin_system/以下]] --- AがB以下か
+- [[(Aが)未満:plugin_system/未満]] --- AがB未満か
+- [[(Aが)超:plugin_system/超]] --- AがB超か
+- [[(AがBと)等:plugin_system/等]] --- AがBと等しいか
 
 ● [[特殊命令:plugin_system]]
-- [[JS実行:plugin_system/JS実行]] --- JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを参照できる)
-- [[JSオブジェクト取得:plugin_system/JSオブジェクト取得]] --- なでしこで定義した関数や変数nameのJavaScriptオブジェクトを取得する
-- [[ナデシコ:plugin_system/ナデシコ]] --- なでしこのコードCODEを実行する
-- [[ナデシコ続:plugin_system/ナデシコ続]] --- なでしこのコードCODEを実行する
+- [[(SRCを|SRCで)JS実行:plugin_system/JS実行]] --- JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを参照できる)
+- [[(NAMEの)JSオブジェクト取得:plugin_system/JSオブジェクト取得]] --- なでしこで定義した関数や変数nameのJavaScriptオブジェクトを取得する
+- [[(NAMEをARGSで)JS関数実行:plugin_system/JS関数実行]] --- JavaScriptの関数NAMEを引数ARGS(配列)で実行する
+- [[(CODEを|CODEで)ナデシコ:plugin_system/ナデシコ]] --- なでしこのコードCODEを実行する
+- [[(CODEを|CODEで)ナデシコ続:plugin_system/ナデシコ続]] --- なでしこのコードCODEを実行する
 
 ● [[型変換:plugin_system]]
-- [[変数型確認:plugin_system/変数型確認]] --- 変数Vの型を返す
-- [[TYPEOF:plugin_system/TYPEOF]] --- 変数Vの型を返す
-- [[文字列変換:plugin_system/文字列変換]] --- 値Vを文字列に変換
-- [[TOSTR:plugin_system/TOSTR]] --- 値Vを文字列に変換
-- [[整数変換:plugin_system/整数変換]] --- 値Vを整数に変換
-- [[TOINT:plugin_system/TOINT]] --- 値Vを整数に変換
-- [[実数変換:plugin_system/実数変換]] --- 値Vを実数に変換
-- [[TOFLOAT:plugin_system/TOFLOAT]] --- 値Vを実数に変換
-- [[INT:plugin_system/INT]] --- 値Vを整数に変換
-- [[FLOAT:plugin_system/FLOAT]] --- 値Vを実数に変換
-- [[HEX:plugin_system/HEX]] --- 値Vを16進数に変換
+- [[(Vの)変数型確認:plugin_system/変数型確認]] --- 変数Vの型を返す
+- [[(Vの)TYPEOF:plugin_system/TYPEOF]] --- 変数Vの型を返す
+- [[(Vを)文字列変換:plugin_system/文字列変換]] --- 値Vを文字列に変換
+- [[(Vを)TOSTR:plugin_system/TOSTR]] --- 値Vを文字列に変換
+- [[(Vを)整数変換:plugin_system/整数変換]] --- 値Vを整数に変換
+- [[(Vを)TOINT:plugin_system/TOINT]] --- 値Vを整数に変換
+- [[(Vを)実数変換:plugin_system/実数変換]] --- 値Vを実数に変換
+- [[(Vを)TOFLOAT:plugin_system/TOFLOAT]] --- 値Vを実数に変換
+- [[(Vの)INT:plugin_system/INT]] --- 値Vを整数に変換
+- [[(Vの)FLOAT:plugin_system/FLOAT]] --- 値Vを実数に変換
+- [[(Aの)HEX:plugin_system/HEX]] --- 値Vを16進数に変換
 
 ● [[三角関数:plugin_system]]
-- [[SIN:plugin_system/SIN]] --- ラジアン単位VのSINを求める
-- [[COS:plugin_system/COS]] --- ラジアン単位VのCOSを求める
-- [[TAN:plugin_system/TAN]] --- ラジアン単位VのTANを求める
-- [[ARCSIN:plugin_system/ARCSIN]] --- ラジアン単位VのARCSINを求める
-- [[ARCCOS:plugin_system/ARCCOS]] --- ラジアン単位VのARCCOSを求める
-- [[ARCTAN:plugin_system/ARCTAN]] --- ラジアン単位VのARCTANを求める
-- [[RAD2DEG:plugin_system/RAD2DEG]] --- ラジアンから度に変換
-- [[DEG2RAD:plugin_system/DEG2RAD]] --- 度からラジアンに変換
-- [[度変換:plugin_system/度変換]] --- ラジアンから度に変換
-- [[ラジアン変換:plugin_system/ラジアン変換]] --- 度からラジアンに変換
+- [[(Vの)SIN:plugin_system/SIN]] --- ラジアン単位VのSINを求める
+- [[(Vの)COS:plugin_system/COS]] --- ラジアン単位VのCOSを求める
+- [[(Vの)TAN:plugin_system/TAN]] --- ラジアン単位VのTANを求める
+- [[(Vの)ARCSIN:plugin_system/ARCSIN]] --- ラジアン単位VのARCSINを求める
+- [[(Vの)ARCCOS:plugin_system/ARCCOS]] --- ラジアン単位VのARCCOSを求める
+- [[(Vの)ARCTAN:plugin_system/ARCTAN]] --- ラジアン単位VのARCTANを求める
+- [[(Vを)RAD2DEG:plugin_system/RAD2DEG]] --- ラジアンから度に変換
+- [[(Vを)DEG2RAD:plugin_system/DEG2RAD]] --- 度からラジアンに変換
+- [[(Vを)度変換:plugin_system/度変換]] --- ラジアンから度に変換
+- [[(Vを)ラジアン変換:plugin_system/ラジアン変換]] --- 度からラジアンに変換
 
 ● [[算術関数:plugin_system]]
-- [[SIGN:plugin_system/SIGN]] --- Vが0なら0を、0超なら1を、0未満なら-1を返す
-- [[ABS:plugin_system/ABS]] --- Vの絶対値を返す
-- [[EXP:plugin_system/EXP]] --- e（自然対数の底）の A 乗の値を返す
-- [[HYPOT:plugin_system/HYPOT]] --- 直角三角形の二辺の長さA,Bから斜辺を求めて返す。
-- [[LN:plugin_system/LN]] --- 実数式 A の自然対数（Ln(A) = 1）を返す
-- [[LOG:plugin_system/LOG]] --- Aの自然対数（底はE）を返す
-- [[LOGN:plugin_system/LOGN]] --- 指定された底AでBの対数を計算して返す
-- [[FRAC:plugin_system/FRAC]] --- 実数Aの小数部分を返す
-- [[乱数:plugin_system/乱数]] --- 0から(A-1)までの乱数を返す
-- [[SQRT:plugin_system/SQRT]] --- Aの平方根を返す
-- [[平方根:plugin_system/平方根]] --- Aの平方根を返す
-- [[RGB:plugin_system/RGB]] --- HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255
-- [[ROUND:plugin_system/ROUND]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
-- [[四捨五入:plugin_system/四捨五入]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
-- [[CEIL:plugin_system/CEIL]] --- 数値を正の無限大方向へ切り上げて返す。
-- [[切上:plugin_system/切上]] --- 数値を正の無限大方向へ切り上げて返す。
-- [[FLOOR:plugin_system/FLOOR]] --- 数値を負の無限大方向へ切り下げて返す。
-- [[切捨:plugin_system/切捨]] --- 数値を負の無限大方向へ切り下げて返す。
+- [[(Vの)SIGN:plugin_system/SIGN]] --- Vが0なら0を、0超なら1を、0未満なら-1を返す
+- [[(Aの)ABS:plugin_system/ABS]] --- Vの絶対値を返す
+- [[(Aの)EXP:plugin_system/EXP]] --- e（自然対数の底）の A 乗の値を返す
+- [[(AとBの)HYPOT:plugin_system/HYPOT]] --- 直角三角形の二辺の長さA,Bから斜辺を求めて返す。
+- [[(Aの)LN:plugin_system/LN]] --- 実数式 A の自然対数（Ln(A) = 1）を返す
+- [[(Aの)LOG:plugin_system/LOG]] --- Aの自然対数（底はE）を返す
+- [[(AでBの)LOGN:plugin_system/LOGN]] --- 指定された底AでBの対数を計算して返す
+- [[(Aの)FRAC:plugin_system/FRAC]] --- 実数Aの小数部分を返す
+- [[(Aの)乱数:plugin_system/乱数]] --- 0から(A-1)までの乱数を返す
+- [[(Aの)SQRT:plugin_system/SQRT]] --- Aの平方根を返す
+- [[(Aの)平方根:plugin_system/平方根]] --- Aの平方根を返す
+- [[(RとGのBで)RGB:plugin_system/RGB]] --- HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255
+- [[(Vを)ROUND:plugin_system/ROUND]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
+- [[(Vを|Vの)四捨五入:plugin_system/四捨五入]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
+- [[(Vを)CEIL:plugin_system/CEIL]] --- 数値を正の無限大方向へ切り上げて返す。
+- [[(Vを)切上:plugin_system/切上]] --- 数値を正の無限大方向へ切り上げて返す。
+- [[(Vを)FLOOR:plugin_system/FLOOR]] --- 数値を負の無限大方向へ切り下げて返す。
+- [[(Vを)切捨:plugin_system/切捨]] --- 数値を負の無限大方向へ切り下げて返す。
 
 ● [[論理演算:plugin_system]]
-- [[論理OR:plugin_system/論理OR]] --- (ビット演算で)AとBの論理和を返す(v1非互換)。
-- [[論理AND:plugin_system/論理AND]] --- (ビット演算で)AとBの論理積を返す(v1非互換)。日本語の「AかつB」に相当する
-- [[論理NOT:plugin_system/論理NOT]] --- 値Vが0ならば1、それ以外ならば0を返す(v1非互換)
+- [[(AとBの)論理OR:plugin_system/論理OR]] --- (ビット演算で)AとBの論理和を返す(v1非互換)。
+- [[(AとBの)論理AND:plugin_system/論理AND]] --- (ビット演算で)AとBの論理積を返す(v1非互換)。日本語の「AかつB」に相当する
+- [[(Vの)論理NOT:plugin_system/論理NOT]] --- 値Vが0ならば1、それ以外ならば0を返す(v1非互換)
 
 ● [[ビット演算:plugin_system]]
-- [[OR:plugin_system/OR]] --- (ビット演算で)AとBの論理和を返す。
-- [[AND:plugin_system/AND]] --- (ビット演算で)AとBの論理積を返す。日本語の「AかつB」に相当する
-- [[XOR:plugin_system/XOR]] --- (ビット演算で)AとBの排他的論理和を返す。
-- [[NOT:plugin_system/NOT]] --- (ビット演算で)vの各ビットを反転して返す。
-- [[SHIFT_L:plugin_system/SHIFT_L]] --- VをAビット左へシフトして返す
-- [[SHIFT_R:plugin_system/SHIFT_R]] --- VをAビット右へシフトして返す(符号を維持する)
-- [[SHIFT_UR:plugin_system/SHIFT_UR]] --- VをAビット右へシフトして返す(符号を維持しない、0で埋める)
+- [[(AとBの)OR:plugin_system/OR]] --- (ビット演算で)AとBの論理和を返す。
+- [[(AとBの)AND:plugin_system/AND]] --- (ビット演算で)AとBの論理積を返す。日本語の「AかつB」に相当する
+- [[(AとBの)XOR:plugin_system/XOR]] --- (ビット演算で)AとBの排他的論理和を返す。
+- [[(Vの)NOT:plugin_system/NOT]] --- (ビット演算で)vの各ビットを反転して返す。
+- [[(AをBで)SHIFT_L:plugin_system/SHIFT_L]] --- VをAビット左へシフトして返す
+- [[(AをBで)SHIFT_R:plugin_system/SHIFT_R]] --- VをAビット右へシフトして返す(符号を維持する)
+- [[(AをBで)SHIFT_UR:plugin_system/SHIFT_UR]] --- VをAビット右へシフトして返す(符号を維持しない、0で埋める)
 
 ● [[文字列処理:plugin_system]]
-- [[文字数:plugin_system/文字数]] --- 文字列Vの文字数を返す
-- [[何文字目:plugin_system/何文字目]] --- 文字列SでAが何文字目にあるか調べて返す
-- [[CHR:plugin_system/CHR]] --- 文字コードから文字を返す
-- [[ASC:plugin_system/ASC]] --- 文字列Vの最初の文字の文字コードを返す
-- [[文字挿入:plugin_system/文字挿入]] --- 文字列SのI文字目に文字列Aを挿入する
-- [[文字検索:plugin_system/文字検索]] --- 文字列Sで文字列Aが何文字目にあるか調べて返す
-- [[追加:plugin_system/追加]] --- 文字列SにAを追加して返す(v1非互換)
-- [[一行追加:plugin_system/一行追加]] --- 文字列SにAと改行を追加して返す(v1非互換)
-- [[文字列分解:plugin_system/文字列分解]] --- 文字列Vを一文字ずつに分解して返す
-- [[リフレイン:plugin_system/リフレイン]] --- 文字列VをCNT回繰り返す(v1非互換)
-- [[出現回数:plugin_system/出現回数]] --- 文字列SにAが何回出現するか数える
-- [[MID:plugin_system/MID]] --- 文字列SのA文字目からCNT文字を抽出する
-- [[文字抜出:plugin_system/文字抜出]] --- 文字列SのA文字目からCNT文字を抽出する
-- [[LEFT:plugin_system/LEFT]] --- 文字列Sの左端からCNT文字を抽出する
-- [[文字左部分:plugin_system/文字左部分]] --- 文字列Sの左端からCNT文字を抽出する
-- [[RIGHT:plugin_system/RIGHT]] --- 文字列Sの右端からCNT文字を抽出する
-- [[文字右部分:plugin_system/文字右部分]] --- 文字列Sの右端からCNT文字を抽出する
-- [[区切:plugin_system/区切]] --- 文字列Sを区切り文字Aで区切って配列で返す
-- [[切取:plugin_system/切取]] --- 文字列Sから文字列Aまでの部分を抽出する(v1非互換)
-- [[文字削除:plugin_system/文字削除]] --- 文字列SのA文字目からB文字分を削除して返す
+- [[(Vの)文字数:plugin_system/文字数]] --- 文字列Vの文字数を返す
+- [[(SでAが|Sの)何文字目:plugin_system/何文字目]] --- 文字列SでAが何文字目にあるか調べて返す
+- [[(Vの)CHR:plugin_system/CHR]] --- 文字コードから文字を返す
+- [[(Vの)ASC:plugin_system/ASC]] --- 文字列Vの最初の文字の文字コードを返す
+- [[(SでIにAを|SのIへ)文字挿入:plugin_system/文字挿入]] --- 文字列SのI文字目に文字列Aを挿入する
+- [[(SでAを|Sの)文字検索:plugin_system/文字検索]] --- 文字列Sで文字列Aが何文字目にあるか調べて返す
+- [[(SでAを|Sに|Sへ)追加:plugin_system/追加]] --- 文字列SにAを追加して返す(v1非互換)
+- [[(SでAを|Sに|Sへ)一行追加:plugin_system/一行追加]] --- 文字列SにAと改行を追加して返す(v1非互換)
+- [[(Vを|Vの|Vで)文字列分解:plugin_system/文字列分解]] --- 文字列Vを一文字ずつに分解して返す
+- [[(VをCNTで|Vの)リフレイン:plugin_system/リフレイン]] --- 文字列VをCNT回繰り返す(v1非互換)
+- [[(SでAの)出現回数:plugin_system/出現回数]] --- 文字列SにAが何回出現するか数える
+- [[(SでAからCNTを|Sの)MID:plugin_system/MID]] --- 文字列SのA文字目からCNT文字を抽出する
+- [[(SでAからCNTを|SのCNT)文字抜出:plugin_system/文字抜出]] --- 文字列SのA文字目からCNT文字を抽出する
+- [[(SのCNTだけ|Sで)LEFT:plugin_system/LEFT]] --- 文字列Sの左端からCNT文字を抽出する
+- [[(SのCNTだけ|SでCNT)文字左部分:plugin_system/文字左部分]] --- 文字列Sの左端からCNT文字を抽出する
+- [[(SのCNTだけ|Sで)RIGHT:plugin_system/RIGHT]] --- 文字列Sの右端からCNT文字を抽出する
+- [[(SのCNTだけ|SでCNT)文字右部分:plugin_system/文字右部分]] --- 文字列Sの右端からCNT文字を抽出する
+- [[(SのAで|Sを)区切:plugin_system/区切]] --- 文字列Sを区切り文字Aで区切って配列で返す
+- [[(SからAまで|SのAを)切取:plugin_system/切取]] --- 文字列Sから文字列Aまでの部分を抽出する(v1非互換)
+- [[(SのAからBだけ|Bを|B)文字削除:plugin_system/文字削除]] --- 文字列SのA文字目からB文字分を削除して返す
 
 ● [[置換・トリム:plugin_system]]
-- [[置換:plugin_system/置換]] --- 文字列Sのうち文字列AをBに全部置換して返す
-- [[単置換:plugin_system/単置換]] --- 文字列Sのうち、最初に出現するAだけをBに置換して返す
-- [[トリム:plugin_system/トリム]] --- 文字列Sの前後にある空白を削除する
-- [[空白除去:plugin_system/空白除去]] --- 文字列Sの前後にある空白を削除する
+- [[(SのAをBに|SでAからBへ)置換:plugin_system/置換]] --- 文字列Sのうち文字列AをBに全部置換して返す
+- [[(SのAをBに|SでBへ)単置換:plugin_system/単置換]] --- 文字列Sのうち、最初に出現するAだけをBに置換して返す
+- [[(Sの|Sを)トリム:plugin_system/トリム]] --- 文字列Sの前後にある空白を削除する
+- [[(Sの|Sを)空白除去:plugin_system/空白除去]] --- 文字列Sの前後にある空白を削除する
 
 ● [[文字変換:plugin_system]]
-- [[大文字変換:plugin_system/大文字変換]] --- アルファベットの文字列Sを大文字に変換
-- [[小文字変換:plugin_system/小文字変換]] --- アルファベットの文字列Sを小文字に変換
-- [[平仮名変換:plugin_system/平仮名変換]] --- 文字列Sのひらがなをカタカナに変換
-- [[カタカナ変換:plugin_system/カタカナ変換]] --- 文字列Sのひらがなをカタカナに変換
-- [[英数全角変換:plugin_system/英数全角変換]] --- 文字列Sの半角英数文字を全角に変換
-- [[英数半角変換:plugin_system/英数半角変換]] --- 文字列Sの全角英数文字を半角に変換
-- [[英数記号全角変換:plugin_system/英数記号全角変換]] --- 文字列Sの半角英数記号文字を全角に変換
-- [[英数記号半角変換:plugin_system/英数記号半角変換]] --- 文字列Sの記号文字を半角に変換
-- [[カタカナ全角変換:plugin_system/カタカナ全角変換]] --- 文字列Sの半角カタカナを全角に変換
-- [[カタカナ半角変換:plugin_system/カタカナ半角変換]] --- 文字列Sの全角カタカナを半角に変換
-- [[全角変換:plugin_system/全角変換]] --- 文字列Sの半角文字を全角に変換
-- [[半角変換:plugin_system/半角変換]] --- 文字列Sの全角文字を半角に変換
+- [[(Sの|Sを)大文字変換:plugin_system/大文字変換]] --- アルファベットの文字列Sを大文字に変換
+- [[(Sの|Sを)小文字変換:plugin_system/小文字変換]] --- アルファベットの文字列Sを小文字に変換
+- [[(Sの|Sを)平仮名変換:plugin_system/平仮名変換]] --- 文字列Sのひらがなをカタカナに変換
+- [[(Sの|Sを)カタカナ変換:plugin_system/カタカナ変換]] --- 文字列Sのひらがなをカタカナに変換
+- [[(Sの|Sを)英数全角変換:plugin_system/英数全角変換]] --- 文字列Sの半角英数文字を全角に変換
+- [[(Sの|Sを)英数半角変換:plugin_system/英数半角変換]] --- 文字列Sの全角英数文字を半角に変換
+- [[(Sの|Sを)英数記号全角変換:plugin_system/英数記号全角変換]] --- 文字列Sの半角英数記号文字を全角に変換
+- [[(Sの|Sを)英数記号半角変換:plugin_system/英数記号半角変換]] --- 文字列Sの記号文字を半角に変換
+- [[(Sの|Sを)カタカナ全角変換:plugin_system/カタカナ全角変換]] --- 文字列Sの半角カタカナを全角に変換
+- [[(Sの|Sを)カタカナ半角変換:plugin_system/カタカナ半角変換]] --- 文字列Sの全角カタカナを半角に変換
+- [[(Sの|Sを)全角変換:plugin_system/全角変換]] --- 文字列Sの半角文字を全角に変換
+- [[(Sの|Sを)半角変換:plugin_system/半角変換]] --- 文字列Sの全角文字を半角に変換
 
 ● [[JSON:plugin_system]]
-- [[JSONエンコード:plugin_system/JSONエンコード]] --- オブジェクトVをJSON形式にエンコードして返す
-- [[JSONエンコード整形:plugin_system/JSONエンコード整形]] --- オブジェクトVをJSON形式にエンコードして整形して返す
-- [[JSONデコード:plugin_system/JSONデコード]] --- JSON文字列Sをオブジェクトにデコードして返す
+- [[(Vを|Vの)JSONエンコード:plugin_system/JSONエンコード]] --- オブジェクトVをJSON形式にエンコードして返す
+- [[(Vを|Vの)JSONエンコード整形:plugin_system/JSONエンコード整形]] --- オブジェクトVをJSON形式にエンコードして整形して返す
+- [[(Sを|Sの|Sから)JSONデコード:plugin_system/JSONデコード]] --- JSON文字列Sをオブジェクトにデコードして返す
 
 ● [[正規表現:plugin_system]]
-- [[正規表現マッチ:plugin_system/正規表現マッチ]] --- 文字列Aを正規表現パターンBでマッチして結果を返す(パターンBは「/pat/opt」の形式で指定。optにgの指定がなければ部分マッチが『抽出文字列』に入る)
+- [[(AをBで|AがBに)正規表現マッチ:plugin_system/正規表現マッチ]] --- 文字列Aを正規表現パターンBでマッチして結果を返す(パターンBは「/pat/opt」の形式で指定。optにgの指定がなければ部分マッチが『抽出文字列』に入る)
 - [[抽出文字列:plugin_system/抽出文字列]] --- 定数
-- [[正規表現置換:plugin_system/正規表現置換]] --- 文字列Sの正規表現パターンAをBに置換して結果を返す(パターンAは/pat/optで指定)
-- [[正規表現区切:plugin_system/正規表現区切]] --- 文字列Sを正規表現パターンAで区切って配列で返す(パターンAは/pat/optで指定)
+- [[(SのAをBで|AからBに|Bへ)正規表現置換:plugin_system/正規表現置換]] --- 文字列Sの正規表現パターンAをBに置換して結果を返す(パターンAは/pat/optで指定)
+- [[(SをAで)正規表現区切:plugin_system/正規表現区切]] --- 文字列Sを正規表現パターンAで区切って配列で返す(パターンAは/pat/optで指定)
 
 ● [[指定形式:plugin_system]]
-- [[通貨形式:plugin_system/通貨形式]] --- 数値Vを三桁ごとにカンマで区切る
-- [[ゼロ埋:plugin_system/ゼロ埋]] --- 数値VをA桁の0で埋める
-- [[空白埋:plugin_system/空白埋]] --- 文字列VをA桁の空白で埋める
+- [[(Vを|Vの)通貨形式:plugin_system/通貨形式]] --- 数値Vを三桁ごとにカンマで区切る
+- [[(VをAで)ゼロ埋:plugin_system/ゼロ埋]] --- 数値VをA桁の0で埋める
+- [[(VをAで)空白埋:plugin_system/空白埋]] --- 文字列VをA桁の空白で埋める
 
 ● [[文字種類:plugin_system]]
-- [[かなか判定:plugin_system/かなか判定]] --- 文字列Sの1文字目がひらがなか判定
-- [[カタカナ判定:plugin_system/カタカナ判定]] --- 文字列Sの1文字目がカタカナか判定
-- [[数字判定:plugin_system/数字判定]] --- 文字列Sの1文字目が数字か判定
-- [[数列判定:plugin_system/数列判定]] --- 文字列S全部が数字か判定
+- [[(Sを|Sの|Sが)かなか判定:plugin_system/かなか判定]] --- 文字列Sの1文字目がひらがなか判定
+- [[(Sを|Sの|Sが)カタカナ判定:plugin_system/カタカナ判定]] --- 文字列Sの1文字目がカタカナか判定
+- [[(Sを|Sが)数字判定:plugin_system/数字判定]] --- 文字列Sの1文字目が数字か判定
+- [[(Sを|Sが)数列判定:plugin_system/数列判定]] --- 文字列S全部が数字か判定
 
 ● [[配列操作:plugin_system]]
-- [[配列結合:plugin_system/配列結合]] --- 配列Aを文字列Sでつなげて文字列で返す
-- [[配列検索:plugin_system/配列検索]] --- 配列Aから文字列Sを探してインデックス番号(0起点)を返す。見つからなければ-1を返す。
-- [[配列要素数:plugin_system/配列要素数]] --- 配列Aの要素数を返す
-- [[要素数:plugin_system/要素数]] --- 配列Aの要素数を返す
-- [[配列挿入:plugin_system/配列挿入]] --- 配列AのI番目(0起点)に要素Sを追加して返す(v1非互換)
-- [[配列一括挿入:plugin_system/配列一括挿入]] --- 配列AのI番目(0起点)に配列bを追加して返す(v1非互換)
-- [[配列ソート:plugin_system/配列ソート]] --- 配列Aをソートして返す(A自体を変更)
-- [[配列数値ソート:plugin_system/配列数値ソート]] --- 配列Aをソートして返す(A自体を変更)
-- [[配列カスタムソート:plugin_system/配列カスタムソート]] --- 関数Fで配列Aをソートして返す(引数A自体を変更)
-- [[配列逆順:plugin_system/配列逆順]] --- 配列Aを逆にして返す。Aを書き換える(A自体を変更)。
-- [[配列シャッフル:plugin_system/配列シャッフル]] --- 配列Aをシャッフルして返す。Aを書き換える
-- [[配列切取:plugin_system/配列切取]] --- 配列AのI番目(0起点)の要素を切り取って返す。Aの内容を書き換える。
-- [[配列取出:plugin_system/配列取出]] --- 配列AのI番目(0起点)からCNT個の応訴を取り出して返す。Aの内容を書き換える
-- [[配列ポップ:plugin_system/配列ポップ]] --- 配列Aの末尾を取り出して返す。Aの内容を書き換える。
-- [[配列追加:plugin_system/配列追加]] --- 配列Aの末尾にBを追加して返す。Aの内容を書き換える。
+- [[(AをSで)配列結合:plugin_system/配列結合]] --- 配列Aを文字列Sでつなげて文字列で返す
+- [[(AのSを|Aから)配列検索:plugin_system/配列検索]] --- 配列Aから文字列Sを探してインデックス番号(0起点)を返す。見つからなければ-1を返す。
+- [[(Aの)配列要素数:plugin_system/配列要素数]] --- 配列Aの要素数を返す
+- [[(Aの)要素数:plugin_system/要素数]] --- 配列Aの要素数を返す
+- [[(AのIにSを|Iへ)配列挿入:plugin_system/配列挿入]] --- 配列AのI番目(0起点)に要素Sを追加して返す(v1非互換)
+- [[(AのIにBを|Iへ)配列一括挿入:plugin_system/配列一括挿入]] --- 配列AのI番目(0起点)に配列bを追加して返す(v1非互換)
+- [[(Aの|Aを)配列ソート:plugin_system/配列ソート]] --- 配列Aをソートして返す(A自体を変更)
+- [[(Aの|Aを)配列数値ソート:plugin_system/配列数値ソート]] --- 配列Aをソートして返す(A自体を変更)
+- [[(FでAの|Aを)配列カスタムソート:plugin_system/配列カスタムソート]] --- 関数Fで配列Aをソートして返す(引数A自体を変更)
+- [[(Aの|Aを)配列逆順:plugin_system/配列逆順]] --- 配列Aを逆にして返す。Aを書き換える(A自体を変更)。
+- [[(Aの|Aを)配列シャッフル:plugin_system/配列シャッフル]] --- 配列Aをシャッフルして返す。Aを書き換える
+- [[(AのIを)配列切取:plugin_system/配列切取]] --- 配列AのI番目(0起点)の要素を切り取って返す。Aの内容を書き換える。
+- [[(AのIからCNTを)配列取出:plugin_system/配列取出]] --- 配列AのI番目(0起点)からCNT個の応訴を取り出して返す。Aの内容を書き換える
+- [[(Aの|Aから)配列ポップ:plugin_system/配列ポップ]] --- 配列Aの末尾を取り出して返す。Aの内容を書き換える。
+- [[(AにBを|Aへ)配列追加:plugin_system/配列追加]] --- 配列Aの末尾にBを追加して返す。Aの内容を書き換える。
+- [[(Aを)配列複製:plugin_system/配列複製]] --- 配列Aを複製して返す。
 
 ● [[ハッシュ:plugin_system]]
-- [[ハッシュキー列挙:plugin_system/ハッシュキー列挙]] --- ハッシュAのキー一覧を配列で返す。
-- [[ハッシュ内容列挙:plugin_system/ハッシュ内容列挙]] --- ハッシュAの内容一覧を配列で返す。
-- [[ハッシュキー削除:plugin_system/ハッシュキー削除]] --- ハッシュAからキーKEYを削除して返す。
+- [[(Aの)ハッシュキー列挙:plugin_system/ハッシュキー列挙]] --- ハッシュAのキー一覧を配列で返す。
+- [[(Aの)ハッシュ内容列挙:plugin_system/ハッシュ内容列挙]] --- ハッシュAの内容一覧を配列で返す。
+- [[(AからKEYを|Aの)ハッシュキー削除:plugin_system/ハッシュキー削除]] --- ハッシュAからキーKEYを削除して返す。
 
 ● [[日時処理:plugin_system]]
 - [[今:plugin_system/今]] --- 現在時刻を「HH:mm:ss」の形式で返す
@@ -204,23 +208,23 @@
 - [[今日:plugin_system/今日]] --- 今日の日付を「YYYY/MM/DD」の形式で返す
 - [[今年:plugin_system/今年]] --- 今年の西暦を返す
 - [[今月:plugin_system/今月]] --- 今月を返す(v1非互換)
-- [[曜日:plugin_system/曜日]] --- 日付Sの曜日を返す
-- [[UNIX時間変換:plugin_system/UNIX時間変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す(v1非互換)
-- [[UNIXTIME変換:plugin_system/UNIXTIME変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す
-- [[日時変換:plugin_system/日時変換]] --- UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換
-- [[実行:plugin_system/実行]] --- 無名関数（あるいは、文字列で関数名を指定）Fを実行する(Fが関数でなければ無視する)
-- [[秒後:plugin_system/秒後]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する
-- [[秒毎:plugin_system/秒毎]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる)
-- [[秒タイマー開始時:plugin_system/秒タイマー開始時]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『秒毎』と同じ)
-- [[タイマー停止:plugin_system/タイマー停止]] --- 『秒毎』や『秒タイマー開始』で開始したタイマーを停止する
+- [[(Sの)曜日:plugin_system/曜日]] --- 日付Sの曜日を返す
+- [[(Sの|Sを|Sから)UNIX時間変換:plugin_system/UNIX時間変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す(v1非互換)
+- [[(Sの|Sを|Sから)UNIXTIME変換:plugin_system/UNIXTIME変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す
+- [[(TMを|TMから)日時変換:plugin_system/日時変換]] --- UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換
+- [[(Fを|Fに|Fで)実行:plugin_system/実行]] --- 無名関数（あるいは、文字列で関数名を指定）Fを実行する(Fが関数でなければ無視する)
+- [[(Fを)秒後:plugin_system/秒後]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する
+- [[(Fを)秒毎:plugin_system/秒毎]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる)
+- [[(Fを)秒タイマー開始時:plugin_system/秒タイマー開始時]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『秒毎』と同じ)
+- [[(TIMERIDの|TIMERIDで)タイマー停止:plugin_system/タイマー停止]] --- 『秒毎』や『秒タイマー開始』で開始したタイマーを停止する
 
 ● [[デバッグ支援:plugin_system]]
-- [[エラー発生:plugin_system/エラー発生]] --- 故意にエラーSを発生させる
+- [[(Sの|Sで)エラー発生:plugin_system/エラー発生]] --- 故意にエラーSを発生させる
 - [[システム関数一覧取得:plugin_system/システム関数一覧取得]] --- システム関数の一覧を取得
-- [[システム関数存在:plugin_system/システム関数存在]] --- 文字列で関数名を指定してシステム関数が存在するかを調べる
+- [[(FNAMEが|FNAMEの)システム関数存在:plugin_system/システム関数存在]] --- 文字列で関数名を指定してシステム関数が存在するかを調べる
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
-- [[タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+- [[(TZで)タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
 
 ■ [[plugin_browser]]
 
@@ -242,134 +246,141 @@
 - [[オリーブ色:plugin_browser/オリーブ色]] --- 定数
 - [[ベージュ色:plugin_browser/ベージュ色]] --- 定数
 - [[アリスブルー色:plugin_browser/アリスブルー色]] --- 定数
-- [[RGB:plugin_browser/RGB]] --- 赤緑青を256段階でそれぞれ指定して、#RRGGBB形式の値を返す
+- [[(RとGとBで|Bの)RGB:plugin_browser/RGB]] --- 赤緑青を256段階でそれぞれ指定して、#RRGGBB形式の値を返す
 
 ● [[システム:plugin_browser]]
 - [[終:plugin_browser/終]] --- ブラウザでプログラムの実行を強制終了する
 
 ● [[ダイアログ:plugin_browser]]
-- [[言:plugin_browser/言]] --- メッセージダイアログにSを表示
-- [[尋:plugin_browser/尋]] --- メッセージSと入力ボックスを出して尋ねる
-- [[二択:plugin_browser/二択]] --- メッセージSと[OK]と[キャンセル]のダイアログを出して尋ねる
+- [[(Sと|Sを)言:plugin_browser/言]] --- メッセージダイアログにSを表示
+- [[(Sと|Sを)尋:plugin_browser/尋]] --- メッセージSと入力ボックスを出して尋ねる
+- [[(Sで|Sの|Sと|Sを)二択:plugin_browser/二択]] --- メッセージSと[OK]と[キャンセル]のダイアログを出して尋ねる
+
+● [[ブラウザ操作:plugin_browser]]
+- [[(URLに|URLへ)ブラウザ移動:plugin_browser/ブラウザ移動]] --- 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
+- [[ブラウザ戻:plugin_browser/ブラウザ戻]] --- 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
 
 ● [[Ajax:plugin_browser]]
-- [[AJAX送信時:plugin_browser/AJAX送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
-- [[GET送信時:plugin_browser/GET送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
-- [[POST送信時:plugin_browser/POST送信時]] --- AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
-- [[POSTフォーム送信時:plugin_browser/POSTフォーム送信時]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定
-- [[AJAX失敗時:plugin_browser/AJAX失敗時]] --- Ajax命令でエラーが起きたとき
+- [[(CALLBACKのURLまで|URLへ|URLに)AJAX送信時:plugin_browser/AJAX送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
+- [[(CALLBACKのURLまで|URLへ|URLに)GET送信時:plugin_browser/GET送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
+- [[(CALLBACKのURLまでPARAMSを|URLへ|URLに)POST送信時:plugin_browser/POST送信時]] --- AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
+- [[(CALLBACKのURLまでPARAMSを|URLへ|URLに)POSTフォーム送信時:plugin_browser/POSTフォーム送信時]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定
+- [[(CALLBACKの)AJAX失敗時:plugin_browser/AJAX失敗時]] --- Ajax命令でエラーが起きたとき
 - [[AJAXオプション:plugin_browser/AJAXオプション]] --- 定数
-- [[AJAXオプション設定:plugin_browser/AJAXオプション設定]] --- Ajax命令でオプションを設定
+- [[(OPTIONに|OPTIONへ|OPTIONと)AJAXオプション設定:plugin_browser/AJAXオプション設定]] --- Ajax命令でオプションを設定
 
 ● [[DOM操作:plugin_browser]]
 - [[DOCUMENT:plugin_browser/DOCUMENT]] --- 定数
 - [[WINDOW:plugin_browser/WINDOW]] --- 定数
 - [[NAVIGATOR:plugin_browser/NAVIGATOR]] --- 定数
-- [[DOM要素ID取得:plugin_browser/DOM要素ID取得]] --- DOMの要素をIDを指定して取得
-- [[DOM要素取得:plugin_browser/DOM要素取得]] --- DOMの要素をクエリqで取得して返す
-- [[DOM要素全取得:plugin_browser/DOM要素全取得]] --- DOMの要素をクエリqで全部取得して返す
-- [[タグ一覧取得:plugin_browser/タグ一覧取得]] --- 任意のタグの一覧を取得して返す
-- [[DOMイベント設定:plugin_browser/DOMイベント設定]] --- DOMのEVENTになでしこ関数名funcStrのイベントを設定
-- [[DOMイベント追加:plugin_browser/DOMイベント追加]] --- DOMのEVENTになでしこ関数名funcStrのイベントを追加
-- [[DOMイベント削除:plugin_browser/DOMイベント削除]] --- DOMのEVENTからなでしこ関数名funcStrのイベントを削除
-- [[DOMイベント発火時:plugin_browser/DOMイベント発火時]] --- DOMのEVENTが発火した時にCALLBACKを実行するように設定
-- [[クリック時:plugin_browser/クリック時]] --- 無名関数FでDOMをクリックした時に実行するイベントを設定
-- [[読込時:plugin_browser/読込時]] --- 無名関数FでDOMを読み個だ時に実行するイベントを設定
-- [[フォーム送信時:plugin_browser/フォーム送信時]] --- 無名関数Fでフォームを送信した時に実行するイベントを設定
+- [[(IDの|IDを)DOM要素ID取得:plugin_browser/DOM要素ID取得]] --- DOMの要素をIDを指定して取得
+- [[(Qの|Qを)DOM要素取得:plugin_browser/DOM要素取得]] --- DOMの要素をクエリqで取得して返す
+- [[(Qの|Qを)DOM要素全取得:plugin_browser/DOM要素全取得]] --- DOMの要素をクエリqで全部取得して返す
+- [[(TAGの|TAGを)タグ一覧取得:plugin_browser/タグ一覧取得]] --- 任意のタグの一覧を取得して返す
+- [[(DOMのEVENTにFUNCSTRを|EVENTへ)DOMイベント設定:plugin_browser/DOMイベント設定]] --- DOMのEVENTになでしこ関数名funcStrのイベントを設定
+- [[(DOMのEVENTにFUNCSTRを|EVENTへ)DOMイベント追加:plugin_browser/DOMイベント追加]] --- DOMのEVENTになでしこ関数名funcStrのイベントを追加
+- [[(DOMのEVENTからFUNCSTRを)DOMイベント削除:plugin_browser/DOMイベント削除]] --- DOMのEVENTからなでしこ関数名funcStrのイベントを削除
+- [[(CALLBACKでDOMのEVENTが)DOMイベント発火時:plugin_browser/DOMイベント発火時]] --- DOMのEVENTが発火した時にCALLBACKを実行するように設定
+- [[対象イベント:plugin_browser/対象イベント]] --- 定数
+- [[(EVENTを|EVENTの)DOMイベント処理停止:plugin_browser/DOMイベント処理停止]] --- キーイベントやマウスイベントで、元々ブラウザが行う処理を中止する
+- [[(FUNCでDOMを)クリック時:plugin_browser/クリック時]] --- 無名関数FでDOMをクリックした時に実行するイベントを設定
+- [[(FUNCでDOMを)読込時:plugin_browser/読込時]] --- 無名関数FでDOMを読み込んだ時に実行するイベントを設定
+- [[(FUNCでDOMを|DOMの)フォーム送信時:plugin_browser/フォーム送信時]] --- 無名関数Fでフォームを送信した時に実行するイベントを設定
 - [[押キー:plugin_browser/押キー]] --- 定数
-- [[キー押時:plugin_browser/キー押時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『押されたキー』が設定される。
-- [[キー離時:plugin_browser/キー離時]] --- 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『押されたキー』が設定される。
-- [[キータイピング時:plugin_browser/キータイピング時]] --- 無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定。『押されたキー』が設定される。
+- [[(FUNCでDOMを|DOMの)キー押時:plugin_browser/キー押時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『押されたキー』が設定される。
+- [[(FUNCでDOMを|DOMの)キー離時:plugin_browser/キー離時]] --- 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『押されたキー』が設定される。
+- [[(FUNCでDOMを|DOMの)キータイピング時:plugin_browser/キータイピング時]] --- 無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定。『押されたキー』が設定される。
 - [[マウスX:plugin_browser/マウスX]] --- 定数
 - [[マウスY:plugin_browser/マウスY]] --- 定数
-- [[マウス押時:plugin_browser/マウス押時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
-- [[マウス移動時:plugin_browser/マウス移動時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
-- [[マウス離時:plugin_browser/マウス離時]] --- 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
-- [[DOMテキスト設定:plugin_browser/DOMテキスト設定]] --- DOMにテキストを設定
-- [[DOMテキスト取得:plugin_browser/DOMテキスト取得]] --- DOMのテキストを取得
-- [[DOM_HTML設定:plugin_browser/DOM_HTML設定]] --- DOMにHTML文字列を設定
-- [[DOM_HTML取得:plugin_browser/DOM_HTML取得]] --- DOMのHTML文字列を取得
-- [[テキスト設定:plugin_browser/テキスト設定]] --- DOMのテキストにVを設定
-- [[テキスト取得:plugin_browser/テキスト取得]] --- DOMのテキストを取得
-- [[HTML設定:plugin_browser/HTML設定]] --- DOMのHTMLにVを設定
-- [[HTML取得:plugin_browser/HTML取得]] --- DOMのテキストを取得
-- [[DOM属性設定:plugin_browser/DOM属性設定]] --- DOMの属性Sに値Vを設定
-- [[DOM属性取得:plugin_browser/DOM属性取得]] --- DOMの属性Sを取得
-- [[DOM和スタイル:plugin_browser/DOM和スタイル]] --- 定数
-- [[DOMスタイル設定:plugin_browser/DOMスタイル設定]] --- DOMのスタイルAに値Bを設定
-- [[DOMスタイル取得:plugin_browser/DOMスタイル取得]] --- DOMのSTYLEの値を取得
-- [[DOMスタイル一括取得:plugin_browser/DOMスタイル一括取得]] --- DOMのSTYLE(配列で複数指定)の値を取得
-- [[DOM要素作成:plugin_browser/DOM要素作成]] --- DOMにTAGの新規要素を作成
-- [[DOM子要素追加:plugin_browser/DOM子要素追加]] --- DOMの要素PAの子へ要素ELを追加してPAを返す
-- [[DOM子要素削除:plugin_browser/DOM子要素削除]] --- DOMの要素PAの子から要素ELを削除してPAを返す
+- [[(FUNCでDOMを|DOMの)マウス押時:plugin_browser/マウス押時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+- [[(FUNCでDOMを|DOMの)マウス移動時:plugin_browser/マウス移動時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+- [[(FUNCでDOMを|DOMの)マウス離時:plugin_browser/マウス離時]] --- 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+- [[(DOMにTEXTを|DOMの|DOMへ)DOMテキスト設定:plugin_browser/DOMテキスト設定]] --- DOMにテキストを設定
+- [[(DOMの|DOMから)DOMテキスト取得:plugin_browser/DOMテキスト取得]] --- DOMのテキストを取得
+- [[(DOMにTEXTを|DOMの|DOMへ)DOM_HTML設定:plugin_browser/DOM_HTML設定]] --- DOMにHTML文字列を設定
+- [[(DOMの|DOMから)DOM_HTML取得:plugin_browser/DOM_HTML取得]] --- DOMのHTML文字列を取得
+- [[(DOMにVを|DOMの|DOMへ)テキスト設定:plugin_browser/テキスト設定]] --- DOMのテキストにVを設定
+- [[(DOMの|DOMから)テキスト取得:plugin_browser/テキスト取得]] --- DOMのテキストを取得
+- [[(DOMにVを|DOMの|DOMへ)HTML設定:plugin_browser/HTML設定]] --- DOMのHTMLにVを設定
+- [[(DOMの|DOMから)HTML取得:plugin_browser/HTML取得]] --- DOMのテキストを取得
+- [[(DOMのSにVを|Sへ)DOM属性設定:plugin_browser/DOM属性設定]] --- DOMの属性Sに値Vを設定
+- [[(DOMのSを|DOMから)DOM属性取得:plugin_browser/DOM属性取得]] --- DOMの属性Sを取得
+- [[(DOMのSにVを|Sへ)DOMスタイル設定:plugin_browser/DOMスタイル設定]] --- DOMのスタイルAに値Bを設定
+- [[(DOMにVALUESを|DOMへ)DOMスタイル一括設定:plugin_browser/DOMスタイル一括設定]] --- DOMに(オブジェクト型で)スタイル情報を一括設定
+- [[(DOMのSTYLEを)DOMスタイル取得:plugin_browser/DOMスタイル取得]] --- DOMのSTYLEの値を取得
+- [[(DOMのSTYLEを)DOMスタイル一括取得:plugin_browser/DOMスタイル一括取得]] --- DOMのSTYLE(配列で複数指定)の値を取得
+- [[(TAGの|TAGを)DOM要素作成:plugin_browser/DOM要素作成]] --- DOMにTAGの新規要素を作成
+- [[(PAにELを|PAへ)DOM子要素追加:plugin_browser/DOM子要素追加]] --- DOMの要素PAの子へ要素ELを追加してPAを返す
+- [[(PAからELを)DOM子要素削除:plugin_browser/DOM子要素削除]] --- DOMの要素PAの子から要素ELを削除してPAを返す
 
 ● [[DOM部品操作:plugin_browser]]
 - [[DOM親要素:plugin_browser/DOM親要素]] --- 定数
 - [[DOM生成個数:plugin_browser/DOM生成個数]] --- 定数
-- [[DOM親要素設定:plugin_browser/DOM親要素設定]] --- 「ボタン作成」「エディタ作成」などのDOM要素を追加する対象を指定(デフォルトはdocument)して親要素のDOMオブジェクトを返す
-- [[ボタン作成:plugin_browser/ボタン作成]] --- ラベルlabelを持つbutton要素を追加しDOMオブジェクトを返す
-- [[エディタ作成:plugin_browser/エディタ作成]] --- textの値を持つテキストボックス(input[type='text'])の要素を追加しDOMオブジェクトを返す
-- [[テキストエリア作成:plugin_browser/テキストエリア作成]] --- textの値を持つtextarea要素を追加しDOMオブジェクトを返す
-- [[ラベル作成:plugin_browser/ラベル作成]] --- textの値を持つラベル(span要素)を追加しDOMオブジェクトを返す
+- [[(ELに|ELへ)DOM親要素設定:plugin_browser/DOM親要素設定]] --- 「ボタン作成」「エディタ作成」などのDOM要素を追加する対象を指定(デフォルトはdocument)して親要素のDOMオブジェクトを返す
+- [[(LABELの)ボタン作成:plugin_browser/ボタン作成]] --- ラベルlabelを持つbutton要素を追加しDOMオブジェクトを返す
+- [[(TEXTの)エディタ作成:plugin_browser/エディタ作成]] --- textの値を持つテキストボックス(input[type='text'])の要素を追加しDOMオブジェクトを返す
+- [[(TEXTの)テキストエリア作成:plugin_browser/テキストエリア作成]] --- textの値を持つtextarea要素を追加しDOMオブジェクトを返す
+- [[(TEXTの)ラベル作成:plugin_browser/ラベル作成]] --- textの値を持つラベル(span要素)を追加しDOMオブジェクトを返す
 - [[改行作成:plugin_browser/改行作成]] --- 改行(br要素)を追加しDOMオブジェクトを返す
-- [[チェックボックス作成:plugin_browser/チェックボックス作成]] --- textのラベルを持つチェックボックス(input[type='checkbox'])要素を追加しDOMオブジェクトを返す
-- [[セレクトボックス作成:plugin_browser/セレクトボックス作成]] --- 配列optionsの選択肢を持つselect要素を追加しDOMオブジェクトを返す
+- [[(TEXTの)チェックボックス作成:plugin_browser/チェックボックス作成]] --- textのラベルを持つチェックボックス(input[type='checkbox'])要素を追加しDOMオブジェクトを返す
+- [[(OPTIONSの)セレクトボックス作成:plugin_browser/セレクトボックス作成]] --- 配列optionsの選択肢を持つselect要素を追加しDOMオブジェクトを返す
 
 ● [[HTML操作:plugin_browser]]
-- [[HTML変換:plugin_browser/HTML変換]] --- 文字列をHTMLに変換して返す
+- [[(TEXTを)HTML変換:plugin_browser/HTML変換]] --- 文字列をHTMLに変換して返す
 
 ● [[URLエンコード:plugin_browser]]
-- [[URLエンコード:plugin_browser/URLエンコード]] --- URLエンコードして返す
-- [[URLデコード:plugin_browser/URLデコード]] --- URLデコードして返す
-- [[URLパラメータ解析:plugin_browser/URLパラメータ解析]] --- URLパラメータを解析してハッシュで返す
+- [[(TEXTを|TEXTから)URLエンコード:plugin_browser/URLエンコード]] --- URLエンコードして返す
+- [[(TEXTを|TEXTへ|TEXTに)URLデコード:plugin_browser/URLデコード]] --- URLデコードして返す
+- [[(URLを|URLの|URLから)URLパラメータ解析:plugin_browser/URLパラメータ解析]] --- URLパラメータを解析してハッシュで返す
 
 ● [[ローカルストレージ:plugin_browser]]
-- [[保存:plugin_browser/保存]] --- ブラウザのlocalStorageのキーKに文字列Vを保存
-- [[開:plugin_browser/開]] --- ブラウザのlocalStorageからVを読む
-- [[存在:plugin_browser/存在]] --- ブラウザのlocalStorageにKEYが存在しているか調べる
-- [[ローカルストレージ保存:plugin_browser/ローカルストレージ保存]] --- ブラウザのlocalStorageのKにVを保存
-- [[ローカルストレージ読:plugin_browser/ローカルストレージ読]] --- ブラウザのlocalStorageからVを読む
+- [[(VをKEYに|KEYへ)保存:plugin_browser/保存]] --- ブラウザのlocalStorageのキーKに文字列Vを保存
+- [[(KEYを|KEYから|KEYの)開:plugin_browser/開]] --- ブラウザのlocalStorageからVを読む
+- [[(KEYが)存在:plugin_browser/存在]] --- ブラウザのlocalStorageにKEYが存在しているか調べる
+- [[(KEYにVを|KEYへ)ローカルストレージ保存:plugin_browser/ローカルストレージ保存]] --- ブラウザのlocalStorageのKにVを保存
+- [[(KEYを|KEYから|KEYの)ローカルストレージ読:plugin_browser/ローカルストレージ読]] --- ブラウザのlocalStorageからVを読む
 - [[ローカルストレージキー列挙:plugin_browser/ローカルストレージキー列挙]] --- ブラウザのlocalStorageのキー一覧を返す
-- [[ローカルストレージキー削除:plugin_browser/ローカルストレージキー削除]] --- ブラウザのlocalStorageのkeyを削除
+- [[(KEYを|KEYの)ローカルストレージキー削除:plugin_browser/ローカルストレージキー削除]] --- ブラウザのlocalStorageのkeyを削除
 - [[ローカルストレージ全削除:plugin_browser/ローカルストレージ全削除]] --- ブラウザのlocalStorageのデータを全部削除する
 
 ● [[描画:plugin_browser]]
-- [[描画開始:plugin_browser/描画開始]] --- 描画先にCanvas(文字列でクエリの指定も可)を指定して描画API(2D)の利用準備する
+- [[(CVの|CVへ|CVで)描画開始:plugin_browser/描画開始]] --- 描画先にCanvas(文字列でクエリの指定も可)を指定して描画API(2D)の利用準備する
 - [[描画中キャンバス:plugin_browser/描画中キャンバス]] --- 定数
-- [[線色設定:plugin_browser/線色設定]] --- Canvasの線の描画色(lineStyle)を指定する
-- [[塗色設定:plugin_browser/塗色設定]] --- Canvasへの描画色(fillStyle)を指定する
-- [[線描画:plugin_browser/線描画]] --- [x1, y1]から[x2, y2]まで線を描画する
-- [[線太設定:plugin_browser/線太設定]] --- vに線の太さ設定
-- [[四角描画:plugin_browser/四角描画]] --- [x, y, w, h]で矩形を描画する
-- [[描画クリア:plugin_browser/描画クリア]] --- [x, y, w, h]の範囲を描画クリア
-- [[円描画:plugin_browser/円描画]] --- [x, y]へrの円を描画する
-- [[楕円描画:plugin_browser/楕円描画]] --- [x, y, x幅, y幅, 回転, 開始角, 終了角, 左回転か]に楕円を描画する
-- [[多角形描画:plugin_browser/多角形描画]] --- 座標配列vを指定して多角形を描画する
-- [[画像描画:plugin_browser/画像描画]] --- [x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す
-- [[描画フォント設定:plugin_browser/描画フォント設定]] --- 描画フォントを指定する(CSSのフォント設定と同じ 例「36px Aria」)
-- [[文字描画:plugin_browser/文字描画]] --- [x, y]へテキストSを描画する(描画フォント設定でサイズなど指定)
+- [[(Vに|Vへ)線色設定:plugin_browser/線色設定]] --- Canvasの線の描画色(lineStyle)を指定する
+- [[(Vに|Vへ)塗色設定:plugin_browser/塗色設定]] --- Canvasへの描画色(fillStyle)を指定する
+- [[(AからBへ|Bまで)線描画:plugin_browser/線描画]] --- [x1, y1]から[x2, y2]まで線を描画する
+- [[(Vに|Vへ)線太設定:plugin_browser/線太設定]] --- vに線の太さ設定
+- [[(Bの|Bへ|Bに)四角描画:plugin_browser/四角描画]] --- [x, y, w, h]で矩形を描画する
+- [[(Bの|Bへ|Bに)描画クリア:plugin_browser/描画クリア]] --- [x, y, w, h]の範囲を描画クリア
+- [[(XYへRの|XYに)円描画:plugin_browser/円描画]] --- [x, y]へrの円を描画する
+- [[(ARGSへ|ARGSに|ARGSの)楕円描画:plugin_browser/楕円描画]] --- [x, y, x幅, y幅, 回転, 開始角, 終了角, 左回転か]に楕円を描画する
+- [[(Aで|Aの|Aを)多角形描画:plugin_browser/多角形描画]] --- 座標配列vを指定して多角形を描画する
+- [[(XYへIMGの|XYにIMGを)画像描画:plugin_browser/画像描画]] --- [x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す
+- [[(Nを|Nの|Nで|Nに)描画フォント設定:plugin_browser/描画フォント設定]] --- 描画フォントを指定する(CSSのフォント設定と同じ 例「36px Aria」)
+- [[(XYへSの|XYにSを)文字描画:plugin_browser/文字描画]] --- [x, y]へテキストSを描画する(描画フォント設定でサイズなど指定)
 
 ● [[位置情報:plugin_browser]]
-- [[位置情報取得時:plugin_browser/位置情報取得時]] --- 位置情報を取得してコールバック関数内で変数「対象」に配列で[緯度,経度]を返す
-- [[位置情報監視時:plugin_browser/位置情報監視時]] --- 位置情報を監視してIDを返す。引数に指定したコールバック関数内で変数「対象」に配列で[緯度,経度]を返す
-- [[位置情報監視停止:plugin_browser/位置情報監視停止]] --- 『位置情報監視時』で開始した監視を停止する
+- [[(FUNCの|FUNCに|FUNCへ)位置情報取得時:plugin_browser/位置情報取得時]] --- 位置情報を取得してコールバック関数内で変数「対象」に配列で[緯度,経度]を返す
+- [[(FUNCの|FUNCに|FUNCへ)位置情報監視時:plugin_browser/位置情報監視時]] --- 位置情報を監視してIDを返す。引数に指定したコールバック関数内で変数「対象」に配列で[緯度,経度]を返す
+- [[(WIDの)位置情報監視停止:plugin_browser/位置情報監視停止]] --- 『位置情報監視時』で開始した監視を停止する
 
 ● [[音声合成:plugin_browser]]
-- [[話:plugin_browser/話]] --- 音声合成APIを使って、Sを発話する
-- [[話終時:plugin_browser/話終時]] --- 音声合成APIを使って、Sを発話し発話した後でcallbackを実行
+- [[(Sと|Sを|Sの)話:plugin_browser/話]] --- 音声合成APIを使って、Sを発話する
+- [[(CALLBACKでSと|Sを|Sの)話終時:plugin_browser/話終時]] --- 音声合成APIを使って、Sを発話し発話した後でcallbackを実行
 - [[話者一覧取得:plugin_browser/話者一覧取得]] --- 音声合成APIの話者一覧を得る
-- [[話者設定:plugin_browser/話者設定]] --- 音声合成APIの話者を指定する
+- [[(Vに|Vへ)話者設定:plugin_browser/話者設定]] --- 音声合成APIの話者を指定する
 - [[話者速度:plugin_browser/話者速度]] --- 定数
 - [[話者声高:plugin_browser/話者声高]] --- 定数
 - [[話者音量:plugin_browser/話者音量]] --- 定数
-- [[話者詳細設定:plugin_browser/話者詳細設定]] --- 音声合成APIの話者の設定をJSON形式で設定する。key=(速度
+- [[(OBJで|OBJに|OBJへ)話者詳細設定:plugin_browser/話者詳細設定]] --- 音声合成APIの話者の設定をオブジェクト形式で設定する。『速度,声高,ピッチ,音量』を指定
 
 ● [[WebSocket:plugin_browser]]
-- [[WS接続完了時:plugin_browser/WS接続完了時]] --- WebSocketでサーバに接続完了した時に実行されるイベントを指定
-- [[WS受信時:plugin_browser/WS受信時]] --- WebSocketでサーバからメッセージを受信した時に実行されるイベントを指定
-- [[WSエラー発生時:plugin_browser/WSエラー発生時]] --- WebSocketでエラーが発生した時に実行されるイベントを指定
-- [[WS接続:plugin_browser/WS接続]] --- WebSocketサーバsに接続する
-- [[WS送信:plugin_browser/WS送信]] --- アクティブなWebSocketへsを送信する
+- [[(CALLBACKを)WS接続完了時:plugin_browser/WS接続完了時]] --- WebSocketでサーバに接続完了した時に実行されるイベントを指定
+- [[(CALLBACKを)WS受信時:plugin_browser/WS受信時]] --- WebSocketでサーバからメッセージを受信した時に実行されるイベントを指定
+- [[(CALLBACKを)WSエラー発生時:plugin_browser/WSエラー発生時]] --- WebSocketでエラーが発生した時に実行されるイベントを指定
+- [[(Sに|Sへ|Sの)WS接続:plugin_browser/WS接続]] --- WebSocketサーバsに接続する
+- [[(Sを|Sと)WS送信:plugin_browser/WS送信]] --- アクティブなWebSocketへsを送信する
+- [[WS切断:plugin_browser/WS切断]] --- アクティブなWebSocketを閉じる
 
 ■ [[plugin_turtle]]
 
@@ -377,62 +388,62 @@
 - [[カメ作成:plugin_turtle/カメ作成]] --- タートルグラフィックスを開始してカメのIDを返す
 - [[ゾウ作成:plugin_turtle/ゾウ作成]] --- ゾウの画像でタートルグラフィックスを開始してIDを返す
 - [[パンダ作成:plugin_turtle/パンダ作成]] --- パンダの画像でタートルグラフィックスを開始してIDを返す
-- [[カメ操作対象設定:plugin_turtle/カメ操作対象設定]] --- IDを指定して操作対象となるカメを変更する
+- [[(IDに|IDへ|IDの)カメ操作対象設定:plugin_turtle/カメ操作対象設定]] --- IDを指定して操作対象となるカメを変更する
 - [[カメ描画先:plugin_turtle/カメ描画先]] --- 定数
 - [[カメ画像URL:plugin_turtle/カメ画像URL]] --- 定数
-- [[カメ画像変更:plugin_turtle/カメ画像変更]] --- カメの画像をURLに変更する
+- [[(URLに|URLへ)カメ画像変更:plugin_turtle/カメ画像変更]] --- カメの画像をURLに変更する
 - [[カメ速度:plugin_turtle/カメ速度]] --- 定数
-- [[カメ速度設定:plugin_turtle/カメ速度設定]] --- カメの動作速度vに設定(大きいほど遅い)
-- [[カメ移動:plugin_turtle/カメ移動]] --- カメの位置を[x,y]へ移動する
-- [[カメ起点移動:plugin_turtle/カメ起点移動]] --- カメの描画起点位置を[x,y]へ移動する
-- [[カメ進:plugin_turtle/カメ進]] --- カメの位置をVだけ進める
-- [[カメ戻:plugin_turtle/カメ戻]] --- カメの位置をVだけ戻す
-- [[カメ角度設定:plugin_turtle/カメ角度設定]] --- カメの向きをDEGに設定する
-- [[カメ右回転:plugin_turtle/カメ右回転]] --- カメの向きをDEGだけ右に向ける
-- [[カメ左回転:plugin_turtle/カメ左回転]] --- カメの向きをDEGだけ左に向ける
-- [[カメペン色設定:plugin_turtle/カメペン色設定]] --- カメのペン描画色をCに設定する
-- [[カメペンサイズ設定:plugin_turtle/カメペンサイズ設定]] --- カメペンのサイズをWに設定する
-- [[カメペン設定:plugin_turtle/カメペン設定]] --- カメペンを使うかどうかをV(オン/オフ)に設定する
+- [[(Vに|Vへ)カメ速度設定:plugin_turtle/カメ速度設定]] --- カメの動作速度vに設定(大きいほど遅い)
+- [[(XYに|XYへ)カメ移動:plugin_turtle/カメ移動]] --- カメの位置を[x,y]へ移動する
+- [[(XYに|XYへ)カメ起点移動:plugin_turtle/カメ起点移動]] --- カメの描画起点位置を[x,y]へ移動する
+- [[(Vだけ)カメ進:plugin_turtle/カメ進]] --- カメの位置をVだけ進める
+- [[(Vだけ)カメ戻:plugin_turtle/カメ戻]] --- カメの位置をVだけ戻す
+- [[(Vに|Vへ|Vの)カメ角度設定:plugin_turtle/カメ角度設定]] --- カメの向きをDEGに設定する
+- [[(Vだけ)カメ右回転:plugin_turtle/カメ右回転]] --- カメの向きをDEGだけ右に向ける
+- [[(Vだけ)カメ左回転:plugin_turtle/カメ左回転]] --- カメの向きをDEGだけ左に向ける
+- [[(Cに|Cへ)カメペン色設定:plugin_turtle/カメペン色設定]] --- カメのペン描画色をCに設定する
+- [[(Wに|Wへ)カメペンサイズ設定:plugin_turtle/カメペンサイズ設定]] --- カメペンのサイズをWに設定する
+- [[(Wに|Wへ)カメペン設定:plugin_turtle/カメペン設定]] --- カメペンを使うかどうかをV(オン/オフ)に設定する
 - [[カメ全消去:plugin_turtle/カメ全消去]] --- 表示しているカメと描画内容を全部消去する
 - [[カメ非表示:plugin_turtle/カメ非表示]] --- カメの画像を非表示にする。描画に影響しない。
 - [[カメ表示:plugin_turtle/カメ表示]] --- 非表示にしたカメを表示する。
-- [[カメクリック時:plugin_turtle/カメクリック時]] --- 操作対象のカメをクリックした時のイベントを設定する
+- [[(FUNCを)カメクリック時:plugin_turtle/カメクリック時]] --- 操作対象のカメをクリックした時のイベントを設定する
 
 ■ [[plugin_node]]
 
 ● [[ファイル入出力:plugin_node]]
-- [[開:plugin_node/開]] --- ファイルSを開く
-- [[読:plugin_node/読]] --- ファイルSを開く
-- [[バイナリ読:plugin_node/バイナリ読]] --- ファイルSをバイナリ(Buffer)として開く
-- [[保存:plugin_node/保存]] --- データSをファイルFヘ書き込む
-- [[起動待機:plugin_node/起動待機]] --- シェルコマンドSを起動し実行終了まで待機する
-- [[起動:plugin_node/起動]] --- シェルコマンドSを起動
-- [[起動時:plugin_node/起動時]] --- シェルコマンドSを起動
-- [[ブラウザ起動:plugin_node/ブラウザ起動]] --- ブラウザでURLを起動
-- [[ファイル列挙:plugin_node/ファイル列挙]] --- パスSのファイル名（フォルダ名）一覧を取得する。ワイルドカード可能。「*.jpg;*.png」など複数の拡張子を指定可能。
-- [[全ファイル列挙:plugin_node/全ファイル列挙]] --- パスS以下の全ファイル名を取得する。ワイルドカード可能。「*.jpg;*.png」のように複数の拡張子を指定可能。
-- [[存在:plugin_node/存在]] --- ファイルPATHが存在するか確認して返す
-- [[フォルダ存在:plugin_node/フォルダ存在]] --- ディレクトリPATHが存在するか確認して返す
-- [[フォルダ作成:plugin_node/フォルダ作成]] --- ディレクトリPATHを作成して返す(再帰的に作成)
-- [[ファイルコピー:plugin_node/ファイルコピー]] --- パスAをパスBへファイルコピーする
-- [[ファイルコピー時:plugin_node/ファイルコピー時]] --- パスAをパスBへファイルコピーしてcallbackを実行
-- [[ファイル移動:plugin_node/ファイル移動]] --- パスAをパスBへ移動する
-- [[ファイル移動時:plugin_node/ファイル移動時]] --- パスAをパスBへ移動してcallbackを実行
-- [[ファイル削除:plugin_node/ファイル削除]] --- パスPATHを削除する
-- [[ファイル削除時:plugin_node/ファイル削除時]] --- パスPATHを削除してcallbackを実行
-- [[ファイル情報取得:plugin_node/ファイル情報取得]] --- パスPATHの情報を調べてオブジェクトで返す
-- [[ファイルサイズ取得:plugin_node/ファイルサイズ取得]] --- パスPATHのファイルサイズを調べて返す
+- [[(Sを|Sから)開:plugin_node/開]] --- ファイルSを開く
+- [[(Sを|Sから)読:plugin_node/読]] --- ファイルSを開く
+- [[(Sを|Sから)バイナリ読:plugin_node/バイナリ読]] --- ファイルSをバイナリ(Buffer)として開く
+- [[(SをFへ|Fに)保存:plugin_node/保存]] --- データSをファイルFヘ書き込む
+- [[(Sを)起動待機:plugin_node/起動待機]] --- シェルコマンドSを起動し実行終了まで待機する
+- [[(Sを)起動:plugin_node/起動]] --- シェルコマンドSを起動
+- [[(CALLBACKでSを)起動時:plugin_node/起動時]] --- シェルコマンドSを起動
+- [[(URLを)ブラウザ起動:plugin_node/ブラウザ起動]] --- ブラウザでURLを起動
+- [[(Sの|Sを|Sで)ファイル列挙:plugin_node/ファイル列挙]] --- パスSのファイル名（フォルダ名）一覧を取得する。ワイルドカード可能。「*.jpg;*.png」など複数の拡張子を指定可能。
+- [[(Sの|Sを|Sで)全ファイル列挙:plugin_node/全ファイル列挙]] --- パスS以下の全ファイル名を取得する。ワイルドカード可能。「*.jpg;*.png」のように複数の拡張子を指定可能。
+- [[(PATHが|PATHの)存在:plugin_node/存在]] --- ファイルPATHが存在するか確認して返す
+- [[(PATHが|PATHの)フォルダ存在:plugin_node/フォルダ存在]] --- ディレクトリPATHが存在するか確認して返す
+- [[(PATHの|PATHを|PATHに|PATHへ)フォルダ作成:plugin_node/フォルダ作成]] --- ディレクトリPATHを作成して返す(再帰的に作成)
+- [[(AからBに|AをBへ)ファイルコピー:plugin_node/ファイルコピー]] --- パスAをパスBへファイルコピーする
+- [[(CALLBACKでAからBに|AをBへ)ファイルコピー時:plugin_node/ファイルコピー時]] --- パスAをパスBへファイルコピーしてcallbackを実行
+- [[(AからBに|AをBへ)ファイル移動:plugin_node/ファイル移動]] --- パスAをパスBへ移動する
+- [[(CALLBACKでAからBに|AをBへ)ファイル移動時:plugin_node/ファイル移動時]] --- パスAをパスBへ移動してcallbackを実行
+- [[(PATHの|PATHを)ファイル削除:plugin_node/ファイル削除]] --- パスPATHを削除する
+- [[(CALLBACKでPATHの|PATHを)ファイル削除時:plugin_node/ファイル削除時]] --- パスPATHを削除してcallbackを実行
+- [[(PATHの|PATHから)ファイル情報取得:plugin_node/ファイル情報取得]] --- パスPATHの情報を調べてオブジェクトで返す
+- [[(PATHの|PATHから)ファイルサイズ取得:plugin_node/ファイルサイズ取得]] --- パスPATHのファイルサイズを調べて返す
 
 ● [[パス操作:plugin_node]]
-- [[ファイル名抽出:plugin_node/ファイル名抽出]] --- フルパスのファイル名Sからファイル名部分を抽出して返す
-- [[パス抽出:plugin_node/パス抽出]] --- ファイル名Sからパス部分を抽出して返す
-- [[相対パス展開:plugin_node/相対パス展開]] --- ファイル名AからパスBを展開して返す
+- [[(Sから|Sの)ファイル名抽出:plugin_node/ファイル名抽出]] --- フルパスのファイル名Sからファイル名部分を抽出して返す
+- [[(Sから|Sの)パス抽出:plugin_node/パス抽出]] --- ファイル名Sからパス部分を抽出して返す
+- [[(AをBで)相対パス展開:plugin_node/相対パス展開]] --- ファイル名AからパスBを展開して返す
 
 ● [[フォルダ取得:plugin_node]]
 - [[カレントディレクトリ取得:plugin_node/カレントディレクトリ取得]] --- カレントディレクトリを返す
-- [[カレントディレクトリ変更:plugin_node/カレントディレクトリ変更]] --- カレントディレクトリをDIRに変更する
+- [[(DIRに|DIRへ)カレントディレクトリ変更:plugin_node/カレントディレクトリ変更]] --- カレントディレクトリをDIRに変更する
 - [[作業フォルダ取得:plugin_node/作業フォルダ取得]] --- カレントディレクトリを返す
-- [[作業フォルダ変更:plugin_node/作業フォルダ変更]] --- カレントディレクトリをDIRに変更する
+- [[(DIRに|DIRへ)作業フォルダ変更:plugin_node/作業フォルダ変更]] --- カレントディレクトリをDIRに変更する
 - [[ホームディレクトリ取得:plugin_node/ホームディレクトリ取得]] --- ホームディレクトリを取得して返す
 - [[デスクトップ:plugin_node/デスクトップ]] --- デスクトップパスを取得して返す
 - [[マイドキュメント:plugin_node/マイドキュメント]] --- マイドキュメントのパスを取得して返す
@@ -440,81 +451,72 @@
 - [[母艦パス取得:plugin_node/母艦パス取得]] --- スクリプトのあるディレクトリを返す
 
 ● [[環境変数:plugin_node]]
-- [[環境変数取得:plugin_node/環境変数取得]] --- 環境変数Sを返す
+- [[(Sの)環境変数取得:plugin_node/環境変数取得]] --- 環境変数Sを返す
 - [[環境変数一覧取得:plugin_node/環境変数一覧取得]] --- 環境変数の一覧を返す
 
 ● [[圧縮・解凍:plugin_node]]
-- [[圧縮解凍ツールパス変更:plugin_node/圧縮解凍ツールパス変更]] --- 圧縮解凍に使うツールを取得変更する
-- [[解凍:plugin_node/解凍]] --- (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https://goo.gl/LmKswH)
-- [[解凍時:plugin_node/解凍時]] --- 解凍処理を行い、処理が完了したときにcallback処理を実行
-- [[圧縮:plugin_node/圧縮]] --- (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https://goo.gl/LmKswH)
-- [[圧縮時:plugin_node/圧縮時]] --- 圧縮処理を行い完了したときにcallback処理を指定
+- [[(Vに|Vへ)圧縮解凍ツールパス変更:plugin_node/圧縮解凍ツールパス変更]] --- 圧縮解凍に使うツールを取得変更する
+- [[(AをBに|AからBへ)解凍:plugin_node/解凍]] --- (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https:
+- [[(CALLBACKでAをBに|AからBへ)解凍時:plugin_node/解凍時]] --- 解凍処理を行い、処理が完了したときにcallback処理を実行
+- [[(AをBに|AからBへ)圧縮:plugin_node/圧縮]] --- (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https:
+- [[(CALLBACKでAをBに|AからBへ)圧縮時:plugin_node/圧縮時]] --- 圧縮処理を行い完了したときにcallback処理を指定
 
 ● [[Nodeプロセス:plugin_node]]
 - [[終:plugin_node/終]] --- Nodeでプログラム実行を強制終了する
 - [[終了:plugin_node/終了]] --- Nodeでプログラム実行を強制終了する
-- [[秒待:plugin_node/秒待]] --- NodeでN秒待つ
+- [[(SEC)秒待:plugin_node/秒待]] --- NodeでN秒待つ
 - [[OS取得:plugin_node/OS取得]] --- OSプラットフォームを返す(darwin
 - [[OSアーキテクチャ取得:plugin_node/OSアーキテクチャ取得]] --- OSアーキテクチャを返す
 
 ● [[クリップボード:plugin_node]]
-- [[クリップボード:plugin_node/クリップボード]] --- クリップボードを取得設定（『クリップボード＝値』で書換が可能）
+- [[(Vを)クリップボード:plugin_node/クリップボード]] --- クリップボードを取得設定（『クリップボード＝値』で書換が可能）
 
 ● [[コマンドライン:plugin_node]]
 - [[コマンドライン:plugin_node/コマンドライン]] --- 定数
 - [[ナデシコランタイム:plugin_node/ナデシコランタイム]] --- 定数
 - [[ナデシコランタイムパス:plugin_node/ナデシコランタイムパス]] --- 定数
-- [[標準入力取得時:plugin_node/標準入力取得時]] --- 標準入力を一行取得した時に、無名関数（あるいは、文字列で関数名を指定）F(s)を実行する
+- [[(CALLBACKを)標準入力取得時:plugin_node/標準入力取得時]] --- 標準入力を一行取得した時に、無名関数（あるいは、文字列で関数名を指定）F(s)を実行する
 
 ● [[テスト:plugin_node]]
-- [[ASSERT等:plugin_node/ASSERT等]] --- mochaによるテストで、ASSERTでAとBが正しいことを報告する
+- [[(AとBが)ASSERT等:plugin_node/ASSERT等]] --- mochaによるテストで、ASSERTでAとBが正しいことを報告する
+
+● [[ネットワーク:plugin_node]]
+- [[自分IPアドレス取得:plugin_node/自分IPアドレス取得]] --- ネットワークアダプターからIPアドレス(IPv4)を取得して配列で返す
+- [[自分IPV6アドレス取得:plugin_node/自分IPV6アドレス取得]] --- ネットワークアダプターからIPアドレス(IPv6)を取得して配列で返す
 
 ● [[Ajax:plugin_node]]
-- [[AJAX送信時:plugin_node/AJAX送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
-- [[GET送信時:plugin_node/GET送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
-- [[POST送信時:plugin_node/POST送信時]] --- AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
-- [[POSTフォーム送信時:plugin_node/POSTフォーム送信時]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定
-- [[AJAX失敗時:plugin_node/AJAX失敗時]] --- Ajax命令でエラーが起きたとき
+- [[(CALLBACKのURLまで|URLへ|URLに)AJAX送信時:plugin_node/AJAX送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
+- [[(CALLBACKのURLまで|URLへ|URLに)GET送信時:plugin_node/GET送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
+- [[(CALLBACKのURLまでPARAMSを|URLへ|URLに)POST送信時:plugin_node/POST送信時]] --- AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
+- [[(CALLBACKのURLまでPARAMSを|URLへ|URLに)POSTフォーム送信時:plugin_node/POSTフォーム送信時]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定
+- [[(CALLBACKの)AJAX失敗時:plugin_node/AJAX失敗時]] --- Ajax命令でエラーが起きたとき
 - [[AJAXオプション:plugin_node/AJAXオプション]] --- 定数
-- [[AJAXオプション設定:plugin_node/AJAXオプション設定]] --- Ajax命令でオプションを設定
+- [[(OPTIONに|OPTIONへ|OPTIONと)AJAXオプション設定:plugin_node/AJAXオプション設定]] --- Ajax命令でオプションを設定
 
 ● [[文字コード:plugin_node]]
-- [[文字コード変換サポート判定:plugin_node/文字コード変換サポート判定]] --- 文字コードCODEをサポートしているか確認
-- [[SJIS変換:plugin_node/SJIS変換]] --- (v1非互換)文字列をShift_JISのバイナリバッファに変換
-- [[SJIS取得:plugin_node/SJIS取得]] --- Shift_JISのバイナリバッファを文字列に変換
-- [[エンコーディング変換:plugin_node/エンコーディング変換]] --- 文字列SをCODEへ変換してバイナリバッファを返す
-- [[エンコーディング取得:plugin_node/エンコーディング取得]] --- バイナリバッファBUFをCODEから変換して返す
+- [[(CODEの|CODEを)文字コード変換サポート判定:plugin_node/文字コード変換サポート判定]] --- 文字コードCODEをサポートしているか確認
+- [[(STRに|STRへ|STRを)SJIS変換:plugin_node/SJIS変換]] --- (v1非互換)文字列をShift_JISのバイナリバッファに変換
+- [[(BUFから|BUFを|BUFで)SJIS取得:plugin_node/SJIS取得]] --- Shift_JISのバイナリバッファを文字列に変換
+- [[(SをCODEへ|CODEで)エンコーディング変換:plugin_node/エンコーディング変換]] --- 文字列SをCODEへ変換してバイナリバッファを返す
+- [[(BUFをCODEから|CODEで)エンコーディング取得:plugin_node/エンコーディング取得]] --- バイナリバッファBUFをCODEから変換して返す
 
 ● [[マウスとキーボード操作:plugin_node]]
-- [[キー送信:plugin_node/キー送信]] --- Sのキーを送信
-- [[窓アクティブ:plugin_node/窓アクティブ]] --- Sの窓をアクティブにする
+- [[(Sを|Sの)キー送信:plugin_node/キー送信]] --- Sのキーを送信
+- [[(Sを|Sの)窓アクティブ:plugin_node/窓アクティブ]] --- Sの窓をアクティブにする
 
 ■ [[plugin_express]]
 
 ● [[Webサーバ(Express):plugin_express]]
 - [[GETデータ:plugin_express/GETデータ]] --- 定数
 - [[POSTデータ:plugin_express/POSTデータ]] --- 定数
-- [[WEBサーバ名前設定:plugin_express/WEBサーバ名前設定]] --- Webサーバの名前を変更する
-- [[WEBサーバ起動:plugin_express/WEBサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WEBサーバ起動成功した時』を実行する
-- [[WEBサーバ起動成功時:plugin_express/WEBサーバ起動成功時]] --- WEBサーバ起動が成功した時にcallbackを実行
-- [[WEBサーバ起動失敗時:plugin_express/WEBサーバ起動失敗時]] --- WEBサーバ起動が失敗した時にcallbackを実行
-- [[WEBサーバ静的パス指定:plugin_express/WEBサーバ静的パス指定]] --- サーバのHTMLや画像などを配置する静的パスを指定する
-- [[WEBサーバGET時:plugin_express/WEBサーバGET時]] --- URIにGETメソッドがあった時の処理を指定
-- [[WEBサーバPOST時:plugin_express/WEBサーバPOST時]] --- URIにPOSTメソッドがあった時の処理を指定
-- [[WEBサーバPUT時:plugin_express/WEBサーバPUT時]] --- URIにPOSTメソッドがあった時の処理を指定
-- [[WEBサーバDELETE時:plugin_express/WEBサーバDELETE時]] --- URIにPOSTメソッドがあった時の処理を指定
-- [[WEBサーバ出力:plugin_express/WEBサーバ出力]] --- クライアントにSを出力
-- [[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト]] --- URLにリダイレクトする
-
-■ [[plugin_websocket]]
-
-● [[WebSocketサーバ:plugin_websocket]]
-- [[GETデータ:plugin_websocket/GETデータ]] --- 定数
-- [[POSTデータ:plugin_websocket/POSTデータ]] --- 定数
-- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
-- [[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時]] --- WSサーバ起動が成功した時にcallbackを実行
-- [[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時]] --- WSサーバ起動が失敗した時にcallbackを実行
-- [[WSサーバ接続時:plugin_websocket/WSサーバ接続時]] --- WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
-- [[WSサーバ受信時:plugin_websocket/WSサーバ受信時]] --- WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
-- [[WSサーバ全送信:plugin_websocket/WSサーバ全送信]] --- WSサーバで全員にメッセージSを送信する
-- [[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得]] --- WSサーバに接続しているクライアントの一覧を返す
+- [[(NAMEに|NAMEへ)WEBサーバ名前設定:plugin_express/WEBサーバ名前設定]] --- Webサーバの名前を変更する
+- [[(CALLBACKまでPORTNOの|PORTNOで)WEBサーバ起動:plugin_express/WEBサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WEBサーバ起動成功した時』を実行する
+- [[(CALLBACKを)WEBサーバ起動成功時:plugin_express/WEBサーバ起動成功時]] --- WEBサーバ起動が成功した時にcallbackを実行
+- [[(CALLBACKを)WEBサーバ起動失敗時:plugin_express/WEBサーバ起動失敗時]] --- WEBサーバ起動が失敗した時にcallbackを実行
+- [[(URLをPATHに|PATHへ)WEBサーバ静的パス指定:plugin_express/WEBサーバ静的パス指定]] --- サーバのHTMLや画像などを配置する静的パスを指定する
+- [[(CALLBACKをURIに|URIへ)WEBサーバGET時:plugin_express/WEBサーバGET時]] --- URIにGETメソッドがあった時の処理を指定
+- [[(CALLBACKをURIに|URIへ)WEBサーバPOST時:plugin_express/WEBサーバPOST時]] --- URIにPOSTメソッドがあった時の処理を指定
+- [[(CALLBACKをURIに|URIへ)WEBサーバPUT時:plugin_express/WEBサーバPUT時]] --- URIにPOSTメソッドがあった時の処理を指定
+- [[(CALLBACKをURIに|URIへ)WEBサーバDELETE時:plugin_express/WEBサーバDELETE時]] --- URIにPOSTメソッドがあった時の処理を指定
+- [[(Sを|Sと)WEBサーバ出力:plugin_express/WEBサーバ出力]] --- クライアントにSを出力
+- [[(URLへ|URLに)WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト]] --- URLにリダイレクトする

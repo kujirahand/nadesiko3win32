@@ -478,6 +478,46 @@
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/CR
+■ CR (CR)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[システム定数:plugin_system/システム定数]]
+種類 || 定数
+初期値 || '\r'
+}}}
+
+#page(plugin_system/CR/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/CR/解説
+●『[[CR:plugin_system/CR/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/LF
+■ LF (LF)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[システム定数:plugin_system/システム定数]]
+種類 || 定数
+初期値 || '\n'
+}}}
+
+#page(plugin_system/LF/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/LF/解説
+●『[[LF:plugin_system/LF/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/空配列
 ■ 空配列 (からはいれつ)
 {{{#csv(flag=||)
@@ -907,6 +947,29 @@ JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを
 ●『[[JSオブジェクト取得:plugin_system/JSオブジェクト取得/解説]]』の詳しい解説
 
 なでしこで定義した関数や変数nameのJavaScriptオブジェクトを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/JS関数実行
+■ JS関数実行 (JSかんすうしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[特殊命令:plugin_system/特殊命令]]
+種類 || 関数
+引数 || NAMEをARGSで
+説明 || JavaScriptの関数NAMEを引数ARGS(配列)で実行する
+}}}
+
+#page(plugin_system/JS関数実行/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/JS関数実行/解説
+●『[[JS関数実行:plugin_system/JS関数実行/解説]]』の詳しい解説
+
+JavaScriptの関数NAMEを引数ARGS(配列)で実行する
 
 {{{
 # 準備中
@@ -3577,6 +3640,29 @@ JSON文字列Sをオブジェクトにデコードして返す
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/配列複製
+■ 配列複製 (はいれつふくせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[配列操作:plugin_system/配列操作]]
+種類 || 関数
+引数 || Aを
+説明 || 配列Aを複製して返す。
+}}}
+
+#page(plugin_system/配列複製/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/配列複製/解説
+●『[[配列複製:plugin_system/配列複製/解説]]』の詳しい解説
+
+配列Aを複製して返す。
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/ハッシュキー列挙
 ■ ハッシュキー列挙 (はっしゅきーれっきょ)
 {{{#csv(flag=||)
@@ -4084,12 +4170,12 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 }}}
 
 ###PAGE###:w:plugin_system/タイムゾーン設定
-■ タイムゾーン設定 (たいむぞーんせってい)
+■ タイムゾーン設定 (en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照))
 {{{#csv(flag=||)
 カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
 種類 || 関数
 引数 || TZで
-説明 || タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+説明 || タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
 }}}
 
 #page(plugin_system/タイムゾーン設定/解説)
@@ -4100,7 +4186,7 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 ###PAGE###:c:plugin_system/タイムゾーン設定/解説
 ●『[[タイムゾーン設定:plugin_system/タイムゾーン設定/解説]]』の詳しい解説
 
-タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
 
 {{{
 # 準備中
@@ -4561,6 +4647,52 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/ブラウザ移動
+■ ブラウザ移動 (ぶらうざいどう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[ブラウザ操作:plugin_browser/ブラウザ操作]]
+種類 || 関数
+引数 || URLに|URLへ
+説明 || 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
+}}}
+
+#page(plugin_browser/ブラウザ移動/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/ブラウザ移動/解説
+●『[[ブラウザ移動:plugin_browser/ブラウザ移動/解説]]』の詳しい解説
+
+任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/ブラウザ戻
+■ ブラウザ戻 (ぶらうざもどる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[ブラウザ操作:plugin_browser/ブラウザ操作]]
+種類 || 関数
+引数 || 
+説明 || 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
+}}}
+
+#page(plugin_browser/ブラウザ戻/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/ブラウザ戻/解説
+●『[[ブラウザ戻:plugin_browser/ブラウザ戻/解説]]』の詳しい解説
+
+任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/AJAX送信時
 ■ AJAX送信時 (AJAXそうしんしたとき)
 {{{#csv(flag=||)
@@ -4963,6 +5095,49 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/対象イベント
+■ 対象イベント (たいしょういべんと)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || ''
+}}}
+
+#page(plugin_browser/対象イベント/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/対象イベント/解説
+●『[[対象イベント:plugin_browser/対象イベント/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/DOMイベント処理停止
+■ DOMイベント処理停止 (DOMいべんとしょりていし)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || EVENTを|EVENTの
+説明 || キーイベントやマウスイベントで、元々ブラウザが行う処理を中止する
+}}}
+
+#page(plugin_browser/DOMイベント処理停止/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/DOMイベント処理停止/解説
+●『[[DOMイベント処理停止:plugin_browser/DOMイベント処理停止/解説]]』の詳しい解説
+
+キーイベントやマウスイベントで、元々ブラウザが行う処理を中止する
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/クリック時
 ■ クリック時 (くりっくしたとき)
 {{{#csv(flag=||)
@@ -4992,7 +5167,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを
-説明 || 無名関数FでDOMを読み個だ時に実行するイベントを設定
+説明 || 無名関数FでDOMを読み込んだ時に実行するイベントを設定
 }}}
 
 #page(plugin_browser/読込時/解説)
@@ -5003,7 +5178,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/読込時/解説
 ●『[[読込時:plugin_browser/読込時/解説]]』の詳しい解説
 
-無名関数FでDOMを読み個だ時に実行するイベントを設定
+無名関数FでDOMを読み込んだ時に実行するイベントを設定
 
 {{{
 # 準備中
@@ -5014,7 +5189,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
-引数 || FUNCでDOMを
+引数 || FUNCでDOMを|DOMの
 説明 || 無名関数Fでフォームを送信した時に実行するイベントを設定
 }}}
 
@@ -5057,7 +5232,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
-引数 || FUNCでDOMを
+引数 || FUNCでDOMを|DOMの
 説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『押されたキー』が設定される。
 }}}
 
@@ -5080,7 +5255,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
-引数 || FUNCでDOMを
+引数 || FUNCでDOMを|DOMの
 説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『押されたキー』が設定される。
 }}}
 
@@ -5103,7 +5278,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
-引数 || FUNCでDOMを
+引数 || FUNCでDOMを|DOMの
 説明 || 無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定。『押されたキー』が設定される。
 }}}
 
@@ -5166,7 +5341,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
-引数 || FUNCでDOMを
+引数 || FUNCでDOMを|DOMの
 説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 }}}
 
@@ -5189,7 +5364,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
-引数 || FUNCでDOMを
+引数 || FUNCでDOMを|DOMの
 説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 }}}
 
@@ -5212,7 +5387,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
-引数 || FUNCでDOMを
+引数 || FUNCでDOMを|DOMの
 説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
 }}}
 
@@ -5460,26 +5635,6 @@ DOMの属性Sを取得
 # 準備中
 }}}
 
-###PAGE###:w:plugin_browser/DOM和スタイル
-■ DOM和スタイル (DOMわすたいる)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
-種類 || 定数
-初期値 || 
-}}}
-
-#page(plugin_browser/DOM和スタイル/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser]]
-
-###PAGE###:c:plugin_browser/DOM和スタイル/解説
-●『[[DOM和スタイル:plugin_browser/DOM和スタイル/解説]]』の詳しい解説
-
-{{{
-# 準備中
-}}}
-
 ###PAGE###:w:plugin_browser/DOMスタイル設定
 ■ DOMスタイル設定 (DOMすたいるせってい)
 {{{#csv(flag=||)
@@ -5498,6 +5653,29 @@ DOMの属性Sを取得
 ●『[[DOMスタイル設定:plugin_browser/DOMスタイル設定/解説]]』の詳しい解説
 
 DOMのスタイルAに値Bを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/DOMスタイル一括設定
+■ DOMスタイル一括設定 (DOMすたいるいっかつせってい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || DOMにVALUESを|DOMへ
+説明 || DOMに(オブジェクト型で)スタイル情報を一括設定
+}}}
+
+#page(plugin_browser/DOMスタイル一括設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/DOMスタイル一括設定/解説
+●『[[DOMスタイル一括設定:plugin_browser/DOMスタイル一括設定/解説]]』の詳しい解説
+
+DOMに(オブジェクト型で)スタイル情報を一括設定
 
 {{{
 # 準備中
@@ -6659,12 +6837,12 @@ vに線の太さ設定
 }}}
 
 ###PAGE###:w:plugin_browser/話者詳細設定
-■ 話者詳細設定 (声高)
+■ 話者詳細設定 (わしゃしょうさいせってい)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[音声合成:plugin_browser/音声合成]]
 種類 || 関数
 引数 || OBJで|OBJに|OBJへ
-説明 || 音声合成APIの話者の設定をJSON形式で設定する。key=(速度
+説明 || 音声合成APIの話者の設定をオブジェクト形式で設定する。『速度,声高,ピッチ,音量』を指定
 }}}
 
 #page(plugin_browser/話者詳細設定/解説)
@@ -6675,7 +6853,7 @@ vに線の太さ設定
 ###PAGE###:c:plugin_browser/話者詳細設定/解説
 ●『[[話者詳細設定:plugin_browser/話者詳細設定/解説]]』の詳しい解説
 
-音声合成APIの話者の設定をJSON形式で設定する。key=(速度
+音声合成APIの話者の設定をオブジェクト形式で設定する。『速度,声高,ピッチ,音量』を指定
 
 {{{
 # 準備中
@@ -6791,6 +6969,29 @@ WebSocketサーバsに接続する
 ●『[[WS送信:plugin_browser/WS送信/解説]]』の詳しい解説
 
 アクティブなWebSocketへsを送信する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/WS切断
+■ WS切断 (WSせつだん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[WebSocket:plugin_browser/WebSocket]]
+種類 || 関数
+引数 || 
+説明 || アクティブなWebSocketを閉じる
+}}}
+
+#page(plugin_browser/WS切断/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/WS切断/解説
+●『[[WS切断:plugin_browser/WS切断/解説]]』の詳しい解説
+
+アクティブなWebSocketを閉じる
 
 {{{
 # 準備中
@@ -8142,12 +8343,12 @@ IDを指定して操作対象となるカメを変更する
 }}}
 
 ###PAGE###:w:plugin_node/解凍
-■ 解凍 (かいとう)
+■ 解凍 (goo.gl/LmKswH))
 {{{#csv(flag=||)
 カテゴリ || [[plugin_node]] > [[圧縮・解凍:plugin_node/圧縮・解凍]]
 種類 || 関数
 引数 || AをBに|AからBへ
-説明 || (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https://goo.gl/LmKswH)
+説明 || (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https:
 }}}
 
 #page(plugin_node/解凍/解説)
@@ -8158,7 +8359,7 @@ IDを指定して操作対象となるカメを変更する
 ###PAGE###:c:plugin_node/解凍/解説
 ●『[[解凍:plugin_node/解凍/解説]]』の詳しい解説
 
-(v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https://goo.gl/LmKswH)
+(v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https:
 
 {{{
 # 準備中
@@ -8188,12 +8389,12 @@ IDを指定して操作対象となるカメを変更する
 }}}
 
 ###PAGE###:w:plugin_node/圧縮
-■ 圧縮 (あっしゅく)
+■ 圧縮 (goo.gl/LmKswH))
 {{{#csv(flag=||)
 カテゴリ || [[plugin_node]] > [[圧縮・解凍:plugin_node/圧縮・解凍]]
 種類 || 関数
 引数 || AをBに|AからBへ
-説明 || (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https://goo.gl/LmKswH)
+説明 || (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https:
 }}}
 
 #page(plugin_node/圧縮/解説)
@@ -8204,7 +8405,7 @@ IDを指定して操作対象となるカメを変更する
 ###PAGE###:c:plugin_node/圧縮/解説
 ●『[[圧縮:plugin_node/圧縮/解説]]』の詳しい解説
 
-(v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https://goo.gl/LmKswH)
+(v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https:
 
 {{{
 # 準備中
@@ -8472,6 +8673,52 @@ OSアーキテクチャを返す
 ●『[[ASSERT等:plugin_node/ASSERT等/解説]]』の詳しい解説
 
 mochaによるテストで、ASSERTでAとBが正しいことを報告する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_node/自分IPアドレス取得
+■ 自分IPアドレス取得 (じぶんIPあどれすしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[ネットワーク:plugin_node/ネットワーク]]
+種類 || 関数
+引数 || 
+説明 || ネットワークアダプターからIPアドレス(IPv4)を取得して配列で返す
+}}}
+
+#page(plugin_node/自分IPアドレス取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/自分IPアドレス取得/解説
+●『[[自分IPアドレス取得:plugin_node/自分IPアドレス取得/解説]]』の詳しい解説
+
+ネットワークアダプターからIPアドレス(IPv4)を取得して配列で返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_node/自分IPV6アドレス取得
+■ 自分IPV6アドレス取得 (じぶんIPV6あどれすしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[ネットワーク:plugin_node/ネットワーク]]
+種類 || 関数
+引数 || 
+説明 || ネットワークアダプターからIPアドレス(IPv6)を取得して配列で返す
+}}}
+
+#page(plugin_node/自分IPV6アドレス取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/自分IPV6アドレス取得/解説
+●『[[自分IPV6アドレス取得:plugin_node/自分IPV6アドレス取得/解説]]』の詳しい解説
+
+ネットワークアダプターからIPアドレス(IPv6)を取得して配列で返す
 
 {{{
 # 準備中
@@ -9084,207 +9331,6 @@ URIにPOSTメソッドがあった時の処理を指定
 ●『[[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト/解説]]』の詳しい解説
 
 URLにリダイレクトする
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/GETデータ
-■ GETデータ (WEBサーバクエリ)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 定数
-初期値 || ''
-}}}
-
-#page(plugin_websocket/GETデータ/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/GETデータ/解説
-●『[[GETデータ:plugin_websocket/GETデータ/解説]]』の詳しい解説
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/POSTデータ
-■ POSTデータ (WEBサーバクエリ)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 定数
-初期値 || ''
-}}}
-
-#page(plugin_websocket/POSTデータ/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/POSTデータ/解説
-●『[[POSTデータ:plugin_websocket/POSTデータ/解説]]』の詳しい解説
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/WSサーバ起動
-■ WSサーバ起動 (WSさーばきどう)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 関数
-引数 || PORTNOの|PORTNOで
-説明 || ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
-}}}
-
-#page(plugin_websocket/WSサーバ起動/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/WSサーバ起動/解説
-●『[[WSサーバ起動:plugin_websocket/WSサーバ起動/解説]]』の詳しい解説
-
-ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/WSサーバ起動成功時
-■ WSサーバ起動成功時 (WSさーばきどうせいこうしたとき)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 関数
-引数 || CALLBACKを
-説明 || WSサーバ起動が成功した時にcallbackを実行
-}}}
-
-#page(plugin_websocket/WSサーバ起動成功時/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/WSサーバ起動成功時/解説
-●『[[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時/解説]]』の詳しい解説
-
-WSサーバ起動が成功した時にcallbackを実行
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/WSサーバ起動失敗時
-■ WSサーバ起動失敗時 (WSさーばきどうしっぱいしたとき)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 関数
-引数 || CALLBACKを
-説明 || WSサーバ起動が失敗した時にcallbackを実行
-}}}
-
-#page(plugin_websocket/WSサーバ起動失敗時/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/WSサーバ起動失敗時/解説
-●『[[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時/解説]]』の詳しい解説
-
-WSサーバ起動が失敗した時にcallbackを実行
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/WSサーバ接続時
-■ WSサーバ接続時 (WSさーばせつぞくしたとき)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 関数
-引数 || CALLBACKを
-説明 || WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
-}}}
-
-#page(plugin_websocket/WSサーバ接続時/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/WSサーバ接続時/解説
-●『[[WSサーバ接続時:plugin_websocket/WSサーバ接続時/解説]]』の詳しい解説
-
-WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/WSサーバ受信時
-■ WSサーバ受信時 (WSさーばじゅしんしたとき)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 関数
-引数 || CALLBACKで
-説明 || WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
-}}}
-
-#page(plugin_websocket/WSサーバ受信時/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/WSサーバ受信時/解説
-●『[[WSサーバ受信時:plugin_websocket/WSサーバ受信時/解説]]』の詳しい解説
-
-WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/WSサーバ全送信
-■ WSサーバ全送信 (WSさーばぜんそうしん)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 関数
-引数 || Sを
-説明 || WSサーバで全員にメッセージSを送信する
-}}}
-
-#page(plugin_websocket/WSサーバ全送信/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/WSサーバ全送信/解説
-●『[[WSサーバ全送信:plugin_websocket/WSサーバ全送信/解説]]』の詳しい解説
-
-WSサーバで全員にメッセージSを送信する
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_websocket/WSクライアント一覧取得
-■ WSクライアント一覧取得 (WSくらいあんといちらんしゅとく)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
-種類 || 関数
-引数 || Sを
-説明 || WSサーバに接続しているクライアントの一覧を返す
-}}}
-
-#page(plugin_websocket/WSクライアント一覧取得/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_websocket]]
-
-###PAGE###:c:plugin_websocket/WSクライアント一覧取得/解説
-●『[[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得/解説]]』の詳しい解説
-
-WSサーバに接続しているクライアントの一覧を返す
 
 {{{
 # 準備中
