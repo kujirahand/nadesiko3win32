@@ -727,7 +727,7 @@ AにBを掛ける
 {{{#csv(flag=||)
 カテゴリ || [[plugin_system]] > [[四則演算:plugin_system/四則演算]]
 種類 || 関数
-引数 || AのBを
+引数 || Aの
 説明 || AのB倍を求める
 }}}
 
@@ -3962,6 +3962,29 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/秒待機
+■ 秒待機 (びょうまつ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || 
+説明 || 逐次実行構文にて、N秒の間待機する
+}}}
+
+#page(plugin_system/秒待機/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/秒待機/解説
+●『[[秒待機:plugin_system/秒待機/解説]]』の詳しい解説
+
+逐次実行構文にて、N秒の間待機する
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/秒後
 ■ 秒後 (びょうご)
 {{{#csv(flag=||)
@@ -4555,6 +4578,29 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/色混
+■ 色混 (いろまぜる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[色定数:plugin_browser/色定数]]
+種類 || 関数
+引数 || Aの
+説明 || 配列で[RR,GG,BB]を指定して色を混ぜて#RRGGBB形式の値を返す
+}}}
+
+#page(plugin_browser/色混/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/色混/解説
+●『[[色混:plugin_browser/色混/解説]]』の詳しい解説
+
+配列で[RR,GG,BB]を指定して色を混ぜて#RRGGBB形式の値を返す
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/終
 ■ 終 (おわる)
 {{{#csv(flag=||)
@@ -4696,7 +4742,7 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 ###PAGE###:w:plugin_browser/AJAX送信時
 ■ AJAX送信時 (AJAXそうしんしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 種類 || 関数
 引数 || CALLBACKのURLまで|URLへ|URLに
 説明 || 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
@@ -4719,7 +4765,7 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 ###PAGE###:w:plugin_browser/GET送信時
 ■ GET送信時 (GETそうしんしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 種類 || 関数
 引数 || CALLBACKのURLまで|URLへ|URLに
 説明 || 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
@@ -4739,10 +4785,33 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/POSTデータ生成
+■ POSTデータ生成 (POSTでーたせいせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
+種類 || 関数
+引数 || PARAMSの|PARAMSを
+説明 || 連想配列をkey=value&key=value...の形式に変換する
+}}}
+
+#page(plugin_browser/POSTデータ生成/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/POSTデータ生成/解説
+●『[[POSTデータ生成:plugin_browser/POSTデータ生成/解説]]』の詳しい解説
+
+連想配列をkey=value&key=value...の形式に変換する
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/POST送信時
 ■ POST送信時 (POSTそうしんしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 種類 || 関数
 引数 || CALLBACKのURLまでPARAMSを|URLへ|URLに
 説明 || AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
@@ -4765,7 +4834,7 @@ AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
 ###PAGE###:w:plugin_browser/POSTフォーム送信時
 ■ POSTフォーム送信時 (POSTふぉーむそうしんしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 種類 || 関数
 引数 || CALLBACKのURLまでPARAMSを|URLへ|URLに
 説明 || AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定
@@ -4788,7 +4857,7 @@ AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータ
 ###PAGE###:w:plugin_browser/AJAX失敗時
 ■ AJAX失敗時 (AJAXえらーしっぱいしたとき)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 種類 || 関数
 引数 || CALLBACKの
 説明 || Ajax命令でエラーが起きたとき
@@ -4811,7 +4880,7 @@ Ajax命令でエラーが起きたとき
 ###PAGE###:w:plugin_browser/AJAXオプション
 ■ AJAXオプション (AJAXおぷしょん)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 種類 || 定数
 初期値 || ''
 }}}
@@ -4831,7 +4900,7 @@ Ajax命令でエラーが起きたとき
 ###PAGE###:w:plugin_browser/AJAXオプション設定
 ■ AJAXオプション設定 (AJAXおぷしょんせってい)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[Ajax:plugin_browser/Ajax]]
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 種類 || 関数
 引数 || OPTIONに|OPTIONへ|OPTIONと
 説明 || Ajax命令でオプションを設定
@@ -4846,6 +4915,98 @@ Ajax命令でエラーが起きたとき
 ●『[[AJAXオプション設定:plugin_browser/AJAXオプション設定/解説]]』の詳しい解説
 
 Ajax命令でオプションを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/AJAX送信
+■ AJAX送信 (AJAXそうしんした)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
+種類 || 関数
+引数 || URLまで|URLへ|URLに
+説明 || 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+}}}
+
+#page(plugin_browser/AJAX送信/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/AJAX送信/解説
+●『[[AJAX送信:plugin_browser/AJAX送信/解説]]』の詳しい解説
+
+逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/HTTP取得
+■ HTTP取得 (HTTPしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
+種類 || 関数
+引数 || URLの|URLから|URLを
+説明 || 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+}}}
+
+#page(plugin_browser/HTTP取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/HTTP取得/解説
+●『[[HTTP取得:plugin_browser/HTTP取得/解説]]』の詳しい解説
+
+逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/POST送信
+■ POST送信 (POSTそうしん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
+種類 || 関数
+引数 || CALLBACKのURLまでPARAMSを|URLへ|URLに
+説明 || 逐次実行構文にて、AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
+}}}
+
+#page(plugin_browser/POST送信/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/POST送信/解説
+●『[[POST送信:plugin_browser/POST送信/解説]]』の詳しい解説
+
+逐次実行構文にて、AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/POSTフォーム送信
+■ POSTフォーム送信 (POSTふぉーむそうしん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
+種類 || 関数
+引数 || URLまでPARAMSを|URLへ|URLに
+説明 || AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
+}}}
+
+#page(plugin_browser/POSTフォーム送信/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/POSTフォーム送信/解説
+●『[[POSTフォーム送信:plugin_browser/POSTフォーム送信/解説]]』の詳しい解説
+
+AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
 
 {{{
 # 準備中
@@ -8650,6 +8811,29 @@ OSアーキテクチャを返す
 ●『[[標準入力取得時:plugin_node/標準入力取得時/解説]]』の詳しい解説
 
 標準入力を一行取得した時に、無名関数（あるいは、文字列で関数名を指定）F(s)を実行する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_node/尋
+■ 尋 (たずねる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[コマンドライン:plugin_node/コマンドライン]]
+種類 || 関数
+引数 || MSGと|MSGを
+説明 || 標準入力を一行取得する
+}}}
+
+#page(plugin_node/尋/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/尋/解説
+●『[[尋:plugin_node/尋/解説]]』の詳しい解説
+
+標準入力を一行取得する
 
 {{{
 # 準備中

@@ -7,7 +7,7 @@ describe('plugin_system_test', () => {
   const cmp = (code, res) => {
     if (nako.debug)
       console.log('code=' + code)
-      
+
     assert.equal(nako.runReset(code).log, res)
   }
   const cmd = (code) => {
@@ -27,6 +27,7 @@ describe('plugin_system_test', () => {
     cmp('1に2を足して3を掛けて表示', '9')
     cmp('10を2で割って表示', '5')
     cmp('10を2で割った余り;それを表示', '0')
+    cmp('10の2倍;それを表示', '20')
   })
   it('JS実行', () => {
     cmp('「3+6」をJS実行して表示', '9')
@@ -262,6 +263,7 @@ describe('plugin_system_test', () => {
     cmp('a=「1,"a""a",2」のCSV取得。a[0][1]を表示', 'a"a')
     cmp('a=「1,"2""2",3\n4,5,6」のCSV取得。a[0][1]を表示', '2"2')
     cmp('a=「1,,3\n4,5,6」のCSV取得。a[0][2]を表示', '3')
+    cmp('a=「1,2,3,\n4,5,6」のCSV取得。a[1][0]を表示', '4') // #353
   })
   it('TSV取得', () => {
     cmp('a=「1\t2\t3\n4\t5\t6」のTSV取得。a[1][2]を表示', '6')

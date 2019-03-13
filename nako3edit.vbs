@@ -11,13 +11,6 @@ dim path
 dim cmd
 
 home = fso.getParentFolderName(WScript.ScriptFullName)
-
-rem --- check setup ---
-if not fso.FolderExists(home & "\node_modules\fs-extra") then
-  call shell.Run(home & "\setup.vbs", 1, True)
-end if
-
-
 path = _
   home & "\bin;" & _
   home & "\nodejs;" & _

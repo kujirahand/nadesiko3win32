@@ -339,6 +339,9 @@ class NakoGen {
       case 'if':
         code += this.convIf(node)
         break
+      case 'promise':
+        code += this.convPromise(node)
+        break
       case 'for':
         code += this.convFor(node)
         break
@@ -681,6 +684,27 @@ class NakoGen {
       : 'else {' + this.convGen(node.false_block) + '};\n'
     return NakoGen.convLineno(node) +
       `if (${expr}) {\n  ${block}\n}` + falseBlock + ';\n'
+  }
+
+  convPromise (node) {
+    const pid = this.loop_id++
+    let code = `const __pid${pid} = async () => {\n`
+    for (let i = 0; i < node.blocks.length; i++) {
+      const block = this.convGen(node.blocks[i]).replace(/\s+$/, '') + '\n'
+      const blockCode =
+        'await new Promise((resolve) => {\n' +
+        '  __self.resolve = resolve;\n' +
+        '  __self.resolveCount = 0;\n' +
+        `  ${block}\n` +
+        '  if (__self.resolveCount === 0) resolve();\n' +
+        '\n' +
+        '})\n'
+      code += `${blockCode}`
+    }
+    code += `};/* __pid${pid} */\n`
+    code += `__pid${pid}();\n`
+    code += '__self.resolve = undefined;\n'
+    return NakoGen.convLineno(node) + code
   }
 
   convFuncGetArgsCalcType (funcName, func, node) {

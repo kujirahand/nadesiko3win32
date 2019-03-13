@@ -38,7 +38,7 @@
 - [[システム:plugin_browser/システム]]
 - [[ダイアログ:plugin_browser/ダイアログ]]
 - [[ブラウザ操作:plugin_browser/ブラウザ操作]]
-- [[Ajax:plugin_browser/Ajax]]
+- [[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 - [[DOM操作:plugin_browser/DOM操作]]
 - [[DOM部品操作:plugin_browser/DOM部品操作]]
 - [[HTML操作:plugin_browser/HTML操作]]
@@ -459,6 +459,7 @@
 - [[UNIXTIME変換:plugin_system/UNIXTIME変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す
 - [[日時変換:plugin_system/日時変換]] --- UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換
 - [[実行:plugin_system/実行]] --- 無名関数（あるいは、文字列で関数名を指定）Fを実行する(Fが関数でなければ無視する)
+- [[秒待機:plugin_system/秒待機]] --- 逐次実行構文にて、N秒の間待機する
 - [[秒後:plugin_system/秒後]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する
 - [[秒毎:plugin_system/秒毎]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる)
 - [[秒タイマー開始時:plugin_system/秒タイマー開始時]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『秒毎』と同じ)
@@ -507,6 +508,7 @@
 - [[ベージュ色:plugin_browser/ベージュ色]] --- 定数
 - [[アリスブルー色:plugin_browser/アリスブルー色]] --- 定数
 - [[RGB:plugin_browser/RGB]] --- 赤緑青を256段階でそれぞれ指定して、#RRGGBB形式の値を返す
+- [[色混:plugin_browser/色混]] --- 配列で[RR,GG,BB]を指定して色を混ぜて#RRGGBB形式の値を返す
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
@@ -547,19 +549,24 @@
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
 
-###PAGE###:w:plugin_browser/Ajax
-■ [[plugin_browser]]/[[Ajax:plugin_browser/Ajax]]
+###PAGE###:w:plugin_browser/AJAXとHTTP
+■ [[plugin_browser]]/[[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
 このカテゴリの命令
 
 ▲ カテゴリの命令一覧
 
 - [[AJAX送信時:plugin_browser/AJAX送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
 - [[GET送信時:plugin_browser/GET送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
+- [[POSTデータ生成:plugin_browser/POSTデータ生成]] --- 連想配列をkey=value&key=value...の形式に変換する
 - [[POST送信時:plugin_browser/POST送信時]] --- AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
 - [[POSTフォーム送信時:plugin_browser/POSTフォーム送信時]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定
 - [[AJAX失敗時:plugin_browser/AJAX失敗時]] --- Ajax命令でエラーが起きたとき
 - [[AJAXオプション:plugin_browser/AJAXオプション]] --- 定数
 - [[AJAXオプション設定:plugin_browser/AJAXオプション設定]] --- Ajax命令でオプションを設定
+- [[AJAX送信:plugin_browser/AJAX送信]] --- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+- [[HTTP取得:plugin_browser/HTTP取得]] --- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+- [[POST送信:plugin_browser/POST送信]] --- 逐次実行構文にて、AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
+- [[POSTフォーム送信:plugin_browser/POSTフォーム送信]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
@@ -908,6 +915,7 @@
 - [[ナデシコランタイム:plugin_node/ナデシコランタイム]] --- 定数
 - [[ナデシコランタイムパス:plugin_node/ナデシコランタイムパス]] --- 定数
 - [[標準入力取得時:plugin_node/標準入力取得時]] --- 標準入力を一行取得した時に、無名関数（あるいは、文字列で関数名を指定）F(s)を実行する
+- [[尋:plugin_node/尋]] --- 標準入力を一行取得する
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_node:plugin_node]]

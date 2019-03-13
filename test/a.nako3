@@ -1,6 +1,0 @@
-！「nadesiko3-sqlite3」を取り込む
-「test_node_func.sqlite3」をSQLITE3開く。
-F=関数(D)→
-  D[0]['value']を表示。
-←。
-Fに「SELECT * FROM tt」を[]でSQLITE3取得後

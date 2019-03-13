@@ -3,7 +3,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['ナデシコバージョン'] = '3.0.53'
+      sys.__v0['ナデシコバージョン'] = '3.0.57'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) return def
@@ -137,7 +137,7 @@ const PluginSystem = {
   },
   '倍': { // @AのB倍を求める // @ばい
     type: 'func',
-    josi: [['の'], ['を']],
+    josi: [['の'], []],
     fn: function (a, b) {
       return a * b
     }
@@ -1203,9 +1203,9 @@ const PluginSystem = {
     fn: function (f, a, sys) {
       let ufunc = f
       if (typeof f === 'string') {
-        ufunc = sys.__varslist[1][f]
+        ufunc = sys.__v1[f]
         if (ufunc === undefined)
-          ufunc = sys.__varslist[1][f]
+          ufunc = sys.__v0[f]
 
         if (!ufunc) throw new Error('関数『' + f + '』が見当たりません。')
       }
@@ -1412,6 +1412,18 @@ const PluginSystem = {
       if (typeof f === 'string') f = sys.__findVar(f)
       if (typeof f === 'function') return f(sys)
     }
+  },
+  '秒待機': { // @ 逐次実行構文にて、N秒の間待機する // @びょうまつ
+    type: 'func',
+    josi: [[]],
+    fn: function (n, sys) {
+      if (sys.resolve === undefined) throw new Error('『秒待機』命令は『逐次実行』構文と一緒に使ってください。')
+      const resolve = sys.resolve
+      sys.resolveCount++
+      setTimeout(function () {
+        resolve()
+      }, n * 1000)
+    },
   },
   '秒後': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する // @びょうご
     type: 'func',

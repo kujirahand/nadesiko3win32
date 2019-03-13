@@ -50,6 +50,7 @@ class NakoParser extends NakoParserBase {
     if (this.check('embed_code')) return this.get()
     if (this.check('もし')) return this.yIF()
     if (this.check('エラー監視')) return this.yTryExcept()
+    if (this.check('逐次実行')) return this.yPromise()
     if (this.accept(['抜ける'])) return {type: 'break', line: this.y[0].line, josi: ''}
     if (this.accept(['続ける'])) return {type: 'continue', line: this.y[0].line, josi: ''}
     if (this.accept(['require', 'string', '取込']))
@@ -63,7 +64,20 @@ class NakoParser extends NakoParserBase {
     // 先読みして初めて確定する構文
     if (this.accept([this.yLet])) return this.y[0]
     if (this.accept([this.yDefFunc])) return this.y[0]
-    if (this.accept([this.yCall])) return this.y[0] // 関数呼び出しの他、各種構文の実装
+    if (this.accept([this.yCall])) { // 関数呼び出しの他、各種構文の実装
+      const c1 = this.y[0]
+      if (c1.josi === 'して') { // 連文をblockとして接続する(もし構文、逐次実行構文などのため)
+        const c2 = this.ySentence()
+        if (c2 !== null) {
+          return {
+            type: 'block',
+            block: [c1, c2],
+            josi: c2.josi
+          }
+        }
+      }
+      return c1
+    }
     return null
   }
 
@@ -207,11 +221,11 @@ class NakoParser extends NakoParserBase {
     if (cond === null) throw new NakoSyntaxError('『もし』文で条件の指定が空です。', mosi.line)
     let trueBlock = null
     let falseBlock = null
+    
     // True Block
-    if (this.check('eol')) {
+    if (this.check('eol'))
       trueBlock = this.yBlock()
-      if (this.check('ここまで')) this.get()
-    } else
+    else
       trueBlock = this.ySentence()
 
     while (this.check('eol'))
@@ -220,13 +234,13 @@ class NakoParser extends NakoParserBase {
     // Flase Block
     if (this.check('違えば')) {
       this.get() // skip 違えば
-      if (this.check('eol')) {
+      if (this.check('eol'))
         falseBlock = this.yBlock()
-        if (this.check('ここまで')) this.get()
-      } else
+      else
         falseBlock = this.ySentence()
-
     }
+
+    if (this.check('ここまで')) this.get()
     return {
       type: 'if',
       expr: cond,
@@ -234,6 +248,45 @@ class NakoParser extends NakoParserBase {
       false_block: falseBlock,
       josi: '',
       line: mosi.line
+    }
+  }
+
+  yPromise () {
+    if (!this.check('逐次実行')) return null
+    const tikuji = this.get() // skip 逐次実行
+    const blocks = []
+    if (!this.check('eol')) throw new NakoSyntaxError('『逐次実行』の直後は改行が必要です', tikuji.line)
+    while (this.check('eol'))
+      this.get() // skip EOL
+    // ブロックを読む
+    for (;;) {
+      var a = this.peek()
+      if (!this.check('先に') && !this.check('次に')) break
+      const tugini = this.get() // skip 次に
+      let block = null
+      if (this.check('eol')) { // block
+        block = this.yBlock()
+        if (!this.check('ここまで')) {
+          throw new NakoSyntaxError(`『${tugini.type}』...『ここまで』を対応させてください。`, tugini.line)
+        }
+        this.get() // skip 'ここまで'
+      } else { // line
+        block = this.ySentence()
+      }
+      blocks.push(block)
+      while (this.check('eol'))
+        this.get() // skip EOL
+    }
+    if (!this.check('ここまで')) {
+      console.log(blocks, this.peek())
+      throw new NakoSyntaxError('『逐次実行』...『ここまで』を対応させてください。', tikuji.line)
+    }
+    this.get() // skip 'ここまで'
+    return {
+      type: 'promise',
+      blocks: blocks,
+      josi: '',
+      line: tikuji.line
     }
   }
 

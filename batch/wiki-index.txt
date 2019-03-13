@@ -40,7 +40,7 @@
 - [[(AにBを|Aと)足:plugin_system/足]] --- AとBを足す
 - [[(AからBを)引:plugin_system/引]] --- AからBを引く
 - [[(AにBを|Aと)掛:plugin_system/掛]] --- AにBを掛ける
-- [[(AのBを)倍:plugin_system/倍]] --- AのB倍を求める
+- [[(Aの)倍:plugin_system/倍]] --- AのB倍を求める
 - [[(AをBで)割:plugin_system/割]] --- AをBで割る
 - [[(AをBで)割余:plugin_system/割余]] --- AをBで割った余りを求める
 - [[(Aが)以上:plugin_system/以上]] --- AがB以上か
@@ -213,6 +213,7 @@
 - [[(Sの|Sを|Sから)UNIXTIME変換:plugin_system/UNIXTIME変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す
 - [[(TMを|TMから)日時変換:plugin_system/日時変換]] --- UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換
 - [[(Fを|Fに|Fで)実行:plugin_system/実行]] --- 無名関数（あるいは、文字列で関数名を指定）Fを実行する(Fが関数でなければ無視する)
+- [[秒待機:plugin_system/秒待機]] --- 逐次実行構文にて、N秒の間待機する
 - [[(Fを)秒後:plugin_system/秒後]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する
 - [[(Fを)秒毎:plugin_system/秒毎]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる)
 - [[(Fを)秒タイマー開始時:plugin_system/秒タイマー開始時]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『秒毎』と同じ)
@@ -247,6 +248,7 @@
 - [[ベージュ色:plugin_browser/ベージュ色]] --- 定数
 - [[アリスブルー色:plugin_browser/アリスブルー色]] --- 定数
 - [[(RとGとBで|Bの)RGB:plugin_browser/RGB]] --- 赤緑青を256段階でそれぞれ指定して、#RRGGBB形式の値を返す
+- [[(Aの)色混:plugin_browser/色混]] --- 配列で[RR,GG,BB]を指定して色を混ぜて#RRGGBB形式の値を返す
 
 ● [[システム:plugin_browser]]
 - [[終:plugin_browser/終]] --- ブラウザでプログラムの実行を強制終了する
@@ -260,14 +262,19 @@
 - [[(URLに|URLへ)ブラウザ移動:plugin_browser/ブラウザ移動]] --- 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
 - [[ブラウザ戻:plugin_browser/ブラウザ戻]] --- 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
 
-● [[Ajax:plugin_browser]]
+● [[AJAXとHTTP:plugin_browser]]
 - [[(CALLBACKのURLまで|URLへ|URLに)AJAX送信時:plugin_browser/AJAX送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
 - [[(CALLBACKのURLまで|URLへ|URLに)GET送信時:plugin_browser/GET送信時]] --- 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。
+- [[(PARAMSの|PARAMSを)POSTデータ生成:plugin_browser/POSTデータ生成]] --- 連想配列をkey=value&key=value...の形式に変換する
 - [[(CALLBACKのURLまでPARAMSを|URLへ|URLに)POST送信時:plugin_browser/POST送信時]] --- AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定
 - [[(CALLBACKのURLまでPARAMSを|URLへ|URLに)POSTフォーム送信時:plugin_browser/POSTフォーム送信時]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定
 - [[(CALLBACKの)AJAX失敗時:plugin_browser/AJAX失敗時]] --- Ajax命令でエラーが起きたとき
 - [[AJAXオプション:plugin_browser/AJAXオプション]] --- 定数
 - [[(OPTIONに|OPTIONへ|OPTIONと)AJAXオプション設定:plugin_browser/AJAXオプション設定]] --- Ajax命令でオプションを設定
+- [[(URLまで|URLへ|URLに)AJAX送信:plugin_browser/AJAX送信]] --- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+- [[(URLの|URLから|URLを)HTTP取得:plugin_browser/HTTP取得]] --- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。
+- [[(CALLBACKのURLまでPARAMSを|URLへ|URLに)POST送信:plugin_browser/POST送信]] --- 逐次実行構文にて、AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
+- [[(URLまでPARAMSを|URLへ|URLに)POSTフォーム送信:plugin_browser/POSTフォーム送信]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
 
 ● [[DOM操作:plugin_browser]]
 - [[DOCUMENT:plugin_browser/DOCUMENT]] --- 定数
@@ -476,6 +483,7 @@
 - [[ナデシコランタイム:plugin_node/ナデシコランタイム]] --- 定数
 - [[ナデシコランタイムパス:plugin_node/ナデシコランタイムパス]] --- 定数
 - [[(CALLBACKを)標準入力取得時:plugin_node/標準入力取得時]] --- 標準入力を一行取得した時に、無名関数（あるいは、文字列で関数名を指定）F(s)を実行する
+- [[(MSGと|MSGを)尋:plugin_node/尋]] --- 標準入力を一行取得する
 
 ● [[テスト:plugin_node]]
 - [[(AとBが)ASSERT等:plugin_node/ASSERT等]] --- mochaによるテストで、ASSERTでAとBが正しいことを報告する
