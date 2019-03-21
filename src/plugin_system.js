@@ -3,7 +3,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['ナデシコバージョン'] = '3.0.57'
+      sys.__v0['ナデシコバージョン'] = '3.0.59'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) return def
@@ -645,11 +645,15 @@ const PluginSystem = {
       return mae + a + usi
     }
   },
-  '文字検索': { // @文字列Sで文字列Aが何文字目にあるか調べて返す // @もじけんさく
+  '文字検索': { // @文字列Sで文字列A文字目からBを検索。見つからなければ0を返す。(類似命令に『何文字目』がある)(v1非互換) // @もじけんさく
     type: 'func',
-    josi: [['で', 'の'], ['を']],
-    fn: function (s, a) {
-      return String(s).indexOf(a) + 1
+    josi: [['で', 'の'], ['から'], ['を']],
+    fn: function (s, a, b) {
+      let str = String(s)
+      str = str.substr(a)
+      const res = str.indexOf(b)
+      if (res === -1) return 0
+      return res + 1 + a
     }
   },
   '追加': { // @文字列SにAを追加して返す(v1非互換) // @ついか
