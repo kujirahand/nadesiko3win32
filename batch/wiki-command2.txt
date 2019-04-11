@@ -1,6 +1,6 @@
 ###PAGE###:w:plugin_system
-■ plugin_system - なでしこv3 プラグイン
-なでしこv3のプラグイン。
+■ plugin_system - なでしこ3 プラグイン
+#page(plugin_system/解説)
 
 ▲ プラグインで使える命令のカテゴリ
 
@@ -26,11 +26,15 @@
 - [[デバッグ支援:plugin_system/デバッグ支援]]
 
 ▲ 参考
-- [[命令一覧/機能順]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_system/解説
+[[plugin_system:plugin_system/解説]]とは、なでしこv3のプラグイン。
+
 
 ###PAGE###:w:plugin_browser
-■ plugin_browser - なでしこv3 プラグイン
-なでしこv3のプラグイン。
+■ plugin_browser - なでしこ3 プラグイン
+#page(plugin_browser/解説)
 
 ▲ プラグインで使える命令のカテゴリ
 
@@ -50,22 +54,30 @@
 - [[WebSocket:plugin_browser/WebSocket]]
 
 ▲ 参考
-- [[命令一覧/機能順]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_browser/解説
+[[plugin_browser:plugin_browser/解説]]とは、なでしこv3のプラグイン。
+
 
 ###PAGE###:w:plugin_turtle
-■ plugin_turtle - なでしこv3 プラグイン
-なでしこv3のプラグイン。
+■ plugin_turtle - なでしこ3 プラグイン
+#page(plugin_turtle/解説)
 
 ▲ プラグインで使える命令のカテゴリ
 
 - [[タートルグラフィックス/カメ操作:plugin_turtle/タートルグラフィックス/カメ操作]]
 
 ▲ 参考
-- [[命令一覧/機能順]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_turtle/解説
+[[plugin_turtle:plugin_turtle/解説]]とは、なでしこv3のプラグイン。
+
 
 ###PAGE###:w:plugin_node
-■ plugin_node - なでしこv3 プラグイン
-なでしこv3のプラグイン。
+■ plugin_node - なでしこ3 プラグイン
+#page(plugin_node/解説)
 
 ▲ プラグインで使える命令のカテゴリ
 
@@ -84,22 +96,135 @@
 - [[マウスとキーボード操作:plugin_node/マウスとキーボード操作]]
 
 ▲ 参考
-- [[命令一覧/機能順]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_node/解説
+[[plugin_node:plugin_node/解説]]とは、なでしこv3のプラグイン。
+
 
 ###PAGE###:w:plugin_express
-■ plugin_express - なでしこv3 プラグイン
-なでしこv3のプラグイン。
+■ plugin_express - なでしこ3 プラグイン
+#page(plugin_express/解説)
 
 ▲ プラグインで使える命令のカテゴリ
 
 - [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 
 ▲ 参考
-- [[命令一覧/機能順]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_express/解説
+[[plugin_express:plugin_express/解説]]とは、なでしこv3のプラグイン。
+
+
+###PAGE###:w:plugin_sqlite3
+■ plugin_sqlite3 - なでしこ3 [[拡張プラグイン]]
+#page(plugin_sqlite3/解説)
+
+▲ プラグインで使える命令のカテゴリ
+
+- [[SQLite3:plugin_sqlite3/SQLite3]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_sqlite3/解説
+[[plugin_sqlite3:plugin_sqlite3/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
+
+###PAGE###:w:plugin_odbc
+■ plugin_odbc - なでしこ3 [[拡張プラグイン]]
+#page(plugin_odbc/解説)
+
+▲ プラグインで使える命令のカテゴリ
+
+- [[ODBC:plugin_odbc/ODBC]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_odbc/解説
+[[plugin_odbc:plugin_odbc/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
+
+###PAGE###:w:plugin_mysql
+■ plugin_mysql - なでしこ3 [[拡張プラグイン]]
+#page(plugin_mysql/解説)
+
+▲ プラグインで使える命令のカテゴリ
+
+- [[MySQL:plugin_mysql/MySQL]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_mysql/解説
+[[plugin_mysql:plugin_mysql/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
+
+###PAGE###:w:plugin_postgresql
+■ plugin_postgresql - なでしこ3 [[拡張プラグイン]]
+#page(plugin_postgresql/解説)
+
+▲ プラグインで使える命令のカテゴリ
+
+- [[PostgreSQL:plugin_postgresql/PostgreSQL]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_postgresql/解説
+[[plugin_postgresql:plugin_postgresql/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
+
+###PAGE###:w:plugin_firebase
+■ plugin_firebase - なでしこ3 [[拡張プラグイン]]
+#page(plugin_firebase/解説)
+
+▲ プラグインで使える命令のカテゴリ
+
+- [[Firebase:plugin_firebase/Firebase]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_firebase/解説
+[[plugin_firebase:plugin_firebase/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
+
+###PAGE###:w:plugin_googlehome
+■ plugin_googlehome - なでしこ3 [[拡張プラグイン]]
+#page(plugin_googlehome/解説)
+
+▲ プラグインで使える命令のカテゴリ
+
+- [[GoogleHome:plugin_googlehome/GoogleHome]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_googlehome/解説
+[[plugin_googlehome:plugin_googlehome/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
+
+###PAGE###:w:plugin_websocket
+■ plugin_websocket - なでしこ3 [[拡張プラグイン]]
+#page(plugin_websocket/解説)
+
+▲ プラグインで使える命令のカテゴリ
+
+- [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_websocket/解説
+[[plugin_websocket:plugin_websocket/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
 
 ###PAGE###:w:plugin_system/システム定数
 ■ [[plugin_system]]/[[システム定数:plugin_system/システム定数]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -132,11 +257,11 @@
 - [[空配列:plugin_system/空配列]] --- 空の配列を返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/標準出力
 ■ [[plugin_system]]/[[標準出力:plugin_system/標準出力]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -147,11 +272,11 @@
 - [[コンソール表示:plugin_system/コンソール表示]] --- Sをコンソール表示する(console.log)
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/四則演算
 ■ [[plugin_system]]/[[四則演算:plugin_system/四則演算]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -168,11 +293,11 @@
 - [[等:plugin_system/等]] --- AがBと等しいか
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/特殊命令
 ■ [[plugin_system]]/[[特殊命令:plugin_system/特殊命令]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -183,11 +308,11 @@
 - [[ナデシコ続:plugin_system/ナデシコ続]] --- なでしこのコードCODEを実行する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/型変換
 ■ [[plugin_system]]/[[型変換:plugin_system/型変換]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -204,11 +329,11 @@
 - [[HEX:plugin_system/HEX]] --- 値Vを16進数に変換
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/三角関数
 ■ [[plugin_system]]/[[三角関数:plugin_system/三角関数]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -224,11 +349,11 @@
 - [[ラジアン変換:plugin_system/ラジアン変換]] --- 度からラジアンに変換
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/算術関数
 ■ [[plugin_system]]/[[算術関数:plugin_system/算術関数]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -252,11 +377,11 @@
 - [[切捨:plugin_system/切捨]] --- 数値を負の無限大方向へ切り下げて返す。
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/論理演算
 ■ [[plugin_system]]/[[論理演算:plugin_system/論理演算]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -265,11 +390,11 @@
 - [[論理NOT:plugin_system/論理NOT]] --- 値Vが0ならば1、それ以外ならば0を返す(v1非互換)
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/ビット演算
 ■ [[plugin_system]]/[[ビット演算:plugin_system/ビット演算]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -282,11 +407,11 @@
 - [[SHIFT_UR:plugin_system/SHIFT_UR]] --- VをAビット右へシフトして返す(符号を維持しない、0で埋める)
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/文字列処理
 ■ [[plugin_system]]/[[文字列処理:plugin_system/文字列処理]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -312,11 +437,11 @@
 - [[文字削除:plugin_system/文字削除]] --- 文字列SのA文字目からB文字分を削除して返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/置換・トリム
 ■ [[plugin_system]]/[[置換・トリム:plugin_system/置換・トリム]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -326,11 +451,11 @@
 - [[空白除去:plugin_system/空白除去]] --- 文字列Sの前後にある空白を削除する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/文字変換
 ■ [[plugin_system]]/[[文字変換:plugin_system/文字変換]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -348,11 +473,11 @@
 - [[半角変換:plugin_system/半角変換]] --- 文字列Sの全角文字を半角に変換
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/JSON
 ■ [[plugin_system]]/[[JSON:plugin_system/JSON]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -361,11 +486,11 @@
 - [[JSONデコード:plugin_system/JSONデコード]] --- JSON文字列Sをオブジェクトにデコードして返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/正規表現
 ■ [[plugin_system]]/[[正規表現:plugin_system/正規表現]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -375,11 +500,11 @@
 - [[正規表現区切:plugin_system/正規表現区切]] --- 文字列Sを正規表現パターンAで区切って配列で返す(パターンAは/pat/optで指定)
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/指定形式
 ■ [[plugin_system]]/[[指定形式:plugin_system/指定形式]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -388,11 +513,11 @@
 - [[空白埋:plugin_system/空白埋]] --- 文字列VをA桁の空白で埋める
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/文字種類
 ■ [[plugin_system]]/[[文字種類:plugin_system/文字種類]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -402,11 +527,11 @@
 - [[数列判定:plugin_system/数列判定]] --- 文字列S全部が数字か判定
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/配列操作
 ■ [[plugin_system]]/[[配列操作:plugin_system/配列操作]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -428,11 +553,11 @@
 - [[配列複製:plugin_system/配列複製]] --- 配列Aを複製して返す。
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/ハッシュ
 ■ [[plugin_system]]/[[ハッシュ:plugin_system/ハッシュ]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -441,11 +566,11 @@
 - [[ハッシュキー削除:plugin_system/ハッシュキー削除]] --- ハッシュAからキーKEYを削除して返す。
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/日時処理
 ■ [[plugin_system]]/[[日時処理:plugin_system/日時処理]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -466,11 +591,11 @@
 - [[タイマー停止:plugin_system/タイマー停止]] --- 『秒毎』や『秒タイマー開始』で開始したタイマーを停止する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_system/デバッグ支援
 ■ [[plugin_system]]/[[デバッグ支援:plugin_system/デバッグ支援]]
-このカテゴリの命令
+#page(plugin_system/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -482,11 +607,11 @@
 - [[タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system:plugin_system]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
 
 ###PAGE###:w:plugin_browser/色定数
 ■ [[plugin_browser]]/[[色定数:plugin_browser/色定数]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -511,22 +636,22 @@
 - [[色混:plugin_browser/色混]] --- 配列で[RR,GG,BB]を指定して色を混ぜて#RRGGBB形式の値を返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/システム
 ■ [[plugin_browser]]/[[システム:plugin_browser/システム]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
 - [[終:plugin_browser/終]] --- ブラウザでプログラムの実行を強制終了する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/ダイアログ
 ■ [[plugin_browser]]/[[ダイアログ:plugin_browser/ダイアログ]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -535,11 +660,11 @@
 - [[二択:plugin_browser/二択]] --- メッセージSと[OK]と[キャンセル]のダイアログを出して尋ねる
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/ブラウザ操作
 ■ [[plugin_browser]]/[[ブラウザ操作:plugin_browser/ブラウザ操作]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -547,11 +672,11 @@
 - [[ブラウザ戻:plugin_browser/ブラウザ戻]] --- 任意のURLにブラウザ移動(ただし移動後スクリプトの実行は停止する)
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/AJAXとHTTP
 ■ [[plugin_browser]]/[[AJAXとHTTP:plugin_browser/AJAXとHTTP]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -569,11 +694,11 @@
 - [[POSTフォーム送信:plugin_browser/POSTフォーム送信]] --- AjaxでURLにPARAMSをフォームとしてPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/DOM操作
 ■ [[plugin_browser]]/[[DOM操作:plugin_browser/DOM操作]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -621,11 +746,11 @@
 - [[DOM子要素削除:plugin_browser/DOM子要素削除]] --- DOMの要素PAの子から要素ELを削除してPAを返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/DOM部品操作
 ■ [[plugin_browser]]/[[DOM部品操作:plugin_browser/DOM部品操作]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -641,22 +766,22 @@
 - [[セレクトボックス作成:plugin_browser/セレクトボックス作成]] --- 配列optionsの選択肢を持つselect要素を追加しDOMオブジェクトを返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/HTML操作
 ■ [[plugin_browser]]/[[HTML操作:plugin_browser/HTML操作]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
 - [[HTML変換:plugin_browser/HTML変換]] --- 文字列をHTMLに変換して返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/URLエンコード
 ■ [[plugin_browser]]/[[URLエンコード:plugin_browser/URLエンコード]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -665,11 +790,11 @@
 - [[URLパラメータ解析:plugin_browser/URLパラメータ解析]] --- URLパラメータを解析してハッシュで返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/ローカルストレージ
 ■ [[plugin_browser]]/[[ローカルストレージ:plugin_browser/ローカルストレージ]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -683,11 +808,11 @@
 - [[ローカルストレージ全削除:plugin_browser/ローカルストレージ全削除]] --- ブラウザのlocalStorageのデータを全部削除する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/描画
 ■ [[plugin_browser]]/[[描画:plugin_browser/描画]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -707,11 +832,11 @@
 - [[文字描画:plugin_browser/文字描画]] --- [x, y]へテキストSを描画する(描画フォント設定でサイズなど指定)
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/位置情報
 ■ [[plugin_browser]]/[[位置情報:plugin_browser/位置情報]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -720,11 +845,11 @@
 - [[位置情報監視停止:plugin_browser/位置情報監視停止]] --- 『位置情報監視時』で開始した監視を停止する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/音声合成
 ■ [[plugin_browser]]/[[音声合成:plugin_browser/音声合成]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -738,11 +863,11 @@
 - [[話者詳細設定:plugin_browser/話者詳細設定]] --- 音声合成APIの話者の設定をオブジェクト形式で設定する。『速度,声高,ピッチ,音量』を指定
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_browser/WebSocket
 ■ [[plugin_browser]]/[[WebSocket:plugin_browser/WebSocket]]
-このカテゴリの命令
+#page(plugin_browser/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -754,11 +879,11 @@
 - [[WS切断:plugin_browser/WS切断]] --- アクティブなWebSocketを閉じる
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_browser:plugin_browser]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
 
 ###PAGE###:w:plugin_turtle/タートルグラフィックス/カメ操作
 ■ [[plugin_turtle]]/[[タートルグラフィックス:plugin_turtle/タートルグラフィックス/カメ操作]]
-このカテゴリの命令
+#page(plugin_turtle/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -787,11 +912,11 @@
 - [[カメクリック時:plugin_turtle/カメクリック時]] --- 操作対象のカメをクリックした時のイベントを設定する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_turtle:plugin_turtle]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_turtle:plugin_turtle]]
 
 ###PAGE###:w:plugin_node/ファイル入出力
 ■ [[plugin_node]]/[[ファイル入出力:plugin_node/ファイル入出力]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -818,11 +943,11 @@
 - [[ファイルサイズ取得:plugin_node/ファイルサイズ取得]] --- パスPATHのファイルサイズを調べて返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/パス操作
 ■ [[plugin_node]]/[[パス操作:plugin_node/パス操作]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -831,11 +956,11 @@
 - [[相対パス展開:plugin_node/相対パス展開]] --- ファイル名AからパスBを展開して返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/フォルダ取得
 ■ [[plugin_node]]/[[フォルダ取得:plugin_node/フォルダ取得]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -850,11 +975,11 @@
 - [[母艦パス取得:plugin_node/母艦パス取得]] --- スクリプトのあるディレクトリを返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/環境変数
 ■ [[plugin_node]]/[[環境変数:plugin_node/環境変数]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -862,11 +987,11 @@
 - [[環境変数一覧取得:plugin_node/環境変数一覧取得]] --- 環境変数の一覧を返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/圧縮・解凍
 ■ [[plugin_node]]/[[圧縮・解凍:plugin_node/圧縮・解凍]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -877,11 +1002,11 @@
 - [[圧縮時:plugin_node/圧縮時]] --- 圧縮処理を行い完了したときにcallback処理を指定
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/Nodeプロセス
 ■ [[plugin_node]]/[[Nodeプロセス:plugin_node/Nodeプロセス]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -892,22 +1017,22 @@
 - [[OSアーキテクチャ取得:plugin_node/OSアーキテクチャ取得]] --- OSアーキテクチャを返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/クリップボード
 ■ [[plugin_node]]/[[クリップボード:plugin_node/クリップボード]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
 - [[クリップボード:plugin_node/クリップボード]] --- クリップボードを取得設定（『クリップボード＝値』で書換が可能）
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/コマンドライン
 ■ [[plugin_node]]/[[コマンドライン:plugin_node/コマンドライン]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -918,22 +1043,22 @@
 - [[尋:plugin_node/尋]] --- 標準入力を一行取得する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/テスト
 ■ [[plugin_node]]/[[テスト:plugin_node/テスト]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
 - [[ASSERT等:plugin_node/ASSERT等]] --- mochaによるテストで、ASSERTでAとBが正しいことを報告する
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/ネットワーク
 ■ [[plugin_node]]/[[ネットワーク:plugin_node/ネットワーク]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -941,11 +1066,11 @@
 - [[自分IPV6アドレス取得:plugin_node/自分IPV6アドレス取得]] --- ネットワークアダプターからIPアドレス(IPv6)を取得して配列で返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/Ajax
 ■ [[plugin_node]]/[[Ajax:plugin_node/Ajax]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -958,11 +1083,11 @@
 - [[AJAXオプション設定:plugin_node/AJAXオプション設定]] --- Ajax命令でオプションを設定
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/文字コード
 ■ [[plugin_node]]/[[文字コード:plugin_node/文字コード]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -973,11 +1098,11 @@
 - [[エンコーディング取得:plugin_node/エンコーディング取得]] --- バイナリバッファBUFをCODEから変換して返す
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_node/マウスとキーボード操作
 ■ [[plugin_node]]/[[マウスとキーボード操作:plugin_node/マウスとキーボード操作]]
-このカテゴリの命令
+#page(plugin_node/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -985,11 +1110,11 @@
 - [[窓アクティブ:plugin_node/窓アクティブ]] --- Sの窓をアクティブにする
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_node:plugin_node]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_node:plugin_node]]
 
 ###PAGE###:w:plugin_express/Webサーバ(Express)
 ■ [[plugin_express]]/[[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
-このカテゴリの命令
+#page(plugin_express/解説)
 
 ▲ カテゴリの命令一覧
 
@@ -1008,5 +1133,113 @@
 - [[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト]] --- URLにリダイレクトする
 
 ▲ 参考
-- [[命令一覧/機能順]] > [[plugin_express:plugin_express]]
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_express:plugin_express]]
+
+###PAGE###:w:plugin_sqlite3/SQLite3
+■ [[plugin_sqlite3]]/[[SQLite3:plugin_sqlite3/SQLite3]]
+#page(plugin_sqlite3/解説)
+
+▲ カテゴリの命令一覧
+
+- [[SQLITE3開:plugin_sqlite3/SQLITE3開]] --- SQlite3のデータベースを開いて、データベースオブジェクトを返す
+- [[SQLITE3閉:plugin_sqlite3/SQLITE3閉]] --- アクティブなSQlite3のデータベースを閉じる
+- [[SQLITE3切替:plugin_sqlite3/SQLITE3切替]] --- アクティブなSQlite3のデータベースをDB(SQLITE3開くで開いたもの)に切り替える
+- [[SQLITE3実行後:plugin_sqlite3/SQLITE3実行後]] --- SQLをパラメータPARAMSで実行する。完了するとコールバック関数Fを実行する。
+- [[SQLITE3取得後:plugin_sqlite3/SQLITE3取得後]] --- SQLをパラメータPARAMSで取得実行する。完了するとコールバック関数Fが実行され、結果は第一引数に与えられる。
+- [[SQLITE3逐次実行:plugin_sqlite3/SQLITE3逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+- [[SQLITE3逐次全取得:plugin_sqlite3/SQLITE3逐次全取得]] --- 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+- [[SQLITE3逐次取得:plugin_sqlite3/SQLITE3逐次取得]] --- 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_sqlite3:plugin_sqlite3]]
+
+###PAGE###:w:plugin_odbc/ODBC
+■ [[plugin_odbc]]/[[ODBC:plugin_odbc/ODBC]]
+#page(plugin_odbc/解説)
+
+▲ カテゴリの命令一覧
+
+- [[ODBC逐次開:plugin_odbc/ODBC逐次開]] --- 逐次実行構文にて、ODBCのデータベースを開く
+- [[ODBC開:plugin_odbc/ODBC開]] --- ODBCのデータベースを同期的に開いてオブジェクトを返す
+- [[ODBC逐次実行:plugin_odbc/ODBC逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+- [[ODBC実行:plugin_odbc/ODBC実行]] --- 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+- [[ODBC閉:plugin_odbc/ODBC閉]] --- ODBCで開いているデータベースを閉じる
+- [[ODBC逐次閉:plugin_odbc/ODBC逐次閉]] --- 逐次実行構文でODBCで開いているデータベースを閉じる
+- [[ODBCトランザクション開始:plugin_odbc/ODBCトランザクション開始]] --- ODBCでトランザクションを開始する
+- [[ODBCトランザクション終了:plugin_odbc/ODBCトランザクション終了]] --- ODBCでトランザクションを終了する
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_odbc:plugin_odbc]]
+
+###PAGE###:w:plugin_mysql/MySQL
+■ [[plugin_mysql]]/[[MySQL:plugin_mysql/MySQL]]
+#page(plugin_mysql/解説)
+
+▲ カテゴリの命令一覧
+
+- [[MYSQL開:plugin_mysql/MYSQL開]] --- データベースを開く
+- [[MYSQL閉:plugin_mysql/MYSQL閉]] --- データベースを閉じる
+- [[MYSQL逐次実行:plugin_mysql/MYSQL逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。INSERT句の場合は『対象[insertId]』でIDが得られる。
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_mysql:plugin_mysql]]
+
+###PAGE###:w:plugin_postgresql/PostgreSQL
+■ [[plugin_postgresql]]/[[PostgreSQL:plugin_postgresql/PostgreSQL]]
+#page(plugin_postgresql/解説)
+
+▲ カテゴリの命令一覧
+
+- [[PG開:plugin_postgresql/PG開]] --- データベースを開く
+- [[PG閉:plugin_postgresql/PG閉]] --- データベースを閉じる
+- [[PG逐次実行:plugin_postgresql/PG逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。SELECT句以外を実行した時も情報が『対象』に入る。
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_postgresql:plugin_postgresql]]
+
+###PAGE###:w:plugin_firebase/Firebase
+■ [[plugin_firebase]]/[[Firebase:plugin_firebase/Firebase]]
+#page(plugin_firebase/解説)
+
+▲ カテゴリの命令一覧
+
+- [[FIREBASE初期化:plugin_firebase/FIREBASE初期化]] --- アカウント設定オブジェクトconfigを与えてFirebaseを初期化する
+- [[FIREBASEパス参照:plugin_firebase/FIREBASEパス参照]] --- データベースのパスPATHを参照
+- [[FIREBASE値設定:plugin_firebase/FIREBASE値設定]] --- データベースのパスPATHにオブジェクトVALUESを設定
+- [[FIREBASE値変更時:plugin_firebase/FIREBASE値変更時]] --- パスpathの値(オブジェクト)が変更された時callbackを実行。引数に値(オブジェクト)が得られる。
+- [[FIREBASE値取得時:plugin_firebase/FIREBASE値取得時]] --- パスpathの値を取得した時callbackを実行。引数に値(オブジェクト)が得られる。
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_firebase:plugin_firebase]]
+
+###PAGE###:w:plugin_googlehome/GoogleHome
+■ [[plugin_googlehome]]/[[GoogleHome:plugin_googlehome/GoogleHome]]
+#page(plugin_googlehome/解説)
+
+▲ カテゴリの命令一覧
+
+- [[GoogleHome接続:plugin_googlehome/GoogleHome接続]] --- LAN内にある名前NAMEのGoogleHomeに接続する
+- [[GoogleHome言:plugin_googlehome/GoogleHome言]] --- GoogleHomeにSと言わせる
+- [[GoogleHome話:plugin_googlehome/GoogleHome話]] --- GoogleHomeにSと言わせる
+- [[GoogleHome再生:plugin_googlehome/GoogleHome再生]] --- GoogleHomeでMP3を再生する
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_googlehome:plugin_googlehome]]
+
+###PAGE###:w:plugin_websocket/WebSocketサーバ
+■ [[plugin_websocket]]/[[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+#page(plugin_websocket/解説)
+
+▲ カテゴリの命令一覧
+
+- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+- [[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時]] --- WSサーバ起動が成功した時にcallbackを実行
+- [[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時]] --- WSサーバ起動が失敗した時にcallbackを実行
+- [[WSサーバ接続時:plugin_websocket/WSサーバ接続時]] --- WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
+- [[WSサーバ受信時:plugin_websocket/WSサーバ受信時]] --- WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
+- [[WSサーバ全送信:plugin_websocket/WSサーバ全送信]] --- WSサーバで全員にメッセージSを送信する
+- [[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得]] --- WSサーバに接続しているクライアントの一覧を返す
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_websocket:plugin_websocket]]
 

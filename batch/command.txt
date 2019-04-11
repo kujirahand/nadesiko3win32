@@ -838,3 +838,100 @@ WEBサーバ出力
 | 関数 | WEBサーバ出力 | Sを/Sと | クライアントにSを出力 | WEBさーばしゅつりょく
 WEBサーバリダイレクト
 | 関数 | WEBサーバリダイレクト | URLへ/URLに | URLにリダイレクトする | WEBさーばりだいれくと
+
+■plugin_sqlite3(拡張プラグイン)
+●SQLite3
+SQLITE3開
+| 関数 | SQLITE3開 | Sを/Sの | SQlite3のデータベースを開いて、データベースオブジェクトを返す | SQLITE3ひらく
+SQLITE3閉
+| 関数 | SQLITE3閉 |  | アクティブなSQlite3のデータベースを閉じる | SQLITE3とじる
+SQLITE3切替
+| 関数 | SQLITE3切替 | DBに/DBへ | アクティブなSQlite3のデータベースをDB(SQLITE3開くで開いたもの)に切り替える | SQLITE3きりかえる
+SQLITE3実行後
+| 関数 | SQLITE3実行後 | FにSQLをPARAMSで | SQLをパラメータPARAMSで実行する。完了するとコールバック関数Fを実行する。 | SQLITE3じっこうしたあと
+SQLITE3取得後
+| 関数 | SQLITE3取得後 | FにSQLをPARAMSで | SQLをパラメータPARAMSで取得実行する。完了するとコールバック関数Fが実行され、結果は第一引数に与えられる。 | SQLITE3じっこうしゅとくしたあと
+SQLITE3逐次実行
+| 関数 | SQLITE3逐次実行 | SQLをPARAMSで | 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。 | SQLITE3ちくじじっこう
+SQLITE3逐次全取得
+| 関数 | SQLITE3逐次全取得 | SQLをPARAMSで | 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。 | SQLITE3ちくじぜんしゅとく
+SQLITE3逐次取得
+| 関数 | SQLITE3逐次取得 | SQLをPARAMSで | 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。 | SQLITE3ちくじしゅとく
+
+■plugin_odbc(拡張プラグイン)
+●ODBC
+ODBC逐次開
+| 関数 | ODBC逐次開 | Sを/Sの/Sで | 逐次実行構文にて、ODBCのデータベースを開く | ODBCちくじひらく
+ODBC開
+| 関数 | ODBC開 | Sを/Sの/Sで | ODBCのデータベースを同期的に開いてオブジェクトを返す | ODBCひらく
+ODBC逐次実行
+| 関数 | ODBC逐次実行 | SQLをPARAMSで | 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。 | ODBCちくじじっこう
+ODBC実行
+| 関数 | ODBC実行 | SQLをPARAMSで | 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。 | SQLITE3をしゅとく
+ODBC閉
+| 関数 | ODBC閉 |  | ODBCで開いているデータベースを閉じる | ODBCとじる
+ODBC逐次閉
+| 関数 | ODBC逐次閉 |  | 逐次実行構文でODBCで開いているデータベースを閉じる | ODBCちくじとじる
+ODBCトランザクション開始
+| 関数 | ODBCトランザクション開始 |  | ODBCでトランザクションを開始する | ODBCとらんざくしょんかいし
+ODBCトランザクション終了
+| 関数 | ODBCトランザクション終了 |  | ODBCでトランザクションを終了する | ODBCとらんざくしょんしゅうりょう
+
+■plugin_mysql(拡張プラグイン)
+●MySQL
+MYSQL開
+| 関数 | MYSQL開 | Sを/Sの/Sで | データベースを開く | MYSQLひらく
+MYSQL閉
+| 関数 | MYSQL閉 |  | データベースを閉じる | MYSQLとじる
+MYSQL逐次実行
+| 関数 | MYSQL逐次実行 | SQLをPARAMSで | 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。INSERT句の場合は『対象[insertId]』でIDが得られる。 | MYSQLちくじじっこう
+
+■plugin_postgresql(拡張プラグイン)
+●PostgreSQL
+PG開
+| 関数 | PG開 | Sを/Sの/Sで | データベースを開く | PGひらく
+PG閉
+| 関数 | PG閉 |  | データベースを閉じる | PGとじる
+PG逐次実行
+| 関数 | PG逐次実行 | SQLをPARAMSで | 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。SELECT句以外を実行した時も情報が『対象』に入る。 | PGちくじじっこう
+
+■plugin_firebase(拡張プラグイン)
+●Firebase
+FIREBASE初期化
+| 関数 | FIREBASE初期化 | CONFIGで | アカウント設定オブジェクトconfigを与えてFirebaseを初期化する | FIREBASEしょきか
+FIREBASEパス参照
+| 関数 | FIREBASEパス参照 | PATHを | データベースのパスPATHを参照 | FIREBASEぱすさんしょう
+FIREBASE値設定
+| 関数 | FIREBASE値設定 | PATHにVALUESを/PATHへVALUESの | データベースのパスPATHにオブジェクトVALUESを設定 | FIREBASEせっていs
+FIREBASE値変更時
+| 関数 | FIREBASE値変更時 | CALLBACKでPATHの | パスpathの値(オブジェクト)が変更された時callbackを実行。引数に値(オブジェクト)が得られる。 | FIREBASEへんこうしたとき
+FIREBASE値取得時
+| 関数 | FIREBASE値取得時 | CALLBACKでPATHの | パスpathの値を取得した時callbackを実行。引数に値(オブジェクト)が得られる。 | FIREBASEしゅとくしたとき
+
+■plugin_googlehome(拡張プラグイン)
+●GoogleHome
+GoogleHome接続
+| 関数 | GoogleHome接続 | NAMEへ/NAMEに/NAMEの | LAN内にある名前NAMEのGoogleHomeに接続する | GOOGLEHOMEせつぞく
+GoogleHome言
+| 関数 | GoogleHome言 | Sと/Sを | GoogleHomeにSと言わせる | GOOGLEHOMEいう
+GoogleHome話
+| 関数 | GoogleHome話 | Sと/Sを | GoogleHomeにSと言わせる | GOOGLEHOMEはなす
+GoogleHome再生
+| 関数 | GoogleHome再生 | Sを/Sで | GoogleHomeでMP3を再生する | GOOGLEHOMEさいせい
+
+■plugin_websocket(拡張プラグイン)
+●WebSocketサーバ
+WSサーバ起動
+| 関数 | WSサーバ起動 | PORTNOの/PORTNOで | ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する | WSさーばきどう
+WSサーバ起動成功時
+| 関数 | WSサーバ起動成功時 | CALLBACKを | WSサーバ起動が成功した時にcallbackを実行 | WSさーばきどうせいこうしたとき
+WSサーバ起動失敗時
+| 関数 | WSサーバ起動失敗時 | CALLBACKを | WSサーバ起動が失敗した時にcallbackを実行 | WSさーばきどうしっぱいしたとき
+WSサーバ接続時
+| 関数 | WSサーバ接続時 | CALLBACKを | WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る | WSさーばせつぞくしたとき
+WSサーバ受信時
+| 関数 | WSサーバ受信時 | CALLBACKで | WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される | WSさーばじゅしんしたとき
+WSサーバ全送信
+| 関数 | WSサーバ全送信 | Sを | WSサーバで全員にメッセージSを送信する | WSさーばぜんそうしん
+WSクライアント一覧取得
+| 関数 | WSクライアント一覧取得 | Sを | WSサーバに接続しているクライアントの一覧を返す | WSくらいあんといちらんしゅとく

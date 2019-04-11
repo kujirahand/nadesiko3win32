@@ -9520,3 +9520,877 @@ URLにリダイレクトする
 # 準備中
 }}}
 
+###PAGE###:w:plugin_sqlite3/SQLITE3開
+■ SQLITE3開 (SQLITE3ひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || Sを|Sの
+説明 || SQlite3のデータベースを開いて、データベースオブジェクトを返す
+}}}
+
+#page(plugin_sqlite3/SQLITE3開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3開/解説
+●『[[SQLITE3開:plugin_sqlite3/SQLITE3開/解説]]』の詳しい解説
+
+SQlite3のデータベースを開いて、データベースオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_sqlite3/SQLITE3閉
+■ SQLITE3閉 (SQLITE3とじる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || 
+説明 || アクティブなSQlite3のデータベースを閉じる
+}}}
+
+#page(plugin_sqlite3/SQLITE3閉/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3閉/解説
+●『[[SQLITE3閉:plugin_sqlite3/SQLITE3閉/解説]]』の詳しい解説
+
+アクティブなSQlite3のデータベースを閉じる
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_sqlite3/SQLITE3切替
+■ SQLITE3切替 (SQLITE3きりかえる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || DBに|DBへ
+説明 || アクティブなSQlite3のデータベースをDB(SQLITE3開くで開いたもの)に切り替える
+}}}
+
+#page(plugin_sqlite3/SQLITE3切替/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3切替/解説
+●『[[SQLITE3切替:plugin_sqlite3/SQLITE3切替/解説]]』の詳しい解説
+
+アクティブなSQlite3のデータベースをDB(SQLITE3開くで開いたもの)に切り替える
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_sqlite3/SQLITE3実行後
+■ SQLITE3実行後 (SQLITE3じっこうしたあと)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || FにSQLをPARAMSで
+説明 || SQLをパラメータPARAMSで実行する。完了するとコールバック関数Fを実行する。
+}}}
+
+#page(plugin_sqlite3/SQLITE3実行後/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3実行後/解説
+●『[[SQLITE3実行後:plugin_sqlite3/SQLITE3実行後/解説]]』の詳しい解説
+
+SQLをパラメータPARAMSで実行する。完了するとコールバック関数Fを実行する。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_sqlite3/SQLITE3取得後
+■ SQLITE3取得後 (SQLITE3じっこうしゅとくしたあと)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || FにSQLをPARAMSで
+説明 || SQLをパラメータPARAMSで取得実行する。完了するとコールバック関数Fが実行され、結果は第一引数に与えられる。
+}}}
+
+#page(plugin_sqlite3/SQLITE3取得後/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3取得後/解説
+●『[[SQLITE3取得後:plugin_sqlite3/SQLITE3取得後/解説]]』の詳しい解説
+
+SQLをパラメータPARAMSで取得実行する。完了するとコールバック関数Fが実行され、結果は第一引数に与えられる。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_sqlite3/SQLITE3逐次実行
+■ SQLITE3逐次実行 (SQLITE3ちくじじっこう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+}}}
+
+#page(plugin_sqlite3/SQLITE3逐次実行/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3逐次実行/解説
+●『[[SQLITE3逐次実行:plugin_sqlite3/SQLITE3逐次実行/解説]]』の詳しい解説
+
+逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_sqlite3/SQLITE3逐次全取得
+■ SQLITE3逐次全取得 (SQLITE3ちくじぜんしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+}}}
+
+#page(plugin_sqlite3/SQLITE3逐次全取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3逐次全取得/解説
+●『[[SQLITE3逐次全取得:plugin_sqlite3/SQLITE3逐次全取得/解説]]』の詳しい解説
+
+逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_sqlite3/SQLITE3逐次取得
+■ SQLITE3逐次取得 (SQLITE3ちくじしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+}}}
+
+#page(plugin_sqlite3/SQLITE3逐次取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3逐次取得/解説
+●『[[SQLITE3逐次取得:plugin_sqlite3/SQLITE3逐次取得/解説]]』の詳しい解説
+
+逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBC逐次開
+■ ODBC逐次開 (ODBCちくじひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || Sを|Sの|Sで
+説明 || 逐次実行構文にて、ODBCのデータベースを開く
+}}}
+
+#page(plugin_odbc/ODBC逐次開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBC逐次開/解説
+●『[[ODBC逐次開:plugin_odbc/ODBC逐次開/解説]]』の詳しい解説
+
+逐次実行構文にて、ODBCのデータベースを開く
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBC開
+■ ODBC開 (ODBCひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || Sを|Sの|Sで
+説明 || ODBCのデータベースを同期的に開いてオブジェクトを返す
+}}}
+
+#page(plugin_odbc/ODBC開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBC開/解説
+●『[[ODBC開:plugin_odbc/ODBC開/解説]]』の詳しい解説
+
+ODBCのデータベースを同期的に開いてオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBC逐次実行
+■ ODBC逐次実行 (ODBCちくじじっこう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+}}}
+
+#page(plugin_odbc/ODBC逐次実行/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBC逐次実行/解説
+●『[[ODBC逐次実行:plugin_odbc/ODBC逐次実行/解説]]』の詳しい解説
+
+逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBC実行
+■ ODBC実行 (SQLITE3をしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+}}}
+
+#page(plugin_odbc/ODBC実行/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBC実行/解説
+●『[[ODBC実行:plugin_odbc/ODBC実行/解説]]』の詳しい解説
+
+逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBC閉
+■ ODBC閉 (ODBCとじる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || 
+説明 || ODBCで開いているデータベースを閉じる
+}}}
+
+#page(plugin_odbc/ODBC閉/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBC閉/解説
+●『[[ODBC閉:plugin_odbc/ODBC閉/解説]]』の詳しい解説
+
+ODBCで開いているデータベースを閉じる
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBC逐次閉
+■ ODBC逐次閉 (ODBCちくじとじる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || 
+説明 || 逐次実行構文でODBCで開いているデータベースを閉じる
+}}}
+
+#page(plugin_odbc/ODBC逐次閉/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBC逐次閉/解説
+●『[[ODBC逐次閉:plugin_odbc/ODBC逐次閉/解説]]』の詳しい解説
+
+逐次実行構文でODBCで開いているデータベースを閉じる
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBCトランザクション開始
+■ ODBCトランザクション開始 (ODBCとらんざくしょんかいし)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || 
+説明 || ODBCでトランザクションを開始する
+}}}
+
+#page(plugin_odbc/ODBCトランザクション開始/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBCトランザクション開始/解説
+●『[[ODBCトランザクション開始:plugin_odbc/ODBCトランザクション開始/解説]]』の詳しい解説
+
+ODBCでトランザクションを開始する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_odbc/ODBCトランザクション終了
+■ ODBCトランザクション終了 (ODBCとらんざくしょんしゅうりょう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_odbc]] > [[ODBC:plugin_odbc/ODBC]]
+種類 || 関数
+引数 || 
+説明 || ODBCでトランザクションを終了する
+}}}
+
+#page(plugin_odbc/ODBCトランザクション終了/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_odbc]]
+
+###PAGE###:c:plugin_odbc/ODBCトランザクション終了/解説
+●『[[ODBCトランザクション終了:plugin_odbc/ODBCトランザクション終了/解説]]』の詳しい解説
+
+ODBCでトランザクションを終了する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_mysql/MYSQL開
+■ MYSQL開 (MYSQLひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_mysql]] > [[MySQL:plugin_mysql/MySQL]]
+種類 || 関数
+引数 || Sを|Sの|Sで
+説明 || データベースを開く
+}}}
+
+#page(plugin_mysql/MYSQL開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_mysql]]
+
+###PAGE###:c:plugin_mysql/MYSQL開/解説
+●『[[MYSQL開:plugin_mysql/MYSQL開/解説]]』の詳しい解説
+
+データベースを開く
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_mysql/MYSQL閉
+■ MYSQL閉 (MYSQLとじる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_mysql]] > [[MySQL:plugin_mysql/MySQL]]
+種類 || 関数
+引数 || 
+説明 || データベースを閉じる
+}}}
+
+#page(plugin_mysql/MYSQL閉/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_mysql]]
+
+###PAGE###:c:plugin_mysql/MYSQL閉/解説
+●『[[MYSQL閉:plugin_mysql/MYSQL閉/解説]]』の詳しい解説
+
+データベースを閉じる
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_mysql/MYSQL逐次実行
+■ MYSQL逐次実行 (MYSQLちくじじっこう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_mysql]] > [[MySQL:plugin_mysql/MySQL]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。INSERT句の場合は『対象[insertId]』でIDが得られる。
+}}}
+
+#page(plugin_mysql/MYSQL逐次実行/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_mysql]]
+
+###PAGE###:c:plugin_mysql/MYSQL逐次実行/解説
+●『[[MYSQL逐次実行:plugin_mysql/MYSQL逐次実行/解説]]』の詳しい解説
+
+逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。INSERT句の場合は『対象[insertId]』でIDが得られる。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_postgresql/PG開
+■ PG開 (PGひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_postgresql]] > [[PostgreSQL:plugin_postgresql/PostgreSQL]]
+種類 || 関数
+引数 || Sを|Sの|Sで
+説明 || データベースを開く
+}}}
+
+#page(plugin_postgresql/PG開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_postgresql]]
+
+###PAGE###:c:plugin_postgresql/PG開/解説
+●『[[PG開:plugin_postgresql/PG開/解説]]』の詳しい解説
+
+データベースを開く
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_postgresql/PG閉
+■ PG閉 (PGとじる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_postgresql]] > [[PostgreSQL:plugin_postgresql/PostgreSQL]]
+種類 || 関数
+引数 || 
+説明 || データベースを閉じる
+}}}
+
+#page(plugin_postgresql/PG閉/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_postgresql]]
+
+###PAGE###:c:plugin_postgresql/PG閉/解説
+●『[[PG閉:plugin_postgresql/PG閉/解説]]』の詳しい解説
+
+データベースを閉じる
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_postgresql/PG逐次実行
+■ PG逐次実行 (PGちくじじっこう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_postgresql]] > [[PostgreSQL:plugin_postgresql/PostgreSQL]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。SELECT句以外を実行した時も情報が『対象』に入る。
+}}}
+
+#page(plugin_postgresql/PG逐次実行/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_postgresql]]
+
+###PAGE###:c:plugin_postgresql/PG逐次実行/解説
+●『[[PG逐次実行:plugin_postgresql/PG逐次実行/解説]]』の詳しい解説
+
+逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。SELECT句以外を実行した時も情報が『対象』に入る。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_firebase/FIREBASE初期化
+■ FIREBASE初期化 (FIREBASEしょきか)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_firebase]] > [[Firebase:plugin_firebase/Firebase]]
+種類 || 関数
+引数 || CONFIGで
+説明 || アカウント設定オブジェクトconfigを与えてFirebaseを初期化する
+}}}
+
+#page(plugin_firebase/FIREBASE初期化/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_firebase]]
+
+###PAGE###:c:plugin_firebase/FIREBASE初期化/解説
+●『[[FIREBASE初期化:plugin_firebase/FIREBASE初期化/解説]]』の詳しい解説
+
+アカウント設定オブジェクトconfigを与えてFirebaseを初期化する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_firebase/FIREBASEパス参照
+■ FIREBASEパス参照 (FIREBASEぱすさんしょう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_firebase]] > [[Firebase:plugin_firebase/Firebase]]
+種類 || 関数
+引数 || PATHを
+説明 || データベースのパスPATHを参照
+}}}
+
+#page(plugin_firebase/FIREBASEパス参照/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_firebase]]
+
+###PAGE###:c:plugin_firebase/FIREBASEパス参照/解説
+●『[[FIREBASEパス参照:plugin_firebase/FIREBASEパス参照/解説]]』の詳しい解説
+
+データベースのパスPATHを参照
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_firebase/FIREBASE値設定
+■ FIREBASE値設定 (FIREBASEせっていs)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_firebase]] > [[Firebase:plugin_firebase/Firebase]]
+種類 || 関数
+引数 || PATHにVALUESを|PATHへVALUESの
+説明 || データベースのパスPATHにオブジェクトVALUESを設定
+}}}
+
+#page(plugin_firebase/FIREBASE値設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_firebase]]
+
+###PAGE###:c:plugin_firebase/FIREBASE値設定/解説
+●『[[FIREBASE値設定:plugin_firebase/FIREBASE値設定/解説]]』の詳しい解説
+
+データベースのパスPATHにオブジェクトVALUESを設定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_firebase/FIREBASE値変更時
+■ FIREBASE値変更時 (FIREBASEへんこうしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_firebase]] > [[Firebase:plugin_firebase/Firebase]]
+種類 || 関数
+引数 || CALLBACKでPATHの
+説明 || パスpathの値(オブジェクト)が変更された時callbackを実行。引数に値(オブジェクト)が得られる。
+}}}
+
+#page(plugin_firebase/FIREBASE値変更時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_firebase]]
+
+###PAGE###:c:plugin_firebase/FIREBASE値変更時/解説
+●『[[FIREBASE値変更時:plugin_firebase/FIREBASE値変更時/解説]]』の詳しい解説
+
+パスpathの値(オブジェクト)が変更された時callbackを実行。引数に値(オブジェクト)が得られる。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_firebase/FIREBASE値取得時
+■ FIREBASE値取得時 (FIREBASEしゅとくしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_firebase]] > [[Firebase:plugin_firebase/Firebase]]
+種類 || 関数
+引数 || CALLBACKでPATHの
+説明 || パスpathの値を取得した時callbackを実行。引数に値(オブジェクト)が得られる。
+}}}
+
+#page(plugin_firebase/FIREBASE値取得時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_firebase]]
+
+###PAGE###:c:plugin_firebase/FIREBASE値取得時/解説
+●『[[FIREBASE値取得時:plugin_firebase/FIREBASE値取得時/解説]]』の詳しい解説
+
+パスpathの値を取得した時callbackを実行。引数に値(オブジェクト)が得られる。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_googlehome/GoogleHome接続
+■ GoogleHome接続 (GOOGLEHOMEせつぞく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_googlehome]] > [[GoogleHome:plugin_googlehome/GoogleHome]]
+種類 || 関数
+引数 || NAMEへ|NAMEに|NAMEの
+説明 || LAN内にある名前NAMEのGoogleHomeに接続する
+}}}
+
+#page(plugin_googlehome/GoogleHome接続/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_googlehome]]
+
+###PAGE###:c:plugin_googlehome/GoogleHome接続/解説
+●『[[GoogleHome接続:plugin_googlehome/GoogleHome接続/解説]]』の詳しい解説
+
+LAN内にある名前NAMEのGoogleHomeに接続する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_googlehome/GoogleHome言
+■ GoogleHome言 (GOOGLEHOMEいう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_googlehome]] > [[GoogleHome:plugin_googlehome/GoogleHome]]
+種類 || 関数
+引数 || Sと|Sを
+説明 || GoogleHomeにSと言わせる
+}}}
+
+#page(plugin_googlehome/GoogleHome言/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_googlehome]]
+
+###PAGE###:c:plugin_googlehome/GoogleHome言/解説
+●『[[GoogleHome言:plugin_googlehome/GoogleHome言/解説]]』の詳しい解説
+
+GoogleHomeにSと言わせる
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_googlehome/GoogleHome話
+■ GoogleHome話 (GOOGLEHOMEはなす)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_googlehome]] > [[GoogleHome:plugin_googlehome/GoogleHome]]
+種類 || 関数
+引数 || Sと|Sを
+説明 || GoogleHomeにSと言わせる
+}}}
+
+#page(plugin_googlehome/GoogleHome話/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_googlehome]]
+
+###PAGE###:c:plugin_googlehome/GoogleHome話/解説
+●『[[GoogleHome話:plugin_googlehome/GoogleHome話/解説]]』の詳しい解説
+
+GoogleHomeにSと言わせる
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_googlehome/GoogleHome再生
+■ GoogleHome再生 (GOOGLEHOMEさいせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_googlehome]] > [[GoogleHome:plugin_googlehome/GoogleHome]]
+種類 || 関数
+引数 || Sを|Sで
+説明 || GoogleHomeでMP3を再生する
+}}}
+
+#page(plugin_googlehome/GoogleHome再生/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_googlehome]]
+
+###PAGE###:c:plugin_googlehome/GoogleHome再生/解説
+●『[[GoogleHome再生:plugin_googlehome/GoogleHome再生/解説]]』の詳しい解説
+
+GoogleHomeでMP3を再生する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ起動
+■ WSサーバ起動 (WSさーばきどう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || PORTNOの|PORTNOで
+説明 || ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+}}}
+
+#page(plugin_websocket/WSサーバ起動/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ起動/解説
+●『[[WSサーバ起動:plugin_websocket/WSサーバ起動/解説]]』の詳しい解説
+
+ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ起動成功時
+■ WSサーバ起動成功時 (WSさーばきどうせいこうしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WSサーバ起動が成功した時にcallbackを実行
+}}}
+
+#page(plugin_websocket/WSサーバ起動成功時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ起動成功時/解説
+●『[[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時/解説]]』の詳しい解説
+
+WSサーバ起動が成功した時にcallbackを実行
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ起動失敗時
+■ WSサーバ起動失敗時 (WSさーばきどうしっぱいしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WSサーバ起動が失敗した時にcallbackを実行
+}}}
+
+#page(plugin_websocket/WSサーバ起動失敗時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ起動失敗時/解説
+●『[[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時/解説]]』の詳しい解説
+
+WSサーバ起動が失敗した時にcallbackを実行
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ接続時
+■ WSサーバ接続時 (WSさーばせつぞくしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKを
+説明 || WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
+}}}
+
+#page(plugin_websocket/WSサーバ接続時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ接続時/解説
+●『[[WSサーバ接続時:plugin_websocket/WSサーバ接続時/解説]]』の詳しい解説
+
+WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ受信時
+■ WSサーバ受信時 (WSさーばじゅしんしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CALLBACKで
+説明 || WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
+}}}
+
+#page(plugin_websocket/WSサーバ受信時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ受信時/解説
+●『[[WSサーバ受信時:plugin_websocket/WSサーバ受信時/解説]]』の詳しい解説
+
+WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSサーバ全送信
+■ WSサーバ全送信 (WSさーばぜんそうしん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || Sを
+説明 || WSサーバで全員にメッセージSを送信する
+}}}
+
+#page(plugin_websocket/WSサーバ全送信/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSサーバ全送信/解説
+●『[[WSサーバ全送信:plugin_websocket/WSサーバ全送信/解説]]』の詳しい解説
+
+WSサーバで全員にメッセージSを送信する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSクライアント一覧取得
+■ WSクライアント一覧取得 (WSくらいあんといちらんしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || Sを
+説明 || WSサーバに接続しているクライアントの一覧を返す
+}}}
+
+#page(plugin_websocket/WSクライアント一覧取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSクライアント一覧取得/解説
+●『[[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得/解説]]』の詳しい解説
+
+WSサーバに接続しているクライアントの一覧を返す
+
+{{{
+# 準備中
+}}}
+

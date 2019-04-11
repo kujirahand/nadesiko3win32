@@ -1,4 +1,5 @@
 ■ [[plugin_system]]
+#page(plugin_system/解説)
 
 ● [[システム定数:plugin_system]]
 - [[ナデシコバージョン:plugin_system/ナデシコバージョン]] --- 定数
@@ -228,6 +229,7 @@
 - [[(TZで)タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
 
 ■ [[plugin_browser]]
+#page(plugin_browser/解説)
 
 ● [[色定数:plugin_browser]]
 - [[水色:plugin_browser/水色]] --- 定数
@@ -390,6 +392,7 @@
 - [[WS切断:plugin_browser/WS切断]] --- アクティブなWebSocketを閉じる
 
 ■ [[plugin_turtle]]
+#page(plugin_turtle/解説)
 
 ● [[タートルグラフィックス/カメ操作:plugin_turtle]]
 - [[カメ作成:plugin_turtle/カメ作成]] --- タートルグラフィックスを開始してカメのIDを返す
@@ -417,6 +420,7 @@
 - [[(FUNCを)カメクリック時:plugin_turtle/カメクリック時]] --- 操作対象のカメをクリックした時のイベントを設定する
 
 ■ [[plugin_node]]
+#page(plugin_node/解説)
 
 ● [[ファイル入出力:plugin_node]]
 - [[(Sを|Sから)開:plugin_node/開]] --- ファイルSを開く
@@ -513,6 +517,7 @@
 - [[(Sを|Sの)窓アクティブ:plugin_node/窓アクティブ]] --- Sの窓をアクティブにする
 
 ■ [[plugin_express]]
+#page(plugin_express/解説)
 
 ● [[Webサーバ(Express):plugin_express]]
 - [[GETデータ:plugin_express/GETデータ]] --- 定数
@@ -528,3 +533,76 @@
 - [[(CALLBACKをURIに|URIへ)WEBサーバDELETE時:plugin_express/WEBサーバDELETE時]] --- URIにPOSTメソッドがあった時の処理を指定
 - [[(Sを|Sと)WEBサーバ出力:plugin_express/WEBサーバ出力]] --- クライアントにSを出力
 - [[(URLへ|URLに)WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト]] --- URLにリダイレクトする
+
+■ [[plugin_sqlite3]] ([[拡張プラグイン]])
+#page(plugin_sqlite3/解説)
+
+● [[SQLite3:plugin_sqlite3]]
+- [[(Sを|Sの)SQLITE3開:plugin_sqlite3/SQLITE3開]] --- SQlite3のデータベースを開いて、データベースオブジェクトを返す
+- [[SQLITE3閉:plugin_sqlite3/SQLITE3閉]] --- アクティブなSQlite3のデータベースを閉じる
+- [[(DBに|DBへ)SQLITE3切替:plugin_sqlite3/SQLITE3切替]] --- アクティブなSQlite3のデータベースをDB(SQLITE3開くで開いたもの)に切り替える
+- [[(FにSQLをPARAMSで)SQLITE3実行後:plugin_sqlite3/SQLITE3実行後]] --- SQLをパラメータPARAMSで実行する。完了するとコールバック関数Fを実行する。
+- [[(FにSQLをPARAMSで)SQLITE3取得後:plugin_sqlite3/SQLITE3取得後]] --- SQLをパラメータPARAMSで取得実行する。完了するとコールバック関数Fが実行され、結果は第一引数に与えられる。
+- [[(SQLをPARAMSで)SQLITE3逐次実行:plugin_sqlite3/SQLITE3逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+- [[(SQLをPARAMSで)SQLITE3逐次全取得:plugin_sqlite3/SQLITE3逐次全取得]] --- 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+- [[(SQLをPARAMSで)SQLITE3逐次取得:plugin_sqlite3/SQLITE3逐次取得]] --- 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+
+■ [[plugin_odbc]] ([[拡張プラグイン]])
+#page(plugin_odbc/解説)
+
+● [[ODBC:plugin_odbc]]
+- [[(Sを|Sの|Sで)ODBC逐次開:plugin_odbc/ODBC逐次開]] --- 逐次実行構文にて、ODBCのデータベースを開く
+- [[(Sを|Sの|Sで)ODBC開:plugin_odbc/ODBC開]] --- ODBCのデータベースを同期的に開いてオブジェクトを返す
+- [[(SQLをPARAMSで)ODBC逐次実行:plugin_odbc/ODBC逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+- [[(SQLをPARAMSで)ODBC実行:plugin_odbc/ODBC実行]] --- 逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。
+- [[ODBC閉:plugin_odbc/ODBC閉]] --- ODBCで開いているデータベースを閉じる
+- [[ODBC逐次閉:plugin_odbc/ODBC逐次閉]] --- 逐次実行構文でODBCで開いているデータベースを閉じる
+- [[ODBCトランザクション開始:plugin_odbc/ODBCトランザクション開始]] --- ODBCでトランザクションを開始する
+- [[ODBCトランザクション終了:plugin_odbc/ODBCトランザクション終了]] --- ODBCでトランザクションを終了する
+
+■ [[plugin_mysql]] ([[拡張プラグイン]])
+#page(plugin_mysql/解説)
+
+● [[MySQL:plugin_mysql]]
+- [[(Sを|Sの|Sで)MYSQL開:plugin_mysql/MYSQL開]] --- データベースを開く
+- [[MYSQL閉:plugin_mysql/MYSQL閉]] --- データベースを閉じる
+- [[(SQLをPARAMSで)MYSQL逐次実行:plugin_mysql/MYSQL逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。INSERT句の場合は『対象[insertId]』でIDが得られる。
+
+■ [[plugin_postgresql]] ([[拡張プラグイン]])
+#page(plugin_postgresql/解説)
+
+● [[PostgreSQL:plugin_postgresql]]
+- [[(Sを|Sの|Sで)PG開:plugin_postgresql/PG開]] --- データベースを開く
+- [[PG閉:plugin_postgresql/PG閉]] --- データベースを閉じる
+- [[(SQLをPARAMSで)PG逐次実行:plugin_postgresql/PG逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。SELECT句以外を実行した時も情報が『対象』に入る。
+
+■ [[plugin_firebase]] ([[拡張プラグイン]])
+#page(plugin_firebase/解説)
+
+● [[Firebase:plugin_firebase]]
+- [[(CONFIGで)FIREBASE初期化:plugin_firebase/FIREBASE初期化]] --- アカウント設定オブジェクトconfigを与えてFirebaseを初期化する
+- [[(PATHを)FIREBASEパス参照:plugin_firebase/FIREBASEパス参照]] --- データベースのパスPATHを参照
+- [[(PATHにVALUESを|PATHへVALUESの)FIREBASE値設定:plugin_firebase/FIREBASE値設定]] --- データベースのパスPATHにオブジェクトVALUESを設定
+- [[(CALLBACKでPATHの)FIREBASE値変更時:plugin_firebase/FIREBASE値変更時]] --- パスpathの値(オブジェクト)が変更された時callbackを実行。引数に値(オブジェクト)が得られる。
+- [[(CALLBACKでPATHの)FIREBASE値取得時:plugin_firebase/FIREBASE値取得時]] --- パスpathの値を取得した時callbackを実行。引数に値(オブジェクト)が得られる。
+
+■ [[plugin_googlehome]] ([[拡張プラグイン]])
+#page(plugin_googlehome/解説)
+
+● [[GoogleHome:plugin_googlehome]]
+- [[(NAMEへ|NAMEに|NAMEの)GoogleHome接続:plugin_googlehome/GoogleHome接続]] --- LAN内にある名前NAMEのGoogleHomeに接続する
+- [[(Sと|Sを)GoogleHome言:plugin_googlehome/GoogleHome言]] --- GoogleHomeにSと言わせる
+- [[(Sと|Sを)GoogleHome話:plugin_googlehome/GoogleHome話]] --- GoogleHomeにSと言わせる
+- [[(Sを|Sで)GoogleHome再生:plugin_googlehome/GoogleHome再生]] --- GoogleHomeでMP3を再生する
+
+■ [[plugin_websocket]] ([[拡張プラグイン]])
+#page(plugin_websocket/解説)
+
+● [[WebSocketサーバ:plugin_websocket]]
+- [[(PORTNOの|PORTNOで)WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+- [[(CALLBACKを)WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時]] --- WSサーバ起動が成功した時にcallbackを実行
+- [[(CALLBACKを)WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時]] --- WSサーバ起動が失敗した時にcallbackを実行
+- [[(CALLBACKを)WSサーバ接続時:plugin_websocket/WSサーバ接続時]] --- WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
+- [[(CALLBACKで)WSサーバ受信時:plugin_websocket/WSサーバ受信時]] --- WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
+- [[(Sを)WSサーバ全送信:plugin_websocket/WSサーバ全送信]] --- WSサーバで全員にメッセージSを送信する
+- [[(Sを)WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得]] --- WSサーバに接続しているクライアントの一覧を返す
