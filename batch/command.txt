@@ -841,6 +841,7 @@ WEBサーバリダイレクト
 
 ■plugin_sqlite3(拡張プラグイン)
 ●SQLite3
+| 定数 | SQLITE3今挿入ID | | '?' | SQLITE3いまそうにゅうID |
 SQLITE3開
 | 関数 | SQLITE3開 | Sを/Sの | SQlite3のデータベースを開いて、データベースオブジェクトを返す | SQLITE3ひらく
 SQLITE3閉
@@ -876,6 +877,15 @@ ODBCトランザクション開始
 | 関数 | ODBCトランザクション開始 |  | ODBCでトランザクションを開始する | ODBCとらんざくしょんかいし
 ODBCトランザクション終了
 | 関数 | ODBCトランザクション終了 |  | ODBCでトランザクションを終了する | ODBCとらんざくしょんしゅうりょう
+
+■plugin_mssql(拡張プラグイン)
+●SQLServer
+MSSQL逐次開
+| 関数 | MSSQL逐次開 | Sを/Sの/Sで | 逐次実行構文にてデータベースを開く | MSSQLちくじひらく
+MSSQL逐次実行
+| 関数 | MSSQL逐次実行 | SQLをPARAMSで | 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。 | MSSQLちくじじっこう
+MSSQL逐次閉
+| 関数 | MSSQL逐次閉 |  | 開いているデータベースを閉じる | MSSQLとじる
 
 ■plugin_mysql(拡張プラグイン)
 ●MySQL

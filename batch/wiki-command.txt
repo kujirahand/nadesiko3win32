@@ -9520,6 +9520,26 @@ URLにリダイレクトする
 # 準備中
 }}}
 
+###PAGE###:w:plugin_sqlite3/SQLITE3今挿入ID
+■ SQLITE3今挿入ID (SQLITE3いまそうにゅうID)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_sqlite3]] > [[SQLite3:plugin_sqlite3/SQLite3]]
+種類 || 定数
+初期値 || '?'
+}}}
+
+#page(plugin_sqlite3/SQLITE3今挿入ID/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_sqlite3]]
+
+###PAGE###:c:plugin_sqlite3/SQLITE3今挿入ID/解説
+●『[[SQLITE3今挿入ID:plugin_sqlite3/SQLITE3今挿入ID/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_sqlite3/SQLITE3開
 ■ SQLITE3開 (SQLITE3ひらく)
 {{{#csv(flag=||)
@@ -9883,6 +9903,75 @@ ODBCでトランザクションを開始する
 ●『[[ODBCトランザクション終了:plugin_odbc/ODBCトランザクション終了/解説]]』の詳しい解説
 
 ODBCでトランザクションを終了する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_mssql/MSSQL逐次開
+■ MSSQL逐次開 (MSSQLちくじひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_mssql]] > [[SQLServer:plugin_mssql/SQLServer]]
+種類 || 関数
+引数 || Sを|Sの|Sで
+説明 || 逐次実行構文にてデータベースを開く
+}}}
+
+#page(plugin_mssql/MSSQL逐次開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_mssql]]
+
+###PAGE###:c:plugin_mssql/MSSQL逐次開/解説
+●『[[MSSQL逐次開:plugin_mssql/MSSQL逐次開/解説]]』の詳しい解説
+
+逐次実行構文にてデータベースを開く
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_mssql/MSSQL逐次実行
+■ MSSQL逐次実行 (MSSQLちくじじっこう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_mssql]] > [[SQLServer:plugin_mssql/SQLServer]]
+種類 || 関数
+引数 || SQLをPARAMSで
+説明 || 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+}}}
+
+#page(plugin_mssql/MSSQL逐次実行/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_mssql]]
+
+###PAGE###:c:plugin_mssql/MSSQL逐次実行/解説
+●『[[MSSQL逐次実行:plugin_mssql/MSSQL逐次実行/解説]]』の詳しい解説
+
+逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_mssql/MSSQL逐次閉
+■ MSSQL逐次閉 (MSSQLとじる)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_mssql]] > [[SQLServer:plugin_mssql/SQLServer]]
+種類 || 関数
+引数 || 
+説明 || 開いているデータベースを閉じる
+}}}
+
+#page(plugin_mssql/MSSQL逐次閉/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_mssql]]
+
+###PAGE###:c:plugin_mssql/MSSQL逐次閉/解説
+●『[[MSSQL逐次閉:plugin_mssql/MSSQL逐次閉/解説]]』の詳しい解説
+
+開いているデータベースを閉じる
 
 {{{
 # 準備中

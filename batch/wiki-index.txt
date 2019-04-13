@@ -538,6 +538,7 @@
 #page(plugin_sqlite3/解説)
 
 ● [[SQLite3:plugin_sqlite3]]
+- [[SQLITE3今挿入ID:plugin_sqlite3/SQLITE3今挿入ID]] --- 定数
 - [[(Sを|Sの)SQLITE3開:plugin_sqlite3/SQLITE3開]] --- SQlite3のデータベースを開いて、データベースオブジェクトを返す
 - [[SQLITE3閉:plugin_sqlite3/SQLITE3閉]] --- アクティブなSQlite3のデータベースを閉じる
 - [[(DBに|DBへ)SQLITE3切替:plugin_sqlite3/SQLITE3切替]] --- アクティブなSQlite3のデータベースをDB(SQLITE3開くで開いたもの)に切り替える
@@ -559,6 +560,14 @@
 - [[ODBC逐次閉:plugin_odbc/ODBC逐次閉]] --- 逐次実行構文でODBCで開いているデータベースを閉じる
 - [[ODBCトランザクション開始:plugin_odbc/ODBCトランザクション開始]] --- ODBCでトランザクションを開始する
 - [[ODBCトランザクション終了:plugin_odbc/ODBCトランザクション終了]] --- ODBCでトランザクションを終了する
+
+■ [[plugin_mssql]] ([[拡張プラグイン]])
+#page(plugin_mssql/解説)
+
+● [[SQLServer:plugin_mssql]]
+- [[(Sを|Sの|Sで)MSSQL逐次開:plugin_mssql/MSSQL逐次開]] --- 逐次実行構文にてデータベースを開く
+- [[(SQLをPARAMSで)MSSQL逐次実行:plugin_mssql/MSSQL逐次実行]] --- 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。
+- [[MSSQL逐次閉:plugin_mssql/MSSQL逐次閉]] --- 開いているデータベースを閉じる
 
 ■ [[plugin_mysql]] ([[拡張プラグイン]])
 #page(plugin_mysql/解説)
