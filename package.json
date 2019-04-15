@@ -80,7 +80,7 @@
       "no-console": "off",
       "curly": [
         "error",
-        "multi"
+        "all"
       ]
     },
     "plugins": [
@@ -125,7 +125,6 @@
     "fs-extra": "^6.0.0",
     "iconv-lite": "^0.4.24",
     "moment-timezone": "^0.5.23",
-    "nadesiko3-sqlite3": "0.0.3",
     "node-fetch": "^2.3.0",
     "opener": "^1.5.1",
     "react": "^16.7.0",

@@ -28,6 +28,9 @@ module.exports = {
     // ならば ← 助詞として定義
     {name: '違えば', pattern: /^違(えば)?/},
     // 「回」「間」「繰返」「反復」「抜」「続」「戻」「代入」などは replaceWord で word から変換
+    {name: 'shift_r0', pattern: /^>>>/},
+    {name: 'shift_r', pattern: /^>>/},
+    {name: 'shift_l', pattern: /^<</},
     {name: 'gteq', pattern: /^(≧|>=|=>)/},
     {name: 'lteq', pattern: /^(≦|<=|=<)/},
     {name: 'noteq', pattern: /^(≠|<>|!=)/},
@@ -94,7 +97,7 @@ function cbRangeComment (src) {
   }
   // 改行を数える
   for (let i = 0; i < res.length; i++)
-    if (res.charAt(i) === '\n') numEOL++
+    {if (res.charAt(i) === '\n') {numEOL++}}
 
   res = res.replace(/(^\s+|\s+$)/, '') // trim
   return {src: src, res: res, josi: josi, numEOL: numEOL}
@@ -157,7 +160,7 @@ function cbString (beginTag, closeTag, src) {
     const sm = src.match(/^\{{3,}/)
     const cnt = sm[0].length
     closeTag = ''
-    for (let i = 0; i < cnt; i++) closeTag += '}'
+    for (let i = 0; i < cnt; i++) {closeTag += '}'}
     src = src.substr(cnt)
   }
   const i = src.indexOf(closeTag)
@@ -176,14 +179,14 @@ function cbString (beginTag, closeTag, src) {
   }
   // 改行を数える
   for (let i = 0; i < res.length; i++)
-    if (res.charAt(i) === '\n') numEOL++
+    {if (res.charAt(i) === '\n') {numEOL++}}
 
   return {src: src, res: res, josi: josi, numEOL: numEOL}
 }
 
 function trimOkurigana (s) {
   if (!hira.test(s))
-    s = s.replace(/[ぁ-ん]+/g, '')
+    {s = s.replace(/[ぁ-ん]+/g, '')}
 
   return s
 }
