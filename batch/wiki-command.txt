@@ -3577,7 +3577,7 @@ JSON文字列Sをオブジェクトにデコードして返す
 カテゴリ || [[plugin_system]] > [[配列操作:plugin_system/配列操作]]
 種類 || 関数
 引数 || AのIからCNTを
-説明 || 配列AのI番目(0起点)からCNT個の応訴を取り出して返す。Aの内容を書き換える
+説明 || 配列AのI番目(0起点)からCNT個の要素を取り出して返す。Aの内容を書き換える
 }}}
 
 #page(plugin_system/配列取出/解説)
@@ -3588,7 +3588,7 @@ JSON文字列Sをオブジェクトにデコードして返す
 ###PAGE###:c:plugin_system/配列取出/解説
 ●『[[配列取出:plugin_system/配列取出/解説]]』の詳しい解説
 
-配列AのI番目(0起点)からCNT個の応訴を取り出して返す。Aの内容を書き換える
+配列AのI番目(0起点)からCNT個の要素を取り出して返す。Aの内容を書き換える
 
 {{{
 # 準備中
@@ -3658,6 +3658,374 @@ JSON文字列Sをオブジェクトにデコードして返す
 ●『[[配列複製:plugin_system/配列複製/解説]]』の詳しい解説
 
 配列Aを複製して返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/配列足
+■ 配列足 (はいれつたす)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[配列操作:plugin_system/配列操作]]
+種類 || 関数
+引数 || AにBを|Aへ|Aと
+説明 || 配列Aに配列Bを足し合わせて返す。
+}}}
+
+#page(plugin_system/配列足/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/配列足/解説
+●『[[配列足:plugin_system/配列足/解説]]』の詳しい解説
+
+配列Aに配列Bを足し合わせて返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表ソート
+■ 表ソート (ひょうそーと)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのNOを
+説明 || 配列Aの列番号B(0起点)(あるいはキー名)をキーにしてソートする。Aの内容を書き換える。
+}}}
+
+#page(plugin_system/表ソート/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表ソート/解説
+●『[[表ソート:plugin_system/表ソート/解説]]』の詳しい解説
+
+配列Aの列番号B(0起点)(あるいはキー名)をキーにしてソートする。Aの内容を書き換える。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表ピックアップ
+■ 表ピックアップ (ひょうぴっくあっぷ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのNOからSを|Sで
+説明 || 配列Aの列番号B(0起点)(あるいはキー名)で検索文字列Sを含む行を返す
+}}}
+
+#page(plugin_system/表ピックアップ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表ピックアップ/解説
+●『[[表ピックアップ:plugin_system/表ピックアップ/解説]]』の詳しい解説
+
+配列Aの列番号B(0起点)(あるいはキー名)で検索文字列Sを含む行を返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表完全一致ピックアップ
+■ 表完全一致ピックアップ (ひょうぴっくあっぷ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのNOからSを|Sで
+説明 || 配列Aの列番号B(0起点)(あるいはキー名)で検索文字列Sと一致する行を返す
+}}}
+
+#page(plugin_system/表完全一致ピックアップ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表完全一致ピックアップ/解説
+●『[[表完全一致ピックアップ:plugin_system/表完全一致ピックアップ/解説]]』の詳しい解説
+
+配列Aの列番号B(0起点)(あるいはキー名)で検索文字列Sと一致する行を返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表検索
+■ 表検索 (ひょうけんさく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのCOLでROWからSを|COLに
+説明 || 二次元配列AでCOL列目(0起点)からキーSを含む行をROW行目から検索して何行目にあるか返す。見つからなければ-1を返す。
+}}}
+
+#page(plugin_system/表検索/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表検索/解説
+●『[[表検索:plugin_system/表検索/解説]]』の詳しい解説
+
+二次元配列AでCOL列目(0起点)からキーSを含む行をROW行目から検索して何行目にあるか返す。見つからなければ-1を返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表列数
+■ 表列数 (ひょうれつすう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || Aの
+説明 || 二次元配列Aの列数を調べて返す。
+}}}
+
+#page(plugin_system/表列数/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表列数/解説
+●『[[表列数:plugin_system/表列数/解説]]』の詳しい解説
+
+二次元配列Aの列数を調べて返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表行数
+■ 表行数 (ひょうぎょうすう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || Aの
+説明 || 二次元配列Aの行数を調べて返す。
+}}}
+
+#page(plugin_system/表行数/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表行数/解説
+●『[[表行数:plugin_system/表行数/解説]]』の詳しい解説
+
+二次元配列Aの行数を調べて返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表行列交換
+■ 表行列交換 (ひょうぎょうれつこうかん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || Aの|Aを
+説明 || 二次元配列Aの行と列を交換して返す。
+}}}
+
+#page(plugin_system/表行列交換/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表行列交換/解説
+●『[[表行列交換:plugin_system/表行列交換/解説]]』の詳しい解説
+
+二次元配列Aの行と列を交換して返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表右回転
+■ 表右回転 (ひょうみぎかいてん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || Aの|Aを
+説明 || 二次元配列Aを90度回転して返す。
+}}}
+
+#page(plugin_system/表右回転/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表右回転/解説
+●『[[表右回転:plugin_system/表右回転/解説]]』の詳しい解説
+
+二次元配列Aを90度回転して返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表重複削除
+■ 表重複削除 (ひょうじゅうふくさくじょ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのIを|Iで
+説明 || 二次元配列AのI列目にある重複項目を削除して返す。
+}}}
+
+#page(plugin_system/表重複削除/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表重複削除/解説
+●『[[表重複削除:plugin_system/表重複削除/解説]]』の詳しい解説
+
+二次元配列AのI列目にある重複項目を削除して返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表列取得
+■ 表列取得 (ひょうれつしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのIを
+説明 || 二次元配列AのI列目を返す。
+}}}
+
+#page(plugin_system/表列取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表列取得/解説
+●『[[表列取得:plugin_system/表列取得/解説]]』の詳しい解説
+
+二次元配列AのI列目を返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表列挿入
+■ 表列挿入 (ひょうれつそうにゅう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのIにSを|Iへ
+説明 || 二次元配列Aの(0から数えて)I列目に配列Sを挿入して返す
+}}}
+
+#page(plugin_system/表列挿入/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表列挿入/解説
+●『[[表列挿入:plugin_system/表列挿入/解説]]』の詳しい解説
+
+二次元配列Aの(0から数えて)I列目に配列Sを挿入して返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表列削除
+■ 表列削除 (ひょうれつそうにゅう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのIを
+説明 || 二次元配列Aの(0から数えて)I列目削除して返す
+}}}
+
+#page(plugin_system/表列削除/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表列削除/解説
+●『[[表列削除:plugin_system/表列削除/解説]]』の詳しい解説
+
+二次元配列Aの(0から数えて)I列目削除して返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表列合計
+■ 表列合計 (ひょうれつごうけい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのIを|Iで
+説明 || 二次元配列Aの(0から数えて)I列目を合計して返す。
+}}}
+
+#page(plugin_system/表列合計/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表列合計/解説
+●『[[表列合計:plugin_system/表列合計/解説]]』の詳しい解説
+
+二次元配列Aの(0から数えて)I列目を合計して返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表曖昧検索
+■ 表曖昧検索 (ひょうれつあいまいけんさく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのROWからCOLでSを
+説明 || 二次元配列AのROW行目からCOL列目(0起点)で正規表現Sにマッチする行を検索して何行目にあるか返す。見つからなければ-1を返す。(v1非互換)
+}}}
+
+#page(plugin_system/表曖昧検索/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表曖昧検索/解説
+●『[[表曖昧検索:plugin_system/表曖昧検索/解説]]』の詳しい解説
+
+二次元配列AのROW行目からCOL列目(0起点)で正規表現Sにマッチする行を検索して何行目にあるか返す。見つからなければ-1を返す。(v1非互換)
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表正規表現ピックアップ
+■ 表正規表現ピックアップ (ひょうせいきひょうげんぴっくあっぷ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[二次元配列処理:plugin_system/二次元配列処理]]
+種類 || 関数
+引数 || AのCOLからSを|Aで
+説明 || 二次元配列AでI列目(0起点)から正規表現パターンSにマッチする行をピックアップして返す。
+}}}
+
+#page(plugin_system/表正規表現ピックアップ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表正規表現ピックアップ/解説
+●『[[表正規表現ピックアップ:plugin_system/表正規表現ピックアップ/解説]]』の詳しい解説
+
+二次元配列AでI列目(0起点)から正規表現パターンSにマッチする行をピックアップして返す。
 
 {{{
 # 準備中
@@ -4193,12 +4561,12 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 }}}
 
 ###PAGE###:w:plugin_system/タイムゾーン設定
-■ タイムゾーン設定 (en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照))
+■ タイムゾーン設定 (たいむぞーんせってい)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
 種類 || 関数
 引数 || TZで
-説明 || タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
+説明 || タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
 }}}
 
 #page(plugin_system/タイムゾーン設定/解説)
@@ -4209,7 +4577,7 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 ###PAGE###:c:plugin_system/タイムゾーン設定/解説
 ●『[[タイムゾーン設定:plugin_system/タイムゾーン設定/解説]]』の詳しい解説
 
-タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https:
+タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
 
 {{{
 # 準備中
@@ -8504,12 +8872,12 @@ IDを指定して操作対象となるカメを変更する
 }}}
 
 ###PAGE###:w:plugin_node/解凍
-■ 解凍 (goo.gl/LmKswH))
+■ 解凍 (かいとう)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_node]] > [[圧縮・解凍:plugin_node/圧縮・解凍]]
 種類 || 関数
 引数 || AをBに|AからBへ
-説明 || (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https:
+説明 || (v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https://goo.gl/LmKswH)
 }}}
 
 #page(plugin_node/解凍/解説)
@@ -8520,7 +8888,7 @@ IDを指定して操作対象となるカメを変更する
 ###PAGE###:c:plugin_node/解凍/解説
 ●『[[解凍:plugin_node/解凍/解説]]』の詳しい解説
 
-(v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https:
+(v1非互換)ZIPファイルAをBに解凍(実行には7-zipが必要-https://goo.gl/LmKswH)
 
 {{{
 # 準備中
@@ -8550,12 +8918,12 @@ IDを指定して操作対象となるカメを変更する
 }}}
 
 ###PAGE###:w:plugin_node/圧縮
-■ 圧縮 (goo.gl/LmKswH))
+■ 圧縮 (あっしゅく)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_node]] > [[圧縮・解凍:plugin_node/圧縮・解凍]]
 種類 || 関数
 引数 || AをBに|AからBへ
-説明 || (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https:
+説明 || (v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https://goo.gl/LmKswH)
 }}}
 
 #page(plugin_node/圧縮/解説)
@@ -8566,7 +8934,7 @@ IDを指定して操作対象となるカメを変更する
 ###PAGE###:c:plugin_node/圧縮/解説
 ●『[[圧縮:plugin_node/圧縮/解説]]』の詳しい解説
 
-(v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https:
+(v1非互換)ファイルAをBにZIP圧縮(実行には7-zipが必要-https://goo.gl/LmKswH)
 
 {{{
 # 準備中
