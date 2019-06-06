@@ -3,7 +3,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['ナデシコバージョン'] = '3.0.60'
+      sys.__v0['ナデシコバージョン'] = '3.0.61'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) {return def}
@@ -29,13 +29,13 @@ const PluginSystem = {
         sys.__v0[name] = value
       }
       // 前回設定したタイマーが実行中ならクリア
-      if (sys.__timeout)
-        {for (const t of sys.__timeout) {clearTimeout(t)}}
-
+      if (sys.__timeout) {
+        for (const t of sys.__timeout) { clearTimeout(t) }
+      }
       sys.__timeout = []
-      if (sys.__interval)
-        {for (const t of sys.__interval) {clearInterval(t)}}
-
+      if (sys.__interval) {
+        for (const t of sys.__interval) { clearInterval(t) }
+      }
       sys.__interval = []
     }
   },
@@ -80,9 +80,7 @@ const PluginSystem = {
     type: 'func',
     josi: [['を', 'と']],
     fn: function (s, sys) {
-      if (!sys.silent)
-        {console.log(s)}
-
+      if (!sys.silent){ console.log(s) }
       sys.__varslist[0]['表示ログ'] += (s + '\n')
     },
     return_none: true
@@ -1206,15 +1204,12 @@ const PluginSystem = {
     fn: function (f, a, sys) {
       let ufunc = f
       if (typeof f === 'string') {
-        ufunc = sys.__v1[f]
-        if (ufunc === undefined)
-          {ufunc = sys.__v0[f]}
-
-        if (!ufunc) {throw new Error('関数『' + f + '』が見当たりません。')}
+        ufunc = sys.__findVar(f)
+        if (!ufunc) { throw new Error('関数『' + f + '』が見当たりません。') }
       }
-      if (a instanceof Array)  // 配列ならOK
-        {return a.sort(ufunc)}
-
+      if (a instanceof Array) {
+        return a.sort(ufunc)
+      }
       throw new Error('『配列カスタムソート』で配列以外が指定されました。')
     }
   },
@@ -1494,7 +1489,7 @@ const PluginSystem = {
   'CSV取得': { // @CSV形式のデータstrを強制的に二次元配列に変換して返す // @CSVしゅとく
     type: 'func',
     josi: [['を', 'の', 'で']],
-    fn: str => {
+    fn: function (str) {
       const CSV = require('csv-lite-js')
       CSV.options.delimiter = ','
       return CSV.parse(str)
@@ -1503,7 +1498,7 @@ const PluginSystem = {
   'TSV取得': { // @TSV形式のデータstrを強制的に二次元配列に変換して返す // @TSVしゅとく
     type: 'func',
     josi: [['を', 'の', 'で']],
-    fn: str => {
+    fn: function (str) {
       const CSV = require('csv-lite-js')
       CSV.options.delimiter = "\t"
       return CSV.parse(str)
@@ -1512,7 +1507,7 @@ const PluginSystem = {
   '表CSV変換': { // @二次元配列AをCSV形式に変換して返す // @ひょうCSVへんかん
     type: 'func',
     josi: [['を']],
-    fn: a => {
+    fn: function (a) {
       const CSV = require('csv-lite-js')
       CSV.options.delimiter = ','
       return CSV.stringify(a)
@@ -1521,7 +1516,7 @@ const PluginSystem = {
   '表TSV変換': { // @二次元配列AをTSV形式に変換して返す // @ひょうTSVへんかん
     type: 'func',
     josi: [['を']],
-    fn: a => {
+    fn: function (a) {
       const CSV = require('csv-lite-js')
       CSV.options.delimiter = '\t'
       return CSV.stringify(a)

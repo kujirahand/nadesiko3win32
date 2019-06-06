@@ -217,6 +217,10 @@
 - [[(AのCOLからSを|Aで)表正規表現ピックアップ:plugin_system/表正規表現ピックアップ]] --- 二次元配列AでI列目(0起点)から正規表現パターンSにマッチする行をピックアップして返す。
 
 ● [[CSV操作:plugin_system]]
+- [[(STRを|STRの|STRで)CSV取得:plugin_system/CSV取得]] --- CSV形式のデータstrを強制的に二次元配列に変換して返す
+- [[(STRを|STRの|STRで)TSV取得:plugin_system/TSV取得]] --- TSV形式のデータstrを強制的に二次元配列に変換して返す
+- [[(Aを)表CSV変換:plugin_system/表CSV変換]] --- 二次元配列AをCSV形式に変換して返す
+- [[(Aを)表TSV変換:plugin_system/表TSV変換]] --- 二次元配列AをTSV形式に変換して返す
 
 ● [[ハッシュ:plugin_system]]
 - [[(Aの)ハッシュキー列挙:plugin_system/ハッシュキー列挙]] --- ハッシュAのキー一覧を配列で返す。
@@ -321,9 +325,17 @@
 - [[(FUNCでDOMを|DOMの)キータイピング時:plugin_browser/キータイピング時]] --- 無名関数FでDOMに対してキーをプレスした時に実行するイベントを設定。『押されたキー』が設定される。
 - [[マウスX:plugin_browser/マウスX]] --- 定数
 - [[マウスY:plugin_browser/マウスY]] --- 定数
-- [[(FUNCでDOMを|DOMの)マウス押時:plugin_browser/マウス押時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
-- [[(FUNCでDOMを|DOMの)マウス移動時:plugin_browser/マウス移動時]] --- 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
-- [[(FUNCでDOMを|DOMの)マウス離時:plugin_browser/マウス離時]] --- 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+- [[(FUNCでDOMを|DOMの)マウス押時:plugin_browser/マウス押時]] --- 無名関数FでDOMに対してマウスボタンを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[(FUNCでDOMを|DOMの)マウス移動時:plugin_browser/マウス移動時]] --- 無名関数FでDOMに対してマウスカーソルが移動した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[(FUNCでDOMを|DOMの)マウス離時:plugin_browser/マウス離時]] --- 無名関数FでDOMに対してマウスボタンを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[タッチX:plugin_browser/タッチX]] --- 定数
+- [[タッチY:plugin_browser/タッチY]] --- 定数
+- [[タッチ配列:plugin_browser/タッチ配列]] --- 定数
+- [[(Eの)タッチイベント計算:plugin_browser/タッチイベント計算]] --- タッチイベントのイベント変数を与えることで座標などを計算する関数(自動的に呼ばれるので明示的に呼ぶ必要はない)
+- [[(FUNCでDOMを|DOMの)タッチ開始時:plugin_browser/タッチ開始時]] --- 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[(FUNCでDOMを|DOMの)タッチ時:plugin_browser/タッチ時]] --- 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[(FUNCでDOMを|DOMの)タッチ終了時:plugin_browser/タッチ終了時]] --- 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[(FUNCでDOMを|DOMの)タッチキャンセル時:plugin_browser/タッチキャンセル時]] --- 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 - [[(DOMにTEXTを|DOMの|DOMへ)DOMテキスト設定:plugin_browser/DOMテキスト設定]] --- DOMにテキストを設定
 - [[(DOMの|DOMから)DOMテキスト取得:plugin_browser/DOMテキスト取得]] --- DOMのテキストを取得
 - [[(DOMにTEXTを|DOMの|DOMへ)DOM_HTML設定:plugin_browser/DOM_HTML設定]] --- DOMにHTML文字列を設定
@@ -411,6 +423,11 @@
 - [[(Sを|Sと)WS送信:plugin_browser/WS送信]] --- アクティブなWebSocketへsを送信する
 - [[WS切断:plugin_browser/WS切断]] --- アクティブなWebSocketを閉じる
 
+● [[オーディオ:plugin_browser]]
+- [[(URLを|URLの)オーディオ開:plugin_browser/オーディオ開]] --- オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
+- [[(OBJを)オーディオ再生:plugin_browser/オーディオ再生]] --- AudioオブジェクトOBJを指定してオーディをを再生
+- [[(OBJを)オーディオ停止:plugin_browser/オーディオ停止]] --- AudioオブジェクトOBJを指定してオーディをを停止
+
 ■ [[plugin_turtle]]
 #page(plugin_turtle/解説)
 
@@ -496,7 +513,7 @@
 - [[終:plugin_node/終]] --- Nodeでプログラム実行を強制終了する
 - [[終了:plugin_node/終了]] --- Nodeでプログラム実行を強制終了する
 - [[(SEC)秒待:plugin_node/秒待]] --- NodeでN秒待つ
-- [[OS取得:plugin_node/OS取得]] --- OSプラットフォームを返す(darwin
+- [[OS取得:plugin_node/OS取得]] --- OSプラットフォームを返す(darwin/win32/linux)
 - [[OSアーキテクチャ取得:plugin_node/OSアーキテクチャ取得]] --- OSアーキテクチャを返す
 
 ● [[クリップボード:plugin_node]]
@@ -635,3 +652,28 @@
 - [[(CALLBACKで)WSサーバ受信時:plugin_websocket/WSサーバ受信時]] --- WSサーバでメッセージを受信した時に実行される。受信データは『対象』に代入される
 - [[(Sを)WSサーバ全送信:plugin_websocket/WSサーバ全送信]] --- WSサーバで全員にメッセージSを送信する
 - [[(Sを)WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得]] --- WSサーバに接続しているクライアントの一覧を返す
+
+■ [[plugin_htmlparser]] ([[拡張プラグイン]])
+#page(plugin_htmlparser/解説)
+
+● [[HTMLパーサ(コンソール):plugin_htmlparser]]
+- [[HTML応答ヘッダ:plugin_htmlparser/HTML応答ヘッダ]] --- 定数
+- [[(URLを)HTML逐次URL開:plugin_htmlparser/HTML逐次URL開]] --- 任意のURLを開いてパースする。
+- [[(HTMLを)HTMLパース:plugin_htmlparser/HTMLパース]] --- 任意のHTML文字列をパースする。
+- [[(Qを|Qの|Qから)DOM要素取得:plugin_htmlparser/DOM要素取得]] --- パース済みHTMLからクエリQに該当するDOMを取得する
+- [[(DOMのQを|DOMから)DOM子要素検索:plugin_htmlparser/DOM子要素検索]] --- DOMの子要素Qを取得する
+- [[(DOMの|DOMから)DOM子要素全取得:plugin_htmlparser/DOM子要素全取得]] --- DOMの子要素を全部取得する
+- [[(Qを|Qの|Qから)DOM親要素取得:plugin_htmlparser/DOM親要素取得]] --- DOMの親要素を取得する
+- [[(Qを|Qの|Qから)DOM次要素取得:plugin_htmlparser/DOM次要素取得]] --- DOMの親要素を取得する
+- [[(DOMからQを|DOMの)DOM抽出:plugin_htmlparser/DOM抽出]] --- DOMからクエリQを利用して合致するものを抽出する
+- [[(DOMからKを|DOMの)属性取得:plugin_htmlparser/属性取得]] --- DOMの属性Kを取得する
+- [[(DOMから|DOMの)テキスト取得:plugin_htmlparser/テキスト取得]] --- DOMのテキストを取得する
+- [[(DOMから|DOMの)HTML取得:plugin_htmlparser/HTML取得]] --- DOMのHTMLを取得する
+- [[(DOMにSを|DOMへ)HTML設定:plugin_htmlparser/HTML設定]] --- DOMにSを設定する
+- [[(DOMからPROPを|DOMの)プロパティ取得:plugin_htmlparser/プロパティ取得]] --- DOMのプロパティPROPを取得する
+- [[(DOMから|DOMの)値取得:plugin_htmlparser/値取得]] --- DOMの値を取得する
+- [[(DOMにVを|DOMへ)値設定:plugin_htmlparser/値設定]] --- DOMの値vを設定する
+- [[(DOMからKを|DOMの)スタイル取得:plugin_htmlparser/スタイル取得]] --- DOMのスタイルKを取得する
+- [[(DOMからKを|DOMの)データ取得:plugin_htmlparser/データ取得]] --- DOMのデータkを取得する
+- [[(DOMから|DOMを)DOM配列変換:plugin_htmlparser/DOM配列変換]] --- DOMを配列に変換する
+- [[(DOMから|DOMの)タグ名取得:plugin_htmlparser/タグ名取得]] --- DOMのタグ名を取得する

@@ -4031,6 +4031,98 @@ JSON文字列Sをオブジェクトにデコードして返す
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/CSV取得
+■ CSV取得 (CSVしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[CSV操作:plugin_system/CSV操作]]
+種類 || 関数
+引数 || STRを|STRの|STRで
+説明 || CSV形式のデータstrを強制的に二次元配列に変換して返す
+}}}
+
+#page(plugin_system/CSV取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/CSV取得/解説
+●『[[CSV取得:plugin_system/CSV取得/解説]]』の詳しい解説
+
+CSV形式のデータstrを強制的に二次元配列に変換して返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/TSV取得
+■ TSV取得 (TSVしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[CSV操作:plugin_system/CSV操作]]
+種類 || 関数
+引数 || STRを|STRの|STRで
+説明 || TSV形式のデータstrを強制的に二次元配列に変換して返す
+}}}
+
+#page(plugin_system/TSV取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/TSV取得/解説
+●『[[TSV取得:plugin_system/TSV取得/解説]]』の詳しい解説
+
+TSV形式のデータstrを強制的に二次元配列に変換して返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表CSV変換
+■ 表CSV変換 (ひょうCSVへんかん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[CSV操作:plugin_system/CSV操作]]
+種類 || 関数
+引数 || Aを
+説明 || 二次元配列AをCSV形式に変換して返す
+}}}
+
+#page(plugin_system/表CSV変換/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表CSV変換/解説
+●『[[表CSV変換:plugin_system/表CSV変換/解説]]』の詳しい解説
+
+二次元配列AをCSV形式に変換して返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/表TSV変換
+■ 表TSV変換 (ひょうTSVへんかん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[CSV操作:plugin_system/CSV操作]]
+種類 || 関数
+引数 || Aを
+説明 || 二次元配列AをTSV形式に変換して返す
+}}}
+
+#page(plugin_system/表TSV変換/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/表TSV変換/解説
+●『[[表TSV変換:plugin_system/表TSV変換/解説]]』の詳しい解説
+
+二次元配列AをTSV形式に変換して返す
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/ハッシュキー列挙
 ■ ハッシュキー列挙 (はっしゅきーれっきょ)
 {{{#csv(flag=||)
@@ -5871,7 +5963,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを|DOMの
-説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+説明 || 無名関数FでDOMに対してマウスボタンを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 }}}
 
 #page(plugin_browser/マウス押時/解説)
@@ -5882,7 +5974,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/マウス押時/解説
 ●『[[マウス押時:plugin_browser/マウス押時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+無名関数FでDOMに対してマウスボタンを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 
 {{{
 # 準備中
@@ -5894,7 +5986,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを|DOMの
-説明 || 無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+説明 || 無名関数FでDOMに対してマウスカーソルが移動した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 }}}
 
 #page(plugin_browser/マウス移動時/解説)
@@ -5905,7 +5997,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/マウス移動時/解説
 ●『[[マウス移動時:plugin_browser/マウス移動時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+無名関数FでDOMに対してマウスカーソルが移動した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 
 {{{
 # 準備中
@@ -5917,7 +6009,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを|DOMの
-説明 || 無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+説明 || 無名関数FでDOMに対してマウスボタンを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 }}}
 
 #page(plugin_browser/マウス離時/解説)
@@ -5928,7 +6020,182 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/マウス離時/解説
 ●『[[マウス離時:plugin_browser/マウス離時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してキーを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。
+無名関数FでDOMに対してマウスボタンを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチX
+■ タッチX (たっちX)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || 0
+}}}
+
+#page(plugin_browser/タッチX/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチX/解説
+●『[[タッチX:plugin_browser/タッチX/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチY
+■ タッチY (たっちY)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || 0
+}}}
+
+#page(plugin_browser/タッチY/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチY/解説
+●『[[タッチY:plugin_browser/タッチY/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチ配列
+■ タッチ配列 (たっちはいれつ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 定数
+初期値 || []
+}}}
+
+#page(plugin_browser/タッチ配列/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチ配列/解説
+●『[[タッチ配列:plugin_browser/タッチ配列/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチイベント計算
+■ タッチイベント計算 (たっちいべんとけいさん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || Eの
+説明 || タッチイベントのイベント変数を与えることで座標などを計算する関数(自動的に呼ばれるので明示的に呼ぶ必要はない)
+}}}
+
+#page(plugin_browser/タッチイベント計算/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチイベント計算/解説
+●『[[タッチイベント計算:plugin_browser/タッチイベント計算/解説]]』の詳しい解説
+
+タッチイベントのイベント変数を与えることで座標などを計算する関数(自動的に呼ばれるので明示的に呼ぶ必要はない)
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチ開始時
+■ タッチ開始時 (たっちかいししたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを|DOMの
+説明 || 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+}}}
+
+#page(plugin_browser/タッチ開始時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチ開始時/解説
+●『[[タッチ開始時:plugin_browser/タッチ開始時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチ時
+■ タッチ時 (たっちしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを|DOMの
+説明 || 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+}}}
+
+#page(plugin_browser/タッチ時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチ時/解説
+●『[[タッチ時:plugin_browser/タッチ時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチ終了時
+■ タッチ終了時 (たっちしゅうりょうしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを|DOMの
+説明 || 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+}}}
+
+#page(plugin_browser/タッチ終了時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチ終了時/解説
+●『[[タッチ終了時:plugin_browser/タッチ終了時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してタッチして指を離した時のイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/タッチキャンセル時
+■ タッチキャンセル時 (たっちきゃんせるしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
+種類 || 関数
+引数 || FUNCでDOMを|DOMの
+説明 || 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+}}}
+
+#page(plugin_browser/タッチキャンセル時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/タッチキャンセル時/解説
+●『[[タッチキャンセル時:plugin_browser/タッチキャンセル時/解説]]』の詳しい解説
+
+無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 
 {{{
 # 準備中
@@ -7526,6 +7793,75 @@ WebSocketサーバsに接続する
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/オーディオ開
+■ オーディオ開 (おーでぃおひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+種類 || 関数
+引数 || URLを|URLの
+説明 || オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
+}}}
+
+#page(plugin_browser/オーディオ開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/オーディオ開/解説
+●『[[オーディオ開:plugin_browser/オーディオ開/解説]]』の詳しい解説
+
+オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/オーディオ再生
+■ オーディオ再生 (おーでぃおさいせい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+種類 || 関数
+引数 || OBJを
+説明 || AudioオブジェクトOBJを指定してオーディをを再生
+}}}
+
+#page(plugin_browser/オーディオ再生/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/オーディオ再生/解説
+●『[[オーディオ再生:plugin_browser/オーディオ再生/解説]]』の詳しい解説
+
+AudioオブジェクトOBJを指定してオーディをを再生
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/オーディオ停止
+■ オーディオ停止 (おーでぃおていし)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+種類 || 関数
+引数 || OBJを
+説明 || AudioオブジェクトOBJを指定してオーディをを停止
+}}}
+
+#page(plugin_browser/オーディオ停止/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/オーディオ停止/解説
+●『[[オーディオ停止:plugin_browser/オーディオ停止/解説]]』の詳しい解説
+
+AudioオブジェクトOBJを指定してオーディをを停止
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_turtle/カメ作成
 ■ カメ作成 (かめさくせい)
 {{{#csv(flag=||)
@@ -9033,12 +9369,12 @@ NodeでN秒待つ
 }}}
 
 ###PAGE###:w:plugin_node/OS取得
-■ OS取得 (win32)
+■ OS取得 (OSしゅとく)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_node]] > [[Nodeプロセス:plugin_node/Nodeプロセス]]
 種類 || 関数
 引数 || 
-説明 || OSプラットフォームを返す(darwin
+説明 || OSプラットフォームを返す(darwin/win32/linux)
 }}}
 
 #page(plugin_node/OS取得/解説)
@@ -9049,7 +9385,7 @@ NodeでN秒待つ
 ###PAGE###:c:plugin_node/OS取得/解説
 ●『[[OS取得:plugin_node/OS取得/解説]]』の詳しい解説
 
-OSプラットフォームを返す(darwin
+OSプラットフォームを返す(darwin/win32/linux)
 
 {{{
 # 準備中
@@ -10846,6 +11182,463 @@ WSサーバで全員にメッセージSを送信する
 ●『[[WSクライアント一覧取得:plugin_websocket/WSクライアント一覧取得/解説]]』の詳しい解説
 
 WSサーバに接続しているクライアントの一覧を返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/HTML応答ヘッダ
+■ HTML応答ヘッダ (HTMLおうとうへっだ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 定数
+初期値 || ''
+}}}
+
+#page(plugin_htmlparser/HTML応答ヘッダ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/HTML応答ヘッダ/解説
+●『[[HTML応答ヘッダ:plugin_htmlparser/HTML応答ヘッダ/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/HTML逐次URL開
+■ HTML逐次URL開 (HTMLちくじURLひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || URLを
+説明 || 任意のURLを開いてパースする。
+}}}
+
+#page(plugin_htmlparser/HTML逐次URL開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/HTML逐次URL開/解説
+●『[[HTML逐次URL開:plugin_htmlparser/HTML逐次URL開/解説]]』の詳しい解説
+
+任意のURLを開いてパースする。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/HTMLパース
+■ HTMLパース (HTMLぱーす)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || HTMLを
+説明 || 任意のHTML文字列をパースする。
+}}}
+
+#page(plugin_htmlparser/HTMLパース/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/HTMLパース/解説
+●『[[HTMLパース:plugin_htmlparser/HTMLパース/解説]]』の詳しい解説
+
+任意のHTML文字列をパースする。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/DOM要素取得
+■ DOM要素取得 (DOMようそしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || Qを|Qの|Qから
+説明 || パース済みHTMLからクエリQに該当するDOMを取得する
+}}}
+
+#page(plugin_htmlparser/DOM要素取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/DOM要素取得/解説
+●『[[DOM要素取得:plugin_htmlparser/DOM要素取得/解説]]』の詳しい解説
+
+パース済みHTMLからクエリQに該当するDOMを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/DOM子要素検索
+■ DOM子要素検索 (DOMこようそけんさく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMのQを|DOMから
+説明 || DOMの子要素Qを取得する
+}}}
+
+#page(plugin_htmlparser/DOM子要素検索/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/DOM子要素検索/解説
+●『[[DOM子要素検索:plugin_htmlparser/DOM子要素検索/解説]]』の詳しい解説
+
+DOMの子要素Qを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/DOM子要素全取得
+■ DOM子要素全取得 (DOMこようそぜんしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMの|DOMから
+説明 || DOMの子要素を全部取得する
+}}}
+
+#page(plugin_htmlparser/DOM子要素全取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/DOM子要素全取得/解説
+●『[[DOM子要素全取得:plugin_htmlparser/DOM子要素全取得/解説]]』の詳しい解説
+
+DOMの子要素を全部取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/DOM親要素取得
+■ DOM親要素取得 (DOMおやようそしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || Qを|Qの|Qから
+説明 || DOMの親要素を取得する
+}}}
+
+#page(plugin_htmlparser/DOM親要素取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/DOM親要素取得/解説
+●『[[DOM親要素取得:plugin_htmlparser/DOM親要素取得/解説]]』の詳しい解説
+
+DOMの親要素を取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/DOM次要素取得
+■ DOM次要素取得 (DOMおやようそしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || Qを|Qの|Qから
+説明 || DOMの親要素を取得する
+}}}
+
+#page(plugin_htmlparser/DOM次要素取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/DOM次要素取得/解説
+●『[[DOM次要素取得:plugin_htmlparser/DOM次要素取得/解説]]』の詳しい解説
+
+DOMの親要素を取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/DOM抽出
+■ DOM抽出 (DOMちゅうしゅつ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMからQを|DOMの
+説明 || DOMからクエリQを利用して合致するものを抽出する
+}}}
+
+#page(plugin_htmlparser/DOM抽出/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/DOM抽出/解説
+●『[[DOM抽出:plugin_htmlparser/DOM抽出/解説]]』の詳しい解説
+
+DOMからクエリQを利用して合致するものを抽出する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/属性取得
+■ 属性取得 (ぞくせいしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMからKを|DOMの
+説明 || DOMの属性Kを取得する
+}}}
+
+#page(plugin_htmlparser/属性取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/属性取得/解説
+●『[[属性取得:plugin_htmlparser/属性取得/解説]]』の詳しい解説
+
+DOMの属性Kを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/テキスト取得
+■ テキスト取得 (てきすとしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMから|DOMの
+説明 || DOMのテキストを取得する
+}}}
+
+#page(plugin_htmlparser/テキスト取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/テキスト取得/解説
+●『[[テキスト取得:plugin_htmlparser/テキスト取得/解説]]』の詳しい解説
+
+DOMのテキストを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/HTML取得
+■ HTML取得 (HTMLしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMから|DOMの
+説明 || DOMのHTMLを取得する
+}}}
+
+#page(plugin_htmlparser/HTML取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/HTML取得/解説
+●『[[HTML取得:plugin_htmlparser/HTML取得/解説]]』の詳しい解説
+
+DOMのHTMLを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/HTML設定
+■ HTML設定 (HTML設定)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMにSを|DOMへ
+説明 || DOMにSを設定する
+}}}
+
+#page(plugin_htmlparser/HTML設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/HTML設定/解説
+●『[[HTML設定:plugin_htmlparser/HTML設定/解説]]』の詳しい解説
+
+DOMにSを設定する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/プロパティ取得
+■ プロパティ取得 (ぷろぱてぃしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMからPROPを|DOMの
+説明 || DOMのプロパティPROPを取得する
+}}}
+
+#page(plugin_htmlparser/プロパティ取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/プロパティ取得/解説
+●『[[プロパティ取得:plugin_htmlparser/プロパティ取得/解説]]』の詳しい解説
+
+DOMのプロパティPROPを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/値取得
+■ 値取得 (あたいしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMから|DOMの
+説明 || DOMの値を取得する
+}}}
+
+#page(plugin_htmlparser/値取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/値取得/解説
+●『[[値取得:plugin_htmlparser/値取得/解説]]』の詳しい解説
+
+DOMの値を取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/値設定
+■ 値設定 (あたいせってい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMにVを|DOMへ
+説明 || DOMの値vを設定する
+}}}
+
+#page(plugin_htmlparser/値設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/値設定/解説
+●『[[値設定:plugin_htmlparser/値設定/解説]]』の詳しい解説
+
+DOMの値vを設定する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/スタイル取得
+■ スタイル取得 (すたいるしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMからKを|DOMの
+説明 || DOMのスタイルKを取得する
+}}}
+
+#page(plugin_htmlparser/スタイル取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/スタイル取得/解説
+●『[[スタイル取得:plugin_htmlparser/スタイル取得/解説]]』の詳しい解説
+
+DOMのスタイルKを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/データ取得
+■ データ取得 (でーたしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMからKを|DOMの
+説明 || DOMのデータkを取得する
+}}}
+
+#page(plugin_htmlparser/データ取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/データ取得/解説
+●『[[データ取得:plugin_htmlparser/データ取得/解説]]』の詳しい解説
+
+DOMのデータkを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/DOM配列変換
+■ DOM配列変換 (DOMはいれつへんかん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMから|DOMを
+説明 || DOMを配列に変換する
+}}}
+
+#page(plugin_htmlparser/DOM配列変換/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/DOM配列変換/解説
+●『[[DOM配列変換:plugin_htmlparser/DOM配列変換/解説]]』の詳しい解説
+
+DOMを配列に変換する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_htmlparser/タグ名取得
+■ タグ名取得 (たぐめいしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_htmlparser]] > [[HTMLパーサ(コンソール):plugin_htmlparser/HTMLパーサ(コンソール)]]
+種類 || 関数
+引数 || DOMから|DOMの
+説明 || DOMのタグ名を取得する
+}}}
+
+#page(plugin_htmlparser/タグ名取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_htmlparser]]
+
+###PAGE###:c:plugin_htmlparser/タグ名取得/解説
+●『[[タグ名取得:plugin_htmlparser/タグ名取得/解説]]』の詳しい解説
+
+DOMのタグ名を取得する
 
 {{{
 # 準備中
