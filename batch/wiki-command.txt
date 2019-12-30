@@ -1251,6 +1251,29 @@ JavaScriptの関数NAMEを引数ARGS(配列)で実行する
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/NAN判定
+■ NAN判定 (NANはんてい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[型変換:plugin_system/型変換]]
+種類 || 関数
+引数 || Vを
+説明 || 値VがNaNかどうかを判定
+}}}
+
+#page(plugin_system/NAN判定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/NAN判定/解説
+●『[[NAN判定:plugin_system/NAN判定/解説]]』の詳しい解説
+
+値VがNaNかどうかを判定
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/HEX
 ■ HEX (HEX)
 {{{#csv(flag=||)
@@ -1821,6 +1844,75 @@ HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255
 ●『[[四捨五入:plugin_system/四捨五入/解説]]』の詳しい解説
 
 実数型の値Vを丸めてもっとも近い整数値を返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/小数点切上
+■ 小数点切上 (しょうすうてんきりあげ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[算術関数:plugin_system/算術関数]]
+種類 || 関数
+引数 || AをBで
+説明 || 整数Aを少数点第B桁で切り上げして返す
+}}}
+
+#page(plugin_system/小数点切上/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/小数点切上/解説
+●『[[小数点切上:plugin_system/小数点切上/解説]]』の詳しい解説
+
+整数Aを少数点第B桁で切り上げして返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/小数点切下
+■ 小数点切下 (しょうすうてんきりさげ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[算術関数:plugin_system/算術関数]]
+種類 || 関数
+引数 || AをBで
+説明 || 整数Aを少数点第B桁で切り下げして返す
+}}}
+
+#page(plugin_system/小数点切下/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/小数点切下/解説
+●『[[小数点切下:plugin_system/小数点切下/解説]]』の詳しい解説
+
+整数Aを少数点第B桁で切り下げして返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/小数点四捨五入
+■ 小数点四捨五入 (しょうすうてんししゃごにゅう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[算術関数:plugin_system/算術関数]]
+種類 || 関数
+引数 || AをBで
+説明 || 実数Aを少数点第B桁で四捨五入して返す
+}}}
+
+#page(plugin_system/小数点四捨五入/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/小数点四捨五入/解説
+●『[[小数点四捨五入:plugin_system/小数点四捨五入/解説]]』の詳しい解説
+
+実数Aを少数点第B桁で四捨五入して返す
 
 {{{
 # 準備中
@@ -3686,6 +3778,52 @@ JSON文字列Sをオブジェクトにデコードして返す
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/配列最大値
+■ 配列最大値 (はいれつさいだいち)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[配列操作:plugin_system/配列操作]]
+種類 || 関数
+引数 || Aの
+説明 || 配列Aの値の最大値を調べて返す。
+}}}
+
+#page(plugin_system/配列最大値/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/配列最大値/解説
+●『[[配列最大値:plugin_system/配列最大値/解説]]』の詳しい解説
+
+配列Aの値の最大値を調べて返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/配列最小値
+■ 配列最小値 (はいれつさいしょうち)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[配列操作:plugin_system/配列操作]]
+種類 || 関数
+引数 || Aの
+説明 || 配列Aの値の最小値を調べて返す。
+}}}
+
+#page(plugin_system/配列最小値/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/配列最小値/解説
+●『[[配列最小値:plugin_system/配列最小値/解説]]』の詳しい解説
+
+配列Aの値の最小値を調べて返す。
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/表ソート
 ■ 表ソート (ひょうそーと)
 {{{#csv(flag=||)
@@ -4187,6 +4325,29 @@ TSV形式のデータstrを強制的に二次元配列に変換して返す
 ●『[[ハッシュキー削除:plugin_system/ハッシュキー削除/解説]]』の詳しい解説
 
 ハッシュAからキーKEYを削除して返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/ハッシュキー存在
+■ ハッシュキー存在 (はっしゅきーそんざい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[ハッシュ:plugin_system/ハッシュ]]
+種類 || 関数
+引数 || AのKEYが|Aに
+説明 || ハッシュAのキーKEYが存在するか確認
+}}}
+
+#page(plugin_system/ハッシュキー存在/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/ハッシュキー存在/解説
+●『[[ハッシュキー存在:plugin_system/ハッシュキー存在/解説]]』の詳しい解説
+
+ハッシュAのキーKEYが存在するか確認
 
 {{{
 # 準備中
@@ -6092,7 +6253,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || Eの
-説明 || タッチイベントのイベント変数を与えることで座標などを計算する関数(自動的に呼ばれるので明示的に呼ぶ必要はない)
+説明 || タッチイベントで座標計算を行う。『タッチX』『タッチY』『対象』『対象イベント』が設定される。
 }}}
 
 #page(plugin_browser/タッチイベント計算/解説)
@@ -6103,7 +6264,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/タッチイベント計算/解説
 ●『[[タッチイベント計算:plugin_browser/タッチイベント計算/解説]]』の詳しい解説
 
-タッチイベントのイベント変数を与えることで座標などを計算する関数(自動的に呼ばれるので明示的に呼ぶ必要はない)
+タッチイベントで座標計算を行う。『タッチX』『タッチY』『対象』『対象イベント』が設定される。
 
 {{{
 # 準備中
@@ -6115,7 +6276,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを|DOMの
-説明 || 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+説明 || 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。
 }}}
 
 #page(plugin_browser/タッチ開始時/解説)
@@ -6126,7 +6287,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/タッチ開始時/解説
 ●『[[タッチ開始時:plugin_browser/タッチ開始時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。
 
 {{{
 # 準備中
@@ -6138,7 +6299,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを|DOMの
-説明 || 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+説明 || 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。
 }}}
 
 #page(plugin_browser/タッチ時/解説)
@@ -6149,7 +6310,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/タッチ時/解説
 ●『[[タッチ時:plugin_browser/タッチ時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。
 
 {{{
 # 準備中
@@ -6161,7 +6322,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを|DOMの
-説明 || 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+説明 || 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。
 }}}
 
 #page(plugin_browser/タッチ終了時/解説)
@@ -6172,7 +6333,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/タッチ終了時/解説
 ●『[[タッチ終了時:plugin_browser/タッチ終了時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してタッチして指を離した時のイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+無名関数FでDOMに対してタッチして指を離した時のイベントを設定。
 
 {{{
 # 準備中
@@ -6184,7 +6345,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 カテゴリ || [[plugin_browser]] > [[DOM操作:plugin_browser/DOM操作]]
 種類 || 関数
 引数 || FUNCでDOMを|DOMの
-説明 || 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+説明 || 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。
 }}}
 
 #page(plugin_browser/タッチキャンセル時/解説)
@@ -6195,7 +6356,7 @@ DOMのEVENTが発火した時にCALLBACKを実行するように設定
 ###PAGE###:c:plugin_browser/タッチキャンセル時/解説
 ●『[[タッチキャンセル時:plugin_browser/タッチキャンセル時/解説]]』の詳しい解説
 
-無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。
 
 {{{
 # 準備中
@@ -7857,6 +8018,52 @@ AudioオブジェクトOBJを指定してオーディをを再生
 ●『[[オーディオ停止:plugin_browser/オーディオ停止/解説]]』の詳しい解説
 
 AudioオブジェクトOBJを指定してオーディをを停止
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/ホットキー登録
+■ ホットキー登録 (ほっときーとうろく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+種類 || 関数
+引数 || KEYにFNAMEを|KEYで
+説明 || ホットキーKEYにEVENTを登録する
+}}}
+
+#page(plugin_browser/ホットキー登録/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/ホットキー登録/解説
+●『[[ホットキー登録:plugin_browser/ホットキー登録/解説]]』の詳しい解説
+
+ホットキーKEYにEVENTを登録する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/ホットキー解除
+■ ホットキー解除 (ほっときーかいじょ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+種類 || 関数
+引数 || KEYを|KEYの
+説明 || ホットキーKEYを解除する
+}}}
+
+#page(plugin_browser/ホットキー解除/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/ホットキー解除/解説
+●『[[ホットキー解除:plugin_browser/ホットキー解除/解説]]』の詳しい解説
+
+ホットキーKEYを解除する
 
 {{{
 # 準備中
@@ -9999,7 +10206,7 @@ Webサーバの名前を変更する
 {{{#csv(flag=||)
 カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
 種類 || 関数
-引数 || CALLBACKまでPORTNOの|PORTNOで
+引数 || PORTNOの|PORTNOで
 説明 || ポートPORTNOでWebサーバを起動して成功したら『WEBサーバ起動成功した時』を実行する
 }}}
 
@@ -10012,6 +10219,29 @@ Webサーバの名前を変更する
 ●『[[WEBサーバ起動:plugin_express/WEBサーバ起動/解説]]』の詳しい解説
 
 ポートPORTNOでWebサーバを起動して成功したら『WEBサーバ起動成功した時』を実行する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_express/WEBサーバ起動時
+■ WEBサーバ起動時 (WEBさーばきどうしたとき)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
+種類 || 関数
+引数 || CALLBACKをPORTNOの|PORTNOで
+説明 || ポートPORTNOでWebサーバを起動して成功したらCALLBACKを実行する
+}}}
+
+#page(plugin_express/WEBサーバ起動時/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_express]]
+
+###PAGE###:c:plugin_express/WEBサーバ起動時/解説
+●『[[WEBサーバ起動時:plugin_express/WEBサーバ起動時/解説]]』の詳しい解説
+
+ポートPORTNOでWebサーバを起動して成功したらCALLBACKを実行する
 
 {{{
 # 準備中
@@ -10173,6 +10403,52 @@ URIにPOSTメソッドがあった時の処理を指定
 ●『[[WEBサーバDELETE時:plugin_express/WEBサーバDELETE時/解説]]』の詳しい解説
 
 URIにPOSTメソッドがあった時の処理を指定
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_express/WEBサーバヘッダ出力
+■ WEBサーバヘッダ出力 (WEBさーばへっだしゅつりょく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
+種類 || 関数
+引数 || OBJを|OBJの
+説明 || クライアントにヘッダOBJを出力
+}}}
+
+#page(plugin_express/WEBサーバヘッダ出力/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_express]]
+
+###PAGE###:c:plugin_express/WEBサーバヘッダ出力/解説
+●『[[WEBサーバヘッダ出力:plugin_express/WEBサーバヘッダ出力/解説]]』の詳しい解説
+
+クライアントにヘッダOBJを出力
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_express/WEBサーバステータス出力
+■ WEBサーバステータス出力 (WEBさーばすてーたすしゅつりょく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_express]] > [[Webサーバ(Express):plugin_express/Webサーバ(Express)]]
+種類 || 関数
+引数 || NOを|NOの
+説明 || クライアントにステータスNOを出力
+}}}
+
+#page(plugin_express/WEBサーバステータス出力/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_express]]
+
+###PAGE###:c:plugin_express/WEBサーバステータス出力/解説
+●『[[WEBサーバステータス出力:plugin_express/WEBサーバステータス出力/解説]]』の詳しい解説
+
+クライアントにステータスNOを出力
 
 {{{
 # 準備中

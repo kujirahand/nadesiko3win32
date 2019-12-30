@@ -38,6 +38,7 @@
 - [[TOFLOAT:plugin_system/TOFLOAT]] --- 値Vを実数に変換
 - [[INT:plugin_system/INT]] --- 値Vを整数に変換
 - [[FLOAT:plugin_system/FLOAT]] --- 値Vを実数に変換
+- [[NAN判定:plugin_system/NAN判定]] --- 値VがNaNかどうかを判定
 - [[HEX:plugin_system/HEX]] --- 値Vを16進数に変換
 ▲[[plugin_system/三角関数]]
 - [[SIN:plugin_system/SIN]] --- ラジアン単位VのSINを求める
@@ -65,6 +66,9 @@
 - [[RGB:plugin_system/RGB]] --- HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255
 - [[ROUND:plugin_system/ROUND]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
 - [[四捨五入:plugin_system/四捨五入]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
+- [[小数点切上:plugin_system/小数点切上]] --- 整数Aを少数点第B桁で切り上げして返す
+- [[小数点切下:plugin_system/小数点切下]] --- 整数Aを少数点第B桁で切り下げして返す
+- [[小数点四捨五入:plugin_system/小数点四捨五入]] --- 実数Aを少数点第B桁で四捨五入して返す
 - [[CEIL:plugin_system/CEIL]] --- 数値を正の無限大方向へ切り上げて返す。
 - [[切上:plugin_system/切上]] --- 数値を正の無限大方向へ切り上げて返す。
 - [[FLOOR:plugin_system/FLOOR]] --- 数値を負の無限大方向へ切り下げて返す。
@@ -155,6 +159,8 @@
 - [[配列追加:plugin_system/配列追加]] --- 配列Aの末尾にBを追加して返す。Aの内容を書き換える。
 - [[配列複製:plugin_system/配列複製]] --- 配列Aを複製して返す。
 - [[配列足:plugin_system/配列足]] --- 配列Aに配列Bを足し合わせて返す。
+- [[配列最大値:plugin_system/配列最大値]] --- 配列Aの値の最大値を調べて返す。
+- [[配列最小値:plugin_system/配列最小値]] --- 配列Aの値の最小値を調べて返す。
 ▲[[plugin_system/二次元配列処理]]
 - [[表ソート:plugin_system/表ソート]] --- 配列Aの列番号B(0起点)(あるいはキー名)をキーにしてソートする。Aの内容を書き換える。
 - [[表ピックアップ:plugin_system/表ピックアップ]] --- 配列Aの列番号B(0起点)(あるいはキー名)で検索文字列Sを含む行を返す
@@ -180,6 +186,7 @@
 - [[ハッシュキー列挙:plugin_system/ハッシュキー列挙]] --- ハッシュAのキー一覧を配列で返す。
 - [[ハッシュ内容列挙:plugin_system/ハッシュ内容列挙]] --- ハッシュAの内容一覧を配列で返す。
 - [[ハッシュキー削除:plugin_system/ハッシュキー削除]] --- ハッシュAからキーKEYを削除して返す。
+- [[ハッシュキー存在:plugin_system/ハッシュキー存在]] --- ハッシュAのキーKEYが存在するか確認
 ▲[[plugin_system/日時処理]]
 - [[今:plugin_system/今]] --- 現在時刻を「HH:mm:ss」の形式で返す
 - [[システム時間:plugin_system/システム時間]] --- 現在のUNIX時間 (UTC(1970/1/1)からの経過秒数) を返す
@@ -282,11 +289,11 @@
 - [[マウス押時:plugin_browser/マウス押時]] --- 無名関数FでDOMに対してマウスボタンを押した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 - [[マウス移動時:plugin_browser/マウス移動時]] --- 無名関数FでDOMに対してマウスカーソルが移動した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
 - [[マウス離時:plugin_browser/マウス離時]] --- 無名関数FでDOMに対してマウスボタンを離した時に実行するイベントを設定。『マウスX』『マウスY』に座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
-- [[タッチイベント計算:plugin_browser/タッチイベント計算]] --- タッチイベントのイベント変数を与えることで座標などを計算する関数(自動的に呼ばれるので明示的に呼ぶ必要はない)
-- [[タッチ開始時:plugin_browser/タッチ開始時]] --- 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
-- [[タッチ時:plugin_browser/タッチ時]] --- 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
-- [[タッチ終了時:plugin_browser/タッチ終了時]] --- 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
-- [[タッチキャンセル時:plugin_browser/タッチキャンセル時]] --- 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[タッチイベント計算:plugin_browser/タッチイベント計算]] --- タッチイベントで座標計算を行う。『タッチX』『タッチY』『対象』『対象イベント』が設定される。
+- [[タッチ開始時:plugin_browser/タッチ開始時]] --- 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。
+- [[タッチ時:plugin_browser/タッチ時]] --- 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。
+- [[タッチ終了時:plugin_browser/タッチ終了時]] --- 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。
+- [[タッチキャンセル時:plugin_browser/タッチキャンセル時]] --- 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。
 - [[DOMテキスト設定:plugin_browser/DOMテキスト設定]] --- DOMにテキストを設定
 - [[DOMテキスト取得:plugin_browser/DOMテキスト取得]] --- DOMのテキストを取得
 - [[DOM_HTML設定:plugin_browser/DOM_HTML設定]] --- DOMにHTML文字列を設定
@@ -363,6 +370,8 @@
 - [[オーディオ開:plugin_browser/オーディオ開]] --- オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
 - [[オーディオ再生:plugin_browser/オーディオ再生]] --- AudioオブジェクトOBJを指定してオーディをを再生
 - [[オーディオ停止:plugin_browser/オーディオ停止]] --- AudioオブジェクトOBJを指定してオーディをを停止
+- [[ホットキー登録:plugin_browser/ホットキー登録]] --- ホットキーKEYにEVENTを登録する
+- [[ホットキー解除:plugin_browser/ホットキー解除]] --- ホットキーKEYを解除する
 
 
 - [[色定数:plugin_browser/色定数]]
@@ -534,6 +543,7 @@
 ▲[[plugin_express/Webサーバ(Express)]]
 - [[WEBサーバ名前設定:plugin_express/WEBサーバ名前設定]] --- Webサーバの名前を変更する
 - [[WEBサーバ起動:plugin_express/WEBサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WEBサーバ起動成功した時』を実行する
+- [[WEBサーバ起動時:plugin_express/WEBサーバ起動時]] --- ポートPORTNOでWebサーバを起動して成功したらCALLBACKを実行する
 - [[WEBサーバ起動成功時:plugin_express/WEBサーバ起動成功時]] --- WEBサーバ起動が成功した時にcallbackを実行
 - [[WEBサーバ起動失敗時:plugin_express/WEBサーバ起動失敗時]] --- WEBサーバ起動が失敗した時にcallbackを実行
 - [[WEBサーバ静的パス指定:plugin_express/WEBサーバ静的パス指定]] --- サーバのHTMLや画像などを配置する静的パスを指定する
@@ -541,6 +551,8 @@
 - [[WEBサーバPOST時:plugin_express/WEBサーバPOST時]] --- URIにPOSTメソッドがあった時の処理を指定
 - [[WEBサーバPUT時:plugin_express/WEBサーバPUT時]] --- URIにPOSTメソッドがあった時の処理を指定
 - [[WEBサーバDELETE時:plugin_express/WEBサーバDELETE時]] --- URIにPOSTメソッドがあった時の処理を指定
+- [[WEBサーバヘッダ出力:plugin_express/WEBサーバヘッダ出力]] --- クライアントにヘッダOBJを出力
+- [[WEBサーバステータス出力:plugin_express/WEBサーバステータス出力]] --- クライアントにステータスNOを出力
 - [[WEBサーバ出力:plugin_express/WEBサーバ出力]] --- クライアントにSを出力
 - [[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト]] --- URLにリダイレクトする
 
@@ -862,6 +874,7 @@
 - [[TOFLOAT:plugin_system/TOFLOAT]] --- 値Vを実数に変換
 - [[INT:plugin_system/INT]] --- 値Vを整数に変換
 - [[FLOAT:plugin_system/FLOAT]] --- 値Vを実数に変換
+- [[NAN判定:plugin_system/NAN判定]] --- 値VがNaNかどうかを判定
 - [[HEX:plugin_system/HEX]] --- 値Vを16進数に変換
 
 ▲ 参考
@@ -907,6 +920,9 @@
 - [[RGB:plugin_system/RGB]] --- HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255
 - [[ROUND:plugin_system/ROUND]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
 - [[四捨五入:plugin_system/四捨五入]] --- 実数型の値Vを丸めてもっとも近い整数値を返す
+- [[小数点切上:plugin_system/小数点切上]] --- 整数Aを少数点第B桁で切り上げして返す
+- [[小数点切下:plugin_system/小数点切下]] --- 整数Aを少数点第B桁で切り下げして返す
+- [[小数点四捨五入:plugin_system/小数点四捨五入]] --- 実数Aを少数点第B桁で四捨五入して返す
 - [[CEIL:plugin_system/CEIL]] --- 数値を正の無限大方向へ切り上げて返す。
 - [[切上:plugin_system/切上]] --- 数値を正の無限大方向へ切り上げて返す。
 - [[FLOOR:plugin_system/FLOOR]] --- 数値を負の無限大方向へ切り下げて返す。
@@ -1088,6 +1104,8 @@
 - [[配列追加:plugin_system/配列追加]] --- 配列Aの末尾にBを追加して返す。Aの内容を書き換える。
 - [[配列複製:plugin_system/配列複製]] --- 配列Aを複製して返す。
 - [[配列足:plugin_system/配列足]] --- 配列Aに配列Bを足し合わせて返す。
+- [[配列最大値:plugin_system/配列最大値]] --- 配列Aの値の最大値を調べて返す。
+- [[配列最小値:plugin_system/配列最小値]] --- 配列Aの値の最小値を調べて返す。
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
@@ -1140,6 +1158,7 @@
 - [[ハッシュキー列挙:plugin_system/ハッシュキー列挙]] --- ハッシュAのキー一覧を配列で返す。
 - [[ハッシュ内容列挙:plugin_system/ハッシュ内容列挙]] --- ハッシュAの内容一覧を配列で返す。
 - [[ハッシュキー削除:plugin_system/ハッシュキー削除]] --- ハッシュAからキーKEYを削除して返す。
+- [[ハッシュキー存在:plugin_system/ハッシュキー存在]] --- ハッシュAのキーKEYが存在するか確認
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
@@ -1306,11 +1325,11 @@
 - [[タッチX:plugin_browser/タッチX]] --- 定数
 - [[タッチY:plugin_browser/タッチY]] --- 定数
 - [[タッチ配列:plugin_browser/タッチ配列]] --- 定数
-- [[タッチイベント計算:plugin_browser/タッチイベント計算]] --- タッチイベントのイベント変数を与えることで座標などを計算する関数(自動的に呼ばれるので明示的に呼ぶ必要はない)
-- [[タッチ開始時:plugin_browser/タッチ開始時]] --- 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
-- [[タッチ時:plugin_browser/タッチ時]] --- 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
-- [[タッチ終了時:plugin_browser/タッチ終了時]] --- 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
-- [[タッチキャンセル時:plugin_browser/タッチキャンセル時]] --- 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。『タッチX』『タッチY』また『タッチ配列』に配列で[ [x1,y1],[x2,y2]...]座標が設定される。『対象』にイベントDOM。『対象イベント』にイベント引数。
+- [[タッチイベント計算:plugin_browser/タッチイベント計算]] --- タッチイベントで座標計算を行う。『タッチX』『タッチY』『対象』『対象イベント』が設定される。
+- [[タッチ開始時:plugin_browser/タッチ開始時]] --- 無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。
+- [[タッチ時:plugin_browser/タッチ時]] --- 無名関数FでDOMに対してタッチして指を動かした時に実行するイベントを設定。
+- [[タッチ終了時:plugin_browser/タッチ終了時]] --- 無名関数FでDOMに対してタッチして指を離した時のイベントを設定。
+- [[タッチキャンセル時:plugin_browser/タッチキャンセル時]] --- 無名関数FでDOMに対してタッチイベントをキャンセルした時の動作を設定。
 - [[DOMテキスト設定:plugin_browser/DOMテキスト設定]] --- DOMにテキストを設定
 - [[DOMテキスト取得:plugin_browser/DOMテキスト取得]] --- DOMのテキストを取得
 - [[DOM_HTML設定:plugin_browser/DOM_HTML設定]] --- DOMにHTML文字列を設定
@@ -1474,6 +1493,8 @@
 - [[オーディオ開:plugin_browser/オーディオ開]] --- オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
 - [[オーディオ再生:plugin_browser/オーディオ再生]] --- AudioオブジェクトOBJを指定してオーディをを再生
 - [[オーディオ停止:plugin_browser/オーディオ停止]] --- AudioオブジェクトOBJを指定してオーディをを停止
+- [[ホットキー登録:plugin_browser/ホットキー登録]] --- ホットキーKEYにEVENTを登録する
+- [[ホットキー解除:plugin_browser/ホットキー解除]] --- ホットキーKEYを解除する
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
@@ -1719,6 +1740,7 @@
 - [[POSTデータ:plugin_express/POSTデータ]] --- 定数
 - [[WEBサーバ名前設定:plugin_express/WEBサーバ名前設定]] --- Webサーバの名前を変更する
 - [[WEBサーバ起動:plugin_express/WEBサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WEBサーバ起動成功した時』を実行する
+- [[WEBサーバ起動時:plugin_express/WEBサーバ起動時]] --- ポートPORTNOでWebサーバを起動して成功したらCALLBACKを実行する
 - [[WEBサーバ起動成功時:plugin_express/WEBサーバ起動成功時]] --- WEBサーバ起動が成功した時にcallbackを実行
 - [[WEBサーバ起動失敗時:plugin_express/WEBサーバ起動失敗時]] --- WEBサーバ起動が失敗した時にcallbackを実行
 - [[WEBサーバ静的パス指定:plugin_express/WEBサーバ静的パス指定]] --- サーバのHTMLや画像などを配置する静的パスを指定する
@@ -1726,6 +1748,8 @@
 - [[WEBサーバPOST時:plugin_express/WEBサーバPOST時]] --- URIにPOSTメソッドがあった時の処理を指定
 - [[WEBサーバPUT時:plugin_express/WEBサーバPUT時]] --- URIにPOSTメソッドがあった時の処理を指定
 - [[WEBサーバDELETE時:plugin_express/WEBサーバDELETE時]] --- URIにPOSTメソッドがあった時の処理を指定
+- [[WEBサーバヘッダ出力:plugin_express/WEBサーバヘッダ出力]] --- クライアントにヘッダOBJを出力
+- [[WEBサーバステータス出力:plugin_express/WEBサーバステータス出力]] --- クライアントにステータスNOを出力
 - [[WEBサーバ出力:plugin_express/WEBサーバ出力]] --- クライアントにSを出力
 - [[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト]] --- URLにリダイレクトする
 

@@ -14,7 +14,7 @@
 
 コンパイル環境が必要になるので、ビルドツールをインストールする。PowerShellから以下のコマンドを実行すると、自動的に必要なツールが入る。(Windowsのユーザー名に日本語が使われているとうまくコンパイルできないという情報もあるので注意。)
 
-また、Gitなどのツールをインストールするために、Chocolatey(https://chocolatey.org/)をインストールしておく。
+また、Gitなどのツールをインストールするために、Chocolatey( https://chocolatey.org/ )をインストールしておく。
 
 ```
 # Chocolatey でGitをインストール
@@ -27,7 +27,7 @@ npm install -g windows-build-tools
 
 ## 【macOS】
 
-Homebrew(そしてXcode)をインストールしておく。
+Homebrew( https://brew.sh/index_ja ) (そしてXcode)をインストールしておく。
 
 ## 【共通】
 
@@ -41,7 +41,7 @@ $ npm install -g npm-check-updates electron asar
 
 
 ```
-$ git clone https://github.com/kujirahand/nadesiko3
+$ git clone --recursive https://github.com/kujirahand/nadesiko3
 $ cd nadesiko3
 $ npm install --no-optional
 ```
@@ -107,6 +107,13 @@ export PATH=$PATH:$NAKO_HOME/src
 
 ```
 $ cnako3 $NAKO_HOME/batch/pickup_command.nako
+```
+
+テストを実行する場合には、 `-t` (`--test`) オプションを付与した状態でcnako3を実行し、出力されたテスト用コードをmochaで実行します。
+
+```
+$ cnako3 -t hoge.nako3
+$ mocha hoge.spec.js
 ```
 
 ### デモプログラムを動かす方法

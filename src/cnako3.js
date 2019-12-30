@@ -32,11 +32,13 @@ class CNako3 extends NakoCompiler {
       .option('-d, --debug', 'デバッグモードの指定')
       .option('-D, --debugAll', '詳細デバッグモードの指定')
       .option('-c, --compile', 'コンパイルモードの指定')
+      .option('-t, --test', 'コンパイルモードの指定 (テスト用コードを出力)')
       .option('-r, --run', 'コンパイルモードでも実行する')
       .option('-e, --eval [src]', '直接プログラムを実行するワンライナーモード')
       .option('-o, --output', '出力ファイル名の指定')
       .option('-s, --silent', 'サイレントモードの指定')
       .option('-l, --repl', '対話シェル(REPL)の実行')
+      .option('-m, --man [command]', 'マニュアルを表示する')
       // .option('-h, --help', '使い方を表示する')
       // .option('-v, --version', 'バージョンを表示する')
       .parse(process.argv)
@@ -45,18 +47,10 @@ class CNako3 extends NakoCompiler {
 
   /**
    * コマンドライン引数を解析
-   * @returns {{mainfile: string, compile: boolean, run: boolean, output: string, source: string, one_liner: boolean, debug: (boolean|*)}}
+   * @returns {{debug: boolean, compile: any | boolean, test: any | boolean, one_liner: any | boolean, debugAll: any, run: any | boolean, repl: any | boolean, source: any | string}}
    */
   checkArguments () {
     const app = this.registerCommands()
-    let mainfile = app.args[0]
-    let output = app.output
-    if (/\.(nako|nako3|txt|bak)$/.test(mainfile)) {
-      if (!output) {output = mainfile.replace(/\.(nako|nako3)$/, '.js')}
-    } else {
-      if (!output) {output = mainfile + '.js'}
-      mainfile += '.nako3'
-    }
     // デバッグモードの指定
     this.debug = app.debugAll || app.debug || false
     if (app.debugAll) {
@@ -64,22 +58,47 @@ class CNako3 extends NakoCompiler {
       this.debugParser = true
       this.debugJSCode = true
     }
-    return {
-      'mainfile': mainfile,
-      'output': output,
+    let args = {
       'compile': app.compile || false,
       'run': app.run || false,
       'source': app.eval || '',
+      'man': app.man || '',
       'one_liner': app.eval || false,
       'debug': this.debug,
       'debugAll': app.debugAll,
-      'repl': app.repl || false
+      'repl': app.repl || false,
+      'test': app.test || false
     }
+    args.mainfile = app.args[0]
+    args.output = app.output
+    if (/\.(nako|nako3|txt|bak)$/.test(args.mainfile)) {
+      if (!args.output) {
+        if (args.test) {
+          args.output = args.mainfile.replace(/\.(nako|nako3)$/, '.spec.js')
+        } else {
+          args.output = args.mainfile.replace(/\.(nako|nako3)$/, '.js')
+        }
+      }
+    } else {
+      if (!args.output) {
+        if (args.test) {
+          args.output = args.mainfile + '.spec.js'
+        } else {
+          args.output = args.mainfile + '.js'
+        }
+      }
+      args.mainfile += '.nako3'
+    }
+    return args
   }
 
   // 実行する
   execCommand () {
     const opt = this.checkArguments()
+    if (opt.man) {
+      this.cnakoMan(opt.man)
+      return
+    }
     if (opt.mainfile) {this.filename = opt.mainfile}
     if (opt.repl) {
       this.cnakoRepl(opt)
@@ -93,7 +112,11 @@ class CNako3 extends NakoCompiler {
     // メインプログラムを読み込む
     let src = fs.readFileSync(opt.mainfile, 'utf-8')
     if (opt.compile) {
-      this.nakoCompile(opt, src)
+      this.nakoCompile(opt, src, false)
+      return
+    }
+    if (opt.test) {
+      this.nakoCompile(opt, src, true)
       return
     }
     try {
@@ -108,20 +131,21 @@ class CNako3 extends NakoCompiler {
   }
 
   /** コンパイル(override) */
-  compile (src) {
+  compile(src, isTest) {
     const code = this.includePlugin(src)
     const ast = this.parse(code)
-    return this.generate(ast)
+    return this.generate(ast, isTest)
   }
 
   /**
    * コンパイルモードの場合
    * @param opt
    * @param src
+   * @param isTest
    */
-  nakoCompile (opt, src) {
+  nakoCompile(opt, src, isTest) {
     // system
-    const js = this.compile(src)
+    const js = this.compile(src, isTest)
     const jscode =
       NakoCompiler.getHeader() +
       this.getVarsCode() +
@@ -155,6 +179,72 @@ class CNako3 extends NakoCompiler {
     this.run(src, true)
   }
 
+  // マニュアルを表示する
+  cnakoMan(command) {
+    try {
+      const commands = require('../release/command_cnako3.json')
+      const data = commands[command]
+      for (const key in data) {
+        console.log(`${key}: ${data[key]}`)
+      }
+    } catch (e) {
+      if (e.code === 'MODULE_NOT_FOUND') {
+        console.log('コマンド一覧がないため、マニュアルを表示できません。以下のコマンドでコマンド一覧を生成してください。\n$ npm run build:command')
+      } else {
+        throw e
+      }
+    }
+  }
+
+  /**
+   * プラグインファイルの検索を行う
+   * @param path
+   * @return string フルパス
+   */
+  findPluginFile (pname) {
+    // フルパス指定か?
+    const p1 = pname.substr(0, 1)
+    if (p1 === '/') {
+      // フルパス指定なので何もしない
+      return pname
+    }
+    // 相対パスか?
+    if (p1 === '.') {
+      // 相対パス指定なので、なでしこのプログラムからの相対指定を調べる
+      const basedir = path.dirname(this.filename)
+      return path.resolve(path.join(basedir, pname))
+    }
+    // 同じフォルダか?
+    const basedir = path.dirname(this.filename)
+    let fullpath = path.resolve(path.join(basedir, pname))
+    if (fs.existsSync(fullpath)) {
+        return fullpath
+    }
+    // node_modules 以下にあるか？
+    fullpath = path.resolve(path.join(basedir, 'node_modules', pname))
+    if (fs.existsSync(fullpath)) {
+        return fullpath
+    }
+    // NAKO_HOMEか?
+    if (process.env['NAKO_HOME']) {
+      const NAKO_HOME = process.env['NAKO_HOME']
+      // NAKO_HOME/node_modules?
+      fullpath = path.resolve(path.join(NAKO_HOME, 'node_modules', pname))
+      if (fs.existsSync(fullpath)) {
+          return fullpath
+      }
+      // NAKO_HOME/src ?
+      fullpath = path.resolve(path.join(NAKO_HOME, 'src', pname))
+      if (fs.existsSync(fullpath)) {
+          return fullpath
+      }
+    }
+    // NODE_PATH (global) 以下にあるか？
+    fullpath = path.resolve(path.join(process.env.NODE_PATH, 'node_modules', pname))
+    if (fs.existsSync(fullpath)) {
+        return fullpath
+    }
+  }
   /**
    * プラグインの取込チェック
    * @param src
@@ -171,7 +261,7 @@ class CNako3 extends NakoCompiler {
         result += line + '\n'
         continue
       }
-      const m = s.match(/["'『「](.+)["'』」]を(取り込|取込)/)
+      const m = s.match(/[\"'『「](.+)["'』」]を(取り込|取込)/)
       if (!m) {continue}
       // プラグインの取り込み
       const pname = m[1]
@@ -179,38 +269,7 @@ class CNako3 extends NakoCompiler {
       try {
         let plugmod = {}
         // プラグインフォルダを検索
-        // フルパス指定か相対パスの指定か?
-        const p1 = fullpath.substr(0, 1)
-        if (p1 === '/') {
-          // フルパス指定なので何もしない
-        }
-        else if (p1 === '.') {
-          // 相対パス指定なので、なでしこのプログラムからの相対指定を調べる
-          const basedir = path.dirname(this.filename)
-          fullpath = path.resolve(path.join(basedir, pname))
-        }
-        else {
-          // 同じフォルダにあるか？
-          const basedir = path.dirname(this.filename)
-          fullpath = path.resolve(path.join(basedir, pname))
-          if (!fs.existsSync(fullpath)) {
-            // node_modules 以下にあるか？
-            fullpath = path.resolve(path.join(basedir, 'node_modules', pname))
-            if (!fs.existsSync(fullpath)) {
-              // NAKO_HOME 以下にあるか？
-              if (process.env['NAKO_HOME']) {
-                fullpath = path.resolve(path.join(process.env['NAKO_HOME'], 'node_modules', pname))
-              }
-              if (!fs.existsSync(fullpath)) {
-                // NODE_PATH 以下にあるか？
-                fullpath = path.resolve(path.join(process.env.NODE_PATH, 'node_modules', pname))
-                if (!fs.existsSync(fullpath)) {
-                  fullpath = pname
-                }
-              }
-            }
-          }
-        }
+        fullpath = this.findPluginFile(fullpath)
         // モジュールを実際に取り込む
         plugmod = require(fullpath)
         this.addPluginFile(pname, fullpath, plugmod)

@@ -3,7 +3,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['ナデシコバージョン'] = '3.0.61'
+      sys.__v0['ナデシコバージョン'] = '3.0.66'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) {return def}
@@ -312,6 +312,13 @@ const PluginSystem = {
       return parseFloat(v)
     }
   },
+  'NAN判定': {// @値VがNaNかどうかを判定 // @NANはんてい
+    type: 'func',
+    josi: [['を']],
+    fn: function (v) {
+      return isNaN(v)
+    }
+  },
   'HEX': {// @値Vを16進数に変換 // @
     type: 'func',
     josi: [['の']],
@@ -495,6 +502,30 @@ const PluginSystem = {
     josi: [['を', 'の']],
     fn: function (v) {
       return Math.round(v)
+    }
+  },
+  '小数点切上': { // @整数Aを少数点第B桁で切り上げして返す // @しょうすうてんきりあげ
+    type: 'func',
+    josi: [['を'],['で']],
+    fn: function (a,b) {
+      const base = Math.pow(10, b)
+      return Math.ceil(a * base) / base
+    }
+  },
+  '小数点切下': { // @整数Aを少数点第B桁で切り下げして返す // @しょうすうてんきりさげ
+    type: 'func',
+    josi: [['を'],['で']],
+    fn: function (a,b) {
+      const base = Math.pow(10, b)
+      return Math.floor(a * base) / base
+    }
+  },
+  '小数点四捨五入': { // @実数Aを少数点第B桁で四捨五入して返す // @しょうすうてんししゃごにゅう
+    type: 'func',
+    josi: [['を'], ['で']],
+    fn: function (a, b) {
+      const base = Math.pow(10, b)
+      return Math.round(a * base) / base
     }
   },
   'CEIL': { // @数値を正の無限大方向へ切り上げて返す。 // @
@@ -1295,6 +1326,20 @@ const PluginSystem = {
       return JSON.parse(JSON.stringify(a))
     }
   },
+  '配列最大値': { // @配列Aの値の最大値を調べて返す。 // @はいれつさいだいち
+    type: 'func',
+    josi: [['の']],
+    fn: function (a) {
+      return a.reduce((x, y) => Math.max(x, y))
+    }
+  },
+  '配列最小値': { // @配列Aの値の最小値を調べて返す。 // @はいれつさいしょうち
+    type: 'func',
+    josi: [['の']],
+    fn: function (a) {
+      return a.reduce((x, y) => Math.min(x, y))
+    }
+  },
   // @二次元配列処理
   '表ソート': { // @配列Aの列番号B(0起点)(あるいはキー名)をキーにしてソートする。Aの内容を書き換える。 // @ひょうそーと
     type: 'func',
@@ -1561,6 +1606,13 @@ const PluginSystem = {
         return a
       }
       throw new Error('『ハッシュキー削除』でハッシュ以外が与えられました。')
+    }
+  },
+  'ハッシュキー存在': { // @ハッシュAのキーKEYが存在するか確認 // @はっしゅきーそんざい
+    type: 'func',
+    josi: [['の','に'],['が']],
+    fn: function (a, key) {
+        return key in a
     }
   },
 
