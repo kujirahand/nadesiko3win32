@@ -11920,3 +11920,233 @@ DOMのタグ名を取得する
 # 準備中
 }}}
 
+###PAGE###:w:plugin_ml/SVM開
+■ SVM開 (SVMひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || OPTIONで
+説明 || 機械学習のアルゴリズムSVMをパラメータOPTIONで開く。 OPTION={type,kernel,gamma,cost}
+}}}
+
+#page(plugin_ml/SVM開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/SVM開/解説
+●『[[SVM開:plugin_ml/SVM開/解説]]』の詳しい解説
+
+機械学習のアルゴリズムSVMをパラメータOPTIONで開く。 OPTION={type,kernel,gamma,cost}
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/ランダムフォレスト開
+■ ランダムフォレスト開 (false),nEstimators})
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || OPTIONで
+説明 || 機械学習のアルゴリズムRandom ForestをOPTIONで開く。OPTION={seed,maxFeatures,replacement=(true
+}}}
+
+#page(plugin_ml/ランダムフォレスト開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/ランダムフォレスト開/解説
+●『[[ランダムフォレスト開:plugin_ml/ランダムフォレスト開/解説]]』の詳しい解説
+
+機械学習のアルゴリズムRandom ForestをOPTIONで開く。OPTION={seed,maxFeatures,replacement=(true
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/ランダムフォレスト回帰開
+■ ランダムフォレスト回帰開 (らんだむふぉれすとかいきひらく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || PARAMSで
+説明 || 機械学習のアルゴリズムRandom Forestの回帰をパラメータPARAMSで開く
+}}}
+
+#page(plugin_ml/ランダムフォレスト回帰開/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/ランダムフォレスト回帰開/解説
+●『[[ランダムフォレスト回帰開:plugin_ml/ランダムフォレスト回帰開/解説]]』の詳しい解説
+
+機械学習のアルゴリズムRandom Forestの回帰をパラメータPARAMSで開く
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/学習
+■ 学習 (がくしゅう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || INPUTSとLABELSで
+説明 || 入力配列inputsとラベル配列labelsで機械学習する
+}}}
+
+#page(plugin_ml/学習/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/学習/解説
+●『[[学習:plugin_ml/学習/解説]]』の詳しい解説
+
+入力配列inputsとラベル配列labelsで機械学習する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/予測
+■ 予測 (よそく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || INPUTSを|INPUTSで
+説明 || 入力配列inputsで予測し機械学習の結果を配列で返す
+}}}
+
+#page(plugin_ml/予測/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/予測/解説
+●『[[予測:plugin_ml/予測/解説]]』の詳しい解説
+
+入力配列inputsで予測し機械学習の結果を配列で返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/アヤメデータ取得
+■ アヤメデータ取得 (あやめでーたしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || 
+説明 || アヤメデータをJSON形式で取得して返す
+}}}
+
+#page(plugin_ml/アヤメデータ取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/アヤメデータ取得/解説
+●『[[アヤメデータ取得:plugin_ml/アヤメデータ取得/解説]]』の詳しい解説
+
+アヤメデータをJSON形式で取得して返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/モデル取得
+■ モデル取得 (もでるしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || 
+説明 || 現在学習済みのモデルを取得する
+}}}
+
+#page(plugin_ml/モデル取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/モデル取得/解説
+●『[[モデル取得:plugin_ml/モデル取得/解説]]』の詳しい解説
+
+現在学習済みのモデルを取得する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/モデル設定
+■ モデル設定 (もでるせってい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || Mを|Mの
+説明 || 現在学習済みのモデルMを設定する
+}}}
+
+#page(plugin_ml/モデル設定/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/モデル設定/解説
+●『[[モデル設定:plugin_ml/モデル設定/解説]]』の詳しい解説
+
+現在学習済みのモデルMを設定する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/データランダム分割
+■ データランダム分割 (でーたらんだむぶんかつ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || DATAとLABELをRATEで
+説明 || データとラベルの組をRATEで分割して{学習:{データ:[..],ラベル:[..]},テスト:{データ:[..],ラベル:[..]}}の形式で返す
+}}}
+
+#page(plugin_ml/データランダム分割/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/データランダム分割/解説
+●『[[データランダム分割:plugin_ml/データランダム分割/解説]]』の詳しい解説
+
+データとラベルの組をRATEで分割して{学習:{データ:[..],ラベル:[..]},テスト:{データ:[..],ラベル:[..]}}の形式で返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_ml/正解率計算
+■ 正解率計算 (せいかいりつけいさん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_ml]] > [[機械学習:plugin_ml/機械学習]]
+種類 || 関数
+引数 || TとPの|Pで
+説明 || 配列T(正解)とP(予測)の正解率を計算して返す
+}}}
+
+#page(plugin_ml/正解率計算/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_ml]]
+
+###PAGE###:c:plugin_ml/正解率計算/解説
+●『[[正解率計算:plugin_ml/正解率計算/解説]]』の詳しい解説
+
+配列T(正解)とP(予測)の正解率を計算して返す
+
+{{{
+# 準備中
+}}}
+

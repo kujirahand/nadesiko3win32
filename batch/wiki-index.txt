@@ -689,3 +689,18 @@
 - [[(DOMからKを|DOMの)データ取得:plugin_htmlparser/データ取得]] --- DOMのデータkを取得する
 - [[(DOMから|DOMを)DOM配列変換:plugin_htmlparser/DOM配列変換]] --- DOMを配列に変換する
 - [[(DOMから|DOMの)タグ名取得:plugin_htmlparser/タグ名取得]] --- DOMのタグ名を取得する
+
+■ [[plugin_ml]] ([[拡張プラグイン]])
+#page(plugin_ml/解説)
+
+● [[機械学習:plugin_ml]]
+- [[(OPTIONで)SVM開:plugin_ml/SVM開]] --- 機械学習のアルゴリズムSVMをパラメータOPTIONで開く。 OPTION={type,kernel,gamma,cost}
+- [[(OPTIONで)ランダムフォレスト開:plugin_ml/ランダムフォレスト開]] --- 機械学習のアルゴリズムRandom ForestをOPTIONで開く。OPTION={seed,maxFeatures,replacement=(true
+- [[(PARAMSで)ランダムフォレスト回帰開:plugin_ml/ランダムフォレスト回帰開]] --- 機械学習のアルゴリズムRandom Forestの回帰をパラメータPARAMSで開く
+- [[(INPUTSとLABELSで)学習:plugin_ml/学習]] --- 入力配列inputsとラベル配列labelsで機械学習する
+- [[(INPUTSを|INPUTSで)予測:plugin_ml/予測]] --- 入力配列inputsで予測し機械学習の結果を配列で返す
+- [[アヤメデータ取得:plugin_ml/アヤメデータ取得]] --- アヤメデータをJSON形式で取得して返す
+- [[モデル取得:plugin_ml/モデル取得]] --- 現在学習済みのモデルを取得する
+- [[(Mを|Mの)モデル設定:plugin_ml/モデル設定]] --- 現在学習済みのモデルMを設定する
+- [[(DATAとLABELをRATEで)データランダム分割:plugin_ml/データランダム分割]] --- データとラベルの組をRATEで分割して{学習:{データ:[..],ラベル:[..]},テスト:{データ:[..],ラベル:[..]}}の形式で返す
+- [[(TとPの|Pで)正解率計算:plugin_ml/正解率計算]] --- 配列T(正解)とP(予測)の正解率を計算して返す

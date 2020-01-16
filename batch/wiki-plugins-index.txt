@@ -42,3 +42,6 @@
 ▲ 🔌[[plugin_htmlparser]] [[拡張プラグイン]]
 #page(plugin_htmlparser/解説)
 
+▲ 🔌[[plugin_ml]] [[拡張プラグイン]]
+#page(plugin_ml/解説)
+

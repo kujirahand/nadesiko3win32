@@ -770,6 +770,32 @@
 [[plugin_htmlparser:plugin_htmlparser/解説]]とは、なでしこv3の[[拡張プラグイン]]。
 
 
+###PAGE###:w:plugin_ml
+■ plugin_ml - なでしこ3 [[拡張プラグイン]]
+#page(plugin_ml/解説)
+
+▲[[plugin_ml/機械学習]]
+- [[SVM開:plugin_ml/SVM開]] --- 機械学習のアルゴリズムSVMをパラメータOPTIONで開く。 OPTION={type,kernel,gamma,cost}
+- [[ランダムフォレスト開:plugin_ml/ランダムフォレスト開]] --- 機械学習のアルゴリズムRandom ForestをOPTIONで開く。OPTION={seed,maxFeatures,replacement=(true
+- [[ランダムフォレスト回帰開:plugin_ml/ランダムフォレスト回帰開]] --- 機械学習のアルゴリズムRandom Forestの回帰をパラメータPARAMSで開く
+- [[学習:plugin_ml/学習]] --- 入力配列inputsとラベル配列labelsで機械学習する
+- [[予測:plugin_ml/予測]] --- 入力配列inputsで予測し機械学習の結果を配列で返す
+- [[アヤメデータ取得:plugin_ml/アヤメデータ取得]] --- アヤメデータをJSON形式で取得して返す
+- [[モデル取得:plugin_ml/モデル取得]] --- 現在学習済みのモデルを取得する
+- [[モデル設定:plugin_ml/モデル設定]] --- 現在学習済みのモデルMを設定する
+- [[データランダム分割:plugin_ml/データランダム分割]] --- データとラベルの組をRATEで分割して{学習:{データ:[..],ラベル:[..]},テスト:{データ:[..],ラベル:[..]}}の形式で返す
+- [[正解率計算:plugin_ml/正解率計算]] --- 配列T(正解)とP(予測)の正解率を計算して返す
+
+
+- [[機械学習:plugin_ml/機械学習]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_ml/解説
+[[plugin_ml:plugin_ml/解説]]とは、なでしこv3の[[拡張プラグイン]]。
+
+
 ###PAGE###:w:plugin_system/システム定数
 ■ [[plugin_system]]/[[システム定数:plugin_system/システム定数]]
 #page(plugin_system/解説)
@@ -1907,4 +1933,24 @@
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_htmlparser:plugin_htmlparser]]
+
+###PAGE###:w:plugin_ml/機械学習
+■ [[plugin_ml]]/[[機械学習:plugin_ml/機械学習]]
+#page(plugin_ml/解説)
+
+▲ カテゴリの命令一覧
+
+- [[SVM開:plugin_ml/SVM開]] --- 機械学習のアルゴリズムSVMをパラメータOPTIONで開く。 OPTION={type,kernel,gamma,cost}
+- [[ランダムフォレスト開:plugin_ml/ランダムフォレスト開]] --- 機械学習のアルゴリズムRandom ForestをOPTIONで開く。OPTION={seed,maxFeatures,replacement=(true
+- [[ランダムフォレスト回帰開:plugin_ml/ランダムフォレスト回帰開]] --- 機械学習のアルゴリズムRandom Forestの回帰をパラメータPARAMSで開く
+- [[学習:plugin_ml/学習]] --- 入力配列inputsとラベル配列labelsで機械学習する
+- [[予測:plugin_ml/予測]] --- 入力配列inputsで予測し機械学習の結果を配列で返す
+- [[アヤメデータ取得:plugin_ml/アヤメデータ取得]] --- アヤメデータをJSON形式で取得して返す
+- [[モデル取得:plugin_ml/モデル取得]] --- 現在学習済みのモデルを取得する
+- [[モデル設定:plugin_ml/モデル設定]] --- 現在学習済みのモデルMを設定する
+- [[データランダム分割:plugin_ml/データランダム分割]] --- データとラベルの組をRATEで分割して{学習:{データ:[..],ラベル:[..]},テスト:{データ:[..],ラベル:[..]}}の形式で返す
+- [[正解率計算:plugin_ml/正解率計算]] --- 配列T(正解)とP(予測)の正解率を計算して返す
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_ml:plugin_ml]]
 
