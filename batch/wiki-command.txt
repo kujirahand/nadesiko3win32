@@ -8681,6 +8681,52 @@ IDを指定して操作対象となるカメを変更する
 # 準備中
 }}}
 
+###PAGE###:w:plugin_node/SJISファイル読
+■ SJISファイル読 (SJISふぁいるよむ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[ファイル入出力:plugin_node/ファイル入出力]]
+種類 || 関数
+引数 || Sを|Sから
+説明 || SJIS形式のファイルSを読み込む
+}}}
+
+#page(plugin_node/SJISファイル読/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/SJISファイル読/解説
+●『[[SJISファイル読:plugin_node/SJISファイル読/解説]]』の詳しい解説
+
+SJIS形式のファイルSを読み込む
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_node/SJISファイル保存
+■ SJISファイル保存 (SJISふぁいるほぞん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_node]] > [[ファイル入出力:plugin_node/ファイル入出力]]
+種類 || 関数
+引数 || SをFへ|Fに
+説明 || SをSJIS形式でファイルFへ書き込む
+}}}
+
+#page(plugin_node/SJISファイル保存/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_node]]
+
+###PAGE###:c:plugin_node/SJISファイル保存/解説
+●『[[SJISファイル保存:plugin_node/SJISファイル保存/解説]]』の詳しい解説
+
+SをSJIS形式でファイルFへ書き込む
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_node/起動待機
 ■ 起動待機 (きどうたいき)
 {{{#csv(flag=||)
