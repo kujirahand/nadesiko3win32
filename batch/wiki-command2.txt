@@ -4,6 +4,8 @@
 
 ▲[[plugin_system/システム定数]]
 - [[空配列:plugin_system/空配列]] --- 空の配列を返す
+- [[空ハッシュ:plugin_system/空ハッシュ]] --- 空のハッシュを返す
+- [[空オブジェクト:plugin_system/空オブジェクト]] --- 空のオブジェクトを返す
 ▲[[plugin_system/標準出力]]
 - [[表示:plugin_system/表示]] --- Sを表示
 - [[表示ログクリア:plugin_system/表示ログクリア]] --- 表示ログを空にする
@@ -191,12 +193,30 @@
 - [[今:plugin_system/今]] --- 現在時刻を「HH:mm:ss」の形式で返す
 - [[システム時間:plugin_system/システム時間]] --- 現在のUNIX時間 (UTC(1970/1/1)からの経過秒数) を返す
 - [[今日:plugin_system/今日]] --- 今日の日付を「YYYY/MM/DD」の形式で返す
-- [[今年:plugin_system/今年]] --- 今年の西暦を返す
-- [[今月:plugin_system/今月]] --- 今月を返す(v1非互換)
+- [[明日:plugin_system/明日]] --- 明日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+- [[昨日:plugin_system/昨日]] --- 昨日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+- [[今年:plugin_system/今年]] --- 今年が何年かを西暦で返す
+- [[来年:plugin_system/来年]] --- 来年が何年かを西暦で返す
+- [[去年:plugin_system/去年]] --- 去年が何年かを西暦で返す
+- [[今月:plugin_system/今月]] --- 今月が何月かを返す
+- [[来月:plugin_system/来月]] --- 来月が何月かを返す
+- [[先月:plugin_system/先月]] --- 先月が何月かを返す
 - [[曜日:plugin_system/曜日]] --- 日付Sの曜日を返す
+- [[曜日番号取得:plugin_system/曜日番号取得]] --- Sに指定した日付の曜日番号をで返す。不正な日付の場合は今日の曜日番号を返す。(0=日/1=月/2=火/3=水/4=木/5=金/6=土)
 - [[UNIX時間変換:plugin_system/UNIX時間変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す(v1非互換)
 - [[UNIXTIME変換:plugin_system/UNIXTIME変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す
 - [[日時変換:plugin_system/日時変換]] --- UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換
+- [[和暦変換:plugin_system/和暦変換]] --- Sを和暦に変換する。Sは明治以降の日付が有効。
+- [[年数差:plugin_system/年数差]] --- 日付AとBの差を年数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+- [[月数差:plugin_system/月数差]] --- 日付AとBの差を月数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+- [[日数差:plugin_system/日数差]] --- 日付AとBの差を日数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[日時差:plugin_system/日時差]] --- 日時AとBの差を種類unitで返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+- [[時間差:plugin_system/時間差]] --- 時間AとBの時間の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[分差:plugin_system/分差]] --- 時間AとBの分数の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[秒差:plugin_system/秒差]] --- 時間AとBの差を秒差で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[時間加算:plugin_system/時間加算]] --- 時間SにAを加えて返す。Aには「(+｜-)hh:nn:dd」で指定する。
+- [[日付加算:plugin_system/日付加算]] --- 日付SにAを加えて返す。Aには「(+｜-)yyyy/mm/dd」で指定する。
+- [[日時加算:plugin_system/日時加算]] --- 日時SにAを加えて返す。Aは「(+｜-)1(年
 - [[実行:plugin_system/実行]] --- 無名関数（あるいは、文字列で関数名を指定）Fを実行する(Fが関数でなければ無視する)
 - [[秒待機:plugin_system/秒待機]] --- 逐次実行構文にて、N秒の間待機する
 - [[秒後:plugin_system/秒後]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する
@@ -209,7 +229,7 @@
 - [[システム関数存在:plugin_system/システム関数存在]] --- 文字列で関数名を指定してシステム関数が存在するかを調べる
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
-- [[タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+- [[対応ブラウザ一覧取得:plugin_system/対応ブラウザ一覧取得]] --- 対応しているブラウザの一覧を取得する
 
 
 - [[システム定数:plugin_system/システム定数]]
@@ -346,7 +366,7 @@
 - [[円描画:plugin_browser/円描画]] --- [x, y]へrの円を描画する
 - [[楕円描画:plugin_browser/楕円描画]] --- [x, y, x幅, y幅, 回転, 開始角, 終了角, 左回転か]に楕円を描画する
 - [[多角形描画:plugin_browser/多角形描画]] --- 座標配列vを指定して多角形を描画する
-- [[画像描画:plugin_browser/画像描画]] --- [x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す
+- [[画像描画:plugin_browser/画像描画]] --- ファイル名F(またはImage)の画像を[sx, sy, sw, sh]の[dx, dy, dw, dh]へ描画し、Imageを返す
 - [[描画フォント設定:plugin_browser/描画フォント設定]] --- 描画フォントを指定する(CSSのフォント設定と同じ 例「36px Aria」)
 - [[文字描画:plugin_browser/文字描画]] --- [x, y]へテキストSを描画する(描画フォント設定でサイズなど指定)
 ▲[[plugin_browser/位置情報]]
@@ -370,8 +390,15 @@
 - [[オーディオ開:plugin_browser/オーディオ開]] --- オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
 - [[オーディオ再生:plugin_browser/オーディオ再生]] --- AudioオブジェクトOBJを指定してオーディをを再生
 - [[オーディオ停止:plugin_browser/オーディオ停止]] --- AudioオブジェクトOBJを指定してオーディをを停止
+▲[[plugin_browser/ホットキー]]
 - [[ホットキー登録:plugin_browser/ホットキー登録]] --- ホットキーKEYにEVENTを登録する
 - [[ホットキー解除:plugin_browser/ホットキー解除]] --- ホットキーKEYを解除する
+▲[[plugin_browser/グラフ描画_CHARTJS]]
+- [[グラフ描画:plugin_browser/グラフ描画]] --- Chart.jsを利用して、DATAのグラフを描画
+- [[線グラフ描画:plugin_browser/線グラフ描画]] --- 線グラフを描画
+- [[棒グラフ描画:plugin_browser/棒グラフ描画]] --- 棒グラフを描画
+- [[横棒グラフ描画:plugin_browser/横棒グラフ描画]] --- 横棒グラフを描画
+- [[円グラフ描画:plugin_browser/円グラフ描画]] --- 円グラフを描画
 
 
 - [[色定数:plugin_browser/色定数]]
@@ -389,6 +416,8 @@
 - [[音声合成:plugin_browser/音声合成]]
 - [[WebSocket:plugin_browser/WebSocket]]
 - [[オーディオ:plugin_browser/オーディオ]]
+- [[ホットキー:plugin_browser/ホットキー]]
+- [[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]]
@@ -719,7 +748,8 @@
 #page(plugin_websocket/解説)
 
 ▲[[plugin_websocket/WebSocketサーバ]]
-- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+- [[WSSサーバ起動:plugin_websocket/WSSサーバ起動]] --- 設定CONF{cert:サーバ証明書,key:キーファイル,port:ポート番号}を指定してWSSサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
 - [[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時]] --- WSサーバ起動が成功した時にcallbackを実行
 - [[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時]] --- WSサーバ起動が失敗した時にcallbackを実行
 - [[WSサーバ接続時:plugin_websocket/WSサーバ接続時]] --- WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る
@@ -830,7 +860,11 @@
 - [[回数:plugin_system/回数]] --- 定数
 - [[CR:plugin_system/CR]] --- 定数
 - [[LF:plugin_system/LF]] --- 定数
+- [[元号データ:plugin_system/元号データ]] --- 定数
+- [[ブラウザ名変換表:plugin_system/ブラウザ名変換表]] --- 定数
 - [[空配列:plugin_system/空配列]] --- 空の配列を返す
+- [[空ハッシュ:plugin_system/空ハッシュ]] --- 空のハッシュを返す
+- [[空オブジェクト:plugin_system/空オブジェクト]] --- 空のオブジェクトを返す
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
@@ -1200,12 +1234,30 @@
 - [[今:plugin_system/今]] --- 現在時刻を「HH:mm:ss」の形式で返す
 - [[システム時間:plugin_system/システム時間]] --- 現在のUNIX時間 (UTC(1970/1/1)からの経過秒数) を返す
 - [[今日:plugin_system/今日]] --- 今日の日付を「YYYY/MM/DD」の形式で返す
-- [[今年:plugin_system/今年]] --- 今年の西暦を返す
-- [[今月:plugin_system/今月]] --- 今月を返す(v1非互換)
+- [[明日:plugin_system/明日]] --- 明日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+- [[昨日:plugin_system/昨日]] --- 昨日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+- [[今年:plugin_system/今年]] --- 今年が何年かを西暦で返す
+- [[来年:plugin_system/来年]] --- 来年が何年かを西暦で返す
+- [[去年:plugin_system/去年]] --- 去年が何年かを西暦で返す
+- [[今月:plugin_system/今月]] --- 今月が何月かを返す
+- [[来月:plugin_system/来月]] --- 来月が何月かを返す
+- [[先月:plugin_system/先月]] --- 先月が何月かを返す
 - [[曜日:plugin_system/曜日]] --- 日付Sの曜日を返す
+- [[曜日番号取得:plugin_system/曜日番号取得]] --- Sに指定した日付の曜日番号をで返す。不正な日付の場合は今日の曜日番号を返す。(0=日/1=月/2=火/3=水/4=木/5=金/6=土)
 - [[UNIX時間変換:plugin_system/UNIX時間変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す(v1非互換)
 - [[UNIXTIME変換:plugin_system/UNIXTIME変換]] --- 日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す
 - [[日時変換:plugin_system/日時変換]] --- UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換
+- [[和暦変換:plugin_system/和暦変換]] --- Sを和暦に変換する。Sは明治以降の日付が有効。
+- [[年数差:plugin_system/年数差]] --- 日付AとBの差を年数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+- [[月数差:plugin_system/月数差]] --- 日付AとBの差を月数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+- [[日数差:plugin_system/日数差]] --- 日付AとBの差を日数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[日時差:plugin_system/日時差]] --- 日時AとBの差を種類unitで返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+- [[時間差:plugin_system/時間差]] --- 時間AとBの時間の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[分差:plugin_system/分差]] --- 時間AとBの分数の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[秒差:plugin_system/秒差]] --- 時間AとBの差を秒差で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+- [[時間加算:plugin_system/時間加算]] --- 時間SにAを加えて返す。Aには「(+｜-)hh:nn:dd」で指定する。
+- [[日付加算:plugin_system/日付加算]] --- 日付SにAを加えて返す。Aには「(+｜-)yyyy/mm/dd」で指定する。
+- [[日時加算:plugin_system/日時加算]] --- 日時SにAを加えて返す。Aは「(+｜-)1(年
 - [[実行:plugin_system/実行]] --- 無名関数（あるいは、文字列で関数名を指定）Fを実行する(Fが関数でなければ無視する)
 - [[秒待機:plugin_system/秒待機]] --- 逐次実行構文にて、N秒の間待機する
 - [[秒後:plugin_system/秒後]] --- 無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する
@@ -1227,7 +1279,7 @@
 - [[システム関数存在:plugin_system/システム関数存在]] --- 文字列で関数名を指定してシステム関数が存在するかを調べる
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
-- [[タイムゾーン設定:plugin_system/タイムゾーン設定]] --- タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+- [[対応ブラウザ一覧取得:plugin_system/対応ブラウザ一覧取得]] --- 対応しているブラウザの一覧を取得する
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
@@ -1458,7 +1510,7 @@
 - [[円描画:plugin_browser/円描画]] --- [x, y]へrの円を描画する
 - [[楕円描画:plugin_browser/楕円描画]] --- [x, y, x幅, y幅, 回転, 開始角, 終了角, 左回転か]に楕円を描画する
 - [[多角形描画:plugin_browser/多角形描画]] --- 座標配列vを指定して多角形を描画する
-- [[画像描画:plugin_browser/画像描画]] --- [x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す
+- [[画像描画:plugin_browser/画像描画]] --- ファイル名F(またはImage)の画像を[sx, sy, sw, sh]の[dx, dy, dw, dh]へ描画し、Imageを返す
 - [[描画フォント設定:plugin_browser/描画フォント設定]] --- 描画フォントを指定する(CSSのフォント設定と同じ 例「36px Aria」)
 - [[文字描画:plugin_browser/文字描画]] --- [x, y]へテキストSを描画する(描画フォント設定でサイズなど指定)
 
@@ -1521,8 +1573,34 @@
 - [[オーディオ開:plugin_browser/オーディオ開]] --- オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
 - [[オーディオ再生:plugin_browser/オーディオ再生]] --- AudioオブジェクトOBJを指定してオーディをを再生
 - [[オーディオ停止:plugin_browser/オーディオ停止]] --- AudioオブジェクトOBJを指定してオーディをを停止
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
+
+###PAGE###:w:plugin_browser/ホットキー
+■ [[plugin_browser]]/[[ホットキー:plugin_browser/ホットキー]]
+#page(plugin_browser/解説)
+
+▲ カテゴリの命令一覧
+
 - [[ホットキー登録:plugin_browser/ホットキー登録]] --- ホットキーKEYにEVENTを登録する
 - [[ホットキー解除:plugin_browser/ホットキー解除]] --- ホットキーKEYを解除する
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
+
+###PAGE###:w:plugin_browser/グラフ描画_CHARTJS
+■ [[plugin_browser]]/[[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
+#page(plugin_browser/解説)
+
+▲ カテゴリの命令一覧
+
+- [[グラフ描画:plugin_browser/グラフ描画]] --- Chart.jsを利用して、DATAのグラフを描画
+- [[グラフオプション:plugin_browser/グラフオプション]] --- 定数
+- [[線グラフ描画:plugin_browser/線グラフ描画]] --- 線グラフを描画
+- [[棒グラフ描画:plugin_browser/棒グラフ描画]] --- 棒グラフを描画
+- [[横棒グラフ描画:plugin_browser/横棒グラフ描画]] --- 横棒グラフを描画
+- [[円グラフ描画:plugin_browser/円グラフ描画]] --- 円グラフを描画
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_browser:plugin_browser]]
@@ -1897,7 +1975,8 @@
 
 ▲ カテゴリの命令一覧
 
-- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+- [[WSサーバ起動:plugin_websocket/WSサーバ起動]] --- ポートPORTNOでサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+- [[WSSサーバ起動:plugin_websocket/WSSサーバ起動]] --- 設定CONF{cert:サーバ証明書,key:キーファイル,port:ポート番号}を指定してWSSサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
 - [[WSサーバ起動成功時:plugin_websocket/WSサーバ起動成功時]] --- WSサーバ起動が成功した時にcallbackを実行
 - [[WSサーバ起動失敗時:plugin_websocket/WSサーバ起動失敗時]] --- WSサーバ起動が失敗した時にcallbackを実行
 - [[WSサーバ接続時:plugin_websocket/WSサーバ接続時]] --- WSサーバにクライアントが接続してきた時callbackを実行。接続情報は、変数『対象』に入る

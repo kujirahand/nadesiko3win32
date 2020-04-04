@@ -1,6 +1,6 @@
 // plugin_browser.js
 require('es6-promise').polyfill()
-require('isomorphic-fetch')
+require('node-fetch')
 
 const hotkeys = require('hotkeys-js')
 
@@ -1221,19 +1221,46 @@ const PluginBrowser = {
     },
     return_none: true
   },
-  '画像描画': { // @ [x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す // @ がぞうびょうが
+  '画像描画': { // @ ファイル名F(またはImage)の画像を[sx, sy, sw, sh]の[dx, dy, dw, dh]へ描画し、Imageを返す // @ がぞうびょうが
     type: 'func',
-    josi: [['へ', 'に'], ['の', 'を']],
-    fn: function (xy, img, sys) {
+    josi: [['の', 'を'], ['の', 'を'], ['へ', 'に']],
+    fn: function (img, sxy, dxy, sys) {
+      if(img && sxy){
+        if (!Array.isArray(sxy) && Array.isArray(img)){ //逆になっていれば入れ替える
+          if (typeof sxy === 'string' || String(sxy.__proto__) === '[object HTMLImageElement]'){
+            let sw = img
+            img = sxy
+            sxy = sw
+          }
+        }
+      }
+      
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
       const drawFunc = (im, ctx) => {
-        if (xy.length === 2)
-          {ctx.drawImage(im, xy[0], xy[1])}
-         else if (xy.length === 4)
-          {ctx.drawImage(im, xy[0], xy[1], xy[2], xy[3])}
-         else if (xy.length === 6)
-          {ctx.drawImage(im, xy[0], xy[1], xy[2], xy[3], xy[4], xy[5])}
+        if (!dxy){
+          if(!sxy){
+            ctx.drawImage(im)
+          }
+          else if(sxy.length >= 2){ //もしsxyがあるのにdxyがなかったらdxyを代わりにする
+            dxy = sxy
+            sxy = undefined
+          }
+        }
+        if (dxy.length === 2)
+          {ctx.drawImage(im, dxy[0], dxy[1])}
+        else if (dxy.length === 4) {
+          if (!sxy) {
+            ctx.drawImage(im, dxy[0], dxy[1], dxy[2], dxy[3])
+          }
+          else if (sxy.length === 4){
+            ctx.drawImage(im, sxy[0], sxy[1], sxy[2], sxy[3], dxy[0], dxy[1], dxy[2], dxy[3])
+          }
+          else {throw new Error('画像描画に使える引数は画像と、描画する座標へ2つか、' +
+          '描画する座標とその位置の4つか、使用する座標と使用する位置と描画する座標と大きさの8つだけです。')}
 
+        }
+        else {throw new Error('画像描画に使える引数は画像と、描画する座標へ2つか、' +
+        '描画する座標とその位置の4つか、使用する座標と使用する位置と描画する座標と大きさの8つだけです。')}
       }
       if (typeof img === 'string') {
         const image = new window.Image()
@@ -1459,7 +1486,6 @@ const PluginBrowser = {
         console.log('WSエラー', err)
       }
       ws.onmessage = (e) => {
-        console.log(e.data)
         sys.__v0['対象'] = e.data
         const cbMsg = sys.__v0['WS:ONMESSAGE']
         if (cbMsg) {cbMsg(sys)}
@@ -1513,6 +1539,8 @@ const PluginBrowser = {
     },
     return_none: true
   },
+  
+  // @ホットキー
   'ホットキー登録': { // @ホットキーKEYにEVENTを登録する // @ほっときーとうろく
     type: 'func',
     josi: [['に', 'で'], ['を']],
@@ -1528,6 +1556,77 @@ const PluginBrowser = {
     josi: [['を', 'の']],
     fn: function (key) {
       hotkeys.unbind(key)
+    }
+  },
+  
+  // @グラフ描画_CHARTJS
+  'グラフ描画': { // @ Chart.jsを利用して、DATAのグラフを描画 // @ぐらふびょうが
+    type: 'func',
+    josi: [['を', 'で', 'の']],
+    fn: function (data, sys) {
+      // Chart.jsが使えるかチェック
+      if (!window['Chart']) {
+        throw new Error('『グラフ描画』のエラー。Chart.jsを取り込んでください。' + errMan)
+      }
+      // Canvasが有効？
+      if (!sys.__canvas) {
+        throw new Error('『グラフ描画』のエラー。『描画開始』命令で描画先のCanvasを指定してください。 ')
+      }
+      // 日本語のキーワードを変換
+      if (data['タイプ']) { data['type'] = data['タイプ'] }
+      if (data['データ']) { data['data'] = data['データ'] }
+      if (data['オプション']) { data['options'] = data['オプション'] }
+      const chart = new Chart(sys.__canvas, data)
+      return chart
+    }
+  },
+  'グラフオプション': {type: 'const', value: {}}, // @ぐらふおぷしょん
+  '線グラフ描画': { // @ 線グラフを描画 // @せんぐらふびょうが
+    type: 'func',
+    josi: [['を', 'で', 'の']],
+    fn: function (data, sys) {
+      const d = {
+        type: 'line',
+        data: data,
+        options: sys.__v0['グラフオプション']
+      }
+      return sys.__exec('グラフ描画', [d, sys])
+    }
+  },
+  '棒グラフ描画': { // @ 棒グラフを描画 // @ぼうぐらふびょうが
+    type: 'func',
+    josi: [['を', 'で', 'の']],
+    fn: function (data, sys) {
+      const d = {
+        type: 'bar',
+        data: data,
+        options: sys.__v0['グラフオプション']
+      }
+      return sys.__exec('グラフ描画', [d, sys])
+    }
+  },
+  '横棒グラフ描画': { // @ 横棒グラフを描画 // @よこぼうぐらふびょうが
+    type: 'func',
+    josi: [['を', 'で', 'の']],
+    fn: function (data, sys) {
+      const d = {
+        type: 'horizontalBar',
+        data: data,
+        options: sys.__v0['グラフオプション']
+      }
+      return sys.__exec('グラフ描画', [d, sys])
+    }
+  },
+  '円グラフ描画': { // @ 円グラフを描画 // @えんぐらふびょうが
+    type: 'func',
+    josi: [['を', 'で', 'の']],
+    fn: function (data, sys) {
+      const d = {
+        type: 'pie',
+        data: data,
+        options: sys.__v0['グラフオプション']
+      }
+      return sys.__exec('グラフ描画', [d, sys])
     }
   }
 }

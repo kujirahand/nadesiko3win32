@@ -518,6 +518,46 @@
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/元号データ
+■ 元号データ (げんごうでーた)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[システム定数:plugin_system/システム定数]]
+種類 || 定数
+初期値 || require('./era.json')
+}}}
+
+#page(plugin_system/元号データ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/元号データ/解説
+●『[[元号データ:plugin_system/元号データ/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/ブラウザ名変換表
+■ ブラウザ名変換表 (ぶらうざめいへんかんひょう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[システム定数:plugin_system/システム定数]]
+種類 || 定数
+初期値 || require('caniuse-db/data.json').agents
+}}}
+
+#page(plugin_system/ブラウザ名変換表/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/ブラウザ名変換表/解説
+●『[[ブラウザ名変換表:plugin_system/ブラウザ名変換表/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/空配列
 ■ 空配列 (からはいれつ)
 {{{#csv(flag=||)
@@ -536,6 +576,52 @@
 ●『[[空配列:plugin_system/空配列/解説]]』の詳しい解説
 
 空の配列を返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/空ハッシュ
+■ 空ハッシュ (からはっしゅ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[システム定数:plugin_system/システム定数]]
+種類 || 関数
+引数 || 
+説明 || 空のハッシュを返す
+}}}
+
+#page(plugin_system/空ハッシュ/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/空ハッシュ/解説
+●『[[空ハッシュ:plugin_system/空ハッシュ/解説]]』の詳しい解説
+
+空のハッシュを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/空オブジェクト
+■ 空オブジェクト (からおぶじぇくと)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[システム定数:plugin_system/システム定数]]
+種類 || 関数
+引数 || 
+説明 || 空のオブジェクトを返す
+}}}
+
+#page(plugin_system/空オブジェクト/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/空オブジェクト/解説
+●『[[空オブジェクト:plugin_system/空オブジェクト/解説]]』の詳しい解説
+
+空のオブジェクトを返す
 
 {{{
 # 準備中
@@ -4422,13 +4508,59 @@ TSV形式のデータstrを強制的に二次元配列に変換して返す
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/明日
+■ 明日 (あす)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || 
+説明 || 明日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+}}}
+
+#page(plugin_system/明日/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/明日/解説
+●『[[明日:plugin_system/明日/解説]]』の詳しい解説
+
+明日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/昨日
+■ 昨日 (きのう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || 
+説明 || 昨日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+}}}
+
+#page(plugin_system/昨日/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/昨日/解説
+●『[[昨日:plugin_system/昨日/解説]]』の詳しい解説
+
+昨日の日付を「YYYY/MM/DD」の形式で返す (v1非互換)
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_system/今年
 ■ 今年 (ことし)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
 種類 || 関数
 引数 || 
-説明 || 今年の西暦を返す
+説明 || 今年が何年かを西暦で返す
 }}}
 
 #page(plugin_system/今年/解説)
@@ -4439,7 +4571,53 @@ TSV形式のデータstrを強制的に二次元配列に変換して返す
 ###PAGE###:c:plugin_system/今年/解説
 ●『[[今年:plugin_system/今年/解説]]』の詳しい解説
 
-今年の西暦を返す
+今年が何年かを西暦で返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/来年
+■ 来年 (らいねん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || 
+説明 || 来年が何年かを西暦で返す
+}}}
+
+#page(plugin_system/来年/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/来年/解説
+●『[[来年:plugin_system/来年/解説]]』の詳しい解説
+
+来年が何年かを西暦で返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/去年
+■ 去年 (きょねん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || 
+説明 || 去年が何年かを西暦で返す
+}}}
+
+#page(plugin_system/去年/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/去年/解説
+●『[[去年:plugin_system/去年/解説]]』の詳しい解説
+
+去年が何年かを西暦で返す
 
 {{{
 # 準備中
@@ -4451,7 +4629,7 @@ TSV形式のデータstrを強制的に二次元配列に変換して返す
 カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
 種類 || 関数
 引数 || 
-説明 || 今月を返す(v1非互換)
+説明 || 今月が何月かを返す
 }}}
 
 #page(plugin_system/今月/解説)
@@ -4462,7 +4640,53 @@ TSV形式のデータstrを強制的に二次元配列に変換して返す
 ###PAGE###:c:plugin_system/今月/解説
 ●『[[今月:plugin_system/今月/解説]]』の詳しい解説
 
-今月を返す(v1非互換)
+今月が何月かを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/来月
+■ 来月 (らいげつ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || 
+説明 || 来月が何月かを返す
+}}}
+
+#page(plugin_system/来月/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/来月/解説
+●『[[来月:plugin_system/来月/解説]]』の詳しい解説
+
+来月が何月かを返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/先月
+■ 先月 (せんげつ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || 
+説明 || 先月が何月かを返す
+}}}
+
+#page(plugin_system/先月/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/先月/解説
+●『[[先月:plugin_system/先月/解説]]』の詳しい解説
+
+先月が何月かを返す
 
 {{{
 # 準備中
@@ -4486,6 +4710,29 @@ TSV形式のデータstrを強制的に二次元配列に変換して返す
 ●『[[曜日:plugin_system/曜日/解説]]』の詳しい解説
 
 日付Sの曜日を返す
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/曜日番号取得
+■ 曜日番号取得 (ようびばんごうしゅとく)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || Sの
+説明 || Sに指定した日付の曜日番号をで返す。不正な日付の場合は今日の曜日番号を返す。(0=日/1=月/2=火/3=水/4=木/5=金/6=土)
+}}}
+
+#page(plugin_system/曜日番号取得/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/曜日番号取得/解説
+●『[[曜日番号取得:plugin_system/曜日番号取得/解説]]』の詳しい解説
+
+Sに指定した日付の曜日番号をで返す。不正な日付の場合は今日の曜日番号を返す。(0=日/1=月/2=火/3=水/4=木/5=金/6=土)
 
 {{{
 # 準備中
@@ -4555,6 +4802,259 @@ TSV形式のデータstrを強制的に二次元配列に変換して返す
 ●『[[日時変換:plugin_system/日時変換/解説]]』の詳しい解説
 
 UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/和暦変換
+■ 和暦変換 (われきへんかん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || Sを
+説明 || Sを和暦に変換する。Sは明治以降の日付が有効。
+}}}
+
+#page(plugin_system/和暦変換/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/和暦変換/解説
+●『[[和暦変換:plugin_system/和暦変換/解説]]』の詳しい解説
+
+Sを和暦に変換する。Sは明治以降の日付が有効。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/年数差
+■ 年数差 (ねんすうさ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || AとBの|AからBまでの
+説明 || 日付AとBの差を年数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+}}}
+
+#page(plugin_system/年数差/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/年数差/解説
+●『[[年数差:plugin_system/年数差/解説]]』の詳しい解説
+
+日付AとBの差を年数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/月数差
+■ 月数差 (げっすうさ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || AとBの|AからBまでの
+説明 || 日付AとBの差を月数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+}}}
+
+#page(plugin_system/月数差/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/月数差/解説
+●『[[月数差:plugin_system/月数差/解説]]』の詳しい解説
+
+日付AとBの差を月数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/日数差
+■ 日数差 (にっすうさ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || AとBの|AからBまでの
+説明 || 日付AとBの差を日数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+}}}
+
+#page(plugin_system/日数差/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/日数差/解説
+●『[[日数差:plugin_system/日数差/解説]]』の詳しい解説
+
+日付AとBの差を日数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/日時差
+■ 日時差 (にちじさ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || AとBのUNITによる|AからBまでの
+説明 || 日時AとBの差を種類unitで返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+}}}
+
+#page(plugin_system/日時差/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/日時差/解説
+●『[[日時差:plugin_system/日時差/解説]]』の詳しい解説
+
+日時AとBの差を種類unitで返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/時間差
+■ 時間差 (じかんさ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || AとBの|AからBまでの
+説明 || 時間AとBの時間の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+}}}
+
+#page(plugin_system/時間差/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/時間差/解説
+●『[[時間差:plugin_system/時間差/解説]]』の詳しい解説
+
+時間AとBの時間の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/分差
+■ 分差 (ふんさ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || AとBの|AからBまでの
+説明 || 時間AとBの分数の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+}}}
+
+#page(plugin_system/分差/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/分差/解説
+●『[[分差:plugin_system/分差/解説]]』の詳しい解説
+
+時間AとBの分数の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/秒差
+■ 秒差 (びょうさ)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || AとBの|AからBまでの
+説明 || 時間AとBの差を秒差で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+}}}
+
+#page(plugin_system/秒差/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/秒差/解説
+●『[[秒差:plugin_system/秒差/解説]]』の詳しい解説
+
+時間AとBの差を秒差で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/時間加算
+■ 時間加算 (じかんかさん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || SにAを
+説明 || 時間SにAを加えて返す。Aには「(+｜-)hh:nn:dd」で指定する。
+}}}
+
+#page(plugin_system/時間加算/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/時間加算/解説
+●『[[時間加算:plugin_system/時間加算/解説]]』の詳しい解説
+
+時間SにAを加えて返す。Aには「(+｜-)hh:nn:dd」で指定する。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/日付加算
+■ 日付加算 (ひづけかさん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || SにAを
+説明 || 日付SにAを加えて返す。Aには「(+｜-)yyyy/mm/dd」で指定する。
+}}}
+
+#page(plugin_system/日付加算/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/日付加算/解説
+●『[[日付加算:plugin_system/日付加算/解説]]』の詳しい解説
+
+日付SにAを加えて返す。Aには「(+｜-)yyyy/mm/dd」で指定する。
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/日時加算
+■ 日時加算 (ヶ月)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[日時処理:plugin_system/日時処理]]
+種類 || 関数
+引数 || SにAを
+説明 || 日時SにAを加えて返す。Aは「(+｜-)1(年
+}}}
+
+#page(plugin_system/日時加算/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/日時加算/解説
+●『[[日時加算:plugin_system/日時加算/解説]]』の詳しい解説
+
+日時SにAを加えて返す。Aは「(+｜-)1(年
 
 {{{
 # 準備中
@@ -4813,24 +5313,24 @@ UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の�
 # 準備中
 }}}
 
-###PAGE###:w:plugin_system/タイムゾーン設定
-■ タイムゾーン設定 (たいむぞーんせってい)
+###PAGE###:w:plugin_system/対応ブラウザ一覧取得
+■ 対応ブラウザ一覧取得 (たいおうぶらうざいちらんしゅとく)
 {{{#csv(flag=||)
 カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
 種類 || 関数
-引数 || TZで
-説明 || タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+引数 || 
+説明 || 対応しているブラウザの一覧を取得する
 }}}
 
-#page(plugin_system/タイムゾーン設定/解説)
+#page(plugin_system/対応ブラウザ一覧取得/解説)
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[plugin_system]]
 
-###PAGE###:c:plugin_system/タイムゾーン設定/解説
-●『[[タイムゾーン設定:plugin_system/タイムゾーン設定/解説]]』の詳しい解説
+###PAGE###:c:plugin_system/対応ブラウザ一覧取得/解説
+●『[[対応ブラウザ一覧取得:plugin_system/対応ブラウザ一覧取得/解説]]』の詳しい解説
 
-タイムゾーンTをセットする(v1非互換)(タイムゾーンの一覧は https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List 参照)
+対応しているブラウザの一覧を取得する
 
 {{{
 # 準備中
@@ -7508,8 +8008,8 @@ vに線の太さ設定
 {{{#csv(flag=||)
 カテゴリ || [[plugin_browser]] > [[描画:plugin_browser/描画]]
 種類 || 関数
-引数 || XYへIMGの|XYにIMGを
-説明 || [x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す
+引数 || IMGのSXYのDXYへ|IMGをSXYをDXYに
+説明 || ファイル名F(またはImage)の画像を[sx, sy, sw, sh]の[dx, dy, dw, dh]へ描画し、Imageを返す
 }}}
 
 #page(plugin_browser/画像描画/解説)
@@ -7520,7 +8020,7 @@ vに線の太さ設定
 ###PAGE###:c:plugin_browser/画像描画/解説
 ●『[[画像描画:plugin_browser/画像描画/解説]]』の詳しい解説
 
-[x, y, w, h]へファイル名F(またはImage)の画像を描画し、Imageを返す
+ファイル名F(またはImage)の画像を[sx, sy, sw, sh]の[dx, dy, dw, dh]へ描画し、Imageを返す
 
 {{{
 # 準備中
@@ -8026,7 +8526,7 @@ AudioオブジェクトOBJを指定してオーディをを停止
 ###PAGE###:w:plugin_browser/ホットキー登録
 ■ ホットキー登録 (ほっときーとうろく)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+カテゴリ || [[plugin_browser]] > [[ホットキー:plugin_browser/ホットキー]]
 種類 || 関数
 引数 || KEYにFNAMEを|KEYで
 説明 || ホットキーKEYにEVENTを登録する
@@ -8049,7 +8549,7 @@ AudioオブジェクトOBJを指定してオーディをを停止
 ###PAGE###:w:plugin_browser/ホットキー解除
 ■ ホットキー解除 (ほっときーかいじょ)
 {{{#csv(flag=||)
-カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+カテゴリ || [[plugin_browser]] > [[ホットキー:plugin_browser/ホットキー]]
 種類 || 関数
 引数 || KEYを|KEYの
 説明 || ホットキーKEYを解除する
@@ -8064,6 +8564,141 @@ AudioオブジェクトOBJを指定してオーディをを停止
 ●『[[ホットキー解除:plugin_browser/ホットキー解除/解説]]』の詳しい解説
 
 ホットキーKEYを解除する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/グラフ描画
+■ グラフ描画 (ぐらふびょうが)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
+種類 || 関数
+引数 || DATAを|DATAで|DATAの
+説明 || Chart.jsを利用して、DATAのグラフを描画
+}}}
+
+#page(plugin_browser/グラフ描画/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/グラフ描画/解説
+●『[[グラフ描画:plugin_browser/グラフ描画/解説]]』の詳しい解説
+
+Chart.jsを利用して、DATAのグラフを描画
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/グラフオプション
+■ グラフオプション (ぐらふおぷしょん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
+種類 || 定数
+初期値 || {}
+}}}
+
+#page(plugin_browser/グラフオプション/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/グラフオプション/解説
+●『[[グラフオプション:plugin_browser/グラフオプション/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/線グラフ描画
+■ 線グラフ描画 (せんぐらふびょうが)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
+種類 || 関数
+引数 || DATAを|DATAで|DATAの
+説明 || 線グラフを描画
+}}}
+
+#page(plugin_browser/線グラフ描画/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/線グラフ描画/解説
+●『[[線グラフ描画:plugin_browser/線グラフ描画/解説]]』の詳しい解説
+
+線グラフを描画
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/棒グラフ描画
+■ 棒グラフ描画 (ぼうぐらふびょうが)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
+種類 || 関数
+引数 || DATAを|DATAで|DATAの
+説明 || 棒グラフを描画
+}}}
+
+#page(plugin_browser/棒グラフ描画/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/棒グラフ描画/解説
+●『[[棒グラフ描画:plugin_browser/棒グラフ描画/解説]]』の詳しい解説
+
+棒グラフを描画
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/横棒グラフ描画
+■ 横棒グラフ描画 (よこぼうぐらふびょうが)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
+種類 || 関数
+引数 || DATAを|DATAで|DATAの
+説明 || 横棒グラフを描画
+}}}
+
+#page(plugin_browser/横棒グラフ描画/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/横棒グラフ描画/解説
+●『[[横棒グラフ描画:plugin_browser/横棒グラフ描画/解説]]』の詳しい解説
+
+横棒グラフを描画
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/円グラフ描画
+■ 円グラフ描画 (えんぐらふびょうが)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[グラフ描画_CHARTJS:plugin_browser/グラフ描画_CHARTJS]]
+種類 || 関数
+引数 || DATAを|DATAで|DATAの
+説明 || 円グラフを描画
+}}}
+
+#page(plugin_browser/円グラフ描画/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/円グラフ描画/解説
+●『[[円グラフ描画:plugin_browser/円グラフ描画/解説]]』の詳しい解説
+
+円グラフを描画
 
 {{{
 # 準備中
@@ -11354,7 +11989,7 @@ GoogleHomeでMP3を再生する
 カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
 種類 || 関数
 引数 || PORTNOの|PORTNOで
-説明 || ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+説明 || ポートPORTNOでサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
 }}}
 
 #page(plugin_websocket/WSサーバ起動/解説)
@@ -11365,7 +12000,30 @@ GoogleHomeでMP3を再生する
 ###PAGE###:c:plugin_websocket/WSサーバ起動/解説
 ●『[[WSサーバ起動:plugin_websocket/WSサーバ起動/解説]]』の詳しい解説
 
-ポートPORTNOでWebサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+ポートPORTNOでサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_websocket/WSSサーバ起動
+■ WSSサーバ起動 (WSSさーばきどう)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_websocket]] > [[WebSocketサーバ:plugin_websocket/WebSocketサーバ]]
+種類 || 関数
+引数 || CONFの|CONFで
+説明 || 設定CONF{cert:サーバ証明書,key:キーファイル,port:ポート番号}を指定してWSSサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
+}}}
+
+#page(plugin_websocket/WSSサーバ起動/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_websocket]]
+
+###PAGE###:c:plugin_websocket/WSSサーバ起動/解説
+●『[[WSSサーバ起動:plugin_websocket/WSSサーバ起動/解説]]』の詳しい解説
+
+設定CONF{cert:サーバ証明書,key:キーファイル,port:ポート番号}を指定してWSSサーバを起動して成功したら『WSサーバ起動成功した時』を実行する
 
 {{{
 # 準備中

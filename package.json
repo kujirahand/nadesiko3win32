@@ -1,6 +1,6 @@
 {
   "name": "nadesiko3",
-  "version": "3.0.68",
+  "version": "3.0.72",
   "description": "Japanese Programming Language",
   "main": "src/index.js",
   "bin": {
@@ -9,17 +9,18 @@
     "nako3edit": "tools/nako3edit/run.js"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "TZ=Asia/Tokyo mocha",
     "start": "node src/nako3server.js",
-    "server": "lite-server --config=demo/bs-config.json",
-    "nako3edit": "cnako3 tools/nako3edit/index.nako3",
+    "nako3edit": "node src/cnako3.js tools/nako3edit/index.nako3",
     "nako3edit:run": "node tools/nako3edit/run.js",
-    "electron": "electron src/enako3.js",
+    "electron": "electron .",
     "build": "webpack --mode production",
-    "build:command": "cnako3 batch/build_command.nako3",
-    "build:electron": "asar pack src/enako3.js release/enako3.asar",
-    "build:win32": "cnako3 installer/make-win32.nako3",
-    "watch": "webpack --watch --mode development"
+    "build:command": "node src/cnako3.js batch/build_command.nako3",
+    "build:electron": "electron-packager . --out release/enako3 --asar --all --overwrite",
+    "build:win32": "node src/cnako3.js installer/make-win32.nako3",
+    "build:readme": "node src/cnako3.js batch/build_readme.nako3",
+    "watch": "webpack --watch --mode development",
+    "analyze": "webpack-bundle-analyzer release/stats.json"
   },
   "repository": {
     "type": "git",
@@ -49,23 +50,24 @@
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
-          "targets": {
-            "browsers": [
-              "> 0.5%",
-              "> 0.5% in JP",
-              "last 2 versions",
-              "Firefox ESR",
-              "not dead"
-            ],
-            "useBuiltIns": true
-          }
+          "useBuiltIns": "usage",
+          "corejs": 3,
+          "debug": true
         }
       ],
-      "react"
+      "@babel/preset-react"
     ]
   },
+  "browserslist": [
+    "> 0.5%",
+    "> 0.5% in JP",
+    "last 2 versions",
+    "Firefox ESR",
+    "maintained node versions",
+    "not dead"
+  ],
   "eslintConfig": {
     "extends": [
       "standard",
@@ -89,52 +91,58 @@
   },
   "homepage": "https://github.com/kujirahand/nadesiko3#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.23.0",
-    "date-utils": "^1.2.21",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.0",
+    "core-js": "^3.6.4",
+    "css-loader": "^3.2.0",
+    "electron": "^8.0.2",
+    "electron-packager": "^14.2.1",
     "es6-promise": "^4.2.6",
-    "eslint": "^4.19.1",
+    "eslint": "^6.8.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-standard": "^3.1.0",
-    "isomorphic-fetch": "^2.2.1",
-    "lite-server": "^2.4.0",
+    "hotkeys-js": "^3.7.2",
     "mocha": "^5.2.0",
+    "mocha-css": "^1.0.1",
+    "nadesiko3-hoge": "0.0.3",
+    "npm-check-updates": "^4.0.3",
     "prop-types": "^15.7.2",
     "pump": "^3.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "regenerator-runtime": "^0.13.3",
     "source-map": "^0.7.3",
+    "ssri": "^6.0.1",
+    "stats-webpack-plugin": "^0.7.0",
+    "style-loader": "^1.0.0",
+    "terser-webpack-plugin": "^2.3.5",
     "uuid": "^3.3.2",
     "webpack": "^4.31.0",
+    "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.2"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "browserslist": "^4.8.7",
+    "caniuse-db": "^1.0.30001027",
     "commander": "^2.20.0",
     "copy-paste-win32fix": "^1.4.0",
-    "css-loader": "^3.2.0",
     "csv-lite-js": "^0.0.7",
+    "dayjs": "^1.8.23",
     "express": "^4.16.4",
     "form-data": "^2.3.3",
     "fs-extra": "^6.0.0",
-    "hotkeys-js": "^3.7.2",
     "iconv-lite": "^0.4.24",
-    "mocha-css": "^1.0.1",
-    "moment-timezone": "^0.5.25",
     "node-fetch": "^2.5.0",
     "opener": "^1.5.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "readline-sync": "^1.4.9",
-    "sendkeys-js": "0.0.4",
-    "ssri": "^6.0.1",
-    "style-loader": "^1.0.0",
-    "whatwg-fetch": "^2.0.4"
+    "sendkeys-js": "0.0.4"
   }
 }

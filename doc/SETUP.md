@@ -31,17 +31,11 @@ Homebrew( https://brew.sh/index_ja ) (そしてXcode)をインストールして
 
 ## 【共通】
 
-以下、共通の作業となる。(electron と asar は GUIをやるときに追加。ネット回線が細い人は抜かして実行しても良い)
-
-```
-$ npm install -g npm-check-updates electron asar
-```
-
 コマンドラインから以下を実行して、nadesiko3のリポジトリをcloneし、必要なライブラリをインストール。ただし、Node.jsのバージョンv10以上が必要。もし、Ubuntuで古いのNode.jsをインストールした場合など、nモジュールを利用して最新安定版のNode.jsを利用してください。
 
 
 ```
-$ git clone --recursive https://github.com/kujirahand/nadesiko3
+$ git clone https://github.com/kujirahand/nadesiko3
 $ cd nadesiko3
 $ npm install --no-optional
 ```
@@ -52,6 +46,13 @@ srcディレクトリの中のコードを編集すると、releaseディレク�
 ```
 # Node.js用のソースコードをWeb用のJSに変換
 $ npm run build
+```
+
+ビルド後に以下のコマンドを実行することで、 バンドルファイル内の各パッケージがどのぐらいの容量を占めているかを可視化できる。
+
+```
+# バンドルファイル内の各パッケージがどのぐらいの容量を占めているかを可視化
+$ npm run analyze
 ```
 
 開発時、以下のコマンドを実行すれば、監視ビルドさせることができる。
@@ -135,6 +136,13 @@ $ npm start
 ```
 $ npm run build:command
 ```
+### READMEの生成
+
+「対応機器, 対応ブラウザを展開したい場所に `{embed browser}` と記述する」という規則に従って[README.template.md](../README.template.md)を記述し、以下のコマンドを実行します。
+
+```
+$ npm run build:readme
+```
 
 ### Node.jsのパッケージの更新方法
 
@@ -159,14 +167,12 @@ $ npm run electron
 $ npm run build:electron
 ```
 
-ビルドしたenako3.asarを配布可能な形式にする方法については[Electronでアプリケーションを作ってみよう - Qiita](http://qiita.com/Quramy/items/a4be32769366cfe55778#配布してみる)を参照。
-
 ## Gitからリポジトリを取得して利用する場合
 
 最低限のライブラリで良い場合には、``npm install --production``を実行するだけ。
 
 ```
-$ git clnone https://github.com/kujirahand/nadesiko3.git
+$ git clone https://github.com/kujirahand/nadesiko3.git
 $ cd nadesiko3
 $ npm install --production
 ```
