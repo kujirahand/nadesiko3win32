@@ -24,4 +24,4 @@ cnako = """" & home & "\src\cnako3.js" & """"
 nako3edit = """" & home & "\tools\nako3edit\index.nako3" & """"
 
 cmd = node & " " & cnako & " " & nako3edit
-shell.Run(cmd)
+call shell.Run(cmd)
