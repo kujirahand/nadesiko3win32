@@ -5336,6 +5336,52 @@ Sを和暦に変換する。Sは明治以降の日付が有効。
 # 準備中
 }}}
 
+###PAGE###:w:plugin_system/マークダウンHTML変換
+■ マークダウンHTML変換 (まーくだうんえいちてぃーえむえるへんかん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
+種類 || 関数
+引数 || Sを
+説明 || マークダウン形式で記述された文字列SをHTML形式に変換する
+}}}
+
+#page(plugin_system/マークダウンHTML変換/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/マークダウンHTML変換/解説
+●『[[マークダウンHTML変換:plugin_system/マークダウンHTML変換/解説]]』の詳しい解説
+
+マークダウン形式で記述された文字列SをHTML形式に変換する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_system/HTML整形
+■ HTML整形 (えいちてぃーえむえるせいけい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
+種類 || 関数
+引数 || Sを
+説明 || HTML形式で記述された文字列Sを整形する
+}}}
+
+#page(plugin_system/HTML整形/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_system]]
+
+###PAGE###:c:plugin_system/HTML整形/解説
+●『[[HTML整形:plugin_system/HTML整形/解説]]』の詳しい解説
+
+HTML形式で記述された文字列Sを整形する
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/水色
 ■ 水色 (みずいろ)
 {{{#csv(flag=||)
@@ -8477,6 +8523,26 @@ WebSocketサーバsに接続する
 # 準備中
 }}}
 
+###PAGE###:w:plugin_browser/オーディオ再生位置
+■ オーディオ再生位置 (おーでぃおさいせいいち)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+種類 || 定数
+初期値 || 0
+}}}
+
+#page(plugin_browser/オーディオ再生位置/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/オーディオ再生位置/解説
+●『[[オーディオ再生位置:plugin_browser/オーディオ再生位置/解説]]』の詳しい解説
+
+{{{
+# 準備中
+}}}
+
 ###PAGE###:w:plugin_browser/オーディオ再生
 ■ オーディオ再生 (おーでぃおさいせい)
 {{{#csv(flag=||)
@@ -8506,7 +8572,7 @@ AudioオブジェクトOBJを指定してオーディをを再生
 カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
 種類 || 関数
 引数 || OBJを
-説明 || AudioオブジェクトOBJを指定してオーディをを停止
+説明 || AudioオブジェクトOBJを指定してオーディを停止
 }}}
 
 #page(plugin_browser/オーディオ停止/解説)
@@ -8517,7 +8583,30 @@ AudioオブジェクトOBJを指定してオーディをを再生
 ###PAGE###:c:plugin_browser/オーディオ停止/解説
 ●『[[オーディオ停止:plugin_browser/オーディオ停止/解説]]』の詳しい解説
 
-AudioオブジェクトOBJを指定してオーディをを停止
+AudioオブジェクトOBJを指定してオーディを停止
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_browser/オーディオ一時停止
+■ オーディオ一時停止 (おーでぃおていし)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_browser]] > [[オーディオ:plugin_browser/オーディオ]]
+種類 || 関数
+引数 || OBJを
+説明 || AudioオブジェクトOBJを指定してオーディを一時停止
+}}}
+
+#page(plugin_browser/オーディオ一時停止/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_browser]]
+
+###PAGE###:c:plugin_browser/オーディオ一時停止/解説
+●『[[オーディオ一時停止:plugin_browser/オーディオ一時停止/解説]]』の詳しい解説
+
+AudioオブジェクトOBJを指定してオーディを一時停止
 
 {{{
 # 準備中

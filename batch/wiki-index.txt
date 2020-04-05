@@ -280,6 +280,8 @@
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
 - [[対応ブラウザ一覧取得:plugin_system/対応ブラウザ一覧取得]] --- 対応しているブラウザの一覧を取得する
+- [[(Sを)マークダウンHTML変換:plugin_system/マークダウンHTML変換]] --- マークダウン形式で記述された文字列SをHTML形式に変換する
+- [[(Sを)HTML整形:plugin_system/HTML整形]] --- HTML形式で記述された文字列Sを整形する
 
 ■ [[plugin_browser]]
 #page(plugin_browser/解説)
@@ -454,8 +456,10 @@
 
 ● [[オーディオ:plugin_browser]]
 - [[(URLを|URLの)オーディオ開:plugin_browser/オーディオ開]] --- オーディオファイルのURLを指定して、オーディオを読み込み、Audioオブジェクトを返す
+- [[オーディオ再生位置:plugin_browser/オーディオ再生位置]] --- 定数
 - [[(OBJを)オーディオ再生:plugin_browser/オーディオ再生]] --- AudioオブジェクトOBJを指定してオーディをを再生
-- [[(OBJを)オーディオ停止:plugin_browser/オーディオ停止]] --- AudioオブジェクトOBJを指定してオーディをを停止
+- [[(OBJを)オーディオ停止:plugin_browser/オーディオ停止]] --- AudioオブジェクトOBJを指定してオーディを停止
+- [[(OBJを)オーディオ一時停止:plugin_browser/オーディオ一時停止]] --- AudioオブジェクトOBJを指定してオーディを一時停止
 
 ● [[ホットキー:plugin_browser]]
 - [[(KEYにFNAMEを|KEYで)ホットキー登録:plugin_browser/ホットキー登録]] --- ホットキーKEYにEVENTを登録する

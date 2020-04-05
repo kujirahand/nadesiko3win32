@@ -5,7 +5,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['ナデシコバージョン'] = '3.0.72'
+      sys.__v0['ナデシコバージョン'] = '3.0.73'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) {return def}
@@ -2130,6 +2130,22 @@ const PluginSystem = {
     fn: function () {
       const browserslist = require('browserslist')
       return browserslist()
+    }
+  },
+  'マークダウンHTML変換': { // @マークダウン形式で記述された文字列SをHTML形式に変換する // @まーくだうんえいちてぃーえむえるへんかん
+    type: 'func',
+    josi: [['を']],
+    fn: function (s) {
+      const markdown = require('markdown')
+      return markdown.parse(s)
+    }
+  },
+  'HTML整形': { // @HTML形式で記述された文字列Sを整形する // @えいちてぃーえむえるせいけい
+    type: 'func',
+    josi: [['を']],
+    fn: function (s) {
+      const html = require('html')
+      return html.prettyPrint(s, {indent_size: 2})
     }
   }
 }
