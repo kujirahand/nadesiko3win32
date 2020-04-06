@@ -5336,52 +5336,6 @@ Sを和暦に変換する。Sは明治以降の日付が有効。
 # 準備中
 }}}
 
-###PAGE###:w:plugin_system/マークダウンHTML変換
-■ マークダウンHTML変換 (まーくだうんえいちてぃーえむえるへんかん)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
-種類 || 関数
-引数 || Sを
-説明 || マークダウン形式で記述された文字列SをHTML形式に変換する
-}}}
-
-#page(plugin_system/マークダウンHTML変換/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system]]
-
-###PAGE###:c:plugin_system/マークダウンHTML変換/解説
-●『[[マークダウンHTML変換:plugin_system/マークダウンHTML変換/解説]]』の詳しい解説
-
-マークダウン形式で記述された文字列SをHTML形式に変換する
-
-{{{
-# 準備中
-}}}
-
-###PAGE###:w:plugin_system/HTML整形
-■ HTML整形 (えいちてぃーえむえるせいけい)
-{{{#csv(flag=||)
-カテゴリ || [[plugin_system]] > [[デバッグ支援:plugin_system/デバッグ支援]]
-種類 || 関数
-引数 || Sを
-説明 || HTML形式で記述された文字列Sを整形する
-}}}
-
-#page(plugin_system/HTML整形/解説)
-
-▲ 参考
-- [[命令一覧/機能順]] > [[plugin_system]]
-
-###PAGE###:c:plugin_system/HTML整形/解説
-●『[[HTML整形:plugin_system/HTML整形/解説]]』の詳しい解説
-
-HTML形式で記述された文字列Sを整形する
-
-{{{
-# 準備中
-}}}
-
 ###PAGE###:w:plugin_browser/水色
 ■ 水色 (みずいろ)
 {{{#csv(flag=||)
@@ -11265,6 +11219,52 @@ URIにPOSTメソッドがあった時の処理を指定
 ●『[[WEBサーバリダイレクト:plugin_express/WEBサーバリダイレクト/解説]]』の詳しい解説
 
 URLにリダイレクトする
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_markup/マークダウンHTML変換
+■ マークダウンHTML変換 (まーくだうんえいちてぃーえむえるへんかん)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_markup]] > [[マークアップ:plugin_markup/マークアップ]]
+種類 || 関数
+引数 || Sを
+説明 || マークダウン形式で記述された文字列SをHTML形式に変換する
+}}}
+
+#page(plugin_markup/マークダウンHTML変換/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_markup]]
+
+###PAGE###:c:plugin_markup/マークダウンHTML変換/解説
+●『[[マークダウンHTML変換:plugin_markup/マークダウンHTML変換/解説]]』の詳しい解説
+
+マークダウン形式で記述された文字列SをHTML形式に変換する
+
+{{{
+# 準備中
+}}}
+
+###PAGE###:w:plugin_markup/HTML整形
+■ HTML整形 (えいちてぃーえむえるせいけい)
+{{{#csv(flag=||)
+カテゴリ || [[plugin_markup]] > [[マークアップ:plugin_markup/マークアップ]]
+種類 || 関数
+引数 || Sを
+説明 || HTML形式で記述された文字列Sを整形する
+}}}
+
+#page(plugin_markup/HTML整形/解説)
+
+▲ 参考
+- [[命令一覧/機能順]] > [[plugin_markup]]
+
+###PAGE###:c:plugin_markup/HTML整形/解説
+●『[[HTML整形:plugin_markup/HTML整形/解説]]』の詳しい解説
+
+HTML形式で記述された文字列Sを整形する
 
 {{{
 # 準備中

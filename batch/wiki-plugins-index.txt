@@ -15,6 +15,9 @@
 ▲ 🔌[[plugin_express]] プラグイン
 #page(plugin_express/解説)
 
+▲ 🔌[[plugin_markup]] プラグイン
+#page(plugin_markup/解説)
+
 ▲ 🔌[[plugin_sqlite3]] [[拡張プラグイン]]
 #page(plugin_sqlite3/解説)
 

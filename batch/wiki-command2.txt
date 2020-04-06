@@ -230,8 +230,6 @@
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
 - [[対応ブラウザ一覧取得:plugin_system/対応ブラウザ一覧取得]] --- 対応しているブラウザの一覧を取得する
-- [[マークダウンHTML変換:plugin_system/マークダウンHTML変換]] --- マークダウン形式で記述された文字列SをHTML形式に変換する
-- [[HTML整形:plugin_system/HTML整形]] --- HTML形式で記述された文字列Sを整形する
 
 
 - [[システム定数:plugin_system/システム定数]]
@@ -598,6 +596,24 @@
 
 ###PAGE###:c:plugin_express/解説
 [[plugin_express:plugin_express/解説]]とは、なでしこv3のプラグイン。
+
+
+###PAGE###:w:plugin_markup
+■ plugin_markup - なでしこ3 プラグイン
+#page(plugin_markup/解説)
+
+▲[[plugin_markup/マークアップ]]
+- [[マークダウンHTML変換:plugin_markup/マークダウンHTML変換]] --- マークダウン形式で記述された文字列SをHTML形式に変換する
+- [[HTML整形:plugin_markup/HTML整形]] --- HTML形式で記述された文字列Sを整形する
+
+
+- [[マークアップ:plugin_markup/マークアップ]]
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]]
+
+###PAGE###:c:plugin_markup/解説
+[[plugin_markup:plugin_markup/解説]]とは、なでしこv3のプラグイン。
 
 
 ###PAGE###:w:plugin_sqlite3
@@ -1283,8 +1299,6 @@
 - [[プラグイン一覧取得:plugin_system/プラグイン一覧取得]] --- 利用中のプラグイン一覧を得る
 - [[モジュール一覧取得:plugin_system/モジュール一覧取得]] --- 取り込んだモジュール一覧を得る
 - [[対応ブラウザ一覧取得:plugin_system/対応ブラウザ一覧取得]] --- 対応しているブラウザの一覧を取得する
-- [[マークダウンHTML変換:plugin_system/マークダウンHTML変換]] --- マークダウン形式で記述された文字列SをHTML形式に変換する
-- [[HTML整形:plugin_system/HTML整形]] --- HTML形式で記述された文字列Sを整形する
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_system:plugin_system]]
@@ -1870,6 +1884,18 @@
 
 ▲ 参考
 - [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_express:plugin_express]]
+
+###PAGE###:w:plugin_markup/マークアップ
+■ [[plugin_markup]]/[[マークアップ:plugin_markup/マークアップ]]
+#page(plugin_markup/解説)
+
+▲ カテゴリの命令一覧
+
+- [[マークダウンHTML変換:plugin_markup/マークダウンHTML変換]] --- マークダウン形式で記述された文字列SをHTML形式に変換する
+- [[HTML整形:plugin_markup/HTML整形]] --- HTML形式で記述された文字列Sを整形する
+
+▲ 参考
+- [[命令一覧/機能順]] > [[プラグイン一覧]] > [[plugin_markup:plugin_markup]]
 
 ###PAGE###:w:plugin_sqlite3/SQLite3
 ■ [[plugin_sqlite3]]/[[SQLite3:plugin_sqlite3/SQLite3]]
