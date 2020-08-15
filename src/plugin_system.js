@@ -5,7 +5,7 @@ const PluginSystem = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      sys.__v0['ナデシコバージョン'] = '3.0.75'
+      sys.__v0['ナデシコバージョン'] = '3.1.2'
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) {return def}
@@ -19,6 +19,12 @@ const PluginSystem = {
           if (scope[nameStr]) {return scope[nameStr]}
         }
         return def
+      }
+      // 文字列から関数を探す、見当たらなければエラーを出す
+      sys.__findFunc = function (nameStr, parentFunc) {
+        const f = sys.__findVar(nameStr)
+        if (typeof f === 'function') { return f }
+        throw new Error(`『${parentFunc}』に実行できない関数が指定されました。`)
       }
       // システム関数を実行する(エイリアスを実装するのに使う)
       sys.__exec = function (func, params) {
@@ -132,9 +138,14 @@ const PluginSystem = {
   // @四則演算
   '足': { // @AとBを足す // @たす
     type: 'func',
-    josi: [['に', 'と'], ['を']],
-    fn: function (a, b) {
-      return a + b
+    josi: [['を'], ['に', 'と']],
+    isVariableJosi: true,
+    fn: function (b, ...a) {
+      // 末尾のシステム変数を除外
+      a.pop()
+
+      a.push(b)
+      return a.reduce((p, c) => p + c)
     }
   },
   '引': { // @AからBを引く // @ひく
@@ -153,7 +164,7 @@ const PluginSystem = {
   },
   '倍': { // @AのB倍を求める // @ばい
     type: 'func',
-    josi: [['の'], []],
+    josi: [['の'], ['']],
     fn: function (a, b) {
       return a * b
     }
@@ -174,28 +185,28 @@ const PluginSystem = {
   },
   '以上': { // @AがB以上か // @いじょう
     type: 'func',
-    josi: [['が'], []],
+    josi: [['が'], ['']],
     fn: function (a, b) {
       return a >= b
     }
   },
   '以下': { // @AがB以下か // @いか
     type: 'func',
-    josi: [['が'], []],
+    josi: [['が'], ['']],
     fn: function (a, b) {
       return a <= b
     }
   },
   '未満': { // @AがB未満か // @みまん
     type: 'func',
-    josi: [['が'], []],
+    josi: [['が'], ['']],
     fn: function (a, b) {
       return a < b
     }
   },
   '超': { // @AがB超か // @ちょう
     type: 'func',
-    josi: [['が'], []],
+    josi: [['が'], ['']],
     fn: function (a, b) {
       return a > b
     }
@@ -869,7 +880,7 @@ const PluginSystem = {
       return String(s).toLowerCase()
     }
   },
-  '平仮名変換': {// @文字列Sのひらがなをカタカナに変換 // @ひらがなへんかん
+  '平仮名変換': {// @文字列Sのカタカナをひらがなに変換 // @ひらがなへんかん
     type: 'func',
     josi: [['の', 'を']],
     fn: function (s) {
@@ -1255,8 +1266,7 @@ const PluginSystem = {
     fn: function (f, a, sys) {
       let ufunc = f
       if (typeof f === 'string') {
-        ufunc = sys.__findVar(f)
-        if (!ufunc) { throw new Error('関数『' + f + '』が見当たりません。') }
+        ufunc = sys.__findFunc(f, '配列カスタムソート')
       }
       if (a instanceof Array) {
         return a.sort(ufunc)
@@ -2009,13 +2019,13 @@ const PluginSystem = {
     type: 'func',
     josi: [['を', 'に', 'で']],
     fn: function (f, sys) {
-      if (typeof f === 'string') {f = sys.__findVar(f)}
+      if (typeof f === 'string') {f = sys.__findFunc(f, '実行')}
       if (typeof f === 'function') {return f(sys)}
     }
   },
-  '秒待機': { // @ 逐次実行構文にて、N秒の間待機する // @びょうまつ
+  '秒待機': { // @ 逐次実行構文にて、N秒の間待機する // @びょうたいき
     type: 'func',
-    josi: [[]],
+    josi: [['']],
     fn: function (n, sys) {
       if (sys.resolve === undefined) {throw new Error('『秒待機』命令は『逐次実行』構文と一緒に使ってください。')}
       const resolve = sys.resolve
@@ -2027,10 +2037,10 @@ const PluginSystem = {
   },
   '秒後': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する // @びょうご
     type: 'func',
-    josi: [['を'], []],
+    josi: [['を'], ['']],
     fn: function (f, n, sys) {
       // 文字列で指定された関数をオブジェクトに変換
-      if (typeof f === 'string') {f = sys.__findVar(f)}
+      if (typeof f === 'string') {f = sys.__findFunc(f, '秒後')}
       // 1回限りのタイマーをセット
       const timerId = setTimeout(() => {
         // 使用中リストに追加したIDを削除
@@ -2043,10 +2053,10 @@ const PluginSystem = {
   },
   '秒毎': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる) // @びょうごと
     type: 'func',
-    josi: [['を'], []],
+    josi: [['を'], ['']],
     fn: function (f, n, sys) {
       // 文字列で指定された関数をオブジェクトに変換
-      if (typeof f === 'string') {f = sys.__findVar(f)}
+      if (typeof f === 'string') {f = sys.__findFunc(f, '秒毎')}
       // タイマーをセット
       const timerId = setInterval(() => {
         f(timerId, sys)
@@ -2057,7 +2067,7 @@ const PluginSystem = {
   },
   '秒タイマー開始時': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『秒毎』と同じ) // @びょうたいまーかいししたとき
     type: 'func',
-    josi: [['を'], []],
+    josi: [['を'], ['']],
     fn: function (f, n, sys) {
       sys.__exec('秒毎', [f, n, sys])
     }
@@ -2130,6 +2140,44 @@ const PluginSystem = {
     fn: function () {
       const browserslist = require('browserslist')
       return browserslist()
+    }
+  },
+
+  // @URLエンコードとパラメータ
+  'URLエンコード': { // @URLエンコードして返す // @URLえんこーど
+    type: 'func',
+    josi: [['を', 'から']],
+    fn: function (text) {
+      return encodeURIComponent(text)
+    }
+  },
+  'URLデコード': { // @URLデコードして返す // @URLでこーど
+    type: 'func',
+    josi: [['を', 'へ', 'に']],
+    fn: function (text) {
+      return decodeURIComponent(text)
+    }
+  },
+  'URLパラメータ解析': { // @URLパラメータを解析してハッシュで返す // @URLぱらめーたかいせき
+    type: 'func',
+    josi: [['を', 'の', 'から']],
+    fn: function (url, sys) {
+      const res = {}
+      if (typeof url !== 'string') {
+        return res
+      }
+      const p = url.split('?')
+      if (p.length <= 1) {
+        return res
+      }
+      const params = p[1].split('&')
+      for (const line of params) {
+        const line2 = line + '='
+        const kv = line2.split('=')
+        const k = sys.__exec('URLデコード', [kv[0]])
+        res[k] = sys.__exec('URLデコード', [kv[1]])
+      }
+      return res
     }
   }
 }
