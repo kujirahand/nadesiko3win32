@@ -2,7 +2,7 @@
 require('es6-promise').polyfill()
 require('node-fetch')
 
-const hotkeys = require('hotkeys-js/index.js')
+const hotkeys = require('hotkeys-js')
 
 const errMsgCanvasInit = '描画を行うためには、HTML内にcanvasを配置し、idを振って『描画開始』命令に指定します。'
 
@@ -93,9 +93,11 @@ const PluginBrowser = {
   '尋': { // @メッセージSと入力ボックスを出して尋ねる // @たずねる
     type: 'func',
     josi: [['と', 'を']],
-    fn: function (s) {
+    fn: function (s, sys) {
       const r = window.prompt(s)
-      if (r.match(/^[0-9.]+$/)) {return parseFloat(r)}
+      if (!r) {
+        return sys.__v0['空']
+      } else if (r.match(/^[0-9.]+$/)) {return parseFloat(r)}
       return r
     }
   },
@@ -1200,7 +1202,7 @@ const PluginBrowser = {
           }
         }
       }
-      
+
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
       const drawFunc = (im, ctx) => {
         if (!dxy){
@@ -1521,7 +1523,7 @@ const PluginBrowser = {
     },
     return_none: true
   },
-  
+
   // @ホットキー
   'ホットキー登録': { // @ホットキーKEYにEVENTを登録する // @ほっときーとうろく
     type: 'func',
@@ -1540,7 +1542,7 @@ const PluginBrowser = {
       hotkeys.unbind(key)
     }
   },
-  
+
   // @グラフ描画_CHARTJS
   'グラフ描画': { // @ Chart.jsを利用して、DATAのグラフを描画 // @ぐらふびょうが
     type: 'func',

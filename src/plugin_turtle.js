@@ -3,6 +3,10 @@
  * plugin_turtle.js
  */
 
+const turtleImage = require('./turtle64.png').default
+const elephantImage = require('./turtle-elephant.png').default
+const pandaImage = require('./turtle-panda.png').default
+
 const PluginTurtle = {
   '初期化': {
     type: 'func',
@@ -103,7 +107,7 @@ const PluginTurtle = {
               // 線を引く
               me.line(tt, tt.x, tt.y, m[1], m[2])
               // カメの角度を変更
-              const mvRad = Math.atan2(m[1] - tt.x, m[2] - tt.y)
+              const mvRad = Math.atan2(m[2] - tt.y, m[1] - tt.x)
               tt.dir = mvRad * 57.29577951308232
               tt.f_update = true
               // 実際に位置を移動
@@ -268,7 +272,7 @@ const PluginTurtle = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      const imageUrl = sys.__getSysValue('カメ画像URL', 'turtle.png')
+      const imageUrl = sys.__getSysValue('カメ画像URL', turtleImage)
       return sys._turtle.createTurtle(imageUrl, sys)
     }
   },
@@ -276,7 +280,7 @@ const PluginTurtle = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      const imageUrl = 'turtle-elephant.png'
+      const imageUrl = elephantImage
       return sys._turtle.createTurtle(imageUrl, sys)
     }
   },
@@ -284,7 +288,7 @@ const PluginTurtle = {
     type: 'func',
     josi: [],
     fn: function (sys) {
-      const imageUrl = 'turtle-panda.png'
+      const imageUrl = pandaImage
       return sys._turtle.createTurtle(imageUrl, sys)
     }
   },
@@ -297,7 +301,7 @@ const PluginTurtle = {
     return_none: true
   },
   'カメ描画先': {type: 'var', value: 'turtle_cv'}, // @かめびょうがさき
-  'カメ画像URL': {type: 'var', value: 'turtle.png'}, // @かめがぞうURL
+  'カメ画像URL': {type: 'var', value: turtleImage}, // @かめがぞうURL
   'カメ画像変更': { // @カメの画像をURLに変更する // @かめがぞうへんこう
     type: 'func',
     josi: [['に', 'へ']],
