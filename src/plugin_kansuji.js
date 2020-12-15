@@ -7,7 +7,7 @@ const PluginKansuji = {
     }
   },
   
-  // @漢数字
+  // @漢数字関連
   '漢数字': { // @引数を数字と解釈して漢数字の文字列を返す // @かんすうじ
     type: 'func',
     josi: [['を','の']],
@@ -203,3 +203,7 @@ const 基本漢数字 = "〇一二三四五六七八九".split("")
 
 
 module.exports = PluginKansuji
+
+// scriptタグで取り込んだ時、自動で登録する
+if (typeof (navigator) === 'object')
+  {navigator.nako3.addPluginObject('PluginKansuji', PluginKansuji)}

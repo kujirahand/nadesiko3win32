@@ -97,7 +97,23 @@ const PluginBrowser = {
       const r = window.prompt(s)
       if (!r) {
         return sys.__v0['空']
-      } else if (r.match(/^[0-9.]+$/)) {return parseFloat(r)}
+      } else if (/^[-+]?[0-9]+(\.[0-9]+)?$/.test(r)) {return parseFloat(r)}
+      else if (/^[-+－＋]?[0-9０-９]+([\.．][0-9０-９]+)?$/.test(r)) {
+        return parseFloat(r.replace(/[－＋０-９．]/g, c => {
+          return String.fromCharCode(c.charCodeAt(0) - 0xFEE0)
+        }))
+      }
+      return r
+    }
+  },
+  '文字尋': { // @メッセージSと入力ボックスを出して尋ねる。返り値は常に入力されたままの文字列となる // @もじたずねる
+    type: 'func',
+    josi: [['と', 'を']],
+    fn: function (s, sys) {
+      const r = window.prompt(s)
+      if (!r) {
+        return sys.__v0['空']
+      }
       return r
     }
   },
@@ -198,9 +214,6 @@ const PluginBrowser = {
 
       let options = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
         body: fd
       }
       fetch(url, options).then(res => {
@@ -261,8 +274,8 @@ const PluginBrowser = {
   },
   'POST送信': { // @逐次実行構文にて、AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。 // @POSTそうしん
     type: 'func',
-    josi: [['の'], ['まで', 'へ', 'に'], ['を']],
-    fn: function (callback, url, params, sys) {
+    josi: [['まで', 'へ', 'に'], ['を']],
+    fn: function (url, params, sys) {
       if (!sys.resolve) {throw new Error('『POST送信』は『逐次実行』構文内で利用する必要があります。')}
       sys.resolveCount++
       const resolve = sys.resolve
@@ -289,7 +302,7 @@ const PluginBrowser = {
     type: 'func',
     josi: [['まで', 'へ', 'に'], ['を']],
     fn: function (url, params, sys) {
-      if (!sys.resolve) {throw new Error('『POSフォームT送信』は『逐次実行』構文内で利用する必要があります。')}
+      if (!sys.resolve) {throw new Error('『POSTフォーム送信』は『逐次実行』構文内で利用する必要があります。')}
       sys.resolveCount++
       const resolve = sys.resolve
       const fd = new FormData()
@@ -298,9 +311,6 @@ const PluginBrowser = {
 
       let options = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
         body: fd
       }
       fetch(url, options).then(res => {
@@ -555,8 +565,8 @@ const PluginBrowser = {
       const ts = []
       for (let i = 0; i < touches.length; i++) {
         const t = touches[i]
-        const tx = t.pageX - box.left
-        const ty = t.pageY - box.top
+        const tx = t.clientX - box.left
+        const ty = t.clientY - box.top
         if (i == 0) {
           sys.__v0['タッチX'] = tx
           sys.__v0['タッチY'] = ty

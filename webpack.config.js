@@ -35,6 +35,7 @@ module.exports = {
     plugin_kansuji: [path.join(srcPath, 'plugin_kansuji.js')],
     plugin_markup: [path.join(srcPath, 'plugin_markup.js')],
     plugin_turtle: [path.join(srcPath, 'plugin_turtle.js')],
+    plugin_csv: [path.join(srcPath, 'plugin_csv.js')],
     editor: [path.join(editorPath, 'edit_main.jsx')],
     version: [path.join(editorPath, 'version_main.jsx')]
   },
@@ -60,28 +61,22 @@ module.exports = {
         test: /\.jsx$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        include: [editorPath, srcPath],
-        query: {
-          presets: ['@babel/preset-env', '@babel/preset-react']
-        }
+        include: [editorPath, srcPath]
       },
       // .js file
       {
-        loader: 'babel-loader',
         test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        include: [srcPath],
-        query: {
-          presets: ['@babel/preset-env']
-        }
+        include: [srcPath]
       },
       {
-        loaders: ['style-loader', 'css-loader'],
-        test: /\.css$/
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       },
       {
-        loaders: 'url-loader',
-        test: /\.(jpg|png)$/
+        test: /\.(jpg|png)$/,
+        loader: 'url-loader'
       }
     ]
   },
