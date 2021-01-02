@@ -29,11 +29,12 @@ module.exports = {
     {name: 'number', pattern: /^\.\d+(_\d+)*([eE][+|-]?\d+(_\d+)*)?/, readJosi: true, cb: parseNumber},
     {name: 'number', pattern: /^\d+(_\d+)*([eE][+|-]?\d+(_\d+)*)?/, readJosi: true, cb: parseNumber},
     {name: 'ここから', pattern: /^(ここから)/},
-    {name: 'ここまで', pattern: /^(ここまで)/},
+    {name: 'ここまで', pattern: /^(ここまで|💧)/},
     {name: 'もし', pattern: /^もしも?/},
     // ならば ← 助詞として定義
     {name: '違えば', pattern: /^違(えば)?/},
-    // 「回」「間」「繰返」「反復」「抜」「続」「戻」「代入」などは replaceWord で word から変換
+    // 「回」「間」「繰返」「反復」「抜」「続」「戻」「代入」「条件分岐」などは replaceWord で word から変換
+    // @see nako_reserved_words.js
     {name: 'shift_r0', pattern: /^>>>/},
     {name: 'shift_r', pattern: /^>>/},
     {name: 'shift_l', pattern: /^<</},
@@ -41,6 +42,7 @@ module.exports = {
     {name: 'lteq', pattern: /^(≦|<=|=<)/},
     {name: 'noteq', pattern: /^(≠|<>|!=)/},
     {name: 'eq', pattern: /^=/},
+    {name: 'line_comment', pattern: /^!(インデント構文|ここまでだるい)[^\n]*/},
     {name: 'not', pattern: /^!/},
     {name: 'gt', pattern: /^>/},
     {name: 'lt', pattern: /^</},
@@ -59,10 +61,8 @@ module.exports = {
     {name: '(', pattern: /^\(/},
     {name: ')', pattern: /^\)/, readJosi: true},
     {name: '|', pattern: /^\|/},
-    {name: 'embed_code', pattern: /^JS\{{3}/, cbParser: src => cbString('JS', '}}}', src)},
-    {name: 'string', pattern: /^R\{{3}/, cbParser: src => cbString('R', '}}}', src)},
-    {name: 'string_ex', pattern: /^S\{{3}/, cbParser: src => cbString('S', '}}}', src)},
-    {name: 'string_ex', pattern: /^文字列\{{3}/, cbParser: src => cbString('文字列', '}}}', src)},
+    {name: 'string', pattern: /^🌿/, cbParser: src => cbString('🌿', '🌿', src)},
+    {name: 'string_ex', pattern: /^🌴/, cbParser: src => cbString('🌴', '🌴', src)},
     {name: 'string_ex', pattern: /^「/, cbParser: src => cbString('「', '」', src)},
     {name: 'string', pattern: /^『/, cbParser: src => cbString('『', '』', src)},
     {name: 'string_ex', pattern: /^“/, cbParser: src => cbString('“', '”', src)},
