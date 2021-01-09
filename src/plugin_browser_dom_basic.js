@@ -138,10 +138,12 @@ module.exports = {
   'DOM属性設定': { // @DOMの属性Sに値Vを設定 // @DOMぞくせいせってい
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
-    fn: function (dom, s, v) {
+    uses:['DOM和スタイル'],
+    fn: function (dom, s, v, sys) {
       if (typeof (dom) === 'string')
         {dom = document.querySelector(dom)}
-
+      const wa = sys.__v0['DOM和スタイル']
+      if (wa[s]) {s = wa[s]}
       dom[s] = v
     },
     return_none: true
@@ -149,18 +151,21 @@ module.exports = {
   'DOM属性取得': { // @DOMの属性Sを取得 // @DOMぞくせいしゅとく
     type: 'func',
     josi: [['の', 'から'], ['を']],
-    fn: function (dom, s) {
+    uses:['DOM和スタイル'],
+    fn: function (dom, s, sys) {
       if (typeof (dom) === 'string')
         {dom = document.querySelector(dom)}
-
+      const wa = sys.__v0['DOM和スタイル']
+      if (wa[s]) {s = wa[s]}
       return dom[s]
     }
   },
-  'DOM和スタイル': {
-    type: 'const', // @DOMわすたいる
+  'DOM和スタイル': { // const // @DOMわすたいる
+    type: 'const',
     value: {
       '幅': 'width',
       '高さ': 'height',
+      '高': 'height',
       '背景色': 'background-color',
       '色': 'color',
       'マージン': 'margin',
@@ -181,6 +186,7 @@ module.exports = {
   'DOMスタイル設定': { // @DOMのスタイルAに値Bを設定 // @DOMすたいるせってい
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
+    uses: ['DOM和スタイル'],
     fn: function (dom, s, v, sys) {
       if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
       const wa = sys.__v0['DOM和スタイル']
@@ -216,18 +222,21 @@ module.exports = {
   'DOMスタイル取得': { // @DOMのSTYLEの値を取得 // @DOMすたいるしゅとく
     type: 'func',
     josi: [['の'], ['を']],
-    fn: function (dom, style) {
+    uses: ['DOM和スタイル'],
+    fn: function (dom, style, sys) {
       if (typeof (dom) === 'string')
         {dom = document.querySelector(dom)}
-
       if (!dom) {return ''}
+      const wa = sys.__v0['DOM和スタイル']
+      if (wa[style]) {style = wa[style]}
       return dom.style[style]
     }
   },
   'DOMスタイル一括取得': { // @DOMのSTYLE(配列で複数指定)の値を取得 // @DOMすたいるいっかつしゅとく
     type: 'func',
     josi: [['の'], ['を']],
-    fn: function (dom, style) {
+    uses: ['DOM和スタイル'],
+    fn: function (dom, style, sys) {
       const res = {}
       if (typeof (dom) === 'string')
         {dom = document.querySelector(dom)}
@@ -235,19 +244,22 @@ module.exports = {
       if (!dom) {return res}
       if (style instanceof String)
         {style = [style]}
-
+        
+      const wa = sys.__v0['DOM和スタイル']
       if (style instanceof Array) {
-        for (let i = 0; i < style.length; i++) {
-          const key = style[i]
+        style.forEach((key) => {
+          if (wa[key]) {key = wa[key]}
+          res[key] = dom.style[key]
+        })
+        return res
+      }
+      if (style instanceof Object) {
+        for (const key in style) {
+          if (wa[key]) {key = wa[key]}
           res[key] = dom.style[key]
         }
         return res
       }
-      if (style instanceof Object)
-        {for (let key in style)
-          {res[key] = dom.style[key]}}
-
-
       return dom.style[style]
     }
   },

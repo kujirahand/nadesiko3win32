@@ -20,7 +20,7 @@ if not fso.FolderExists(home & "\nodejs") then
   call shell.Run(cmd_unzip, 1, True)
 end if
 
-rem --- node_modules‚Ì‰ð“š ---
+rem --- node_modules‚Ì‰ð“€ ---
 if not fso.FolderExists(home & "\node_modules") then
   cmd7z = home & "\bin\7z.exe"
   cmd_unzip = """" & cmd7z & """ x -y .\node_modules.7z"
