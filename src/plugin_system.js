@@ -1,33 +1,38 @@
-const NakoRuntimeError = require('./nako_runtime_error')
+const { NakoRuntimeError } = require('./nako_errors')
+const NakoVersion = require('./nako_version')
 
 const PluginSystem = {
   '初期化': {
     type: 'func',
     josi: [],
+    pure: false,
     fn: function (sys) {
-      const NakoVersion = require('./nako_version')
-      sys.__v0['ナデシコバージョン'] = NakoVersion.version
+      sys.__v0['ナデシコバージョン'] = typeof NakoVersion === 'undefined' ? '?' : NakoVersion.version
       // システム関数を探す
       sys.__getSysValue = function (name, def) {
         if (sys.__v0[name] === undefined) {return def}
         return sys.__v0[name]
       }
       // 全ての関数・変数を見つけて返す
+      // ローカル変数を参照しうるため、pure: true のとき正しく動作しない。
       sys.__findVar = function (nameStr, def) {
         if (typeof nameStr === 'function') {return nameStr}
-        for (let i = sys.__varslist.length - 1; i >= 0; i--) {
+        if (sys.__locals[nameStr]) {return sys.__locals[nameStr]}
+        for (let i = 2; i >= 0; i--) {
           let scope = sys.__varslist[i]
           if (scope[nameStr]) {return scope[nameStr]}
         }
         return def
       }
       // 文字列から関数を探す、見当たらなければエラーを出す
+      // ローカル変数を参照しうるため、pure: true のとき正しく動作しない。
       sys.__findFunc = function (nameStr, parentFunc) {
         const f = sys.__findVar(nameStr)
         if (typeof f === 'function') { return f }
         throw new Error(`『${parentFunc}』に実行できない関数が指定されました。`)
       }
       // システム関数を実行する(エイリアスを実装するのに使う)
+      // ローカル変数を参照しうるため、pure: true のとき正しく動作しない。
       sys.__exec = function (func, params) {
         const f = sys.__findVar(func)
         if (!f) {throw new Error('システム関数でエイリアスの指定ミス:' + func)}
@@ -46,6 +51,14 @@ const PluginSystem = {
         for (const t of sys.__interval) { clearInterval(t) }
       }
       sys.__interval = []
+    }
+  },
+  '!クリア': {
+    type: 'func',
+    josi: [],
+    pure: false,
+    fn: function (sys) {
+      sys.__exec('全タイマー停止', [sys])
     }
   },
 
@@ -79,6 +92,7 @@ const PluginSystem = {
   '空配列': { // @空の配列を返す // @からはいれつ
     type: 'func',
     josi: [],
+    pure: true,
     fn: function (sys) {
       return []
     }
@@ -86,6 +100,7 @@ const PluginSystem = {
   '空ハッシュ': { // @空のハッシュを返す // @からはっしゅ
     type: 'func',
     josi: [],
+    pure: true,
     fn: function (sys) {
       return {}
     }
@@ -93,6 +108,7 @@ const PluginSystem = {
   '空オブジェクト': { // @空のオブジェクトを返す // @からおぶじぇくと
     type: 'func',
     josi: [],
+    pure: false,
     fn: function (sys) {
       return sys.__exec('空ハッシュ', [sys])
     }
@@ -102,9 +118,10 @@ const PluginSystem = {
   '表示': { // @Sを表示 // @ひょうじ
     type: 'func',
     josi: [['を', 'と']],
+    pure: true,
     fn: function (s, sys) {
-      if (!sys.silent){ console.log(s) }
       sys.__varslist[0]['表示ログ'] += (s + '\n')
+      sys.logger.send('stdout', s + '')
     },
     return_none: true
   },
@@ -112,6 +129,7 @@ const PluginSystem = {
   '表示ログクリア': { // @表示ログを空にする // @ひょうじろぐくりあ
     type: 'func',
     josi: [],
+    pure: true,
     fn: function (sys) {
       sys.__varslist[0]['表示ログ'] = ''
     },
@@ -120,14 +138,16 @@ const PluginSystem = {
   '言': { // @Sを表示 // @いう
     type: 'func',
     josi: [['を', 'と']],
-    fn: function (s) {
-      console.log(s)
+    pure: true,
+    fn: function (s, sys) {
+      sys.logger.send('stdout', s + '')
     },
     return_none: true
   },
   'コンソール表示': { // @Sをコンソール表示する(console.log) // @こんそーるひょうじ
     type: 'func',
     josi: [['を', 'と']],
+    pure: true,
     fn: function (s, sys) {
       console.log(s)
     },
@@ -137,19 +157,17 @@ const PluginSystem = {
   // @四則演算
   '足': { // @AとBを足す // @たす
     type: 'func',
-    josi: [['を'], ['に', 'と']],
-    isVariableJosi: true,
-    fn: function (b, ...a) {
-      // 末尾のシステム変数を除外
-      a.pop()
-
-      a.push(b)
-      return a.reduce((p, c) => p + c)
+    josi: [['に', 'と'], ['を']],
+    isVariableJosi: false,
+    pure: true,
+    fn: function (a, b) {
+      return a + b
     }
   },
   '引': { // @AからBを引く // @ひく
     type: 'func',
     josi: [['から'], ['を']],
+    pure: true,
     fn: function (a, b) {
       return a - b
     }
@@ -157,6 +175,7 @@ const PluginSystem = {
   '掛': { // @AにBを掛ける // @かける
     type: 'func',
     josi: [['に', 'と'], ['を']],
+    pure: true,
     fn: function (a, b) {
       return a * b
     }
@@ -164,6 +183,7 @@ const PluginSystem = {
   '倍': { // @AのB倍を求める // @ばい
     type: 'func',
     josi: [['の'], ['']],
+    pure: true,
     fn: function (a, b) {
       return a * b
     }
@@ -171,6 +191,7 @@ const PluginSystem = {
   '割': { // @AをBで割る // @わる
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (a, b) {
       return a / b
     }
@@ -178,6 +199,7 @@ const PluginSystem = {
   '割余': { // @AをBで割った余りを求める // @わったあまり
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (a, b) {
       return a % b
     }
@@ -185,6 +207,7 @@ const PluginSystem = {
   '以上': { // @AがB以上か // @いじょう
     type: 'func',
     josi: [['が'], ['']],
+    pure: true,
     fn: function (a, b) {
       return a >= b
     }
@@ -192,6 +215,7 @@ const PluginSystem = {
   '以下': { // @AがB以下か // @いか
     type: 'func',
     josi: [['が'], ['']],
+    pure: true,
     fn: function (a, b) {
       return a <= b
     }
@@ -199,6 +223,7 @@ const PluginSystem = {
   '未満': { // @AがB未満か // @みまん
     type: 'func',
     josi: [['が'], ['']],
+    pure: true,
     fn: function (a, b) {
       return a < b
     }
@@ -206,6 +231,7 @@ const PluginSystem = {
   '超': { // @AがB超か // @ちょう
     type: 'func',
     josi: [['が'], ['']],
+    pure: true,
     fn: function (a, b) {
       return a > b
     }
@@ -213,15 +239,83 @@ const PluginSystem = {
   '等': { // @AがBと等しいか // @ひとしい
     type: 'func',
     josi: [['が'], ['と']],
+    pure: true,
     fn: function (a, b) {
+      return a === b
+    }
+  },
+  '一致': { // @AがBと一致するか(配列や辞書も比較可能) // @いっち
+    type: 'func',
+    josi: [['が'], ['と']],
+    pure: true,
+    fn: function (a, b) {
+      // オブジェクトの場合、JSONに変換して比較
+      if (typeof(a) === 'object') {
+        const jsonA = JSON.stringify(a)
+        const jsonB = JSON.stringify(b)
+        return jsonA === jsonB
+      }
       return a === b
     }
   },
   '範囲内': { // @VがAからBの範囲内か // @はんいない
     type: 'func',
     josi: [['が'], ['から'], ['の']],
+    pure: true,
     fn: function (v, a, b) {
       return (a <= v) && (v <= b)
+    }
+  },
+  '連続加算': { // @A1+A2+A3...にBを足す // @れんぞくかさん
+    type: 'func',
+    josi: [['を'], ['に', 'と']],
+    isVariableJosi: true,
+    pure: true,
+    fn: function (b, ...a) {
+      // 末尾のシステム変数を除外
+      a.pop()
+      a.push(b)
+      return a.reduce((p, c) => p + c)
+    }
+  },
+
+  // @敬語
+  'ください': { // @敬語対応のため // @ください
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      if (!sys.__reisetu) {sys.__reisetu = 0}
+      sys.__reisetu++
+    },
+    return_none: true
+  },
+  'お願': { // @ソースコードを読む人を気持ちよくする // @おねがいします
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      if (!sys.__reisetu) {sys.__reisetu = 0}
+      sys.__reisetu++
+    },
+    return_none: true
+  },
+  '拝啓': { // @ソースコードを読む人を気持ちよくする // @はいけい
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      sys.__reisetu = 0
+    },
+    return_none: true
+  },
+  '礼節レベル取得': { // @(お遊び)敬語を何度使ったか返す // @おねがいします
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      if (!sys.__reisetu) {sys.__reisetu = 0}
+      return sys.__reisetu
     }
   },
 
@@ -229,6 +323,7 @@ const PluginSystem = {
   'JS実行': { // @JavaScriptのコードSRCを実行する(変数sysでなでしこシステムを参照できる) // @JSじっこう
     type: 'func',
     josi: [['を', 'で']],
+    pure: true,
     fn: function (src, sys) {
       return eval(src) // eslint-disable-line
     }
@@ -236,6 +331,7 @@ const PluginSystem = {
   'JSオブジェクト取得': { // @なでしこで定義した関数や変数nameのJavaScriptオブジェクトを取得する // @JSおぶじぇくとしゅとく
     type: 'func',
     josi: [['の']],
+    pure: false,
     fn: function (name, sys) {
       return sys.__findVar(name, null)
     }
@@ -257,6 +353,28 @@ const PluginSystem = {
       return name.apply(null, args)
     }
   },
+  'JSメソッド実行': { // @JavaScriptのオブジェクトOBJのメソッドMを引数ARGS(配列)で実行する // @JSめそっどじっこう
+    type: 'func',
+    josi: [['の'], ['を'], ['で']],
+    fn: function (obj, m, args, sys) {
+      // objが文字列ならevalして関数を得る
+      if (typeof obj === 'string') {obj = eval(obj)}
+      if (typeof obj !== 'object')
+        {throw new Error('JSオブジェクトを取得できませんでした。')}
+
+      // method を求める
+      if (typeof m !== 'function') {
+        m = obj[m]
+      }
+
+      // argsがArrayでなければArrayに変換する
+      if (!(args instanceof Array))
+        {args = [args]}
+
+      // 実行
+      return m.apply(obj, args)
+    }
+  },
 
   'ナデシコ': { // @なでしこのコードCODEを実行する // @なでしこする
     type: 'func',
@@ -264,7 +382,11 @@ const PluginSystem = {
     fn: function (code, sys) {
       sys.__varslist[0]['表示ログ'] = ''
       sys.__self.runEx(code, 'immediate-code.nako3', { resetEnv: false, resetLog: true })
-      return sys.__varslist[0]['表示ログ']
+      const out = sys.__varslist[0]['表示ログ'] + ''
+      if (out) {
+        sys.logger.send('stdout', out)
+      }
+      return out
     }
   },
   'ナデシコ続': { // @なでしこのコードCODEを実行する // @なでしこつづける
@@ -272,12 +394,17 @@ const PluginSystem = {
     josi: [['を', 'で']],
     fn: function (code, sys) {
       sys.__self.runEx(code, 'immediate-code.nako3', { resetEnv: false, resetLog: false })
-      return sys.__varslist[0]['表示ログ']
+      const out = sys.__varslist[0]['表示ログ'] + ''
+      if (out) {
+        sys.logger.send('stdout', out)
+      }
+      return out
     }
   },
   '実行': { // @ 無名関数（あるいは、文字列で関数名を指定）Fを実行する(Fが関数でなければ無視する) // @じっこう
     type: 'func',
     josi: [['を', 'に', 'で']],
+    pure: false,
     fn: function (f, sys) {
       if (typeof f === 'string') {f = sys.__findFunc(f, '実行')}
       if (typeof f === 'function') {return f(sys)}
@@ -288,13 +415,15 @@ const PluginSystem = {
   '変数型確認': { // @変数Vの型を返す // @へんすうかたかくにん
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       return typeof (v)
     }
   },
-  'TYPEOF': {// @変数Vの型を返す // @
+  'TYPEOF': {// @変数Vの型を返す // @TYPEOF
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       return typeof (v)
     }
@@ -302,13 +431,15 @@ const PluginSystem = {
   '文字列変換': {// @値Vを文字列に変換 // @もじれつへんかん
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (v) {
       return String(v)
     }
   },
-  'TOSTR': { // @値Vを文字列に変換 // @とぅーすとりんぐ
+  'TOSTR': { // @値Vを文字列に変換 // @TOSTR
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (v) {
       return String(v)
     }
@@ -316,13 +447,15 @@ const PluginSystem = {
   '整数変換': { // @値Vを整数に変換 // @せいすうへんかん
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (v) {
       return parseInt(v)
     }
   },
-  'TOINT': {// @値Vを整数に変換 // @
+  'TOINT': {// @値Vを整数に変換 // @TOINT
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (v) {
       return parseInt(v)
     }
@@ -330,27 +463,31 @@ const PluginSystem = {
   '実数変換': {// @値Vを実数に変換 // @じっすうへんかん
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (v) {
       return parseFloat(v)
     }
   },
-  'TOFLOAT': {// @値Vを実数に変換 // @
+  'TOFLOAT': {// @値Vを実数に変換 // @TOFLOAT
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (v) {
       return parseFloat(v)
     }
   },
-  'INT': {// @値Vを整数に変換 // @
+  'INT': {// @値Vを整数に変換 // @INT
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       return parseInt(v)
     }
   },
-  'FLOAT': {// @値Vを実数に変換 // @
+  'FLOAT': {// @値Vを実数に変換 // @FLOAT
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       return parseFloat(v)
     }
@@ -358,20 +495,23 @@ const PluginSystem = {
   'NAN判定': {// @値VがNaNかどうかを判定 // @NANはんてい
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (v) {
       return isNaN(v)
     }
   },
-  'HEX': {// @値Vを16進数に変換 // @
+  'HEX': {// @値Vを16進数に変換 // @HEX
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
       return parseInt(a).toString(16)
     }
   },
-  'RGB': { // @HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255 // @
+  'RGB': { // @HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255 // @RGB
     type: 'func',
     josi: [['と'], ['の'], ['で']],
+    pure: true,
     fn: function (r, g, b) {
       const z2 = (v) => {
         const v2 = '00' + parseInt(v).toString(16)
@@ -382,74 +522,84 @@ const PluginSystem = {
   },
 
   // @論理演算
-  '論理OR': { // @(ビット演算で)AとBの論理和を返す(v1非互換)。 // @
+  '論理OR': { // @(ビット演算で)AとBの論理和を返す(v1非互換)。 // @ろんりOR
     type: 'func',
     josi: [['と'], ['の']],
+    pure: true,
     fn: function (a, b) {
       return (a || b)
     }
   },
-  '論理AND': { // @(ビット演算で)AとBの論理積を返す(v1非互換)。日本語の「AかつB」に相当する // @
+  '論理AND': { // @(ビット演算で)AとBの論理積を返す(v1非互換)。日本語の「AかつB」に相当する // @ろんりAND
     type: 'func',
     josi: [['と'], ['の']],
+    pure: true,
     fn: function (a, b) {
       return (a && b)
     }
   },
-  '論理NOT': { // @値Vが0ならば1、それ以外ならば0を返す(v1非互換) // @
+  '論理NOT': { // @値Vが0ならば1、それ以外ならば0を返す(v1非互換) // @ろんりNOT
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       return (!v) ? 1 : 0
     }
   },
 
   // @ビット演算
-  'OR': { // @(ビット演算で)AとBの論理和を返す。 // @
+  'OR': { // @(ビット演算で)AとBの論理和を返す。 // @OR
     type: 'func',
     josi: [['と'], ['の']],
+    pure: true,
     fn: function (a, b) {
       return (a | b)
     }
   },
-  'AND': { // @(ビット演算で)AとBの論理積を返す。日本語の「AかつB」に相当する // @
+  'AND': { // @(ビット演算で)AとBの論理積を返す。日本語の「AかつB」に相当する // @AND
     type: 'func',
     josi: [['と'], ['の']],
+    pure: true,
     fn: function (a, b) {
       return (a & b)
     }
   },
-  'XOR': {// @(ビット演算で)AとBの排他的論理和を返す。// @
+  'XOR': {// @(ビット演算で)AとBの排他的論理和を返す。// @XOR
     type: 'func',
     josi: [['と'], ['の']],
+    pure: true,
     fn: function (a, b) {
       return (a ^ b)
     }
   },
-  'NOT': {// @(ビット演算で)vの各ビットを反転して返す。// @
+  'NOT': {// @(ビット演算で)vの各ビットを反転して返す。// @NOT
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       return (~v)
     }
   },
-  'SHIFT_L': { // @VをAビット左へシフトして返す // @
+  'SHIFT_L': { // @VをAビット左へシフトして返す // @SHIFT_L
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (a, b) {
       return (a << b)
     }
   },
-  'SHIFT_R': { // @VをAビット右へシフトして返す(符号を維持する) // @
+  'SHIFT_R': { // @VをAビット右へシフトして返す(符号を維持する) // @SHIFT_R
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (a, b) {
       return (a >> b)
     }
   },
-  'SHIFT_UR': { // @VをAビット右へシフトして返す(符号を維持しない、0で埋める) // @
+  'SHIFT_UR': { // @VをAビット右へシフトして返す(符号を維持しない、0で埋める) // @SHIFT_UR
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (a, b) {
       return (a >>> b)
     }
@@ -459,6 +609,7 @@ const PluginSystem = {
   '文字数': { // @文字列Vの文字数を返す // @もじすう
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       if (!Array.from) {return String(v).length}
       return Array.from(v).length
@@ -467,21 +618,24 @@ const PluginSystem = {
   '何文字目': { // @文字列SでAが何文字目にあるか調べて返す // @なんもじめ
     type: 'func',
     josi: [['で', 'の'], ['が']],
+    pure: true,
     fn: function (s, a) {
       return String(s).indexOf(a) + 1
     }
   },
-  'CHR': { // @文字コードから文字を返す // @
+  'CHR': { // @文字コードから文字を返す // @CHR
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       if (!String.fromCodePoint) {return String.fromCharCode(v)}
       return String.fromCodePoint(v)
     }
   },
-  'ASC': { // @文字列Vの最初の文字の文字コードを返す // @
+  'ASC': { // @文字列Vの最初の文字の文字コードを返す // @ASC
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (v) {
       if (!String.prototype.codePointAt) {return String(v).charCodeAt(0)}
       return String(v).codePointAt(0)
@@ -490,6 +644,7 @@ const PluginSystem = {
   '文字挿入': { // @文字列SのI文字目に文字列Aを挿入する // @もじそうにゅう
     type: 'func',
     josi: [['で', 'の'], ['に', 'へ'], ['を']],
+    pure: true,
     fn: function (s, i, a) {
       if (i <= 0) {i = 1}
       const ss = String(s)
@@ -501,6 +656,7 @@ const PluginSystem = {
   '文字検索': { // @文字列Sで文字列A文字目からBを検索。見つからなければ0を返す。(類似命令に『何文字目』がある)(v1非互換) // @もじけんさく
     type: 'func',
     josi: [['で', 'の'], ['から'], ['を']],
+    pure: true,
     fn: function (s, a, b) {
       let str = String(s)
       str = str.substr(a)
@@ -512,6 +668,7 @@ const PluginSystem = {
   '追加': { // @文字列SにAを追加して返す(v1非互換) // @ついか
     type: 'func',
     josi: [['で', 'に', 'へ'], ['を']],
+    pure: true,
     fn: function (s, a) {
       return String(s) + String(a)
     }
@@ -519,6 +676,7 @@ const PluginSystem = {
   '一行追加': { // @文字列SにAと改行を追加して返す(v1非互換) // @いちぎょうついか
     type: 'func',
     josi: [['で', 'に', 'へ'], ['を']],
+    pure: true,
     fn: function (s, a) {
       return String(s) + String(a) + '\n'
     }
@@ -526,6 +684,7 @@ const PluginSystem = {
   '文字列分解': {// @文字列Vを一文字ずつに分解して返す // @もじれつぶんかい
     type: 'func',
     josi: [['を', 'の', 'で']],
+    pure: true,
     fn: function (v) {
       if (!Array.from) {return String(v).split('')}
       return Array.from(v)
@@ -534,6 +693,7 @@ const PluginSystem = {
   'リフレイン': { // @文字列VをCNT回繰り返す(v1非互換) // @りふれいん
     type: 'func',
     josi: [['を', 'の'], ['で']],
+    pure: true,
     fn: function (v, cnt) {
       let s = ''
       for (let i = 0; i < cnt; i++) {s += String(v)}
@@ -543,6 +703,7 @@ const PluginSystem = {
   '出現回数': {// @文字列SにAが何回出現するか数える // @しゅつげんかいすう
     type: 'func',
     josi: [['で'], ['の']],
+    pure: true,
     fn: function (s, a) {
       let cnt = 0
       const re = new RegExp(a.replace(/(.)/g, '\\$1'), 'g')
@@ -552,9 +713,10 @@ const PluginSystem = {
       return cnt
     }
   },
-  'MID': {// @文字列SのA文字目からCNT文字を抽出する // @
+  'MID': {// @文字列SのA文字目からCNT文字を抽出する // @MID
     type: 'func',
     josi: [['で', 'の'], ['から'], ['を']],
+    pure: true,
     fn: function (s, a, cnt) {
       cnt = cnt ? cnt : undefined
       return (String(s).substr(a - 1, cnt))
@@ -563,14 +725,16 @@ const PluginSystem = {
   '文字抜出': { // @文字列SのA文字目からCNT文字を抽出する // @もじぬきだす
     type: 'func',
     josi: [['で', 'の'], ['から'], ['を', '']],
+    pure: true,
     fn: function (s, a, cnt) {
       cnt = cnt ? cnt : undefined
       return (String(s).substr(a - 1, cnt))
     }
   },
-  'LEFT': {// @文字列Sの左端からCNT文字を抽出する // @
+  'LEFT': {// @文字列Sの左端からCNT文字を抽出する // @LEFT
     type: 'func',
     josi: [['の', 'で'], ['だけ']],
+    pure: true,
     fn: function (s, cnt) {
       return (String(s).substr(0, cnt))
     }
@@ -578,13 +742,15 @@ const PluginSystem = {
   '文字左部分': { // @文字列Sの左端からCNT文字を抽出する // @もじひだりぶぶん
     type: 'func',
     josi: [['の', 'で'], ['だけ', '']],
+    pure: true,
     fn: function (s, cnt) {
       return (String(s).substr(0, cnt))
     }
   },
-  'RIGHT': {// @文字列Sの右端からCNT文字を抽出する // @
+  'RIGHT': {// @文字列Sの右端からCNT文字を抽出する // @RIGHT
     type: 'func',
     josi: [['の', 'で'], ['だけ']],
+    pure: true,
     fn: function (s, cnt) {
       s = '' + s
       return (s.substr(s.length - cnt, cnt))
@@ -593,6 +759,7 @@ const PluginSystem = {
   '文字右部分': {// @文字列Sの右端からCNT文字を抽出する // @もじみぎぶぶん
     type: 'func',
     josi: [['の', 'で'], ['だけ', '']],
+    pure: true,
     fn: function (s, cnt) {
       s = '' + s
       return (s.substr(s.length - cnt, cnt))
@@ -601,6 +768,7 @@ const PluginSystem = {
   '区切': {// @文字列Sを区切り文字Aで区切って配列で返す // @くぎる
     type: 'func',
     josi: [['の', 'を'], ['で']],
+    pure: true,
     fn: function (s, a) {
       return ('' + s).split('' + a)
     }
@@ -608,6 +776,7 @@ const PluginSystem = {
   '切取': { // @文字列Sから文字列Aまでの部分を抽出する(v1非互換) // @きりとる
     type: 'func',
     josi: [['から', 'の'], ['まで', 'を']],
+    pure: true,
     fn: function (s, a) {
       s = String(s)
       const i = s.indexOf(a)
@@ -618,6 +787,7 @@ const PluginSystem = {
   '文字削除': { // @文字列SのA文字目からB文字分を削除して返す // @もじさくじょ
     type: 'func',
     josi: [['の'], ['から'], ['だけ', 'を', '']],
+    pure: true,
     fn: function (s, a, b) {
       s = '' + s
       const mae = s.substr(0, a - 1)
@@ -630,6 +800,7 @@ const PluginSystem = {
   '置換': {// @文字列Sのうち文字列AをBに全部置換して返す // @ちかん
     type: 'func',
     josi: [['の', 'で'], ['を', 'から'], ['に', 'へ']],
+    pure: true,
     fn: function (s, a, b) {
       return String(s).split(a).join(b)
     }
@@ -637,6 +808,7 @@ const PluginSystem = {
   '単置換': { // @文字列Sのうち、最初に出現するAだけをBに置換して返す // @たんちかん
     type: 'func',
     josi: [['の', 'で'], ['を'], ['に', 'へ']],
+    pure: true,
     fn: function (s, a, b) {
       s = String(s)
       const re = new RegExp(a.replace(/(.)/g, '\\$1'), '')
@@ -646,6 +818,7 @@ const PluginSystem = {
   'トリム': { // @文字列Sの前後にある空白を削除する // @とりむ
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       s = String(s).replace(/^\s+/, '').replace(/\s+$/, '')
       return s
@@ -654,6 +827,7 @@ const PluginSystem = {
   '空白除去': {// @文字列Sの前後にある空白を削除する // @くうはくじょきょ
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       s = String(s).replace(/^\s+/, '').replace(/\s+$/, '')
       return s
@@ -664,6 +838,7 @@ const PluginSystem = {
   '大文字変換': {// @アルファベットの文字列Sを大文字に変換 // @おおもじへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       return String(s).toUpperCase()
     }
@@ -671,6 +846,7 @@ const PluginSystem = {
   '小文字変換': {// @アルファベットの文字列Sを小文字に変換 // @こもじへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       return String(s).toLowerCase()
     }
@@ -678,6 +854,7 @@ const PluginSystem = {
   '平仮名変換': {// @文字列Sのカタカナをひらがなに変換 // @ひらがなへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       const kanaToHira = (str) => {
         return String(str).replace(/[\u30a1-\u30f6]/g, function (m) {
@@ -691,6 +868,7 @@ const PluginSystem = {
   'カタカナ変換': {// @文字列Sのひらがなをカタカナに変換 // @かたかなへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       const hiraToKana = (str) => {
         return String(str).replace(/[\u3041-\u3096]/g, function (m) {
@@ -704,6 +882,7 @@ const PluginSystem = {
   '英数全角変換': {// @文字列Sの半角英数文字を全角に変換 // @えいすうぜんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       return String(s).replace(/[A-Za-z0-9]/g, function (v) {
         return String.fromCharCode(v.charCodeAt(0) + 0xFEE0)
@@ -713,6 +892,7 @@ const PluginSystem = {
   '英数半角変換': {// @文字列Sの全角英数文字を半角に変換 // @えいすうはんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       return String(s).replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (v) {
         return String.fromCharCode(v.charCodeAt(0) - 0xFEE0)
@@ -722,6 +902,7 @@ const PluginSystem = {
   '英数記号全角変換': {// @文字列Sの半角英数記号文字を全角に変換 // @えいすうきごうぜんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       return String(s).replace(/[\x20-\x7F]/g, function (v) {
         return String.fromCharCode(v.charCodeAt(0) + 0xFEE0)
@@ -731,6 +912,7 @@ const PluginSystem = {
   '英数記号半角変換': {// @文字列Sの記号文字を半角に変換 // @えいすうきごうはんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s) {
       return String(s).replace(/[\uFF00-\uFF5F]/g, function (v) {
         return String.fromCharCode(v.charCodeAt(0) - 0xFEE0)
@@ -740,6 +922,7 @@ const PluginSystem = {
   'カタカナ全角変換': {// @文字列Sの半角カタカナを全角に変換 // @かたかなぜんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s, sys) {
       // 半角カタカナ
       const zen1 = sys.__v0['全角カナ一覧']
@@ -774,6 +957,7 @@ const PluginSystem = {
   'カタカナ半角変換': {// @文字列Sの全角カタカナを半角に変換 // @かたかなはんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (s, sys) {
       // 半角カタカナ
       const zen1 = sys.__v0['全角カナ一覧']
@@ -796,6 +980,7 @@ const PluginSystem = {
   '全角変換': { // @文字列Sの半角文字を全角に変換 // @ぜんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: false,
     fn: function (s, sys) {
       let result = s
       result = sys.__exec('カタカナ全角変換', [result, sys])
@@ -806,6 +991,7 @@ const PluginSystem = {
   '半角変換': { // @文字列Sの全角文字を半角に変換 // @はんかくへんかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: false,
     fn: function (s, sys) {
       let result = s
       result = sys.__exec('カタカナ半角変換', [result, sys])
@@ -822,6 +1008,7 @@ const PluginSystem = {
   'JSONエンコード': { // @オブジェクトVをJSON形式にエンコードして返す // @JSONえんこーど
     type: 'func',
     josi: [['を', 'の']],
+    pure: true,
     fn: function (v) {
       return JSON.stringify(v)
     }
@@ -829,6 +1016,7 @@ const PluginSystem = {
   'JSONエンコード整形': { // @オブジェクトVをJSON形式にエンコードして整形して返す // @JSONえんこーどせいけい
     type: 'func',
     josi: [['を', 'の']],
+    pure: true,
     fn: function (v) {
       return JSON.stringify(v, null, 2)
     }
@@ -836,6 +1024,7 @@ const PluginSystem = {
   'JSONデコード': { // @JSON文字列Sをオブジェクトにデコードして返す // @JSONでこーど
     type: 'func',
     josi: [['を', 'の', 'から']],
+    pure: true,
     fn: function (s) {
       return JSON.parse(s)
     }
@@ -845,6 +1034,7 @@ const PluginSystem = {
   '正規表現マッチ': {// @文字列Aを正規表現パターンBでマッチして結果を返す(パターンBは「/pat/opt」の形式で指定。optにgの指定がなければ部分マッチが『抽出文字列』に入る) // @せいきひょうげんまっち
     type: 'func',
     josi: [['を', 'が'], ['で', 'に']],
+    pure: true,
     fn: function (a, b, sys) {
       let re
       let f = b.match(/^\/(.+)\/([a-zA-Z]*)$/)
@@ -873,6 +1063,7 @@ const PluginSystem = {
   '正規表現置換': {// @文字列Sの正規表現パターンAをBに置換して結果を返す(パターンAは/pat/optで指定) // @せいきひょうげんちかん
     type: 'func',
     josi: [['の'], ['を', 'から'], ['で', 'に', 'へ']],
+    pure: true,
     fn: function (s, a, b) {
       let re
       let f = a.match(/^\/(.+)\/([a-zA-Z]*)/)
@@ -887,6 +1078,7 @@ const PluginSystem = {
   '正規表現区切': {// @文字列Sを正規表現パターンAで区切って配列で返す(パターンAは/pat/optで指定) // @せいきひょうげんくぎる
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (s, a) {
       let re
       let f = a.match(/^\/(.+)\/([a-zA-Z]*)/)
@@ -903,6 +1095,7 @@ const PluginSystem = {
   '通貨形式': { // @数値Vを三桁ごとにカンマで区切る // @つうかけいしき
     type: 'func',
     josi: [['を', 'の']],
+    pure: true,
     fn: function (v) {
       return String(v).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
     }
@@ -910,6 +1103,7 @@ const PluginSystem = {
   'ゼロ埋': { // @数値VをA桁の0で埋める // @ぜろうめ
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (v, a) {
       v = String(v)
       let z = '0'
@@ -923,6 +1117,7 @@ const PluginSystem = {
   '空白埋': { // @文字列VをA桁の空白で埋める // @くうはくうめ
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (v, a) {
       v = String(v)
       let z = ' '
@@ -938,6 +1133,7 @@ const PluginSystem = {
   'かなか判定': { // @文字列Sの1文字目がひらがなか判定 // @かなかはんてい
     type: 'func',
     josi: [['を', 'の', 'が']],
+    pure: true,
     fn: function (s) {
       const c = String(s).charCodeAt(0)
       return (c >= 0x3041 && c <= 0x309F)
@@ -946,6 +1142,7 @@ const PluginSystem = {
   'カタカナ判定': { // @文字列Sの1文字目がカタカナか判定 // @かたかなかはんてい
     type: 'func',
     josi: [['を', 'の', 'が']],
+    pure: true,
     fn: function (s) {
       const c = String(s).charCodeAt(0)
       return (c >= 0x30A1 && c <= 0x30FA)
@@ -954,6 +1151,7 @@ const PluginSystem = {
   '数字判定': { // @文字列Sの1文字目が数字か判定 // @すうじかはんてい
     type: 'func',
     josi: [['を', 'が']],
+    pure: true,
     fn: function (s) {
       const c = String(s).charAt(0)
       return ((c >= '0' && c <= '9') || (c >= '０' && c <= '９'))
@@ -962,6 +1160,7 @@ const PluginSystem = {
   '数列判定': { // @文字列S全部が数字か判定 // @すうれつかはんてい
     type: 'func',
     josi: [['を', 'が']],
+    pure: true,
     fn: function (s) {
       return (String(s).match(/^[0-9.]+$/) !== null)
     }
@@ -971,6 +1170,7 @@ const PluginSystem = {
   '配列結合': { // @配列Aを文字列Sでつなげて文字列で返す // @はいれつけつごう
     type: 'func',
     josi: [['を'], ['で']],
+    pure: true,
     fn: function (a, s) {
       if (a instanceof Array)  // 配列ならOK
         {return a.join('' + s)}
@@ -982,6 +1182,7 @@ const PluginSystem = {
   '配列検索': { // @配列Aから文字列Sを探してインデックス番号(0起点)を返す。見つからなければ-1を返す。 // @はいれつけんさく
     type: 'func',
     josi: [['の', 'から'], ['を']],
+    pure: true,
     fn: function (a, s) {
       if (a instanceof Array)  // 配列ならOK
         {return a.indexOf(s)}
@@ -992,6 +1193,7 @@ const PluginSystem = {
   '配列要素数': { // @配列Aの要素数を返す // @はいれつようそすう
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
       if (a instanceof Array)  // 配列ならOK
         {return a.length}
@@ -1005,6 +1207,7 @@ const PluginSystem = {
   '要素数': { // @配列Aの要素数を返す // @ようそすう
     type: 'func',
     josi: [['の']],
+    pure: false,
     fn: function (a, sys) {
       return sys.__exec('配列要素数', [a])
     }
@@ -1012,6 +1215,7 @@ const PluginSystem = {
   '配列挿入': { // @配列AのI番目(0起点)に要素Sを追加して返す(v1非互換) // @はいれつそうにゅう
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
+    pure: true,
     fn: function (a, i, s) {
       if (a instanceof Array)  // 配列ならOK
         {return a.splice(i, 0, s)}
@@ -1022,6 +1226,7 @@ const PluginSystem = {
   '配列一括挿入': { // @配列AのI番目(0起点)に配列bを追加して返す(v1非互換) // @はいれついっかつそうにゅう
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
+    pure: true,
     fn: function (a, i, b) {
       if (a instanceof Array && b instanceof Array) { // 配列ならOK
         for (let j = 0; j < b.length; j++)
@@ -1035,6 +1240,7 @@ const PluginSystem = {
   '配列ソート': { // @配列Aをソートして返す(A自体を変更) // @はいれつそーと
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (a) {
       if (a instanceof Array)  // 配列ならOK
         {return a.sort()}
@@ -1045,6 +1251,7 @@ const PluginSystem = {
   '配列数値ソート': { // @配列Aをソートして返す(A自体を変更) // @はいれつすうちそーと
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (a) {
       if (a instanceof Array)  // 配列ならOK
         {return a.sort((a, b) => {
@@ -1057,6 +1264,7 @@ const PluginSystem = {
   '配列カスタムソート': { // @関数Fで配列Aをソートして返す(引数A自体を変更) // @はいれつかすたむそーと
     type: 'func',
     josi: [['で'], ['の', 'を']],
+    pure: false,
     fn: function (f, a, sys) {
       let ufunc = f
       if (typeof f === 'string') {
@@ -1071,6 +1279,7 @@ const PluginSystem = {
   '配列逆順': { // @配列Aを逆にして返す。Aを書き換える(A自体を変更)。 // @はいれつぎゃくじゅん
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (a) {
       if (a instanceof Array)  // 配列ならOK
         {return a.reverse()}
@@ -1081,6 +1290,7 @@ const PluginSystem = {
   '配列シャッフル': { // @配列Aをシャッフルして返す。Aを書き換える // @はいれつしゃっふる
     type: 'func',
     josi: [['の', 'を']],
+    pure: true,
     fn: function (a) {
       if (a instanceof Array) { // 配列ならOK
         for (let i = a.length - 1; i > 0; i--) {
@@ -1097,6 +1307,7 @@ const PluginSystem = {
   '配列切取': { // @配列AのI番目(0起点)の要素を切り取って返す。Aの内容を書き換える。 // @はいれつきりとる
     type: 'func',
     josi: [['の'], ['を']],
+    pure: true,
     fn: function (a, i) {
       if (a instanceof Array) { // 配列ならOK
         const b = a.splice(i, 1)
@@ -1109,6 +1320,7 @@ const PluginSystem = {
   '配列取出': { // @配列AのI番目(0起点)からCNT個の要素を取り出して返す。Aの内容を書き換える // @はいれつとりだし
     type: 'func',
     josi: [['の'], ['から'], ['を']],
+    pure: true,
     fn: function (a, i, cnt) {
       if (a instanceof Array) {return a.splice(i, cnt)}
       throw new Error('『配列取出』で配列以外を指定。')
@@ -1117,6 +1329,7 @@ const PluginSystem = {
   '配列ポップ': { // @配列Aの末尾を取り出して返す。Aの内容を書き換える。 // @はいれつぽっぷ
     type: 'func',
     josi: [['の', 'から']],
+    pure: true,
     fn: function (a) {
       if (a instanceof Array) {return a.pop()}
       throw new Error('『配列ポップ』で配列以外の処理。')
@@ -1125,6 +1338,7 @@ const PluginSystem = {
   '配列追加': { // @配列Aの末尾にBを追加して返す。Aの内容を書き換える。 // @はいれつついか
     type: 'func',
     josi: [['に', 'へ'], ['を']],
+    pure: true,
     fn: function (a, b) {
       if (a instanceof Array) { // 配列ならOK
         a.push(b)
@@ -1136,6 +1350,7 @@ const PluginSystem = {
   '配列複製': { // @配列Aを複製して返す。 // @はいれつふくせい
     type: 'func',
     josi: [['を']],
+    pure: true,
     fn: function (a) {
       return JSON.parse(JSON.stringify(a))
     }
@@ -1143,6 +1358,7 @@ const PluginSystem = {
   '配列足': { // @配列Aに配列Bを足し合わせて返す。 // @はいれつたす
     type: 'func',
     josi: [['に', 'へ', 'と'],['を']],
+    pure: true,
     fn: function (a, b) {
       if (a instanceof Array) {
         return a.concat(b)
@@ -1153,6 +1369,7 @@ const PluginSystem = {
   '配列最大値': { // @配列Aの値の最大値を調べて返す。 // @はいれつさいだいち
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
       return a.reduce((x, y) => Math.max(x, y))
     }
@@ -1160,6 +1377,7 @@ const PluginSystem = {
   '配列最小値': { // @配列Aの値の最小値を調べて返す。 // @はいれつさいしょうち
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
       return a.reduce((x, y) => Math.min(x, y))
     }
@@ -1168,8 +1386,9 @@ const PluginSystem = {
   '表ソート': { // @二次元配列AでB列目(0起点)(あるいはキー名)をキーに文字列順にソートする。Aの内容を書き換える。 // @ひょうそーと
     type: 'func',
     josi: [['の'], ['を']],
+    pure: true,
     fn: function (a, no) {
-      if (!a instanceof Array) {
+      if (!(a instanceof Array)) {
         throw new Error('『表ソート』には配列を指定する必要があります。')
       }
       a.sort((n, m) => {
@@ -1191,8 +1410,9 @@ const PluginSystem = {
   '表数値ソート': { // @二次元配列AでB列目(0起点)(あるいはキー名)をキーに数値順にソートする。Aの内容を書き換える。 // @ひょうすうちそーと
     type: 'func',
     josi: [['の'], ['を']],
+    pure: true,
     fn: function (a, no) {
-      if (!a instanceof Array) {
+      if (!(a instanceof Array)) {
         throw new Error('『表数値ソート』には配列を指定する必要があります。')
       }
       a.sort((n, m) => {
@@ -1206,24 +1426,27 @@ const PluginSystem = {
   '表ピックアップ': { // @配列Aの列番号B(0起点)(あるいはキー名)で検索文字列Sを含む行を返す // @ひょうぴっくあっぷ
     type: 'func',
     josi: [['の'],['から'],['を','で']],
+    pure: true,
     fn: function (a, no, s) {
-      if (!a instanceof Array) { throw new Error('『表ピックアップ』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表ピックアップ』には配列を指定する必要があります。') }
       return a.filter((row) => String(row[no]).indexOf(s) >= 0)
     }
   },
   '表完全一致ピックアップ': { // @配列Aの列番号B(0起点)(あるいはキー名)で検索文字列Sと一致する行を返す // @ひょうぴっくあっぷ
     type: 'func',
     josi: [['の'],['から'],['を','で']],
+    pure: true,
     fn: function (a, no, s) {
-      if (!a instanceof Array) { throw new Error('『表完全ピックアップ』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表完全ピックアップ』には配列を指定する必要があります。') }
       return a.filter((row) => row[no] == s)
     }
   },
   '表検索': { // @二次元配列AでCOL列目(0起点)からキーSを含む行をROW行目から検索して何行目にあるか返す。見つからなければ-1を返す。 // @ひょうけんさく
     type: 'func',
     josi: [['の'],['で','に'],['から'],['を']],
+    pure: true,
     fn: function (a, col, row, s) {
-      if (!a instanceof Array) { throw new Error('『表検索』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表検索』には配列を指定する必要があります。') }
       for (let i = row; i < a.length; i++) {
         if (a[i][col] === s) return i
       }
@@ -1233,8 +1456,9 @@ const PluginSystem = {
   '表列数': { // @二次元配列Aの列数を調べて返す。 // @ひょうれつすう
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
-      if (!a instanceof Array) { throw new Error('『表列数』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表列数』には配列を指定する必要があります。') }
       let cols = 1
       for (let i = 0; i < a.length; i++) {
         if (a[i].length > cols) {cols = a[i].length}
@@ -1245,16 +1469,18 @@ const PluginSystem = {
   '表行数': { // @二次元配列Aの行数を調べて返す。 // @ひょうぎょうすう
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
-      if (!a instanceof Array) { throw new Error('『表行数』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表行数』には配列を指定する必要があります。') }
       return a.length
     }
   },
   '表行列交換': { // @二次元配列Aの行と列を交換して返す。 // @ひょうぎょうれつこうかん
     type: 'func',
     josi: [['の', 'を']],
+    pure: false,
     fn: function (a, sys) {
-      if (!a instanceof Array) { throw new Error('『表行列交換』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表行列交換』には配列を指定する必要があります。') }
       const cols = sys.__exec('表列数', [a])
       const rows = a.length
       const res = []
@@ -1271,8 +1497,9 @@ const PluginSystem = {
   '表右回転': { // @二次元配列Aを90度回転して返す。 // @ひょうみぎかいてん
     type: 'func',
     josi: [['の', 'を']],
+    pure: false,
     fn: function (a, sys) {
-      if (!a instanceof Array) { throw new Error('『表右回転』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表右回転』には配列を指定する必要があります。') }
       const cols = sys.__exec('表列数', [a])
       const rows = a.length
       const res = []
@@ -1289,8 +1516,9 @@ const PluginSystem = {
   '表重複削除': { // @二次元配列AのI列目にある重複項目を削除して返す。 // @ひょうじゅうふくさくじょ
     type: 'func',
     josi: [['の'],['を','で']],
+    pure: true,
     fn: function (a, i, sys) {
-      if (!a instanceof Array) { throw new Error('『表重複削除』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表重複削除』には配列を指定する必要があります。') }
       const res = []
       const keys = {}
       for (let n = 0; n < a.length; n++) {
@@ -1306,8 +1534,9 @@ const PluginSystem = {
   '表列取得': { // @二次元配列AのI列目を返す。 // @ひょうれつしゅとく
     type: 'func',
     josi: [['の'],['を']],
+    pure: true,
     fn: function (a, i, sys) {
-      if (!a instanceof Array) { throw new Error('『表列取得』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表列取得』には配列を指定する必要があります。') }
       const res = a.map(row => row[i])
       return res
     }
@@ -1315,8 +1544,9 @@ const PluginSystem = {
   '表列挿入': { // @二次元配列Aの(0から数えて)I列目に配列Sを挿入して返す // @ひょうれつそうにゅう
     type: 'func',
     josi: [['の'],['に','へ'],['を']],
+    pure: true,
     fn: function (a, i, s) {
-      if (!a instanceof Array) { throw new Error('『表列挿入』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表列挿入』には配列を指定する必要があります。') }
       const res = []
       a.forEach((row, idx) => {
         let nr = []
@@ -1331,8 +1561,9 @@ const PluginSystem = {
   '表列削除': { // @二次元配列Aの(0から数えて)I列目削除して返す // @ひょうれつそうにゅう
     type: 'func',
     josi: [['の'],['を']],
+    pure: true,
     fn: function (a, i) {
-      if (!a instanceof Array) { throw new Error('『表列削除』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表列削除』には配列を指定する必要があります。') }
       const res = []
       a.forEach((row, idx) => {
         let nr = row.slice(0)
@@ -1345,8 +1576,9 @@ const PluginSystem = {
   '表列合計': { // @二次元配列Aの(0から数えて)I列目を合計して返す。 // @ひょうれつごうけい
     type: 'func',
     josi: [['の'],['を','で']],
+    pure: true,
     fn: function (a, i) {
-      if (!a instanceof Array) { throw new Error('『表列合計』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表列合計』には配列を指定する必要があります。') }
       let sum = 0
       a.forEach((row) => sum += row[i])
       return sum
@@ -1355,8 +1587,9 @@ const PluginSystem = {
   '表曖昧検索': { // @二次元配列AのROW行目からCOL列目(0起点)で正規表現Sにマッチする行を検索して何行目にあるか返す。見つからなければ-1を返す。(v1非互換) // @ひょうれつあいまいけんさく
     type: 'func',
     josi: [['の'],['から'],['で'],['を']],
+    pure: true,
     fn: function (a, row, col, s) {
-      if (!a instanceof Array) { throw new Error('『表曖昧検索』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表曖昧検索』には配列を指定する必要があります。') }
       const re = new RegExp(s)
       for (let i = 0; i < a.length; i++) {
         const row = a[i]
@@ -1368,8 +1601,9 @@ const PluginSystem = {
   '表正規表現ピックアップ': { // @二次元配列AでI列目(0起点)から正規表現パターンSにマッチする行をピックアップして返す。 // @ひょうせいきひょうげんぴっくあっぷ
     type: 'func',
     josi: [['の','で'],['から'],['を']],
+    pure: true,
     fn: function (a, col, s) {
-      if (!a instanceof Array) { throw new Error('『表正規表現ピックアップ』には配列を指定する必要があります。') }
+      if (!(a instanceof Array)) { throw new Error('『表正規表現ピックアップ』には配列を指定する必要があります。') }
       const re = new RegExp(s)
       const res = []
       for (let i = 0; i < a.length; i++) {
@@ -1383,6 +1617,7 @@ const PluginSystem = {
   'ハッシュキー列挙': { // @ハッシュAのキー一覧を配列で返す。 // @はっしゅきーれっきょ
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
       const keys = []
       if (a instanceof Array) { // 配列なら数字を返す
@@ -1399,6 +1634,7 @@ const PluginSystem = {
   'ハッシュ内容列挙': { // @ハッシュAの内容一覧を配列で返す。 // @はっしゅないようれっきょ
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (a) {
       const body = []
       if (a instanceof Object) { // オブジェクトのキーを返す
@@ -1411,6 +1647,7 @@ const PluginSystem = {
   'ハッシュキー削除': { // @ハッシュAからキーKEYを削除して返す。 // @はっしゅきーさくじょ
     type: 'func',
     josi: [['から', 'の'], ['を']],
+    pure: true,
     fn: function (a, key) {
       if (a instanceof Object) { // オブジェクトのキーを返す
         if (a[key]) {delete a[key]}
@@ -1422,6 +1659,7 @@ const PluginSystem = {
   'ハッシュキー存在': { // @ハッシュAのキーKEYが存在するか確認 // @はっしゅきーそんざい
     type: 'func',
     josi: [['の','に'],['が']],
+    pure: true,
     fn: function (a, key) {
         return key in a
     }
@@ -1430,6 +1668,7 @@ const PluginSystem = {
   '秒待機': { // @ 逐次実行構文にて、N秒の間待機する // @びょうたいき
     type: 'func',
     josi: [['']],
+    pure: true,
     fn: function (n, sys) {
       if (sys.resolve === undefined) {throw new Error('『秒待機』命令は『逐次実行』構文と一緒に使ってください。')}
       const resolve = sys.resolve
@@ -1442,6 +1681,7 @@ const PluginSystem = {
   '秒後': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する // @びょうご
     type: 'func',
     josi: [['を'], ['']],
+    pure: false,
     fn: function (f, n, sys) {
       // 文字列で指定された関数をオブジェクトに変換
       if (typeof f === 'string') {f = sys.__findFunc(f, '秒後')}
@@ -1450,7 +1690,14 @@ const PluginSystem = {
         // 使用中リストに追加したIDを削除
         const i = sys.__timeout.indexOf(timerId)
         if (i >= 0) {sys.__timeout.splice(i, 1)}
-        f(timerId, sys)
+        try {
+          f(timerId, sys)
+        } catch (e) {
+          if (!(e instanceof NakoRuntimeError)) {
+            e = new NakoRuntimeError(e, sys.__varslist[0].line)
+          }
+          sys.logger.error(e)
+        }
       }, parseFloat(n) * 1000)
       sys.__timeout.unshift(timerId)
       return timerId
@@ -1459,6 +1706,7 @@ const PluginSystem = {
   '秒毎': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる) // @びょうごと
     type: 'func',
     josi: [['を'], ['']],
+    pure: false,
     fn: function (f, n, sys) {
       // 文字列で指定された関数をオブジェクトに変換
       if (typeof f === 'string') {f = sys.__findFunc(f, '秒毎')}
@@ -1474,6 +1722,7 @@ const PluginSystem = {
   '秒タイマー開始時': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『秒毎』と同じ) // @びょうたいまーかいししたとき
     type: 'func',
     josi: [['を'], ['']],
+    pure: false,
     fn: function (f, n, sys) {
       return sys.__exec('秒毎', [f, n, sys])
     }
@@ -1481,6 +1730,7 @@ const PluginSystem = {
   'タイマー停止': { // @『秒毎』『秒後』や『秒タイマー開始』で開始したタイマーを停止する // @たいまーていし
     type: 'func',
     josi: [['の', 'で']],
+    pure: true,
     fn: function (timerId, sys) {
       const i = sys.__interval.indexOf(timerId)
       if (i >= 0) {
@@ -1501,6 +1751,7 @@ const PluginSystem = {
   '全タイマー停止': { // @『秒毎』『秒後』や『秒タイマー開始』で開始したタイマーを全部停止する // @ぜんたいまーていし
     type: 'func',
     josi: [],
+    pure: true,
     fn: function (sys) {
       // clearInterval
       for (let i = 0; i < sys.__interval.length; i++) {
@@ -1521,6 +1772,7 @@ const PluginSystem = {
   '今': { // @現在時刻を「HH:mm:ss」の形式で返す // @いま
     type: 'func',
     josi: [],
+    pure: true,
     fn: function () {
       const z2 = (n) => {
         n = '00' + n
@@ -1533,6 +1785,7 @@ const PluginSystem = {
   'システム時間': { // @現在のUNIX時間 (UTC(1970/1/1)からの経過秒数) を返す // @しすてむじかん
     type: 'func',
     josi: [],
+    pure: true,
     fn: function () {
       const now = new Date()
       return now.getTime() / 1000
@@ -1541,18 +1794,20 @@ const PluginSystem = {
   '今日': { // @今日の日付を「YYYY/MM/DD」の形式で返す // @きょう
     type: 'func',
     josi: [],
+    pure: true,
     fn: function () {
       const z2 = (n) => {
         n = '00' + n
         return n.substr(n.length-2, 2)
       }
       const t = new Date()
-      return z2(t.getFullYear()) + '/' + z2(t.getMonth()+1) + '/' + z2(t.getDate())
+      return t.getFullYear() + '/' + z2(t.getMonth()+1) + '/' + z2(t.getDate())
     }
   },
   '曜日番号取得': { // @Sに指定した日付の曜日番号をで返す。不正な日付の場合は今日の曜日番号を返す。(0=日/1=月/2=火/3=水/4=木/5=金/6=土) // @ようびばんごうしゅとく
     type: 'func',
     josi: [['の']],
+    pure: true,
     fn: function (s) {
       const a = s.split('/')
       const t = new Date(a[0], a[1]-1, a[2])
@@ -1563,6 +1818,7 @@ const PluginSystem = {
   'エラー発生': { // @故意にエラーSを発生させる // @えらーはっせい
     type: 'func',
     josi: [['の', 'で']],
+    pure: true,
     fn: function (s) {
       throw new Error(s)
     }
@@ -1570,6 +1826,7 @@ const PluginSystem = {
   'システム関数一覧取得': { // @システム関数の一覧を取得 // @しすてむかんすういちらんしゅとく
     type: 'func',
     josi: [],
+    pure: true,
     fn: function (sys) {
       const f = []
       for (const key in sys.__v0) {
@@ -1582,6 +1839,7 @@ const PluginSystem = {
   'システム関数存在': { // @文字列で関数名を指定してシステム関数が存在するかを調べる // @しすてむかんすうそんざい
     type: 'func',
     josi: [['が', 'の']],
+    pure: true,
     fn: function (fname, sys) {
       return (typeof sys.__v0[fname] !== 'undefined')
     }
@@ -1589,6 +1847,7 @@ const PluginSystem = {
   'プラグイン一覧取得': { // @利用中のプラグイン一覧を得る // @ぷらぐいんいちらんしゅとく
     type: 'func',
     josi: [],
+    pure: true,
     fn: function (sys) {
       const a = []
       for (const f in sys.pluginfiles)
@@ -1600,6 +1859,7 @@ const PluginSystem = {
   'モジュール一覧取得': { // @取り込んだモジュール一覧を得る // @もじゅーるいちらんしゅとく
     type: 'func',
     josi: [],
+    pure: true,
     fn: function (sys) {
       const a = []
       for (const f in sys.__module)
@@ -1613,6 +1873,7 @@ const PluginSystem = {
   'URLエンコード': { // @URLエンコードして返す // @URLえんこーど
     type: 'func',
     josi: [['を', 'から']],
+    pure: true,
     fn: function (text) {
       return encodeURIComponent(text)
     }
@@ -1620,6 +1881,7 @@ const PluginSystem = {
   'URLデコード': { // @URLデコードして返す // @URLでこーど
     type: 'func',
     josi: [['を', 'へ', 'に']],
+    pure: true,
     fn: function (text) {
       return decodeURIComponent(text)
     }
@@ -1627,6 +1889,7 @@ const PluginSystem = {
   'URLパラメータ解析': { // @URLパラメータを解析してハッシュで返す // @URLぱらめーたかいせき
     type: 'func',
     josi: [['を', 'の', 'から']],
+    pure: false,
     fn: function (url, sys) {
       const res = {}
       if (typeof url !== 'string') {

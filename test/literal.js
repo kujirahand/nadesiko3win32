@@ -2,15 +2,15 @@ const assert = require('assert')
 const NakoCompiler = require('../src/nako3')
 describe('literal_test', () => {
   const nako = new NakoCompiler()
-  nako.debug = false
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   const cmp = (code, res) => {
-    if (nako.debug) console.log('code=' + code)
-    assert.equal(nako.runReset(code).log, res)
+    nako.logger.debug('code=' + code)
+    assert.strictEqual(nako.run(code).log, res)
   }
   const err = (code) => {
-    if (nako.debug) console.log('code=' + code)
+    nako.logger.debug('code=' + code)
     try {
-      nako.runReset(code)
+      nako.run(code)
     } catch (error) {
       assert.ok(error)
       return
@@ -23,7 +23,7 @@ describe('literal_test', () => {
     cmp('非数を表示', 'NaN')
   })
   it('無限大', () => {
-    cmp('3/無限大を表示', 0)
+    cmp('3/無限大を表示', '0')
   })
   describe('十進法のテスト', () => {
     //基本的に（整数部）（小数部）（指数部）です
@@ -55,7 +55,7 @@ describe('literal_test', () => {
     cmp('12345_00=123_4500を表示', 'true') //区切り文字として「_」が使用できます
     cmp('12345_00=1_23_4500を表示', 'true') //数字の中でのどこでも使用できます
     err('1____23_4500を表示') //連続して使うことはできません
-    cmp('_123を表示', 'undefined') //区切り文字で始めることはできません
+    cmp('_123を表示', 'undefined')  // 区切り文字で始めることはできません（定義されていない変数「_123」の参照）
     err('123_を表示') //区切り文字で終わらせることはできません
     cmp('0xCAFE_F00Dの変数型確認して表示', 'number') //十六進数でも
     cmp('0o123456_777の変数型確認して表示', 'number') //八進数でも

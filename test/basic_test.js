@@ -3,20 +3,15 @@ const NakoCompiler = require('../src/nako3')
 
 describe('basic', () => {
   const nako = new NakoCompiler()
-  // nako.debug = true;
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   const cmp = (code, res) => {
-    if (nako.debug) {
-      console.log('code=' + code)
-    }
-    assert.equal(nako.runReset(code).log, res)
+    nako.logger.debug('code=' + code)
+    assert.strictEqual(nako.run(code).log, res)
   }
   const cmpNakoFuncs = (code, res) => {
-    if (nako.debug) {
-      console.log('code=' + code)
-    }
-
-    nako.runReset(code)
-    assert.deepEqual(nako.usedFuncs, res)
+    nako.logger.debug('code=' + code)
+    nako.run(code)
+    assert.deepStrictEqual(nako.usedFuncs, res)
   }
   // --- test ---
   it('print simple', () => {
@@ -74,6 +69,9 @@ describe('basic', () => {
     cmp('「aabbcc」の「aa」を「」に置換してFに代入。Fを表示', 'bbcc')
     cmp('「aabbcc」の「aa」を「」に置換して「bb」を「」に置換してFに代入。Fを表示', 'cc')
   })
+  it('〜を〜に定める', () => {
+    cmp('Aを0.8に定めてAを表示', '0.8')
+  })
   it('文字列 - &と改行', () => {
     cmp('「aaa」& _\n「bbb」を表示。', 'aaabbb')
     cmp('A= 1 + 1 + 1 + 1 + 1 + _\n1 + 1\nAを表示', '7')
@@ -106,7 +104,144 @@ describe('basic', () => {
   it('ラインコメントに文字列記号があり閉じていないとエラーになる(#725)', () => {
     cmp('A=50 # \"hogehoge\nAを表示', '50')
   })
+  it('範囲コメントに文字列記号があり閉じていないとエラーになる(#731)', () => {
+    cmp('A=50 /* " */Aを表示', '50')
+    cmp('A=50 /* \' */Aを表示', '50')
+  })
   it('usedFuncs', () => {
     cmpNakoFuncs('●({関数}fでaを)演算処理とは;それは、f(a);ここまで;●(aを)二倍処理とは;それはa*2;ここまで;二倍処理で2を演算処理して表示', new Set(['表示']))
+  })
+  it('論文などで使われる句読点「，」を「、」(#735)', () => {
+    cmp('A1=30;B1=20;(A1+B1)を，表示', '50')
+    cmp('A=３．１４;Aを，表示', '3.14')
+  })
+  it('条件分岐のインデント構文', () => {
+    cmp(
+      '！インデント構文\n' +
+      '3で条件分岐\n' +
+      '    2ならば\n' +
+      '        1を表示\n' +
+      '    3ならば\n' +
+      '        2を表示\n' +
+      '    違えば\n' +
+      '        3を表示\n',
+      '2'
+    )
+  })
+  it('独立した助詞『ならば』の位置の取得', () => {
+    const out = nako.lex('もし存在するならば\nここまで')
+    const sonzai = out.tokens.find((t) => t.value === '存在')
+    const naraba = out.tokens.find((t) => t.type === 'ならば')
+
+    // 「存在する」
+    assert.strictEqual(sonzai.startOffset, 2)
+    assert.strictEqual(sonzai.endOffset, 6)
+
+    // ならば
+    assert.strictEqual(naraba.startOffset, 6)
+    assert.strictEqual(naraba.endOffset, 9)
+  })
+  it('preCodeを考慮したソースマップ', () => {
+    const preCode = '1を表示\n2を表示\n3を'
+    const tokens = nako.lex(preCode + '表示', 'main.nako3', preCode).tokens
+
+    // '3' は-2から0文字目
+    const three = tokens.findIndex((t) => t.value === 3)
+    assert.strictEqual(tokens[three].startOffset, -2)
+    assert.strictEqual(tokens[three].endOffset, 0)
+    assert.strictEqual(tokens[three].line, 0)
+    assert.strictEqual(tokens[three].column, -2)
+
+    // '表示' は0~1文字目
+    assert.strictEqual(tokens[three + 1].startOffset, 0)
+    assert.strictEqual(tokens[three + 1].endOffset, 2)
+    assert.strictEqual(tokens[three + 1].line, 0)
+    assert.strictEqual(tokens[three + 1].column, 0)
+  })
+  it('実行速度優先 - 1行のみ', () => {
+    nako.reset()
+    cmp(`
+「全て」で実行速度優先して1を表示
+「全て」で実行速度優先して2を表示
+`, '1\n2')
+  })
+  it('実行速度優先 - ブロック内に適用', () => {
+    // エラーが起きなければ、「実行速度優先」が無い場合と同じ動作をする。
+    cmp(`\
+「全て」で実行速度優先
+    ●Fとは
+        2を表示
+        3を表示
+    ここまで
+    1を表示
+    F
+ここまで
+4を表示
+`, '1\n2\n3\n4')
+  })
+  it('空白で区切って文をつなげた場合', () => {
+    cmp('1と2を足す 1と2を足す', '')
+  })
+  it('return_none: true のaddFuncで定義した関数が「それ」に値を代入しないことを確認する', () => {
+    const nako = new NakoCompiler()
+    nako.addFunc('hoge', [], () => {}, true)
+    assert.strictEqual(nako.run('1と2を足す\nhoge\nそれを表示').log, '3')
+  })
+  it('制御構文で一語関数を使う', () => {
+    cmp('●一とは\n1を戻す\nここまで\nもし一ならば\n1を表示\nここまで', '1') // if
+    cmp('●一とは\n1を戻す\nここまで\n一回\n1を表示\nここまで', '1') // times
+    cmp('●一とは\n1を戻す\nここまで\n一の間\n1を表示\n抜ける\nここまで', '1') // while
+    cmp('●一とは\n[1]を戻す\nここまで\n一を反復\n1を表示\nここまで', '1') // foreach
+    cmp('●一とは\n1を戻す\nここまで\n一で条件分岐\n1ならば\n1を表示\nここまで\nここまで', '1') // switch
+  })
+  it('そう', () => {
+    // 「そう」は「それ」のエイリアス
+    cmp('それ＝1;そうを表示', '1')
+    cmp('1に3を足す;そうを表示', '4')
+  })
+  it('「〜時間」の「間」を制御構文として認識させない #831', () => {
+    cmp('時間=1\n（時間）を表示', '1')
+  })
+  it('「もしFが存在するならば」がFと「存在する」の比較になる問題の修正 #830', () => {
+    cmp('●（Aが）hogeとは\n' +
+        '    1を戻す\n' +
+        'ここまで\n' +
+        'もし、Fがhogeならば\n' +
+        '    1を表示\n' +
+        'ここまで',
+        // ---
+        '1')
+  })
+  it('無名関数が警告を出す問題の修正 #841', () => {
+    let log = ''
+    nako.logger.addListener('warn', ({ noColor }) => { log += noColor })
+    nako.parse(
+      'f = 関数(x) それは、x。ここまで。\n' +
+      'g = 関数(x) それは、x。ここまで。\n'
+      , 'main.nako3')
+    assert.strictEqual(log, '')
+  })
+  it('単独で実行できるプログラムの出力', (done) => {
+    const code = nako.compileStandalone('1+2を表示', 'main.nako3', false)    
+    Function('const console = { log: this.callback };\n' + code).apply({
+      callback: (text) => {
+        assert.strictEqual(text, '3')
+        done()
+      },
+    })
+  })
+  it('resetされた後に関数名を取得できない問題の修正 #849', (done) => {
+    const nako = new NakoCompiler()
+    nako.logger.addListener('stdout', ({ noColor }) => {
+      assert(noColor.includes('function')) // JavaScriptのコード function() { var ... } が表示されるはず
+      done()
+    })
+    nako.run(`
+●Aとは
+ここまで
+0.0001秒後には
+    「A」のJSオブジェクト取得して表示
+`)
+    nako.reset()
   })
 })

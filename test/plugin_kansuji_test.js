@@ -1,21 +1,15 @@
 const assert = require('assert')
 const NakoCompiler = require('../src/nako3')
-const NakoRuntimeError = require('../src/nako_runtime_error')
 const PluginKansuji = require('../src/plugin_kansuji.js')
 
 describe('plugin_kansuji_test', () => {
   const nako = new NakoCompiler()
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   nako.addPluginFile('PluginKansuji', 'plugin_kansuji.js', PluginKansuji)
-  // nako.debug = true;
   const cmp = (code, res) => {
-    if (nako.debug)
-      console.log('code=' + code)
+    nako.logger.debug('code=' + code)
 
-    assert.equal(nako.runReset(code).log, res)
-  }
-  const cmd = (code) => {
-    if (nako.debug) console.log('code=' + code)
-    nako.runReset(code)
+    assert.strictEqual(nako.run(code).log, res)
   }
 
   // --- test ---
@@ -32,8 +26,8 @@ describe('plugin_kansuji_test', () => {
     cmp('「1.1e+1」の漢数字の算用数字を表示。', '11')
     cmp('「1.234e+2」の漢数字の算用数字を表示。', '123.4')
     cmp('「1.234e2」の漢数字の算用数字を表示。', '123.4')
-    cmp('「1.234e23」の漢数字の算用数字を表示。', 123400000000000000000000n)
-    cmp('「1.234e-23」の漢数字の算用数字を表示。', 1.234e-23)
+    cmp('「1.234e23」の漢数字の算用数字を表示。', '123400000000000000000000')
+    cmp('「1.234e-23」の漢数字の算用数字を表示。', '1.234e-23')
     cmp('「901.1234e-2」の漢数字の算用数字を表示。', '9.011234')
     cmp('「0」の漢数字の算用数字を表示。', '0')
     cmp('「1」の漢数字の算用数字を表示。', '1')
@@ -51,7 +45,7 @@ describe('plugin_kansuji_test', () => {
     cmp('「10000000」の漢数字の算用数字を表示。', '10000000')
     cmp('「100000000」の漢数字の算用数字を表示。', '100000000')
     cmp('「28000103206018」の漢数字の算用数字を表示。', '28000103206018')
-    cmp('「161803398874989484820458683436563811772030917980576286213544862270526046」の漢数字の算用数字を表示。', 161803398874989484820458683436563811772030917980576286213544862270526046n)
+    cmp('「161803398874989484820458683436563811772030917980576286213544862270526046」の漢数字の算用数字を表示。', '161803398874989484820458683436563811772030917980576286213544862270526046')
   })
 
 })

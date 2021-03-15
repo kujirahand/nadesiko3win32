@@ -4,17 +4,14 @@ const NakoSyntaxError = require('../src/nako_parser_base').NakoSyntaxError
 
 describe('関数呼び出しテスト', () => {
   const nako = new NakoCompiler()
-  nako.debugParser = false
-  nako.debug = false
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   const cmp = (code, res) => {
-    if (nako.debug)
-      console.log('code=' + code)
-
-    assert.equal(nako.runReset(code).log, res)
+    nako.logger.debug('code=' + code)
+    assert.strictEqual(nako.run(code).log, res)
   }
   const cmd = (code) => {
-    if (nako.debug) console.log('code=' + code)
-    nako.runReset(code)
+    nako.logger.debug('code=' + code)
+    nako.run(code)
   }
   // --- test ---
   it('関数式の呼び出し - 足す(2,3)を表示。', () => {
@@ -57,7 +54,7 @@ describe('関数呼び出しテスト', () => {
   it('階乗計算 - 再帰', () => {
     cmp('●(VをAのBで)階乗計算とは;' +
       'もし、Bが0以下ならば、Vを戻す。;(V*A)をAの(B-1)で階乗計算して戻す。' +
-      'ここまで。;1を2の3で階乗計算して表示。', 8)
+      'ここまで。;1を2の3で階乗計算して表示。', '8')
   })
   it('連続文後の代入', () => {
     cmp('「2017/09/01T00:00:99」の「T」を「 」に置換して「 」まで切り取り、対象日に代入。対象日を表示。', '2017/09/01')
@@ -186,10 +183,10 @@ describe('関数呼び出しテスト', () => {
         'ここまで。\n' +
         'ARYをJSONエンコードして表示', '[3,4,8]')
   })
-  it('可変長引数', () => {
-    cmp('足す(1,2,3)を表示。', '6')
-    cmp('1と2と3を足して表示。', '6')
-    cmp('1に2と3を足して表示。', '6')
+  it('可変長引数', () => { // 経緯 #501 → #729 
+    cmp('連続加算(1,2,3)を表示。', '6')
+    cmp('1と2と3を連続加算して表示。', '6')
+    cmp('1に2と3を連続加算して表示。', '6')
   })
   // ---
 })

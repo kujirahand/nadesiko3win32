@@ -1,22 +1,20 @@
 const assert = require('assert')
 const NakoCompiler = require('../src/nako3')
-const NakoRuntimeError = require('../src/nako_runtime_error')
+const {NakoRuntimeError} = require('../src/nako_errors')
 const PluginDateTime = require('../src/plugin_datetime')
 
 describe('plugin_datetime_test', () => {
   const nako = new NakoCompiler()
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   nako.addPluginObject('PluginDateTime', PluginDateTime)
   
-  // nako.debug = true;
   const cmp = (code, res) => {
-    if (nako.debug)
-      console.log('code=' + code)
-
-    assert.equal(nako.runReset(code).log, res)
+    nako.logger.debug('code=' + code)
+    assert.strictEqual(nako.run(code).log, res)
   }
   const cmd = (code) => {
-    if (nako.debug) console.log('code=' + code)
-    nako.runReset(code)
+    nako.logger.debug('code=' + code)
+    nako.run(code)
   }
 
   // --- test ---

@@ -7,14 +7,13 @@ describe('plugin_math_test', () => {
 
   const cnako = new CNako3()
   cnako.silent = true
+  // wnako.logger.addListener('trace', ({ nodeConsole }) => { console.log(nodeConsole) })
 
   const cmp = (code, res) => {
     for (let nako of [cnako, wnako]) {
       let c = code
-      if (nako.debug) {
-        console.log('code=' + c)
-      }
-      assert.equal(nako.runReset(c).log, res)
+      nako.logger.debug('code=' + code)
+      assert.strictEqual(nako.run(c).log, res)
     }
   }
 

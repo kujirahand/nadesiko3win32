@@ -1,26 +1,16 @@
 const assert = require('assert')
 const NakoCompiler = require('../src/nako3')
-const NakoRuntimeError = require('../src/nako_runtime_error')
 
 describe('plugin_system_test', () => {
   const nako = new NakoCompiler()
-  // nako.debug = true;
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   const cmp = (code, res) => {
-    if (nako.debug)
-      console.log('code=' + code)
-
-    assert.equal(nako.runReset(code).log, res)
+    nako.logger.debug('code=' + code)
+    assert.strictEqual(nako.run(code).log, res)
   }
   const cmpex = (code, exinfo) => {
-    if (nako.debug) {
-      console.log('code=' + code)
-    }
-
-    assert.throws(() => { nako.runReset(code) }, exinfo)
-  }
-  const cmd = (code) => {
-    if (nako.debug) console.log('code=' + code)
-    nako.runReset(code)
+    nako.logger.debug('code=' + code)
+    assert.throws(() => { nako.run(code) }, exinfo)
   }
 
   // --- test ---
@@ -47,16 +37,16 @@ describe('plugin_system_test', () => {
     cmp('30の変数型確認して表示。', 'number')
   })
   it('SIN/COS/TAN', () => {
-    cmp('SIN(1)を表示。', Math.sin(1))
-    cmp('COS(1)を表示。', Math.cos(1))
-    cmp('TAN(1)を表示。', Math.tan(1))
+    cmp('SIN(1)を表示。', '' + Math.sin(1))
+    cmp('COS(1)を表示。', '' + Math.cos(1))
+    cmp('TAN(1)を表示。', '' + Math.tan(1))
   })
   it('RGB', () => {
     cmp('RGB(255,255,0)を表示。', '#ffff00')
   })
   it('LOGN', () => {
-    cmp('LOGN(10,10)を表示。', Math.LOG10E * Math.log(10))
-    cmp('LOGN(2,10)を表示。', Math.LOG2E * Math.log(10))
+    cmp('LOGN(10,10)を表示。', '' + (Math.LOG10E * Math.log(10)))
+    cmp('LOGN(2,10)を表示。', '' + (Math.LOG2E * Math.log(10)))
   })
   it('文字挿入', () => {
     cmp('「12345」の2に「**」を文字挿入して表示', '1**2345')
@@ -387,5 +377,32 @@ describe('plugin_system_test', () => {
     cmpex('「●Fとは\n2を戻す\nここまで\nF()を表示する。」をナデシコする。7+F()を表示する。', { name: 'Error', message: /関数『F』が見当たりません。/ })
     cmp('Bは2;Bを表示する。;「BはB+3。Bを表示する。」をナデシコする。Bを表示する。', '5\n5')
     cmp('Bは2;Bを表示する。;「BはB+3。Bを表示する。」をナデシコ続ける。Bを表示する。', '2\n5\n5')
+    cmp(`1と2を足す\n「それを表示」をナデシコする`, '3')
+  })
+  it('敬語 #728', () => {
+    cmp('32を表示してください', '32')
+    cmp('1に2を足して3を掛けて表示してください。', '9')
+    cmp('1に2を足して3を掛けて表示してください。お願いします。', '9')
+    cmp('拝啓、「abc」の「a」を「*」に置換してください。お願いします。礼節レベル取得して表示', '2')
+  })
+  it('一致 #831', () => {
+    cmp('1と1が一致。もしそうなら"1"を表示。違えば"0"を表示。', '1')
+    cmp('[1,2,3]と[1,2,3]が一致。もしそうなら"1"を表示。違えば"0"を表示。', '1')
+    cmp('[1,2,3]と[2,3]が一致。もしそうなら"NG"を表示。違えば"OK"を表示。', 'OK')
+    cmp('["a",2,3]と["a",2,3]が一致。もしそうなら"OK"を表示。違えば"NG"を表示。', 'OK')
+  })
+  it('「ナデシコ」が空白行を出力してしまう問題の修正', () => {
+    let lineCount = 0
+    nako.logger.addListener('stdout', (data) => { lineCount++ })
+    nako.run('「a=1+2」をナデシコ')
+    assert.strictEqual(lineCount, 0)
+  })
+  it('JSメソッド実行 #854', () => {
+    global.jstest = () => { return 777 }
+    cmp('「global」の「jstest」を[]でJSメソッド実行して表示。', '777')
+    global.jstest_x2 = (a) => { return a * 2 }
+    cmp('「global」の「jstest_x2」を30でJSメソッド実行して表示。', '60')
+    global.jstest_mul = (a, b) => { return a * b }
+    cmp('「global」の「jstest_mul」を[30,30]でJSメソッド実行して表示。', '900')
   })
 })

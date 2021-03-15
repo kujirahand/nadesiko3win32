@@ -8,18 +8,16 @@ const testFileMe = path.join(__dirname, 'plugin_node_test.js')
 
 describe('plugin_node_test', () => {
   const nako = new NakoCompiler()
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   nako.addPluginFile('PluginNode', 'plugin_node.js', PluginNode)
   nako.addPluginFile('PluginCSV', 'plugin_csv.js', PluginCSV)
-  nako.debug = false
   const cmp = (code, res) => {
-    if (nako.debug) {
-      console.log('code=' + code)
-    }
-    assert.equal(nako.runReset(code).log, res)
+    nako.logger.debug('code=' + code)
+    assert.strictEqual(nako.run(code).log, res)
   }
   const cmd = (code) => {
-    if (nako.debug) console.log('code=' + code)
-    nako.runReset(code)
+    nako.logger.debug('code=' + code)
+    nako.run(code)
   }
   // --- test ---
   it('表示', () => {
@@ -60,7 +58,7 @@ describe('plugin_node_test', () => {
       'S1=「{TMP}/plugin_node_test.js」を読む。\n' +
       'S2=FINを読む。\n' +
       'もし(S1＝S2)ならば、"OK"と表示。\n', 'OK')
-  }).timeout(3000)
+  })
   it('ファイルサイズ取得', () => {
     cmp('「' + testFileMe + '」のファイルサイズ取得;もし、それが2000以上ならば;「OK」と表示。違えば「NG」と表示。', 'OK')
   })

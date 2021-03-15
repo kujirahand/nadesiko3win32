@@ -2,16 +2,23 @@
  * なでしこの構文解析のためのユーティリティクラス
  */
 
-const NakoSyntaxError = require('./nako_syntax_error')
+const { NakoSyntaxError } = require('./nako_errors')
 
 class NakoParserBase {
-  constructor () {
-    this.debugAll = false
-    this.debug = false || this.debugAll
-    this.debugStack = false || this.debugAll
+  /**
+   * @param {import("./nako_logger")} logger
+   */
+  constructor (logger) {
+    this.logger = logger
     this.stackList = [] // 関数定義の際にスタックが混乱しないように整理する
-    this.filename = ''
     this.init()
+    /** @type {import('./nako3').TokenWithSourceMap[]} */
+    this.tokens = []
+    /** @type {import('./nako3').Ast[]} */
+    this.stack = []
+    this.index = 0
+    /** @type {import('./nako3').Ast[]} */
+    this.y = []
   }
 
   init () {
@@ -20,14 +27,11 @@ class NakoParserBase {
   }
 
   reset () {
+    /** @type {import('./nako3').TokenWithSourceMap[]} */
     this.tokens = [] // 字句解析済みのトークンの一覧を保存
     this.index = 0 // tokens[] のどこまで読んだかを管理する
     this.stack = [] // 計算用のスタック ... 直接は操作せず、pushStack() popStack() を介して使う
     this.y = [] // accept()で解析済みのトークンを配列で得るときに使う
-  }
-
-  setFilename (fname) {
-    this.filename = fname
   }
 
   setFuncList (funclist) {
@@ -37,6 +41,7 @@ class NakoParserBase {
   /**
    * 特定の助詞を持つ要素をスタックから一つ下ろす、指定がなければ末尾を下ろす
    * @param josiList 下ろしたい助詞の配列
+   * @returns {import('./nako3').Ast | null | undefined}
    */
   popStack (josiList) {
     if (!josiList) {return this.stack.pop()}
@@ -46,7 +51,7 @@ class NakoParserBase {
       const t = this.stack[i]
       if (josiList.length === 0 || josiList.indexOf(t.josi) >= 0) {
         this.stack.splice(i, 1) // remove stack
-        if (this.debugStack) {console.log('POP :', t)}
+        this.logger.trace('POP :' + JSON.stringify(t))
         return t
       }
     }
@@ -71,7 +76,7 @@ class NakoParserBase {
    * 計算用に要素をスタックに積む
    */
   pushStack (item) {
-    if (this.debugStack) {console.log('PUSH:', item)}
+    this.logger.debug('PUSH:' + JSON.stringify(item))
     this.stack.push(item)
   }
 
@@ -138,7 +143,7 @@ class NakoParserBase {
       }
       if (typeof type === 'function') {
         const f = type.bind(this)
-        const r = f(null)
+        const r = f(y)
         if (r === null) {return rollback()}
         y[i] = r
         continue
@@ -156,6 +161,7 @@ class NakoParserBase {
 
   /**
    * カーソル語句を取得して、カーソルを後ろに移動する
+   * @returns {import('./nako3').TokenWithSourceMap | null}
    */
   get () {
     if (this.isEOF()) {return null}
@@ -166,26 +172,87 @@ class NakoParserBase {
     if (this.index > 0) {this.index--}
   }
 
+  /**
+   * @returns {import('./nako3').TokenWithSourceMap | null}
+   */
   peek (i = 0) {
     if (this.isEOF()) {return null}
     return this.tokens[this.index + i]
   }
 
-  nodeToStr (node) {
-    if (!node) {return `(NULL)`}
-    let name = node.name
-    if (node.type === 'op')
-      {name = '演算子[' + node.operator + ']'}
-
-    if (!name) {name = node.value}
-    if (typeof name !== 'string') {name = node.type}
-    if (this.debug)
-      {name += '→' + JSON.stringify(node, null, 2)}
-     else {
-      if (name === 'number') {name = node.value + node.josi}
-      if (node.type === 'string') {name = '「' + node.value + '」' + node.josi}
+  /**
+   * 現在のカーソル語句のソースコード上の位置を取得する。
+   * @returns {{
+   *     startOffset: number | null
+   *     endOffset: number | null
+   *     file: string | undefined
+   *     line: number
+   *     column: number
+   * }}
+   */
+  peekSourceMap () {
+    const token = this.peek()
+    if (token === null) {
+      return { startOffset: null, endOffset: null, file: undefined, line: 0, column: 0 }
     }
-    return `『${name}』`
+    return { startOffset: token.startOffset, endOffset: token.endOffset, file: token.file, line: token.line, column: token.column }
+  }
+
+  /**
+   * depth: 表示する深さ
+   * typeName: 先頭のtypeの表示を上書きする場合に設定する
+   * @param {{ depth: number, typeName?: string }} opts
+   * @param {boolean} debugMode
+   */
+  nodeToStr (node, opts, debugMode) {
+    const depth = opts.depth - 1
+    const typeName = (name) => opts.typeName !== undefined ? opts.typeName : name
+    const debug = debugMode ? (' debug: ' + JSON.stringify(node, null, 2)) : ''
+    if (!node) {
+      return `(NULL)`
+    }
+    switch (node.type) {
+      case 'not':
+        if (depth >= 0) {
+          return `${typeName('')}『${this.nodeToStr(node.value, { depth }, debugMode)}に演算子『not』を適用した式${debug}』`
+        } else {
+          return `${typeName('演算子')}『not』`
+        }
+      case 'op': {
+        let operator = node.operator
+        const table = { 'eq': '＝', 'not': '!', 'gt': '>', 'lt': '<', 'and': 'かつ', 'or': 'または' }
+        if (operator in table) {
+          operator = table[operator]
+        }
+        if (depth >= 0) {
+          const left = this.nodeToStr(node.left, { depth }, debugMode)
+          const right = this.nodeToStr(node.right, { depth }, debugMode)
+          if (node.operator == 'eq') {
+            return `${typeName('')}『${left}と${right}が等しいかどうかの比較${debug}』`
+          }
+          return `${typeName('')}『${left}と${right}に演算子『${operator}』を適用した式${debug}』`
+        } else {
+          return `${typeName('演算子')}『${operator}${debug}』`
+        }
+      } case 'number':
+        return `${typeName('数値')}${node.value}`
+      case 'string':
+        return `${typeName('文字列')}『${node.value}${debug}』`
+      case 'word':
+        return `${typeName('単語')}『${node.value}${debug}』`
+      case 'func':
+        return `${typeName('関数')}『${node.name || node.value}${debug}』`
+      case 'eol':
+        return `行の末尾`
+      case 'eol':
+        return `ファイルの末尾`
+      default: {
+        let name = node.name
+        if (!name) {name = node.value}
+        if (typeof name !== 'string') {name = node.type}
+        return `${typeName('')}『${name}${debug}』`
+      }
+    }
   }
 }
 

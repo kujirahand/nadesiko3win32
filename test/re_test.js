@@ -3,12 +3,10 @@ const NakoCompiler = require('../src/nako3')
 
 describe('re_test', () => {
   const nako = new NakoCompiler()
-  // nako.debug = true
+  // nako.logger.addListener('trace', ({ browserConsole }) => { console.log(...browserConsole) })
   const cmp = (code, res) => {
-    if (nako.debug) {
-      console.log('code=' + code)
-    }
-    assert.equal(nako.runReset(code).log, res)
+    nako.logger.debug('code=' + code)
+    assert.strictEqual(nako.run(code).log, res)
   }
   // --- test ---
   it('正規表現マッチ - 基本', () => {

@@ -6,6 +6,7 @@ const kanakanji = /^[\u3005\u4E00-\u9FCF_a-zA-Z0-9ァ-ヶー]+/
 const josi = require('./nako_josi_list')
 const josiRE = josi.josiRE
 const hira = /^[ぁ-ん]/
+const allHiragana = /^[ぁ-ん]+$/
 
 module.exports = {
   rules: [
@@ -120,6 +121,9 @@ function cbRangeComment (src) {
   return {src: src, res: res, josi: josi, numEOL: numEOL}
 }
 
+/**
+ * @param {string} src
+ */
 function cbWordParser(src, isTrimOkurigana = true) {
   /*
     kanji    = [\u3005\u4E00-\u9FCF]
@@ -157,6 +161,11 @@ function cbWordParser(src, isTrimOkurigana = true) {
       continue
     }
     break // other chars
+  }
+  // 「等しい間」や「一致する間」なら「間」をsrcに戻す。ただし「システム時間」はそのままにする。
+  if (/[ぁ-ん]間$/.test(res)) {
+    src = res.charAt(res.length - 1) + src
+    res = res.slice(0, -1)
   }
   // 漢字カタカナ英語から始まる語句 --- 送り仮名を省略
   if (isTrimOkurigana) {
@@ -204,10 +213,14 @@ function cbString (beginTag, closeTag, src) {
 }
 
 function trimOkurigana (s) {
-  if (!hira.test(s))
-    {s = s.replace(/[ぁ-ん]+/g, '')}
-
-  return s
+  // ひらがなから始まらない場合、送り仮名を削除。(例)置換する
+  if (!hira.test(s)) {
+    return s.replace(/[ぁ-ん]+/g, '')
+  }
+  // 全てひらがな？ (例) どうぞ
+  if (allHiragana.test(s)) {return s}
+  // 末尾のひらがなのみ (例)お願いします →お願
+  return s.replace(/[ぁ-ん]+$/g, '')
 }
 
 function parseNumber (n) {

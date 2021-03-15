@@ -5,6 +5,7 @@ const CNako3 = require('../src/cnako3')
 
 describe('plugin_markup_test', () => {
   const wnako = new NakoCompiler()
+  // wnako.logger.addListener('trace', ({ nodeConsole }) => { console.log(nodeConsole) })
   wnako.addPluginFile('PluginMarkup', 'plugin_markup.js', PluginMarkup)
 
   const cnako = new CNako3()
@@ -18,11 +19,9 @@ describe('plugin_markup_test', () => {
         c = '!「plugin_markup.js」を取り込む。\n' + c
       }
 
-      if (nako.debug) {
-        console.log('code=' + c)
-      }
+      nako.logger.debug('code=' + code)
 
-      assert.equal(nako.runReset(c).log, res)
+      assert.strictEqual(nako.run(c).log, res)
     }
   }
 
