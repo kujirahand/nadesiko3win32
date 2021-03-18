@@ -332,6 +332,15 @@ const PluginTurtle = {
     }
   },
 
+  '!クリア': {
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      sys._turtle.clearAll()
+    }
+  },
+
   // @タートルグラフィックス/カメ操作
   'カメ作成': { // @タートルグラフィックスを開始してカメのIDを返す // @かめさくせい
     type: 'func',
