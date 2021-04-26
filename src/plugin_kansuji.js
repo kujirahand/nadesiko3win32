@@ -45,7 +45,7 @@ const PluginKansuji = {
           }
           return input
         }
-        function asciify (input) {
+        function asciify (input) { // 全角数字を半角数字に
           return input.replace(/[０-９]/g, s => {
             return String.fromCharCode(s.charCodeAt(0) - 65248);
           });
@@ -104,7 +104,15 @@ const PluginKansuji = {
         }, "")
         return result[0] === '・' ? '零' + result : result
       }
-      return converter(separater(input))
+      // フラグを覚えておく #874
+      let flag = ''
+      if (input.charAt(0) == '+' || input.charAt(0) == '-') {
+        flag = input.charAt(0)
+        input = input.substr(1)
+      }
+      let res = converter(separater(input))
+      if (res == '') {res = '零'}
+      return flag + res
     }
   },
   '算用数字': { // @U引数を漢数字と解釈して数値を返す // @さんようすうじ
@@ -208,5 +216,5 @@ const 基本漢数字 = "〇一二三四五六七八九".split("")
 module.exports = PluginKansuji
 
 // scriptタグで取り込んだ時、自動で登録する
-if (typeof (navigator) === 'object')
+if (typeof (navigator) === 'object' && typeof (navigator.nako3) === 'object')
   {navigator.nako3.addPluginObject('PluginKansuji', PluginKansuji)}

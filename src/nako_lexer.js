@@ -358,7 +358,17 @@ class NakoLexer {
           if (isDefTest && rule.name === 'word') {
             rp = rule.cbParser(src, false)
           } else {
-            rp = rule.cbParser(src)
+            try {
+              rp = rule.cbParser(src)
+            } catch (e) {
+              throw new NakoLexerError(
+                e.message,
+                srcLength - src.length,
+                srcLength - src.length + 1,
+                line,
+                filename,
+              )
+            }
           }
 
           if (rule.name === 'string_ex') {
@@ -422,7 +432,7 @@ class NakoLexer {
         lineCurrent = line
         column += m[0].length
         src = src.substr(m[0].length)
-        if (rule.name === 'eol' && value === '\n') {
+        if (rule.name === 'eol' && value === '\n' || rule.name === '_eol') {
           value = line++
           column = 1
         }
@@ -434,6 +444,12 @@ class NakoLexer {
             josi = j[0]
             column += j[0].length
             src = src.substr(j[0].length)
+            // 助詞の直後にあるカンマを無視 #877
+            if (src.charAt(0) == ',') {
+              src = src.substr(1)
+            }
+            // 「＊＊である」なら削除 #939
+            if (josi === 'である') {josi = ''}
           }
         }
 

@@ -72,6 +72,9 @@ const PluginSystem = {
   'ナデシコ種類': {type: 'const', value: 'wnako3/cnako3'}, // @なでしこしゅるい
   'はい': {type: 'const', value: 1}, // @はい
   'いいえ': {type: 'const', value: 0}, // @いいえ
+  '真': {type: 'const', value: 1}, // @しん
+  '偽': {type: 'const', value: 0}, // @ぎ
+  '永遠': {type: 'const', value: 1}, // @えいえん
   'オン': {type: 'const', value: 1}, // @おん
   'オフ': {type: 'const', value: 0}, // @おふ
   '改行': {type: 'const', value: '\n'}, // @かいぎょう
@@ -80,8 +83,9 @@ const PluginSystem = {
   'カッコ閉': {type: 'const', value: '」'}, // @かっことじ
   '波カッコ': {type: 'const', value: '{'}, // @なみかっこ
   '波カッコ閉': {type: 'const', value: '}'}, // @なみかっことじ
-  'OK': {type: 'const', value: 1}, // @OK
-  'NG': {type: 'const', value: 0}, // @NG
+  'OK': {type: 'const', value: true}, // @OK
+  'NG': {type: 'const', value: false}, // @NG
+  'キャンセル': {type: 'const', value: 0}, // @きゃんせる
   'PI': {type: 'const', value: Math.PI}, // @PI
   '空': {type: 'const', value: ''}, // @から
   'NULL': {type: 'const', value: null}, // @NULL
@@ -248,6 +252,14 @@ const PluginSystem = {
       return a === b
     }
   },
+  '等無': { // @AがBと等しくないか // @ひとしくない
+    type: 'func',
+    josi: [['が'], ['と']],
+    pure: true,
+    fn: function (a, b) {
+      return a !== b
+    }
+  },
   '一致': { // @AがBと一致するか(配列や辞書も比較可能) // @いっち
     type: 'func',
     josi: [['が'], ['と']],
@@ -260,6 +272,20 @@ const PluginSystem = {
         return jsonA === jsonB
       }
       return a === b
+    }
+  },
+  '不一致': { // @AがBと不一致か(配列や辞書も比較可能) // @ふいっち
+    type: 'func',
+    josi: [['が'], ['と']],
+    pure: true,
+    fn: function (a, b) {
+      // オブジェクトの場合、JSONに変換して比較
+      if (typeof(a) === 'object') {
+        const jsonA = JSON.stringify(a)
+        const jsonB = JSON.stringify(b)
+        return jsonA !== jsonB
+      }
+      return a !== b
     }
   },
   '範囲内': { // @VがAからBの範囲内か // @はんいない
@@ -295,6 +321,16 @@ const PluginSystem = {
     return_none: true
   },
   'お願': { // @ソースコードを読む人を気持ちよくする // @おねがいします
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      if (!sys.__reisetu) {sys.__reisetu = 0}
+      sys.__reisetu++
+    },
+    return_none: true
+  },
+  'です': { // @ソースコードを読む人を気持ちよくする // @です
     type: 'func',
     josi: [],
     pure: true,
@@ -410,8 +446,18 @@ const PluginSystem = {
     josi: [['を', 'に', 'で']],
     pure: false,
     fn: function (f, sys) {
-      if (typeof f === 'string') {f = sys.__findFunc(f, '実行')}
+      // #938 の規則に従って処理
+      // 引数が関数なら実行
       if (typeof f === 'function') {return f(sys)}
+      // 文字列なら関数に変換できるか判定して実行
+      if (typeof f === 'string') {
+        const tf = sys.__findFunc(f, '実行')
+        if (typeof tf == 'function') {
+          return tf(sys)
+        }
+      }
+      // それ以外ならそのまま値を返す
+      return f
     }
   },
   '実行時間計測': { // @ 関数Fを実行して要した時間をミリ秒で返す // @じっこうじかんけいそく
@@ -1629,22 +1675,51 @@ const PluginSystem = {
       return res
     }
   },
-  // @ハッシュ
-  'ハッシュキー列挙': { // @ハッシュAのキー一覧を配列で返す。 // @はっしゅきーれっきょ
+  // @辞書型変数の操作
+  '辞書キー列挙': { // @辞書型変数Aのキーの一覧を配列で返す。 // @じしょきーれっきょ
     type: 'func',
     josi: [['の']],
     pure: true,
     fn: function (a) {
       const keys = []
-      if (a instanceof Array) { // 配列なら数字を返す
-        for (let i = 0; i < a.length; i++) {keys.push(i)}
-        return keys
-      }
       if (a instanceof Object) { // オブジェクトのキーを返す
         for (const key in a) {keys.push(key)}
         return keys
       }
-      throw new Error('『ハッシュキー列挙』でハッシュ以外が与えられました。')
+      if (a instanceof Array) { // 配列なら数字を返す
+        for (let i = 0; i < a.length; i++) {keys.push(i)}
+        return keys
+      }
+      throw new Error('『辞書キー列挙』でハッシュ以外が与えられました。')
+    }
+  },
+  '辞書キー削除': { // @辞書型変数AからキーKEYを削除して返す（A自体を変更する）。 // @じしょきーさくじょ
+    type: 'func',
+    josi: [['から', 'の'], ['を']],
+    pure: true,
+    fn: function (a, key) {
+      if (a instanceof Object) { // オブジェクトのキーを返す
+        if (a[key]) {delete a[key]}
+        return a
+      }
+      throw new Error('『辞書キー削除』でハッシュ以外が与えられました。')
+    }
+  },
+  '辞書キー存在': { // @辞書型変数AのキーKEYが存在するか確認 // @じしょきーそんざい
+    type: 'func',
+    josi: [['の','に'],['が']],
+    pure: true,
+    fn: function (a, key) {
+        return key in a
+    }
+  },
+  // @ハッシュ
+  'ハッシュキー列挙': { // @ハッシュAのキー一覧を配列で返す。 // @はっしゅきーれっきょ
+    type: 'func',
+    josi: [['の']],
+    pure: false,
+    fn: function (a, sys) {
+      return sys.__exec('辞書キー列挙', [a, sys])
     }
   },
   'ハッシュ内容列挙': { // @ハッシュAの内容一覧を配列で返す。 // @はっしゅないようれっきょ
@@ -1663,13 +1738,9 @@ const PluginSystem = {
   'ハッシュキー削除': { // @ハッシュAからキーKEYを削除して返す。 // @はっしゅきーさくじょ
     type: 'func',
     josi: [['から', 'の'], ['を']],
-    pure: true,
-    fn: function (a, key) {
-      if (a instanceof Object) { // オブジェクトのキーを返す
-        if (a[key]) {delete a[key]}
-        return a
-      }
-      throw new Error('『ハッシュキー削除』でハッシュ以外が与えられました。')
+    pure: false,
+    fn: function (a, key, sys) {
+      return sys.__exec('辞書キー削除', [a, key, sys])
     }
   },
   'ハッシュキー存在': { // @ハッシュAのキーKEYが存在するか確認 // @はっしゅきーそんざい
@@ -1684,17 +1755,31 @@ const PluginSystem = {
   '秒待機': { // @ 逐次実行構文にて、N秒の間待機する // @びょうたいき
     type: 'func',
     josi: [['']],
+    pure: false,
+    fn: function (n, sys) {
+      sys.__exec('秒逐次待機', [n, sys])
+    },
+    return_none: true
+  },
+  '秒逐次待機': { // @ 逐次実行構文にて、N秒の間待機する // @びょうちくじたいき
+    type: 'func',
+    josi: [['']],
     pure: true,
     fn: function (n, sys) {
-      if (sys.resolve === undefined) {throw new Error('『秒待機』命令は『逐次実行』構文と一緒に使ってください。')}
+      if (sys.resolve === undefined) {throw new Error('『秒逐次待機』命令は『逐次実行』構文と一緒に使ってください。')}
       const resolve = sys.resolve
+      const reject = sys.reject
       sys.resolveCount++
-      setTimeout(function () {
+      const timerId = setTimeout(function () {
+        const idx = sys.__timeout.indexOf(timerId)
+        if (idx >= 0) {sys.__timeout.splice(idx, 1)}
         resolve()
       }, n * 1000)
+      sys.__timeout.unshift(timerId)
     },
+    return_none: true
   },
-  '秒後': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する // @びょうご
+  '秒後': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒後に実行する。変数『対象』にタイマーIDを代入する。 // @びょうご
     type: 'func',
     josi: [['を'], ['']],
     pure: false,
@@ -1716,10 +1801,11 @@ const PluginSystem = {
         }
       }, parseFloat(n) * 1000)
       sys.__timeout.unshift(timerId)
+      sys.__v0['対象'] = timerId
       return timerId
     }
   },
-  '秒毎': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる) // @びょうごと
+  '秒毎': { // @無名関数（あるいは、文字列で関数名を指定）FをN秒ごとに実行する(『タイマー停止』で停止できる)。変数『対象』にタイマーIDを代入する。 // @びょうごと
     type: 'func',
     josi: [['を'], ['']],
     pure: false,
@@ -1732,6 +1818,7 @@ const PluginSystem = {
       }, parseFloat(n) * 1000)
       // タイマーIDを追加
       sys.__interval.unshift(timerId)
+      sys.__v0['対象'] = timerId
       return timerId
     }
   },

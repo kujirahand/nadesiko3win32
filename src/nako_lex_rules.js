@@ -7,13 +7,19 @@ const josi = require('./nako_josi_list')
 const josiRE = josi.josiRE
 const hira = /^[ぁ-ん]/
 const allHiragana = /^[ぁ-ん]+$/
+const wordHasIjoIka = /^.+(以上|以下|超|未満)$/
+
+const errorRead = (ch) =>{ 
+  return (function() { throw new Error('突然の『' + ch + '』があります。')})
+}
 
 module.exports = {
   rules: [
     // 上から順にマッチさせていく
+    {name: 'ここまで', pattern: /^;;;/}, // #925
     {name: 'eol', pattern: /^\n/},
     {name: 'eol', pattern: /^;/},
-    {name: 'space', pattern: /^(\s+|、|・)/},
+    {name: 'space', pattern: /^(\s+|・)/}, // #877
     {name: 'comma', pattern: /^,/},
     {name: 'line_comment', pattern: /^#[^\n]*/},
     {name: 'line_comment', pattern: /^\/\/[^\n]*/},
@@ -29,10 +35,10 @@ module.exports = {
     {name: 'number', pattern: /^\d+(_\d+)*\.(\d+(_\d+)*)?([eE][+|-]?\d+(_\d+)*)?/, readJosi: true, cb: parseNumber},
     {name: 'number', pattern: /^\.\d+(_\d+)*([eE][+|-]?\d+(_\d+)*)?/, readJosi: true, cb: parseNumber},
     {name: 'number', pattern: /^\d+(_\d+)*([eE][+|-]?\d+(_\d+)*)?/, readJosi: true, cb: parseNumber},
-    {name: 'ここから', pattern: /^(ここから)/},
+    {name: 'ここから', pattern: /^(ここから),?/},
     {name: 'ここまで', pattern: /^(ここまで|💧)/},
     {name: 'もし', pattern: /^もしも?/},
-    // ならば ← 助詞として定義
+    // 「ならば」は助詞として定義している
     {name: '違えば', pattern: /^違(えば)?/},
     // 「回」「間」「繰返」「反復」「抜」「続」「戻」「代入」「条件分岐」などは replaceWord で word から変換
     // @see nako_reserved_words.js
@@ -42,6 +48,7 @@ module.exports = {
     {name: 'gteq', pattern: /^(≧|>=|=>)/},
     {name: 'lteq', pattern: /^(≦|<=|=<)/},
     {name: 'noteq', pattern: /^(≠|<>|!=)/},
+    {name: '←', pattern: /^(←|<--)/}, // 関数呼び出し演算子 #891 #899
     {name: 'eq', pattern: /^=/},
     {name: 'line_comment', pattern: /^!(インデント構文|ここまでだるい)[^\n]*/},
     {name: 'not', pattern: /^!/},
@@ -69,9 +76,9 @@ module.exports = {
     {name: 'string_ex', pattern: /^“/, cbParser: src => cbString('“', '”', src)},
     {name: 'string_ex', pattern: /^"/, cbParser: src => cbString('"', '"', src)},
     {name: 'string', pattern: /^'/, cbParser: src => cbString('\'', '\'', src)},
-    {name: '」', pattern: /^」/}, // error
-    {name: '』', pattern: /^』/}, // error
-    {name: 'func', pattern: /^\{関数\}/},
+    {name: '」', pattern: /^」/, cbParser: errorRead('」')}, // error
+    {name: '』', pattern: /^』/, cbParser: errorRead('』')}, // error
+    {name: 'func', pattern: /^\{関数\},?/},
     {name: '{', pattern: /^\{/},
     {name: '}', pattern: /^\}/, readJosi: true},
     {name: ':', pattern: /^:/},
@@ -137,21 +144,23 @@ function cbWordParser(src, isTrimOkurigana = true) {
   let res = ''
   let josi = ''
   while (src !== '') {
+    if (res.length > 0) {
+      // 助詞の判定
+      const j = josiRE.exec(src)
+      if (j) {
+        josi = j[0]
+        src = src.substr(j[0].length)
+        // 助詞の直後にある「,」を飛ばす #877
+        if (src.charAt(0) == ',') {src = src.substr(1)}
+        break
+      }
+    }
     // カタカナ漢字英数字か？
     const m = kanakanji.exec(src)
     if (m) {
       res += m[0]
       src = src.substr(m[0].length)
       continue
-    }
-    // 助詞？
-    if (res.length > 0) {
-      const j = josiRE.exec(src)
-      if (j) {
-        josi = j[0]
-        src = src.substr(j[0].length)
-        break
-      }
     }
     // ひらがな？
     const h = hira.test(src)
@@ -162,11 +171,24 @@ function cbWordParser(src, isTrimOkurigana = true) {
     }
     break // other chars
   }
-  // 「等しい間」や「一致する間」なら「間」をsrcに戻す。ただし「システム時間」はそのままにする。
+  // 「間」の特殊ルール (#831)
+  // 「等しい間」や「一致する間」なら「間」をsrcに戻す。ただし「システム時間」はそのままにする。 
   if (/[ぁ-ん]間$/.test(res)) {
     src = res.charAt(res.length - 1) + src
     res = res.slice(0, -1)
   }
+  // 「以上」「以下」「超」「未満」 #918
+  const ii = wordHasIjoIka.exec(res)
+  if (ii) {
+    src = ii[1] + josi + src
+    josi = ''
+    res = res.substr(0, res.length - ii[1].length)
+  }
+  // 助詞「こと」は「＊＊すること」のように使うので削除 #936
+  if (josi === 'こと') {josi = ''}
+  // 「＊＊である」も削除 #939
+  if (josi === 'である') {josi = ''}
+
   // 漢字カタカナ英語から始まる語句 --- 送り仮名を省略
   if (isTrimOkurigana) {
     res = trimOkurigana(res)
@@ -184,13 +206,6 @@ function cbString (beginTag, closeTag, src) {
   let josi = ''
   let numEOL = 0
   src = src.substr(beginTag.length) // skip beginTag
-  if (closeTag === '}}}') { // 可変閉じタグ
-    const sm = src.match(/^\{{3,}/)
-    const cnt = sm[0].length
-    closeTag = ''
-    for (let i = 0; i < cnt; i++) {closeTag += '}'}
-    src = src.substr(cnt)
-  }
   const i = src.indexOf(closeTag)
   if (i < 0) { // not found
     res = src
@@ -198,13 +213,26 @@ function cbString (beginTag, closeTag, src) {
   } else {
     res = src.substr(0, i)
     src = src.substr(i + closeTag.length)
+    // res の中に beginTag があればエラーにする #953
+    if (res.indexOf(beginTag) >= 0) {
+      if (beginTag == '『') {
+        throw new Error('「『」で始めた文字列に「『」を含めることはできません。')
+      } else {
+        throw new Error(`『${beginTag}』で始めた文字列に『${beginTag}』を含めることはできません。`)
+      }
+    }
   }
   // 文字列直後の助詞を取得
   const j = josiRE.exec(src)
   if (j) {
     josi = j[0]
     src = src.substr(j[0].length)
+    // 助詞の後のカンマ #877
+    if (src.charAt(0) == ',') {src = src.substr(1)}
   }
+  // 「＊＊である」なら削除 #939
+  if (josi === 'である') {josi = ''}
+
   // 改行を数える
   for (let i = 0; i < res.length; i++)
     {if (res.charAt(i) === '\n') {numEOL++}}

@@ -21,10 +21,18 @@ const PluginWebWorker = {
                   work.ondata.apply(sys, [value, event])
                 }
                 break;
+              case 'error':
+                sys.logger.error(value.noColor)
+                break;
             }
           }
           work.onerror = (event) => {
-            throw new Error(event.message)
+            const e = new Error(typeof event.message !== 'undefined' ? event.message : 'no message')
+            sys.logger.error(e)
+          }
+          work.onerrormessage = (event) => {
+            const e = new Error(typeof event.message !== 'undefined' ? event.message : 'no message')
+            sys.logger.error(e)
           }
         },
         inWorker: () => {
@@ -67,7 +75,7 @@ const PluginWebWorker = {
       sys.__v0['ワーカーURL'] = sys._webworker.getBaseUrlFromTag()
     }
   },
-  // @イベント用定数
+  // @イベント定数
   '対象イベント': {type:'const', value: ''}, // @たいしょういべんと
   '受信データ': {type:'const', value: ''}, // @たいしょういべんと
 
@@ -85,6 +93,7 @@ const PluginWebWorker = {
     return_none: true
   },
 
+  // @NAKOワーカー
   'ワーカー起動': { // @指定したURLでWebWorkerを起動する。ワーカオブジェクトを返す。 // @わーかーきどう
     type: 'func',
     josi: [['で','を','の']],
@@ -299,6 +308,8 @@ const PluginWebWorker = {
               func: Object.assign({}, sys.compiler.funclist[data], { fn: null })
             }
           })
+        } else {
+          throw new Error('指定した名前のユーザ関数もしくはグローバル変数がありません:' + data)
         }
       })
       if (obj.length > 0) {

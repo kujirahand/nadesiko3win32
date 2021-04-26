@@ -1,5 +1,7 @@
 // nadesiko for web browser
 // wnako3.js
+require('whatwg-fetch')
+
 const NakoCompiler = require('./nako3')
 const { NakoImportError } = require('./nako_errors')
 const PluginBrowser = require('./plugin_browser')
@@ -38,7 +40,7 @@ class WebNakoCompiler extends NakoCompiler {
    * @returns {Promise<unknown>}
    */
   async loadDependencies(code, filename, preCode = '', localFiles = {}) {
-    return super.loadDependencies(code, filename, preCode, {
+    return this._loadDependencies(code, filename, preCode, {
       readJs: (filePath, token) => {
         if (localFiles.hasOwnProperty(filePath)) {
           return { sync: true, value: () => {
@@ -147,7 +149,7 @@ if (typeof (navigator) === 'object' && !navigator.exportWNako3) {
     if (isAutoRun) {nako3.runNakoScript()}
   }, false)
   window.addEventListener('beforeunload', (e) => {
-    if (mocha){mocha.dispose()}
+    if (typeof mocha !== 'undefined'){mocha.dispose()}
   })
 } else
   {module.exports = WebNakoCompiler}

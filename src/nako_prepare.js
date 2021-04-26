@@ -111,11 +111,12 @@ class NakoPrepare {
     this.convertTable = {
       0x09: ' ', // TAB --> SPC
       0x203B: '#', // '※' --- コメント
-      // 0x3001: ',', // 読点 --- JSON記法で「,」と「、」を区別したいので読点は変換しないことに。(#276)
       0x3002: ';', // 句点
       0x3010: '[', // '【'
       0x3011: ']', // '】'
-      0xFF0C: '、' // 読点 '，' 論文などで利用、ただし句点はドットと被るので変換しない (#735)
+      // 読点は「,」に変換する (#877)
+      0x3001: ',', // 読点 --- JSON記法で「,」と「、」を区別したいので読点は変換しないことに。(#276)
+      0xFF0C: ','  // 読点 '，' 論文などで利用、ただし句点はドットと被るので変換しない (#735)
     }
   }
 
@@ -145,24 +146,11 @@ class NakoPrepare {
   convert (code) {
     if (!code) {return []}
     const src = new Replace(code)
-
-    /** @type {[string, string][]} */
-    const replaceList = []
-
+    
     // 改行コードを統一
     src.replaceAll('\r\n', '\n')
     src.replaceAll('\r', '\n')
-
-    // 「リンゴの値段」→「__リンゴ_的_値段__」(#631)
-    src.getText().replace(/([\u3005\u4E00-\u9FCF_a-zA-Z0-9ァ-ヶー]+?)の([\u3005\u4E00-\u9FCF_a-zA-Z0-9ァ-ヶー]+?)(は|\s*\=)/g, (str, p1, p2) => {
-      // 定数宣言は除く
-      if (p1 == '定数' || p1 == '変数') return
-      const key1 = p1 + 'の' + p2
-      const key2 = '__' + p1 + '_的_' + p2 + '__'
-      src.replaceAll(key1, key2)
-      replaceList.push([key1, key2])
-    })
-
+    
     let flagStr = false  // 文字列リテラル内かどうか
     let flagStr2 = false  // 絵文字による文字列リテラル内かどうか
     let endOfStr = ""  // 文字列リテラルを終了させる記号
@@ -180,7 +168,6 @@ class NakoPrepare {
       if (flagStr) {
         if (c === endOfStr) {
           flagStr = false
-          replaceList.forEach((key) => { str = str.split(key[1]).join(key[0]) })
           res.push({ text: str + endOfStr, sourcePosition: src.getSourcePosition(left) })
           i++
           left = i
@@ -194,7 +181,6 @@ class NakoPrepare {
       if (flagStr2) {
         if (ch2 === endOfStr) {
           flagStr2 = false
-          replaceList.forEach((key) => { str = str.split(key[1]).join(key[0]) })
           res.push({ text: str + endOfStr, sourcePosition: src.getSourcePosition(left) })
           i += 2
           left = i

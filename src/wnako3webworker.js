@@ -1,5 +1,7 @@
 // nadesiko for web browser worker
 // wwnako3.js
+require('whatwg-fetch')
+
 const NakoCompiler = require('./nako3')
 const PluginBrowserInWorker = require('./plugin_browser_in_worker')
 const PluginWorker = require('./plugin_worker')
@@ -23,6 +25,13 @@ if (typeof (navigator) === 'object' && self && self instanceof WorkerGlobalScope
 
   nako3Compiler.addPluginObject('PluginBrowserInWorker', PluginBrowserInWorker)
   nako3Compiler.addPluginObject('PluginWorker', PluginWorker)
+
+  nako3Compiler.logger.addListener("error", function(obj) {
+    self.postMessage({
+      type: 'error',
+      data: obj
+    })
+  }, false)
 
   self.onmessage = (event) => {
     const data = event.data || { type: '', data: '' }

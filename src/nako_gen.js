@@ -125,6 +125,8 @@ try {
     this.speedMode = {
       lineNumbers: 0,          // 行番号を出力しない
       implicitTypeCasting: 0,  // 数値加算でparseFloatを出力しない
+      invalidSore: 0,          // 「それ」を用いない
+      forcePure: 0,            // 全てのシステム命令をpureとして扱う。命令からローカル変数への参照が出来なくなる。
     }
   }
 
@@ -342,22 +344,36 @@ try {
     if (ast.type !== 'block')
       {throw NakoSyntaxError.fromNode('構文解析に失敗しています。構文は必ずblockが先頭になります', ast)}
 
-    for (let i = 0; i < ast.block.length; i++) {
-      const t = ast.block[i]
-      if (t.type === 'def_func') {
-        const name = t.name.value
-        this.used_func.add(name)
-        this.__self.__varslist[1][name] = function () { } // 事前に適当な値を設定
-        this.nako_func[name] = {
-          josi: t.name.meta.josi,
-          fn: '',
-          type: 'func'
+    const registFunc = (node) => {
+      for (let i = 0; i < node.block.length; i++) {
+        const t = node.block[i]
+        if (t.type === 'def_func') {
+          const name = t.name.value
+          this.used_func.add(name)
+          this.__self.__varslist[1][name] = function () { } // 事前に適当な値を設定
+          this.nako_func[name] = {
+            josi: t.name.meta.josi,
+            fn: '',
+            type: 'func'
+          }
+        } else
+        if (t.type === 'speed_mode') {
+          if (t.block.type === 'block') {
+            registFunc(t.block)
+          } else {
+            registFunc(t)
+          }
         }
       }
     }
+    registFunc(ast)
 
     // __self.__varslistの変更を反映
-    this.varsSet = { isFunction: false, names: new Set(['それ']), readonly: new Set() }
+    const initialNames = new Set()
+    if (this.speedMode.invalidSore === 0) {
+      initialNames.add('それ')
+    }
+    this.varsSet = { isFunction: false, names: initialNames, readonly: new Set() }
     this.varslistSet = this.__self.__varslist.map((v) => ({ isFunction: false, names: new Set(Object.keys(v)), readonly: new Set() }))
     this.varslistSet[2] = this.varsSet
   }
@@ -448,8 +464,8 @@ try {
       case 'if':
         code += this.convIf(node)
         break
-      case 'promise':
-        code += this.convPromise(node)
+      case 'tikuji':
+        code += this.convTikuji(node)
         break
       case 'for':
         code += this.convFor(node)
@@ -544,10 +560,13 @@ try {
       // 定義されていない名前の参照は変数の定義とみなす。
       // 多くの場合はundefined値を持つ変数であり分かりづらいバグを引き起こすが、
       // 「ナデシコする」などの命令の中で定義された変数の参照の場合があるため警告に留める。
-      this.__self.logger.warn(`変数 ${name} は定義されていません。`, position)
+      // ただし、自動的に定義される変数『引数』は例外 #952
+      if (name !== '引数') {
+        this.__self.logger.warn(`変数『${name}』は定義されていません。`, position)
+      }
       this.varsSet.names.add(name)
       return this.varname(name)
-    }
+  }
 
     const i = res.i
     // システム関数・変数の場合
@@ -592,8 +611,11 @@ try {
     if (node.value) {
       value = this._convGen(node.value, true)
       return lno + `return ${value};`
-    } else {
+    } else
+    if (this.speedMode.invalidSore === 0) {
       return lno + `return ${this.varname('それ')};`
+    } else {
+      return lno + 'return;'
     }
   }
 
@@ -608,7 +630,11 @@ try {
 
   convDefFuncCommon (node, name) {
     let variableDeclarations = '(function(){\n'
-    this.varsSet = { isFunction: true, names: new Set(['それ']), readonly: new Set() }
+    const initialNames = new Set()
+    if (this.speedMode.invalidSore === 0) {
+      initialNames.add('それ')
+    }
+    this.varsSet = { isFunction: true, names: initialNames, readonly: new Set() }
     // ローカル変数をPUSHする
     this.varslistSet.push(this.varsSet)
     // JSの引数と引数をバインド
@@ -637,7 +663,9 @@ try {
     const block = this._convGen(node.block, false)
     code += block.split('\n').map((line) => '  ' + line).join('\n') + '\n'
     // 関数の最後に、変数「それ」をreturnするようにする
-    code += `  return (${this.varname('それ')});\n`
+    if (this.speedMode.invalidSore === 0) {
+      code += `  return (${this.varname('それ')});\n`
+    }
     // 関数の末尾に、ローカル変数をPOP
     code += `})`
 
@@ -652,17 +680,19 @@ try {
         }
       }
     }
-    if (!NakoGen.isValidIdentifier('それ')) {
+    if (!NakoGen.isValidIdentifier('それ') && this.speedMode.invalidSore === 0) {
       needsVarsObject = true
     }
     // 一度でも__varsを使ったら、それも宣言する。
     if (needsVarsObject) {
       variableDeclarations += `  var __vars = {};\n`
     }
-    if (NakoGen.isValidIdentifier('それ')) {
-      variableDeclarations += `  var それ = '';\n`
-    } else {
-      variableDeclarations += `  ${this.varname('それ')} = '';`
+    if (this.speedMode.invalidSore === 0) {
+      if (NakoGen.isValidIdentifier('それ')) {
+        variableDeclarations += `  var それ = '';\n`
+      } else {
+        variableDeclarations += `  ${this.varname('それ')} = '';`
+      }
     }
     code = variableDeclarations + code
 
@@ -783,18 +813,22 @@ try {
     // ループ条件を変数に入れる用
     const varFrom = `$nako_from${idLoop}`
     const varTo = `$nako_to${idLoop}`
+    let sorePrefex = ''
+    if (this.speedMode.invalidSore === 0) {
+      sorePrefex = `${this.varname('それ')} = `
+    }
     const code =
       `\n//[FOR id=${idLoop}]\n` +
       `const ${varFrom} = ${kara};\n` +
       `const ${varTo} = ${made};\n` +
       `if (${varFrom} <= ${varTo}) { // up\n` +
       `  for (let ${varI} = ${varFrom}; ${varI} <= ${varTo}; ${varI}++) {\n` +
-      `    ${this.varname('それ')} = ${word} = ${varI};\n` +
+      `    ${sorePrefex}${word} = ${varI};\n` +
       `    ${block}\n` +
       `  };\n` +
       `} else { // down\n` +
       `  for (let ${varI} = ${varFrom}; ${varI} >= ${varTo}; ${varI}--) {\n` +
-      `    ${this.varname('それ')} = ${word} = ${varI};` + '\n' +
+      `    ${sorePrefex}${word} = ${varI};` + '\n' +
       `    ${block}\n` +
       `  };\n` +
       `};\n//[/FOR id=${idLoop}]\n`
@@ -803,9 +837,13 @@ try {
 
   convForeach (node) {
     let target
-    if (node.target === null)
-      {target = this.varname('それ')}
-     else
+    if (node.target === null) {
+      if (this.speedMode.invalidSore === 0) {
+        target = this.varname('それ')
+      } else {
+        throw NakoSyntaxError.fromNode(`『反復』の対象がありません。`, node)
+      }
+    } else
       {target = this._convGen(node.target, true)}
 
     // blockより早く変数を定義する必要がある
@@ -818,11 +856,15 @@ try {
     const block = this.convGenLoop(node.block)
     const id = this.loop_id++
     const key = '__v0["対象キー"]'
+    let sorePrefex = ''
+    if (this.speedMode.invalidSore === 0) {
+      sorePrefex = `${this.varname('それ')} = `
+    }
     const code =
       `let $nako_foreach_v${id}=${target};\n` +
       `for (let $nako_i${id} in $nako_foreach_v${id})` + '{\n' +
       `  if ($nako_foreach_v${id}.hasOwnProperty($nako_i${id})) {\n` +
-      `    ${nameS} = ${this.varname('それ')} = $nako_foreach_v${id}[$nako_i${id}];` + '\n' +
+      `    ${nameS} = ${sorePrefex}$nako_foreach_v${id}[$nako_i${id}];` + '\n' +
       `    ${key} = $nako_i${id};\n` +
       `    ${block}\n` +
       '  }\n' +
@@ -835,10 +877,14 @@ try {
     const value = this._convGen(node.value, true)
     const block = this.convGenLoop(node.block)
     const kaisu = '__v0["回数"]'
+    let sorePrefex = ''
+    if (this.speedMode.invalidSore === 0) {
+      sorePrefex = `${this.varname('それ')} = `
+    }
     const code =
       `let $nako_times_v${id} = ${value};\n` +
       `for(var $nako_i${id} = 1; $nako_i${id} <= $nako_times_v${id}; $nako_i${id}++)` + '{\n' +
-      `  ${this.varname('それ')} = ${kaisu} = $nako_i${id};` + '\n' +
+      `  ${sorePrefex}${kaisu} = $nako_i${id};` + '\n' +
       '  ' + block + '\n}\n'
     return this.convLineno(node, false) + code
   }
@@ -854,6 +900,12 @@ try {
     }
     if (node.options['暗黙の型変換無し']) {
       this.speedMode.implicitTypeCasting++
+    }
+    if (node.options['強制ピュア']) {
+      this.speedMode.forcePure++
+    }
+    if (node.options['それ無効']) {
+      this.speedMode.invalidSore++
     }
     try {
       return this._convGen(node.block, isExpression)
@@ -905,24 +957,45 @@ try {
       `if (${expr}) {\n  ${block}\n}` + falseBlock + ';\n'
   }
 
-  convPromise (node) {
+  convTikuji (node) {
     const pid = this.loop_id++
-    let code = `const __pid${pid} = async () => {\n`
+    // gen tikuji blocks
+    const curName = `__tikuji${pid}`
+    let code = `const ${curName} = []\n`
     for (let i = 0; i < node.blocks.length; i++) {
       const block = this._convGen(node.blocks[i], false).replace(/\s+$/, '') + '\n'
+      const blockLineNo = this.convLineno(node.blocks[i], true)
       const blockCode =
-        'await new Promise((resolve) => {\n' +
+        `${curName}.push(function(resolve, reject) {\n` +
         '  __self.resolve = resolve;\n' +
+        '  __self.reject = reject;\n' +
         '  __self.resolveCount = 0;\n' +
-        `  ${block}\n` +
+        `  ${blockLineNo}\n` +
+        `  ${block}` +
         '  if (__self.resolveCount === 0) resolve();\n' +
-        '\n' +
-        '})\n'
-      code += `${blockCode}`
+        '}); // end of tikuji__${pid}[{$i}]\n'
+      code += blockCode
     }
-    code += `};/* __pid${pid} */\n`
-    code += `__pid${pid}();\n`
+    code += `// end of ${curName} \n`
+    // gen error block
+    let errorCode = 
+      `  ${curName}.splice(0);\n` + // clear
+      '  __v0["エラーメッセージ"]=errMsg;\n'
+    if (node.errorBlock != null) {
+      const errBlock = this._convGen(node.errorBlock, false).replace(/\s+$/, '') + '\n'
+      errorCode += errBlock
+    }
+    code += `const ${curName}__reject = function(errMsg){\n${errorCode}};\n`
+    // gen run block
     code += '__self.resolve = undefined;\n'
+    code += `const ${curName}__resolve = function(){\n`
+    code += `  setTimeout(function(){\n`
+    code += `    if (${curName}.length == 0) {return}\n`
+    code += `    const f = ${curName}.shift()\n`
+    code += `    f(${curName}__resolve, ${curName}__reject);\n`
+    code += `  }, 0);\n`
+    code += `};\n`
+    code += `${curName}__resolve()\n`
     return this.convLineno(node, false) + code
   }
 
@@ -931,7 +1004,7 @@ try {
     const opts = {}
     for (let i = 0; i < node.args.length; i++) {
       const arg = node.args[i]
-      if (i === 0 && arg === null) {
+      if (i === 0 && arg === null && this.speedMode.invalidSore === 0) {
         args.push(this.varname('それ'))
         opts['sore'] = true
       } else
@@ -993,7 +1066,7 @@ try {
     }
     // 関数内 (__varslist.length > 3) からプラグイン関数 (res.i === 0) を呼び出すとき、 そのプラグイン関数がpureでなければ
     // 呼び出しの直前に全てのローカル変数をthis.__localsに入れる。
-    if (res.i === 0 && this.varslistSet.length > 3 && func.pure !== true) { // undefinedはfalseとみなす
+    if (res.i === 0 && this.varslistSet.length > 3 && func.pure !== true && this.speedMode.forcePure === 0) { // undefinedはfalseとみなす
       // 展開されたローカル変数の列挙
       const localVars = []
       for (const name of Array.from(this.varsSet.names.values())) {
@@ -1041,18 +1114,26 @@ try {
     let code = ``
     if (func.return_none) {
       if (funcEnd === '') {
-        code = `${funcBegin} ${funcCall};\n`
+        if (funcBegin === '') {
+          code = `${funcCall};\n`
+        } else {
+          code = `${funcBegin} ${funcCall};\n`
+        }
       } else {
         code = `${funcBegin}try {\n${indent(funcCall, 1)};\n} finally {\n${indent(funcEnd, 1)}}\n`
       }
     } else {
+      let sorePrefex = ''
+      if (this.speedMode.invalidSore === 0) {
+        sorePrefex = `${this.varname('それ')} = `
+      }
       if (funcBegin === '' && funcEnd === '') {
-        code = `(${this.varname('それ')} = ${funcCall})`
+        code = `(${sorePrefex}${funcCall})`
       } else {
         if (funcEnd === '') {
-          code = `(function(){\n${indent(`${funcBegin};\nreturn ${this.varname('それ')} = ${funcCall}`, 1)}}).call(this)`
+          code = `(function(){\n${indent(`${funcBegin};\nreturn ${sorePrefex} ${funcCall}`, 1)}}).call(this)`
         } else {
-          code = `(function(){\n${indent(`${funcBegin}try {\n${indent(`return ${this.varname('それ')} = ${funcCall};`, 1)}\n} finally {\n${indent(funcEnd, 1)}}`, 1)}}).call(this)`
+          code = `(function(){\n${indent(`${funcBegin}try {\n${indent(`return ${sorePrefex}${funcCall};`, 1)}\n} finally {\n${indent(funcEnd, 1)}}`, 1)}}).call(this)`
         }
       }
       // ...して
@@ -1105,8 +1186,12 @@ try {
 
   convLet (node) {
     // もし値が省略されていたら、変数「それ」に代入する
-    let value = this.varname('それ')
+    let value = null
+    if (this.speedMode.invalidSore === 0) {value = this.varname('それ')}
     if (node.value) {value = this._convGen(node.value, true)}
+    if (value == null) {
+      throw NakoSyntaxError.fromNode(`代入する先の変数名がありません。`, node)
+    }
     // 変数名
     const name = node.name.value
     const res = this.findVar(name)
@@ -1165,7 +1250,7 @@ try {
     const errBlock = this._convGen(node.errBlock, false)
     return this.convLineno(node, false) +
       `try {\n${block}\n} catch (e) {\n` +
-      '__varslist[0]["エラーメッセージ"] = e.message;\n' +
+      '  __v0["エラーメッセージ"] = e.message;\n' +
       ';\n' +
       `${errBlock}}\n`
   }

@@ -1,3 +1,5 @@
+const { func } = require("testdouble")
+
 const errMsgCanvasInit = '描画を行うためには、HTML内にcanvasを配置し、idを振って『描画開始』命令に指定します。'
 
 module.exports = {
@@ -13,6 +15,8 @@ module.exports = {
       if (!cv) {throw new Error('『描画開始』でCanvasを取得できませんでした。')}
       sys.__canvas = cv
       sys.__ctx = cv.getContext('2d')
+      sys.__fillStyle = 'black'
+      sys.__strokeStyle = 'black'
       sys.__v0['描画中キャンバス'] = cv
       sys.__v0['描画中コンテキスト'] = sys.__ctx
     },
@@ -46,7 +50,10 @@ module.exports = {
     pure: true,
     fn: function (v, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
-      sys.__ctx.strokeStyle = v
+      sys.__strokeStyle = v
+      if (v != '') {
+        sys.__ctx.strokeStyle = v
+      }
     },
     return_none: true
   },
@@ -56,7 +63,10 @@ module.exports = {
     pure: true,
     fn: function (v, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
-      sys.__ctx.fillStyle = v
+      sys.__fillStyle = v
+      if (v != '') {
+        sys.__ctx.fillStyle = v
+      }
     },
     return_none: true
   },
@@ -89,10 +99,11 @@ module.exports = {
     pure: true,
     fn: function (b, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      if (sys.__fillStyle == '' && sys.__strokeStyle == '') {return}
       sys.__ctx.beginPath()
       sys.__ctx.rect(b[0], b[1], b[2], b[3])
-      sys.__ctx.fill()
-      sys.__ctx.stroke()
+      if (sys.__fillStyle != '') {sys.__ctx.fill()}
+      if (sys.__strokeStyle != '') {sys.__ctx.stroke()}     
     },
     return_none: true
   },
@@ -112,10 +123,11 @@ module.exports = {
     pure: true,
     fn: function (xy, r, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      if (sys.__fillStyle == '' && sys.__strokeStyle == '') {return}
       sys.__ctx.beginPath()
       sys.__ctx.arc(xy[0], xy[1], r, 0, 2 * Math.PI, false)
-      sys.__ctx.fill()
-      sys.__ctx.stroke()
+      if (sys.__fillStyle != '') {sys.__ctx.fill()}
+      if (sys.__strokeStyle != '') {sys.__ctx.stroke()}     
     },
     return_none: true
   },
@@ -134,10 +146,11 @@ module.exports = {
         if (!args[6]) {args[6] = Math.PI * 2}
         if (!args[7]) {args[7] = true}
       }
+      if (sys.__fillStyle == '' && sys.__strokeStyle == '') {return}
       sys.__ctx.beginPath()
       sys.__ctx.ellipse.apply(sys.__ctx, args)
-      sys.__ctx.fill()
-      sys.__ctx.stroke()
+      if (sys.__fillStyle != '') {sys.__ctx.fill()}
+      if (sys.__strokeStyle != '') {sys.__ctx.stroke()}     
     },
     return_none: true
   },
@@ -147,6 +160,7 @@ module.exports = {
     pure: true,
     fn: function (a, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      if (sys.__fillStyle == '' && sys.__strokeStyle == '') {return}
       sys.__ctx.beginPath()
       const p = a.shift()
       sys.__ctx.moveTo(p[0], p[1])
@@ -155,16 +169,104 @@ module.exports = {
         sys.__ctx.lineTo(t[0], t[1])
       }
       sys.__ctx.lineTo(p[0], p[1])
-      sys.__ctx.fill()
-      sys.__ctx.stroke()
+      if (sys.__fillStyle != '') {sys.__ctx.fill()}
+      if (sys.__strokeStyle != '') {sys.__ctx.stroke()}     
     },
     return_none: true
   },
-  '画像描画': { // @ ファイル名F(またはImage)の画像を[sx, sy, sw, sh]の[dx, dy, dw, dh]へ描画し、Imageを返す // @ がぞうびょうが
+  '画像読': { // @ 画像のURLを読み込んでImageオブジェクトを返す。(URLにdataスキームも指定可能) // @ がぞうよむ
     type: 'func',
-    josi: [['の', 'を'], ['の', 'を'], ['へ', 'に']],
+    josi: [['の', 'を']],
+    pure: true,
+    fn: function (url, sys) {
+      const img = new window.Image()
+      img.src = url
+      return img
+    }
+  },
+  '画像逐次読': { // @ 画像のURLを読み込んでImageオブジェクトを返す。また完了時『対象』にも代入する。『逐次実行』構文で使う。 // @ がぞうちくじよむ
+    type: 'func',
+    josi: [['の', 'を']],
+    pure: true,
+    fn: function (url, sys) {
+      if (sys.resolve === undefined) {throw new Error('『画像逐次読』は『逐次実行』構文で使ってください。')}
+      sys.resolveCount++
+      const img = new window.Image()
+      img.src = url
+      img.onload = () => {
+        sys.__v0['対象'] = img
+        sys.resolve()
+      }
+      img.onerror = () => {
+        sys.__v0['対象'] = ''
+        sys.reject()
+      }
+      return img
+    }
+  },
+  '画像読時': { // @ 画像のURLを読み込んでコールバック関数Fを読み込み、変数『対象』にImageオブジェクトを代入する // @ がぞうよんだとき
+    type: 'func',
+    josi: [['で'], ['の', 'を']],
+    pure: true,
+    fn: function (f, url, sys) {
+      // 関数オブジェクトを得る
+      const func = sys.__findVar(f, null) // 文字列指定なら関数に変換
+      // 画像を読む
+      const img = new window.Image()
+      img.src = url
+      img.onload = () => {
+        sys.__v0['対象'] = img
+        func(sys)
+      }
+      img.onerror = () => {
+        sys.__v0['対象'] = ''
+        func(sys)
+      }
+    },
+    return_none: true
+  },
+  '画像描画': { // @ 画像IMG(またはURL)を描画先座標[x,y]へ描画し、Imageオブジェクトを返す。座標には2,4,8個の引数を指定可能。 // @ がぞうびょうが
+    type: 'func',
+    josi: [['の', 'を'], ['へ', 'に']],
+    pure: true,
+    fn: function (img, xy, sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      const drawFunc = (im, ctx) => {
+        if (xy.length === 2){
+          ctx.drawImage(im, xy[0], xy[1])
+        }
+        else if (xy.length === 4) {
+          ctx.drawImage(im, xy[0], xy[1], xy[2], xy[3])
+        }
+        else if (xy.length === 8) {
+          ctx.drawImage(im, xy[0], xy[1], xy[2], xy[3], xy[4], xy[5], xy[6], xy[7])
+        }
+        else {
+          throw new Error('『画像描画』の第二引数の配列要素は2,4,8個のいずれかです。')
+        }
+      }
+      if (typeof img === 'string') {
+        const image = new window.Image()
+        image.src = img
+        image.onload = () => {
+          drawFunc(image, sys.__ctx)
+        }
+        return image
+      } else {
+        drawFunc(img, sys.__ctx)
+        return img
+      }
+    },
+    return_none: false
+  },
+  '画像部分描画': { // @ 画像IMG(またはURL)の座標[sx, sy, sw, sh]を描画先座標[dx, dy, dw, dh]へ描画し、Imageオブジェクトを返す // @ がぞうかくだいびょうが
+    type: 'func',
+    josi: [['の'], ['を', 'から'], ['へ', 'に']],
     pure: true,
     fn: function (img, sxy, dxy, sys) {
+      const errArgLen = 
+        '『画像部分描画』に使える引数は画像と、描画する座標へ2つか、' +
+        '描画する座標とその位置の4つか、使用する座標と使用する位置と描画する座標と大きさの8つだけです。'
       if(img && sxy){
         if (!Array.isArray(sxy) && Array.isArray(img)){ //逆になっていれば入れ替える
           if (typeof sxy === 'string' || String(sxy.__proto__) === '[object HTMLImageElement]'){
@@ -195,12 +297,9 @@ module.exports = {
           else if (sxy.length === 4){
             ctx.drawImage(im, sxy[0], sxy[1], sxy[2], sxy[3], dxy[0], dxy[1], dxy[2], dxy[3])
           }
-          else {throw new Error('画像描画に使える引数は画像と、描画する座標へ2つか、' +
-          '描画する座標とその位置の4つか、使用する座標と使用する位置と描画する座標と大きさの8つだけです。')}
-
+          else {throw new Error(errArgLen)}
         }
-        else {throw new Error('画像描画に使える引数は画像と、描画する座標へ2つか、' +
-        '描画する座標とその位置の4つか、使用する座標と使用する位置と描画する座標と大きさの8つだけです。')}
+        else {throw new Error(errArgLen)}
       }
       if (typeof img === 'string') {
         const image = new window.Image()
@@ -232,6 +331,56 @@ module.exports = {
     fn: function (xy, s, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
       sys.__ctx.fillText(s, xy[0], xy[1])
+    },
+    return_none: true
+  },
+  '描画起点設定': { // @ 描画位置の起点を[x,y]へ設定する(translate) // @ びょうがきてんせってい
+    type: 'func',
+    josi: [['へ', 'に']],
+    pure: true,
+    fn: function (xy, sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      sys.__ctx.translate(xy[0],xy[1])
+    },
+    return_none: true
+  },
+  '描画回転': { // @ 描画内容をA度だけ回転する(rotate) // @ びょうがかいてん
+    type: 'func',
+    josi: [['だけ', 'に', 'へ']],
+    pure: true,
+    fn: function (a, sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      sys.__ctx.rotate(a * Math.PI / 180)
+    },
+    return_none: true
+  },
+  '描画拡大': { // @ 描画内容を[x方向,y方向]だけ拡大する(scale) // @ びょうがかくだい
+    type: 'func',
+    josi: [['だけ', 'に', 'へ']],
+    pure: true,
+    fn: function (xy, sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      sys.__ctx.scale(xy[0], xy[1])
+    },
+    return_none: true
+  },
+  '描画変換マトリクス設定': { // @ 描画内容を[a,b,c,d,e,f]の変換マトリクスに設定。既存内容を破棄して設定(setTransform) // @ びょうがへんかんまとりくすせってい
+    type: 'func',
+    josi: [['だけ', 'に', 'へ']],
+    pure: true,
+    fn: function (a, sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      sys.__ctx.setTransform(a[0],a[1],a[2],a[3],a[4],a[5],a[6])
+    },
+    return_none: true
+  },
+  '描画変換マトリクス追加': { // @ 描画内容を[a,b,c,d,e,f]のマトリクスで変換。既存のマトリクスに掛け合わせる(transform) // @ びょうがへんかんまとりくすついか
+    type: 'func',
+    josi: [['だけ', 'に', 'へ']],
+    pure: true,
+    fn: function (a, sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      sys.__ctx.transform(a[0],a[1],a[2],a[3],a[4],a[5],a[6])
     },
     return_none: true
   }
