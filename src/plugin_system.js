@@ -97,7 +97,9 @@ const PluginSystem = {
   '回数': {type: 'const', value: ''}, // @かいすう
   'CR': {type: 'const', value: '\r'}, // @CR
   'LF': {type: 'const', value: '\n'}, // @LF
-  '空配列': { // @空の配列を返す // @からはいれつ
+  '非数': {type: 'const', value: NaN}, // @ひすう
+  '無限大': {type: 'const', value: Infinity}, // @むげんだい
+  '空配列': { // @空の配列を返す。『[]』と同義。 // @からはいれつ
     type: 'func',
     josi: [],
     pure: true,
@@ -105,7 +107,15 @@ const PluginSystem = {
       return []
     }
   },
-  '空ハッシュ': { // @空のハッシュを返す // @からはっしゅ
+  '空辞書': { // @空の辞書型を返す。『{}』と同義。 // @からじしょ
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      return []
+    }
+  },
+  '空ハッシュ': { // @空のハッシュを返す(v3.2以降非推奨) // @からはっしゅ
     type: 'func',
     josi: [],
     pure: true,
@@ -113,7 +123,7 @@ const PluginSystem = {
       return {}
     }
   },
-  '空オブジェクト': { // @空のオブジェクトを返す // @からおぶじぇくと
+  '空オブジェクト': { // @空のオブジェクトを返す(v3.2以降非推奨) // @からおぶじぇくと
     type: 'func',
     josi: [],
     pure: false,
@@ -1366,15 +1376,33 @@ const PluginSystem = {
       throw new Error('『配列シャッフル』で配列以外が指定されました。')
     }
   },
-  '配列切取': { // @配列AのI番目(0起点)の要素を切り取って返す。Aの内容を書き換える。 // @はいれつきりとる
+  '配列削除': { // @配列AのI番目(0起点)の要素を削除して返す。Aの内容を書き換える。辞書型変数ならキーIを削除する。 // @はいれつさくじょ
     type: 'func',
-    josi: [['の'], ['を']],
+    josi: [['の', 'から'], ['を']],
+    pure: false,
+    fn: function (a, i, sys) {
+      return sys.__exec('配列切取', [a, i, sys])
+    }
+  },
+  '配列切取': { // @配列AのI番目(0起点)の要素を切り取って返す。Aの内容を書き換える。辞書型変数ならキーIを削除する。 // @はいれつきりとる
+    type: 'func',
+    josi: [['の', 'から'], ['を']],
     pure: true,
     fn: function (a, i) {
-      if (a instanceof Array) { // 配列ならOK
+      // 配列変数のとき
+      if (a instanceof Array) {
         const b = a.splice(i, 1)
-        if (b instanceof Array) {return b[0]}
+        if (b instanceof Array) {return b[0]} // 切り取った戻り値は必ずArrayになるので。
         return null
+      }
+      // 辞書型変数のとき
+      if (a instanceof Object && typeof(i) === 'string') { //辞書型変数も許容
+        if (a[i]) {
+          const old = a[i]
+          delete a[i]
+          return old
+        }
+        return undefined
       }
       throw new Error('『配列切取』で配列以外を指定。')
     }
@@ -1442,6 +1470,23 @@ const PluginSystem = {
     pure: true,
     fn: function (a) {
       return a.reduce((x, y) => Math.min(x, y))
+    }
+  },
+  '配列合計': { // @配列Aの値を全て足して返す。配列の各要素を数値に変換して計算する。数値に変換できない文字列は0になる。 // @はいれつごうけい
+    type: 'func',
+    josi: [['の']],
+    pure: true,
+    fn: function (a) {
+      if (a instanceof Array) {
+        let v = 0
+        a.forEach((n) => {
+          const nn = parseFloat(n)
+          if (isNaN(nn)) {return}
+          v += nn
+        })
+        return v
+      }
+      throw new Error('『配列合計』で配列変数以外の値が指定されました。')
     }
   },
   // @二次元配列処理
@@ -1970,6 +2015,39 @@ const PluginSystem = {
 
       return a
     }
+  },
+  '助詞一覧取得': { // @文法として定義されている助詞の一覧を取得する // @じょしいちらんしゅとく
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      const josi = require('./nako_josi_list.js')
+      return josi.josiList
+    }
+  },
+  '予約語一覧取得': { // @文法として定義されている予約語の一覧を取得する // @よやくごいちらんしゅとく
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      const words = require('./nako_reserved_words.js')
+      const w = []
+      for (let key in words) {
+        w.push(key)
+      }
+      return w
+    }
+  },
+  // @プラグイン管理
+  'プラグイン名': {type: 'const', value: 'メイン'}, // @ぷらぐいんめい
+  'プラグイン名設定': { // @プラグイン名をSに変更する // @プラグインめいせってい
+    type: 'func',
+    josi: [['に','へ']],
+    pure: false,
+    fn: function (s, sys) {
+      sys.__v0['プラグイン名'] = s
+    },
+    return_none: true
   },
 
   // @URLエンコードとパラメータ

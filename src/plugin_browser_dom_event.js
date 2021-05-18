@@ -1,14 +1,12 @@
 module.exports = {
-  // @DOM操作/イベント
+  // @DOM操作とイベント
+  '対象イベント': {type:'const', value: ''}, // @たいしょういべんと
   'DOMイベント追加': { // @DOMのEVENTになでしこ関数名funcStrのイベントを追加// @DOMいべんとついか
     type: 'func',
     josi: [['の'], ['に', 'へ'], ['を']],
     pure: false,
     fn: function (dom, event, funcStr, sys) {
-      if (typeof (dom) === 'string')
-        {dom = document.querySelector(dom)}
-
-      dom.addEventListener(event, sys.__findVar(funcStr, null))
+      sys.__addEvent(dom, event, funcStr, null)
     },
     return_none: true
   },
@@ -17,10 +15,7 @@ module.exports = {
     josi: [['の'], ['から'], ['を']],
     pure: false,
     fn: function (dom, event, funcStr, sys) {
-      if (typeof (dom) === 'string')
-        {dom = document.querySelector(dom)}
-
-      dom.removeEventListener(event, sys.__findVar(funcStr, null))
+      sys.__removeEvent(dom, event, funcStr)
     },
     return_none: true
   },
@@ -29,14 +24,10 @@ module.exports = {
     josi: [['で'], ['の'], ['が']],
     pure: true,
     fn: function (callback, dom, event, sys) {
-      if (typeof (dom) === 'string')
-        {dom = document.querySelector(dom)}
-
-      dom.addEventListener(event, callback)
+      sys.__addEvent(dom, event, callback, null)
     },
     return_none: true
   },
-  '対象イベント': {type:'const', value: ''}, // @たいしょういべんと
   'DOMイベント処理停止': { // @キーイベントやマウスイベントで、元々ブラウザが行う処理を中止する // @DOMいべんとしょりていし
     type: 'func',
     josi: [['を', 'の']],
@@ -51,28 +42,16 @@ module.exports = {
     josi: [['で'], ['を']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom.onclick = (e) => {
-        sys.__v0['対象'] = e.target
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'click', func, null)
     },
     return_none: true
   },
   '読込時': { // @無名関数FでDOMを読み込んだ時に実行するイベントを設定 // @よみこんだとき
     type: 'func',
-    josi: [['で'], ['を']],
+    josi: [['で'], ['を','の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom.onload = (e) => {
-        sys.__v0['対象'] = e.target
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'load', func, null)
     },
     return_none: true
   },
@@ -81,13 +60,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom.onsubmit = (e) => {
-        sys.__v0['対象'] = e.target
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'submit', func, null)
     },
     return_none: true
   },
@@ -97,14 +70,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['onkeydown'] = (e) => {
-        sys.__v0['対象'] = e.target
-        sys.__v0['押キー'] = e.key
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'keydown', func, sys.__keyHandler)
     },
     return_none: true
   },
@@ -113,14 +79,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['onkeyup'] = (e) => {
-        sys.__v0['対象'] = e.target
-        sys.__v0['押キー'] = e.key
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'keyup', func, sys.__keyHandler)
     },
     return_none: true
   },
@@ -129,14 +88,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['onkeypress'] = (e) => {
-        sys.__v0['対象'] = e.target
-        sys.__v0['押キー'] = e.key
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'keypress', func, sys.__keyHandler)
     },
     return_none: true
   },
@@ -147,17 +99,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      // 左上座標を求める
-      dom['onmousedown'] = (e) => {
-        const box = e.target.getBoundingClientRect()
-        sys.__v0['マウスX'] = e.clientX - box.left
-        sys.__v0['マウスY'] = e.clientY - box.top
-        sys.__v0['対象'] = e.target
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'mousedown', func, sys.__mouseHandler)
     },
     return_none: true
   },
@@ -166,16 +108,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['onmousemove'] = (e) => {
-        const box = e.target.getBoundingClientRect()
-        sys.__v0['マウスX'] = e.clientX - box.left
-        sys.__v0['マウスY'] = e.clientY - box.top
-        sys.__v0['対象'] = e.target
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'mousemove', func, sys.__mouseHandler)
     },
     return_none: true
   },
@@ -184,44 +117,19 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['onmouseup'] = (e) => {
-        const box = e.target.getBoundingClientRect()
-        sys.__v0['マウスX'] = e.clientX - box.left
-        sys.__v0['マウスY'] = e.clientY - box.top
-        sys.__v0['対象'] = e.target
-        sys.__v0['対象イベント'] = e
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'mouseup', func, sys.__mouseHandler)
     },
     return_none: true
   },
   'タッチX': {type: 'const', value: 0}, // @たっちX
   'タッチY': {type: 'const', value: 0}, // @たっちY
   'タッチ配列': {type: 'const', value: []}, // @たっちはいれつ
-  'タッチイベント計算': { // @タッチイベントで座標計算を行う。『タッチX』『タッチY』『対象』『対象イベント』が設定される。 // @たっちいべんとけいさん
+  'タッチイベント計算': { // @タッチイベントで座標計算を行う。『タッチX』『タッチY』『タッチ配列』『対象』『対象イベント』が設定される。『タッチ配列』の内容が返る // @たっちいべんとけいさん
     type: 'func',
     josi: [['の']],
     pure: true,
     fn: function (e, sys) {
-      const box = e.target.getBoundingClientRect()
-      const touches = e.changedTouches
-      if (touches.length <= 0) return
-      const ts = []
-      for (let i = 0; i < touches.length; i++) {
-        const t = touches[i]
-        const tx = t.clientX - box.left
-        const ty = t.clientY - box.top
-        if (i == 0) {
-          sys.__v0['タッチX'] = tx
-          sys.__v0['タッチY'] = ty
-        }
-        ts.push([tx, ty])
-      }
-      sys.__v0['タッチ配列'] = ts
-      sys.__v0['対象'] = e.target
-      sys.__v0['対象イベント'] = e
+      return sys.__touchHandler(e, sys)
     }
   },
   'タッチ開始時': { // @無名関数FでDOMに対してタッチを開始した時に実行するイベントを設定。// @たっちかいししたとき
@@ -229,12 +137,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['ontouchstart'] = (e) => {
-        sys.__exec('タッチイベント計算', [e, sys])
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'touchstart', func, sys.__touchHandler)
     },
     return_none: true
   },
@@ -243,12 +146,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['ontouchmove'] = (e) => {
-        sys.__exec('タッチイベント計算', [e, sys])
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'touchmove', func, sys.__touchHandler)
     },
     return_none: true
   },
@@ -257,12 +155,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['ontouchend'] = (e) => {
-        sys.__exec('タッチイベント計算', [e, sys])
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'touchend', func, sys.__touchHandler)
     },
     return_none: true
   },
@@ -271,12 +164,7 @@ module.exports = {
     josi: [['で'], ['を', 'の']],
     pure: false,
     fn: function (func, dom, sys) {
-      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
-      func = sys.__findVar(func, null) // 文字列指定なら関数に変換
-      dom['ontouchcancel'] = (e) => {
-        sys.__exec('タッチイベント計算', [e, sys])
-        return func(e, sys)
-      }
+      sys.__addEvent(dom, 'touchcancel', func, sys.__touchHandler)
     },
     return_none: true
   },
@@ -286,7 +174,9 @@ module.exports = {
     pure: false,
     fn: function (func, sys) {
       func = sys.__findVar(func, null) // 文字列指定なら関数に変換
+      if (!func) {throw new Error('『画面更新時実行』で関数の取得に失敗しました。')}
       return window.requestAnimationFrame(func)
+      // このイベントをなでしこ側で管理すべきか考えたが、一度発火して終了するだけなので、なでしこ側では関知しないことに決めた #991
     }
   },
   '画面更新処理取消': { // @識別IDを指定して『画面更新時実行』を取り消す// @がめんこうしんしょりとりけし

@@ -1,5 +1,3 @@
-const { func } = require("testdouble")
-
 const errMsgCanvasInit = '描画を行うためには、HTML内にcanvasを配置し、idを振って『描画開始』命令に指定します。'
 
 module.exports = {
@@ -107,12 +105,31 @@ module.exports = {
     },
     return_none: true
   },
-  '描画クリア': { // @ [x, y, w, h]の範囲を描画クリア // @ びょうがくりあ
+  '全描画クリア': { // @ 描画中のキャンバスをクリアする。 // @ ぜんびょうがくりあ
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      sys.__ctx.clearRect(0, 0,
+        sys.__canvas.width, sys.__canvas.height)
+    },
+    return_none: true
+  },
+  '描画クリア': { // @ [x, y, w, h]の範囲を描画クリア。空配列を指定すると『全描画クリア』と同じ。2要素の配列だと[0,0]を省略したのと同じ。 // @ びょうがくりあ
     type: 'func',
     josi: [['の', 'へ', 'に']],
     pure: true,
     fn: function (b, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      if (!(b instanceof Array)) { b = [] }
+      if (b.length == 0) {
+        b = [0, 0, sys.__canvas.width, sys.__canvas.height]
+      }
+      else if (b.length <= 2) {
+        b.unshift(0)
+        b.unshift(0)
+      }
       sys.__ctx.clearRect(b[0], b[1], b[2], b[3])
     },
     return_none: true
@@ -259,7 +276,7 @@ module.exports = {
     },
     return_none: false
   },
-  '画像部分描画': { // @ 画像IMG(またはURL)の座標[sx, sy, sw, sh]を描画先座標[dx, dy, dw, dh]へ描画し、Imageオブジェクトを返す // @ がぞうかくだいびょうが
+  '画像部分描画': { // @ 画像IMG(またはURL)の座標[sx, sy, sw, sh]を描画先座標[dx, dy, dw, dh]へ描画し、Imageオブジェクトを返す // @ がぞうぶぶんびょうが
     type: 'func',
     josi: [['の'], ['を', 'から'], ['へ', 'に']],
     pure: true,
@@ -315,11 +332,19 @@ module.exports = {
     },
     return_none: false
   },
-  '描画フォント設定': { // @ 描画フォントを指定する(CSSのフォント設定と同じ 例「36px Aria」) // @ びょうがふぉんとせってい
+  '描画フォント設定': { // @ 描画フォントを指定する(CSSのフォント設定と同じ 例「36px Aria」)。フォントサイズのみの指定も可。 // @ びょうがふぉんとせってい
     type: 'func',
     josi: [['を', 'の', 'で', 'に']],
     pure: true,
     fn: function (n, sys) {
+      // 数値だけならフォントサイズのみの指定
+      if (typeof(n) === 'number') {
+        n = n + 'px sans-serif'
+      }
+      // ピクセル数のみの指定なら適当にフォントを足す
+      else if (/^[0-9]+(px|em)$/.test(n)) {
+        n = n + ' sans-serif'
+      }
       sys.__ctx.font = n
     },
     return_none: true
@@ -331,6 +356,16 @@ module.exports = {
     fn: function (xy, s, sys) {
       if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
       sys.__ctx.fillText(s, xy[0], xy[1])
+    },
+    return_none: true
+  },
+  '文字描画幅取得': { // @ テキストSを指定して文字の描画幅を取得する // @ もじびょうがはばしゅとく
+    type: 'func',
+    josi: [['の']],
+    pure: true,
+    fn: function (s, sys) {
+      if (!sys.__ctx) {throw new Error(errMsgCanvasInit)}
+      return sys.__ctx.measureText(s)
     },
     return_none: true
   },
@@ -383,5 +418,44 @@ module.exports = {
       sys.__ctx.transform(a[0],a[1],a[2],a[3],a[4],a[5],a[6])
     },
     return_none: true
+  },
+  '描画データURL変換': { // @ 描画内容をPNG形式のデータURLに変換して得る。 // @ びょうがでーたURLへんかん
+    type: 'func',
+    josi: [],
+    pure: false,
+    fn: function (sys) {
+      const cv = sys.__v0['描画中キャンバス']
+      const url = cv.toDataURL('image/png')
+      return url
+    }
+  },
+  '描画ダウンロードリンク作成': { // @ 描画内容をPNG形式のデータURLに変換してDOMに設定する。 // @ びょうがだうんろーどりんくさくせい
+    type: 'func',
+    josi: [['へ', 'に']],
+    pure: false,
+    fn: function (dom, sys) {
+      if (typeof dom === 'string') { dom = document.querySelector(dom)}
+      if (!dom){ throw new Error('『描画ダウンロードリンク作成』でDOMが見当たりません。')}
+      const cv = sys.__v0['描画中キャンバス']
+      if (!cv){ throw new Error('『描画ダウンロード』で描画中キャンバスが設定されていません。')}
+      dom.href = cv.toDataURL('image/png')
+      dom.download = 'canvas.png'
+    },
+    return_none: true
+  },
+  '描画ダウンロード': { // @ 描画内容をPNG形式のデータURLに変換してダウンロードする。(「クリックした時」などと組み合わせて使う) // @ びょうがだうんろーど
+    type: 'func',
+    josi: [],
+    pure: false,
+    fn: function (sys) {
+      if (typeof dom === 'string') { dom = document.querySelector(dom)}
+      const cv = sys.__v0['描画中キャンバス']
+      if (!cv){ throw new Error('『描画ダウンロード』で描画中キャンバスが設定されていません。')}
+      const a = document.createElement('a')
+      a.href = cv.toDataURL('image/png')
+      a.download = 'canvas.png'
+      a.click()
+      return true
+    }
   }
 }

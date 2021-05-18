@@ -60,7 +60,6 @@ class NakoParser extends NakoParserBase {
     const map = this.peekSourceMap()
     // 最初の語句が決まっている構文
     if (this.check('eol')) {return this.get()}
-    if (this.check('embed_code')) {return this.get()}
     if (this.check('もし')) {return this.yIF()}
     if (this.check('エラー監視')) {return this.yTryExcept()}
     if (this.check('逐次実行')) {return this.yTikuji()}
@@ -780,15 +779,17 @@ class NakoParser extends NakoParserBase {
     if (!this.check('def_func')) {return null}
     const def = this.get()
     let args = []
+    // 「,」を飛ばす
+    if (this.check('comma')) {this.get()}
     // 関数の引数定義は省略できる
-    if (this.check('('))
-      {args = this.yDefFuncReadArgs()}
-
+    if (this.check('(')) {args = this.yDefFuncReadArgs()}
+    // 「,」を飛ばす
+    if (this.check('comma')) {this.get()}
+    // ブロックを読む
     this.saveStack()
     const block = this.yBlock()
     if (this.check('ここまで')) {this.get()}
     this.loadStack()
-
     return {
       type: 'func_obj',
       args,
@@ -1071,76 +1072,16 @@ class NakoParser extends NakoParserBase {
       }
     }
 
+    // let_array ?
     if (this.check2(['word', '@'])) {
-      // 一次元配列
-      if (this.accept(['word', '@', this.yValue, 'eq', this.yCalc]))
-        {return {
-          type: 'let_array',
-          name: this.y[0],
-          index: [this.y[2]],
-          value: this.y[4],
-          ...map,
-          end: this.peekSourceMap()
-        }}
-
-      // 二次元配列
-      if (this.accept(['word', '@', this.yValue, '@', this.yValue, 'eq', this.yCalc]))
-        {return {
-          type: 'let_array',
-          name: this.y[0],
-          index: [this.y[2], this.y[4]],
-          value: this.y[6],
-          ...map,
-          end: this.peekSourceMap()
-        }}
-
-      // 三次元配列
-      if (this.accept(['word', '@', this.yValue, '@', this.yValue, '@', this.yValue, 'eq', this.yCalc]))
-        {return {
-          type: 'let_array',
-          name: this.y[0],
-          index: [this.y[2], this.y[4], this.y[6]],
-          value: this.y[8],
-          ...map,
-          end: this.peekSourceMap()
-        }}
-
+      const la = this.yLetArrayAt(map)
+      if (la) return la
     }
     if (this.check2(['word', '['])) {
-      // 一次元配列
-      if (this.accept(['word', '[', this.yCalc, ']', 'eq', this.yCalc]))
-        {return {
-          type: 'let_array',
-          name: this.y[0],
-          index: [this.y[2]],
-          value: this.y[5],
-          ...map,
-          end: this.peekSourceMap()
-        }}
-
-      // 二次元配列
-      if (this.accept(['word', '[', this.yCalc, ']', '[', this.yCalc, ']', 'eq', this.yCalc]))
-        {return {
-          type: 'let_array',
-          name: this.y[0],
-          index: [this.y[2], this.y[5]],
-          value: this.y[8],
-          ...map,
-          end: this.peekSourceMap()
-        }}
-
-      // 三次元配列
-      if (this.accept(['word', '[', this.yCalc, ']', '[', this.yCalc, ']', '[', this.yCalc, ']', 'eq', this.yCalc]))
-        {return {
-          type: 'let_array',
-          name: this.y[0],
-          index: [this.y[2], this.y[5], this.y[8]],
-          value: this.y[11],
-          ...map,
-          end: this.peekSourceMap()
-        }}
-
+      const lb = this.yLetArrayBracket(map)
+      if (lb) return lb
     }
+    
     // ローカル変数定義
     if (this.accept(['word', 'とは'])) {
       const word = this.y[0]
@@ -1186,10 +1127,198 @@ class NakoParser extends NakoParserBase {
         end: this.peekSourceMap()
       }
     }
-
+    
+    // 複数定数への代入 #563
+    if (this.accept(['定数', this.yJSONArray, 'eq', this.yCalc])) {
+      const names = this.y[1]
+      // check array
+      if (names && names.value instanceof Array) {
+        for (let i in names.value) {
+          if (names.value[i].type != 'word') {
+            throw NakoSyntaxError.fromNode(`複数定数の代入文${i+1}番目でエラー。『定数[A,B,C]=[1,2,3]』の書式で記述してください。`, this.y[0])
+          }
+        }
+      } else {
+        throw NakoSyntaxError.fromNode(`複数定数の代入文でエラー。『定数[A,B,C]=[1,2,3]』の書式で記述してください。`, this.y[0])
+      }
+      return {
+        type: 'def_local_varlist',
+        names: names.value,
+        vartype: '定数',
+        value: this.y[3],
+        ...map,
+        end: this.peekSourceMap()
+      }
+    }
+    // 複数変数への代入 #563
+    if (this.accept(['変数', this.yJSONArray, 'eq', this.yCalc])) {
+      const names = this.y[1]
+      // check array
+      if (names && names.value instanceof Array) {
+        for (let i in names.value) {
+          if (names.value[i].type != 'word') {
+            throw NakoSyntaxError.fromNode(`複数変数の代入文${i+1}番目でエラー。『変数[A,B,C]=[1,2,3]』の書式で記述してください。`, this.y[0])
+          }
+        }
+      } else {
+        throw NakoSyntaxError.fromNode(`複数変数の代入文でエラー。『変数[A,B,C]=[1,2,3]』の書式で記述してください。`, this.y[0])
+      }
+      return {
+        type: 'def_local_varlist',
+        names: names.value,
+        vartype: '変数',
+        value: this.y[3],
+        ...map,
+        end: this.peekSourceMap()
+      }
+    }
+    
+    // 複数変数への代入 #563
+    if (this.check2(['word', 'comma', 'word'])) {
+      // 2 word
+      if (this.accept(['word','comma','word','eq', this.yCalc])) {
+        return {
+          type: 'def_local_varlist',
+          names: [this.y[0], this.y[2]],
+          vartype: '変数',
+          value: this.y[4],
+          ...map,
+          end: this.peekSourceMap()
+        }
+      }
+      // 3 word
+      if (this.accept(['word','comma','word','comma','word','eq', this.yCalc])) {
+        return {
+          type: 'def_local_varlist',
+          names: [this.y[0], this.y[2], this.y[4]],
+          vartype: '変数',
+          value: this.y[6],
+          ...map,
+          end: this.peekSourceMap()
+        }
+      }
+      // 4 word
+      if (this.accept(['word','comma','word','comma','word','comma','word','eq', this.yCalc])) {
+        return {
+          type: 'def_local_varlist',
+          names: [this.y[0], this.y[2], this.y[4], this.y[6]],
+          vartype: '変数',
+          value: this.y[8],
+          ...map,
+          end: this.peekSourceMap()
+        }
+      }
+      // 5 word
+      if (this.accept(['word','comma','word','comma','word','comma','word','comma','word','eq', this.yCalc])) {
+        return {
+          type: 'def_local_varlist',
+          names: [this.y[0], this.y[2], this.y[4], this.y[6], this.y[8]],
+          vartype: '変数',
+          value: this.y[10],
+          ...map,
+          end: this.peekSourceMap()
+        }
+      }
+    }
     return null
   }
+  
+  /** @returns {Ast | null} */
+  yLetArrayAt (map) {
+    // 一次元配列
+    if (this.accept(['word', '@', this.yValue, 'eq', this.yCalc]))
+      {return {
+        type: 'let_array',
+        name: this.y[0],
+        index: [this.y[2]],
+        value: this.y[4],
+        ...map,
+        end: this.peekSourceMap()
+      }}
 
+    // 二次元配列
+    if (this.accept(['word', '@', this.yValue, '@', this.yValue, 'eq', this.yCalc]))
+      {return {
+        type: 'let_array',
+        name: this.y[0],
+        index: [this.y[2], this.y[4]],
+        value: this.y[6],
+        ...map,
+        end: this.peekSourceMap()
+      }}
+
+    // 三次元配列
+    if (this.accept(['word', '@', this.yValue, '@', this.yValue, '@', this.yValue, 'eq', this.yCalc]))
+      {return {
+        type: 'let_array',
+        name: this.y[0],
+        index: [this.y[2], this.y[4], this.y[6]],
+        value: this.y[8],
+        ...map,
+        end: this.peekSourceMap()
+      }}
+
+    // 二次元配列(カンマ指定)
+    if (this.accept(['word', '@', this.yValue, 'comma', this.yValue, 'eq', this.yCalc]))
+      {return {
+        type: 'let_array',
+        name: this.y[0],
+        index: [this.y[2], this.y[4]],
+        value: this.y[6],
+        ...map,
+        end: this.peekSourceMap()
+      }}
+
+    // 三次元配列(カンマ指定)
+    if (this.accept(['word', '@', this.yValue, 'comma', this.yValue, 'comma', this.yValue, 'eq', this.yCalc]))
+      {return {
+        type: 'let_array',
+        name: this.y[0],
+        index: [this.y[2], this.y[4], this.y[6]],
+        value: this.y[8],
+        ...map,
+        end: this.peekSourceMap()
+      }}
+    return null
+  }
+  /** @returns {Ast | null} */
+  yLetArrayBracket(map) {
+      // 一次元配列
+      if (this.accept(['word', '[', this.yCalc, ']', 'eq', this.yCalc]))
+        {return {
+          type: 'let_array',
+          name: this.y[0],
+          index: [this.y[2]],
+          value: this.y[5],
+          ...map,
+          end: this.peekSourceMap()
+        }}
+
+      // 二次元配列
+      if (this.accept(['word', '[', this.yCalc, ']', '[', this.yCalc, ']', 'eq', this.yCalc]))
+        {return {
+          type: 'let_array',
+          name: this.y[0],
+          index: [this.y[2], this.y[5]],
+          value: this.y[8],
+          tag: '2',
+          ...map,
+          end: this.peekSourceMap()
+        }}
+
+      // 三次元配列
+      if (this.accept(['word', '[', this.yCalc, ']', '[', this.yCalc, ']', '[', this.yCalc, ']', 'eq', this.yCalc]))
+        {return {
+          type: 'let_array',
+          name: this.y[0],
+          index: [this.y[2], this.y[5], this.y[8]],
+          value: this.y[11],
+          ...map,
+          end: this.peekSourceMap()
+        }}
+    return null
+  }
+  
   /** @returns {Ast | null} */
   yCalc () {
     const map = this.peekSourceMap()
@@ -1252,6 +1381,7 @@ class NakoParser extends NakoParserBase {
 
     // 丸括弧
     if (this.check('(')) {return this.yValueKakko()}
+
     // マイナス記号
     if (this.check2(['-', 'number']) || this.check2(['-', 'word']) || this.check2(['-', 'func'])) {
       const m = this.get() // skip '-'
@@ -1313,8 +1443,6 @@ class NakoParser extends NakoParserBase {
     }
     // 関数呼び出し演算子
     if (this.check2(['func', '←'])) {return this.yCallOp()}
-    // 埋め込み文字列
-    if (this.check('embed_code')) {return this.get()}
     // 無名関数(関数オブジェクト)
     if (this.check('def_func')) {return this.yMumeiFunc()}
     // 変数
@@ -1339,7 +1467,11 @@ class NakoParser extends NakoParserBase {
             idx = this.y[1]
             josi = idx.josi
           }
-          if (this.accept(['[', this.yCalc, ']'])) {
+          else if (this.accept(['comma', this.yValue])) {
+            idx = this.y[1]
+            josi = idx.josi
+          }
+          else if (this.accept(['[', this.yCalc, ']'])) {
             idx = this.y[1]
             josi = this.y[2].josi
           }
@@ -1420,6 +1552,13 @@ class NakoParser extends NakoParserBase {
         end: this.peekSourceMap()
       }}
 
+    // 辞書初期化に終わりがなかった場合 (エラーチェックのため) #958
+    if (this.accept(['{', this.yJSONObjectValue])) {
+      throw NakoSyntaxError.fromNode(
+        '辞書型変数の初期化が『}』で閉じられていません。', 
+        this.y[1])
+    }
+
     return null
   }
 
@@ -1460,6 +1599,12 @@ class NakoParser extends NakoParserBase {
         ...map,
         end: this.peekSourceMap()
       }}
+      // 配列に終わりがなかった場合 (エラーチェックのため) #958
+      if (this.accept(['[', this.yJSONArrayValue])) {
+        throw NakoSyntaxError.fromNode(
+          '配列変数の初期化が『]』で閉じられていません。', 
+          this.y[1])
+      }
 
     return null
   }

@@ -3,11 +3,13 @@
  */
 
 const kanakanji = /^[\u3005\u4E00-\u9FCF_a-zA-Z0-9ァ-ヶー]+/
-const josi = require('./nako_josi_list')
-const josiRE = josi.josiRE
+const nakoJosiList = require('./nako_josi_list')
+const josiRE = nakoJosiList.josiRE
+const removeJosiMap = nakoJosiList.removeJosiMap
 const hira = /^[ぁ-ん]/
 const allHiragana = /^[ぁ-ん]+$/
 const wordHasIjoIka = /^.+(以上|以下|超|未満)$/
+const unitRE = /^(円|ドル|元|歩|㎡|坪|度|℃|°|個|つ|本|冊|才|歳|匹|枚|皿|セット|羽|人|件|行|列|機|品|m|mm|cm|km|g|kg|t|px|dot|pt|em|b|mb|kb|gb)/
 
 const errorRead = (ch) =>{ 
   return (function() { throw new Error('突然の『' + ch + '』があります。')})
@@ -26,8 +28,7 @@ module.exports = {
     {name: 'range_comment', pattern: /^\/\*/, cbParser: cbRangeComment},
     {name: 'def_test', pattern: /^●テスト:/},
     {name: 'def_func', pattern: /^●/},
-    {name: 'number', pattern: /^非数/, readJosi: true, cb: () => { return NaN } },
-    {name: 'number', pattern: /^無限大/, readJosi: true, cb: () => { return Infinity } },
+    // 数値の判定 --- この後nako_lexerにて単位を読む処理が入る(#994)
     {name: 'number', pattern: /^0[xX][0-9a-fA-F]+(_[0-9a-fA-F]+)*/, readJosi: true, cb: parseNumber},
     {name: 'number', pattern: /^0[oO][0-7]+(_[0-7]+)*/, readJosi: true, cb: parseNumber},
     {name: 'number', pattern: /^0[bB][0-1]+(_[0-1]+)*/, readJosi: true, cb: parseNumber},
@@ -55,7 +56,7 @@ module.exports = {
     {name: 'gt', pattern: /^>/},
     {name: 'lt', pattern: /^</},
     {name: 'and', pattern: /^(かつ|&&)/},
-    {name: 'or', pattern: /^(または|\|\|)/},
+    {name: 'or', pattern: /^(または|或いは|あるいは|\|\|)/},
     {name: '@', pattern: /^@/},
     {name: '+', pattern: /^\+/},
     {name: '-', pattern: /^-/},
@@ -95,7 +96,8 @@ module.exports = {
       cbParser: cbWordParser
     }
   ],
-  trimOkurigana
+  trimOkurigana,
+  unitRE
 }
 
 function parseInt2(s) {
@@ -184,10 +186,8 @@ function cbWordParser(src, isTrimOkurigana = true) {
     josi = ''
     res = res.substr(0, res.length - ii[1].length)
   }
-  // 助詞「こと」は「＊＊すること」のように使うので削除 #936
-  if (josi === 'こと') {josi = ''}
-  // 「＊＊である」も削除 #939
-  if (josi === 'である') {josi = ''}
+  // 助詞「こと」「である」「です」などは「＊＊すること」のように使うので削除 #936 #939 #974
+  if (removeJosiMap[josi]) {josi = ''}
 
   // 漢字カタカナ英語から始まる語句 --- 送り仮名を省略
   if (isTrimOkurigana) {
@@ -216,9 +216,9 @@ function cbString (beginTag, closeTag, src) {
     // res の中に beginTag があればエラーにする #953
     if (res.indexOf(beginTag) >= 0) {
       if (beginTag == '『') {
-        throw new Error('「『」で始めた文字列に「『」を含めることはできません。')
+        throw new Error('「『」で始めた文字列の中に「『」を含めることはできません。')
       } else {
-        throw new Error(`『${beginTag}』で始めた文字列に『${beginTag}』を含めることはできません。`)
+        throw new Error(`『${beginTag}』で始めた文字列の中に『${beginTag}』を含めることはできません。`)
       }
     }
   }
@@ -230,8 +230,8 @@ function cbString (beginTag, closeTag, src) {
     // 助詞の後のカンマ #877
     if (src.charAt(0) == ',') {src = src.substr(1)}
   }
-  // 「＊＊である」なら削除 #939
-  if (josi === 'である') {josi = ''}
+  // 助詞「こと」「である」「です」などは「＊＊すること」のように使うので削除 #936 #939 #974
+  if (removeJosiMap[josi]) {josi = ''}
 
   // 改行を数える
   for (let i = 0; i < res.length; i++)

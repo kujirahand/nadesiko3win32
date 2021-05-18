@@ -56,6 +56,8 @@ const cloneAsJSON = (x) => JSON.parse(JSON.stringify(x))
  *   startOffset: number | null
  *   endOffset: number | null
  *   rawJosi?: string
+ *   vartype?: string
+ *   index?: Ast[]
  *   end?: {
  *     startOffset: number | null
  *     endOffset: number | null
@@ -204,6 +206,8 @@ class NakoCompiler {
           const registerFile = (code) => {
             // シンタックスハイライトの高速化のために、事前にファイルが定義する関数名のリストを取り出しておく。
             // preDefineFuncはトークン列に変更を加えるため、事前にクローンしておく。
+            // 「プラグイン名設定」を行う (#956)
+            code = `「${item.filePath}」にプラグイン名設定;` + code
             const tokens = this.rawtokenize(code, 0, item.filePath)
             dependencies[item.filePath].tokens = tokens
             /** @type {import('./nako_lexer').FuncList} */
