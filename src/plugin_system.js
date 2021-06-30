@@ -476,10 +476,18 @@ const PluginSystem = {
     pure: false,
     fn: function (f, sys) {
       if (typeof f === 'string') {f = sys.__findFunc(f, '実行時間計測')}
-      const t1 = Date.now()
-      f(sys)
-      const t2 = Date.now()
-      return (t2 - t1)
+      // 
+      if (performance && performance.now) {
+        const t1 = performance.now()
+        f(sys)
+        const t2 = performance.now()
+        return (t2 - t1)
+      } else {
+        const t1 = Date.now()
+        f(sys)
+        const t2 = Date.now()
+        return (t2 - t1)
+      }
     }
   },
 
@@ -1595,7 +1603,7 @@ const PluginSystem = {
         const row = []
         res.push(row)
         for (let c = 0; c < rows; c++) {
-          row[c] = a[c][r]
+          row[c] = a[c][r] ? a[c][r] : ''
         }
       }
       return res
@@ -1797,12 +1805,19 @@ const PluginSystem = {
     }
   },
   // @タイマー
-  '秒待機': { // @ 逐次実行構文にて、N秒の間待機する // @びょうたいき
+  '秒待機': { // @ 「!非同期モード」または「逐次実行構文」にて、N秒の間待機する // @びょうたいき
     type: 'func',
     josi: [['']],
     pure: false,
     fn: function (n, sys) {
-      sys.__exec('秒逐次待機', [n, sys])
+      if (sys.__genMode == '非同期モード') {
+        sys.async = true
+        setTimeout(() => {
+          sys.nextAsync(sys)
+        }, n * 1000)
+      } else {
+        sys.__exec('秒逐次待機', [n, sys])
+      }
     },
     return_none: true
   },
@@ -1960,6 +1975,21 @@ const PluginSystem = {
       const a = s.split('/')
       const t = new Date(a[0], a[1]-1, a[2])
       return t.getDay()
+    }
+  },
+  '時間ミリ秒取得': { // @ミリ秒単位の時間を数値で返す。結果は実装に依存する。 // @じかんみりびょうしゅとく
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      if (performance && performance.now) {
+        return performance.now()
+      } else if (Date.now) {
+        return Date.now()
+      } else {
+        const now = new Date()
+        return now.getTime()
+      }
     }
   },
   // @デバッグ支援

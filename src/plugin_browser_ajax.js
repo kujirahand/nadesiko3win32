@@ -1,6 +1,6 @@
 module.exports = {
   // @AJAXとHTTP
-  'AJAX送信時': { // @非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。 // @AJAXそうしんしたとき
+  'AJAX送信時': { // @非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。『AJAXオプション』を指定できる。 // @AJAXそうしんしたとき
     type: 'func',
     josi: [['の'], ['まで', 'へ', 'に']],
     pure: true,
@@ -16,6 +16,40 @@ module.exports = {
         console.log('[fetch.error]', err)
         sys.__v0['AJAX:ONERROR'](err)
       })
+    },
+    return_none: true
+  },
+  'AJAX受信': { // @「!非同期モード」で非同期通信(Ajax)でURLからデータを受信する。『AJAXオプション』を指定できる。結果は変数『対象』に入る// @AJAXじゅしん
+    type: 'func',
+    josi: [['から', 'を']],
+    pure: true,
+    fn: function (url, sys) {
+      if (sys.__genMode !== '非同期モード') {
+        throw new Error('『AJAX受信』を使うには、プログラムの冒頭で「!非同期モード」と宣言してください。')
+      }
+      sys.async = true
+      let options = sys.__v0['AJAXオプション']
+      if (options === '') {options = {method: 'GET'}}
+      fetch(url, options).then(res => {
+        return res.text()
+      }).then(text => {
+        sys.__v0['対象'] = text
+        sys.nextAsync(sys)
+      }).catch(err => {
+        console.log('[AJAX受信のエラー]', err)
+        sys.__v0['対象'] = ''
+        sys.__v0['エラーメッセージ'] = text
+        sys.nextAsync(sys)
+      })
+    },
+    return_none: true
+  },
+  'AJAX受信時': { // @非同期通信(Ajax)を利用してURLからデータを受信した時callbackが実行される。その際『対象』にデータが代入される。『AJAXオプション』を指定できる。 // @AJAXじゅしんしたとき
+    type: 'func',
+    josi: [['で'], ['から', 'を']],
+    pure: true,
+    fn: function (callback, url, sys) {
+      sys.__exec('AJAX送信時', [callback, url, sys])
     },
     return_none: true
   },
@@ -48,7 +82,6 @@ module.exports = {
     pure: false,
     fn: function (callback, url, params, sys) {
       let bodyData = sys.__exec('POSTデータ生成', [params, sys])
-      console.log("bodyData=", bodyData)
       const options = {
         method: 'POST',
         headers: {

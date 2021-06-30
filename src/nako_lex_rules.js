@@ -21,7 +21,7 @@ module.exports = {
     {name: 'ここまで', pattern: /^;;;/}, // #925
     {name: 'eol', pattern: /^\n/},
     {name: 'eol', pattern: /^;/},
-    {name: 'space', pattern: /^(\s+|・)/}, // #877
+    {name: 'space', pattern: /^(\x20|\x09|・)+/}, // #877,#1015
     {name: 'comma', pattern: /^,/},
     {name: 'line_comment', pattern: /^#[^\n]*/},
     {name: 'line_comment', pattern: /^\/\/[^\n]*/},
@@ -46,6 +46,8 @@ module.exports = {
     {name: 'shift_r0', pattern: /^>>>/},
     {name: 'shift_r', pattern: /^>>/},
     {name: 'shift_l', pattern: /^<</},
+    {name: '===', pattern: /^===/}, // #999
+    {name: '!==', pattern: /^!==/}, // #999
     {name: 'gteq', pattern: /^(≧|>=|=>)/},
     {name: 'lteq', pattern: /^(≦|<=|=<)/},
     {name: 'noteq', pattern: /^(≠|<>|!=)/},

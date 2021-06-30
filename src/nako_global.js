@@ -12,10 +12,17 @@ class NakoGlobal {
     // ユーザーのプログラムから編集される変数
     this.__locals = {}
     this.__varslist = [
-      { ...compiler.__varslist[0] },
-      { ...compiler.__varslist[1] },
-      { ...compiler.__varslist[2] },
+      { ...compiler.__varslist[0] }, // system
+      { ...compiler.__varslist[1] }, // global
+      { ...compiler.__varslist[2] }, // local [2][3][4][5] ...
     ]
+    this.index = 0
+    this.nextIndex = -1
+    this.__code = []
+    this.__callstack = []
+    this.__stack = []
+    this.__labels = []
+    this.__genMode = gen.genMode
 
     // PluginSystemとdestroy()から参照するため
     this.__module = { ...compiler.__module } // shallow copy

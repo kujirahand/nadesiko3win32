@@ -18,12 +18,14 @@ const path = require('path')
 const NakoCompiler = require('./nako3')
 const PluginNode = require('./plugin_node')
 const { NakoImportError } = require('./nako_errors')
+const NakoGenASync = require('./nako_gen_async')
 
 class CNako3 extends NakoCompiler {
   /** @param {{ nostd?: boolean }} [opts] */
   constructor (opts = {}) {
-    super()
+    super({useBasicPlugin: true})
     this.silent = false
+    this.addCodeGenerator('非同期モード', NakoGenASync) // 「!非同期モード」をサポート
     if (!opts.nostd) {
       this.addPluginFile('PluginNode', path.join(__dirname, 'plugin_node.js'), PluginNode)
     }
@@ -357,7 +359,7 @@ class CNako3 extends NakoCompiler {
    * @param {string} fname
    * @param {string} [preCode]
    */
-  run(code, fname, preCode = '') {
+  run (code, fname, preCode = '') {
     const tasks = this.loadDependencies(code, fname, preCode)
     if (tasks !== undefined) {
       throw new Error('assertion error')

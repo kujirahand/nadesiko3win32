@@ -4,7 +4,7 @@
 const Parser = require('./nako_parser3')
 const NakoLexer = require('./nako_lexer')
 const Prepare = require('./nako_prepare')
-const NakoGen = require('./nako_gen')
+const NakoGenSync = require('./nako_gen')
 const NakoIndent = require('./nako_indent')
 const PluginSystem = require('./plugin_system')
 const PluginMath = require('./plugin_math')
@@ -17,6 +17,23 @@ const NakoGlobal = require('./nako_global')
 
 /** @type {<T>(x: T) => T} */
 const cloneAsJSON = (x) => JSON.parse(JSON.stringify(x))
+
+
+// Select Code Generator #637
+/**
+ * @type {Object}
+ */
+const codeGenerators = {
+  'sync': NakoGenSync
+}
+
+/** 
+ * @param {string} mode
+*/
+function NakoGen(mode) {
+  if (codeGenerators[mode]) {return codeGenerators[mode]}
+  throw new Error(`コードジェネレータの「${mode}」はサポートされていません。`)
+}
 
 /**
  * @typedef {{
@@ -73,10 +90,16 @@ const cloneAsJSON = (x) => JSON.parse(JSON.stringify(x))
  */
 
 class NakoCompiler {
-  constructor () {
+  /**
+   * @param {undefined | {'useBasicPlugin':true|false}} options 
+   */
+  constructor (options) {
+    if (options == undefined) {
+      options = {'useBasicPlugin': true}
+    }
     this.silent = true
     this.filename = 'inline'
-    this.options = {}
+    this.options = options
     // 環境のリセット
     /** @type {Record<string, any>[]} */
     this.__varslist = [{}, {}, {}] // このオブジェクトは変更しないこと (this.gen.__varslist と共有する)
@@ -103,12 +126,6 @@ class NakoCompiler {
     this.parser = new Parser(this.logger)
     this.lexer = new NakoLexer(this.logger)
     
-    // set this
-    this.addPluginObject('PluginSystem', PluginSystem)
-    this.addPluginObject('PluginMath', PluginMath)
-    this.addPluginObject('PluginPromise', PluginPromise)
-    this.addPluginObject('PluginAssert', PluginTest)
-
     /**
      * 取り込み文を置換するためのオブジェクト。
      * 正規化されたファイル名がキーになり、取り込み文の引数に指定された正規化されていないファイル名はaliasに入れられる。
@@ -124,12 +141,24 @@ class NakoCompiler {
     this.setFunc = this.addFunc  // エイリアス
 
     this.numFailures = 0
+
+    if (options.useBasicPlugin) {this.addBasicPlugins()}
+  }
+
+  /**
+   * 基本的なプラグインを追加する
+   */
+  addBasicPlugins () {
+    this.addPluginObject('PluginSystem', PluginSystem)
+    this.addPluginObject('PluginMath', PluginMath)
+    this.addPluginObject('PluginPromise', PluginPromise)
+    this.addPluginObject('PluginAssert', PluginTest)
   }
 
   /**
    * loggerを新しいインスタンスで置き換える。
    */
-  replaceLogger() {
+  replaceLogger () {
     return this.prepare.logger = this.lexer.logger = this.parser.logger = this.logger = new NakoLogger()
   }
 
@@ -207,7 +236,8 @@ class NakoCompiler {
             // シンタックスハイライトの高速化のために、事前にファイルが定義する関数名のリストを取り出しておく。
             // preDefineFuncはトークン列に変更を加えるため、事前にクローンしておく。
             // 「プラグイン名設定」を行う (#956)
-            code = `「${item.filePath}」にプラグイン名設定;` + code
+            code = `「${item.filePath}」にプラグイン名設定;` + 
+              code + ';『メイン』にプラグイン名設定;'
             const tokens = this.rawtokenize(code, 0, item.filePath)
             dependencies[item.filePath].tokens = tokens
             /** @type {import('./nako_lexer').FuncList} */
@@ -568,7 +598,8 @@ class NakoCompiler {
    * @param {string} [preCode]
    */
   compile(code, filename, isTest, preCode = '') {
-    return NakoGen.generate(this, this.parse(code, filename, preCode), isTest).runtimeEnv
+    const ast = this.parse(code, filename, preCode)
+    return NakoGen(ast.genMode).generate(this, ast, isTest).runtimeEnv
   }
 
   /**
@@ -607,7 +638,8 @@ class NakoCompiler {
       const optsAll = Object.assign({ resetEnv: true, testOnly: false, resetAll: true }, opts)
       if (optsAll.resetEnv) {this.reset()}
       if (optsAll.resetAll) {this.clearPlugins()}
-      out = NakoGen.generate(this, this.parse(code, fname, preCode), optsAll.testOnly)
+      const ast = this.parse(code, fname, preCode)
+      out = NakoGen(ast.genMode).generate(this, ast, optsAll.testOnly)
     } catch (e) {
       this.logger.error(e)
       throw e
@@ -677,7 +709,8 @@ class NakoCompiler {
    * @param {string} [preCode]
    */
   compileStandalone(code, filename, isTest, preCode = '') {
-    return NakoGen.generate(this, this.parse(code, filename, preCode), isTest).standalone
+    const ast = this.parse(code, filename, preCode)
+    return NakoGen(ast.genMode).generate(this, ast, isTest).standalone
   }
 
   /**
@@ -767,6 +800,15 @@ class NakoCompiler {
    */
   getFunc (key) {
     return this.funclist[key]
+  }
+
+  /**
+   * コードジェネレータを追加する
+   * @param {string} mode 
+   * @param {any} obj
+   */
+  addCodeGenerator(mode, obj) {
+    codeGenerators[mode] = obj
   }
 }
 
