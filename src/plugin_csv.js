@@ -1,3 +1,4 @@
+// @ts-nocheck
 const PluginCSV = {
   '初期化': {
     type: 'func',
@@ -23,7 +24,7 @@ const PluginCSV = {
     pure: true,
     fn: function (str) {
       const CSV = require('csv-lite-js')
-      CSV.options.delimiter = "\t"
+      CSV.options.delimiter = '\t'
       return CSV.parse(str)
     }
   },
@@ -51,7 +52,6 @@ const PluginCSV = {
 
 module.exports = PluginCSV
 // scriptタグで取り込んだ時、自動で登録する
-/* istanbul ignore else */
-if (typeof (navigator) === 'object' && typeof (navigator.nako3) === 'object') 
-  {navigator.nako3.addPluginObject('PluginCSV', PluginCSV)}
-
+if (typeof (navigator) === 'object' && typeof (navigator.nako3) === 'object') {
+  navigator.nako3.addPluginObject('PluginCSV', PluginCSV)
+}

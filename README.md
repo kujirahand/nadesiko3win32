@@ -1,6 +1,8 @@
 # 日本語プログラミング言語「なでしこ3」
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![npm version](https://badge.fury.io/js/nadesiko3.svg)](https://www.npmjs.com/package/nadesiko3) ![Node.js CI](https://github.com/kujirahand/nadesiko3/workflows/Node.js%20CI/badge.svg)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![npm version](https://badge.fury.io/js/nadesiko3.svg)](https://www.npmjs.com/package/nadesiko3)
+![Node.js CI](https://github.com/kujirahand/nadesiko3/workflows/Node.js%20CI/badge.svg)
 
 ## 「なでしこ3」とは
 
@@ -8,7 +10,9 @@
 
 日本語プログラミング言語は、読みやすく理解しやすいのが特徴で、初めてでも楽しくプログラミングを覚えることができます。また、バッチ処理や定型処理などを手軽に記述できます。
 
-- [なでしこ3のWebサイト](https://nadesi.com/doc3/)
+- [なでしこのWebサイト](https://nadesi.com/top/)
+  - [なでしこ3のWebサイト](https://nadesi.com/doc3/)
+  - [なでしこ3(GitHub Pages)](https://kujirahand.github.io/nadesiko3/)
 
 ## 対応機器/ブラウザ
 
@@ -19,11 +23,14 @@
 以下、Webエディタ上で、なでしこを実行できます。
 
 - [なでしこ3簡易エディタ](https://nadesi.com/doc3/index.php?%E3%81%AA%E3%81%A7%E3%81%97%E3%81%933%E7%B0%A1%E6%98%93%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF)
-- [なでしこエディタの一覧](https://nadesi.com/doc3/index.php?%E3%81%AA%E3%81%A7%E3%81%97%E3%81%933%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%81%AE%E4%B8%80%E8%A6%A7)
+  - [なでしこ3貯蔵庫(プログラム一覧)](https://n3s.nadesi.com/)
+  - [なでしこエディタの一覧](https://nadesi.com/doc3/index.php?%E3%81%AA%E3%81%A7%E3%81%97%E3%81%933%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%81%AE%E4%B8%80%E8%A6%A7)
 
-## PCで利用する場合
+## 各OSごとに利用する方法
 
 なでしこ3をPC向けにローカル環境で動作させることも可能です。
+
+- [OS別のインストール方法](https://nadesi.com/doc3/index.php?OS%E5%88%A5)
 
 ### Windowsで利用する
 
@@ -34,40 +41,50 @@
 
 解凍したら「nako3edit.vbs」(PC版)または「start.vbs」(Web版)をクリックします。すると、なでしこエディタが起動します。
 
-### macOS/Linuxで利用する
+### npm でインストール
 
 先にNode.jsをインストールします。
 次いで、コマンドラインから以下のコマンドを実行します。
 
-```
-# npmでなでしこ3をインストールする
-$ npm install -g nadesiko3
+```bash
+npm install -g nadesiko3
 ```
 
 すると、cnako3というコマンドで、なでしこを利用できます。
+
+```bash
+# なでしこのサーバーを起動
+npm start
+# なでしこエディタ(PC版)を起動
+npm run nako3edit
+# なでしこエディタ(WEB版)を起動
+npm run nako3server
+```
+
+### Gitからインストール
+
 また、以下のコマンドを実行すると、ブラウザ上になでしこの簡易エディタが起動します。
 
-```
-# なでしこエディタ(PC版)を起動
-$ nako3edit
-# なでしこエディタ(WEB版)を起動
-$ nako3server
+```bash
+git clone https://github.com/kujirahand/nadesiko3.git
+cd nadesiko3
+npm install
 ```
 
-### 追加インストール(macOS/Linux)
+#### 追加インストール(macOS/Linux)
 
 必要に応じて以下のコマンドをインストールします。
 
-macOS
+macOS:
 
-```
+```bash
 # 『圧縮』『解凍』命令のために
 brew install p7zip
 ```
 
-Ubuntu/Debian
+Ubuntu/Debian:
 
-```
+```bash
 # 『圧縮』『解凍』命令のために
 sudo apt install p7zip-full
 # 『キー送信』命令のために
@@ -76,7 +93,7 @@ sudo apt install xdotool
 
 全てのコマンドが正しく動くかを確認するには、以下のコマンドを実行します。
 
-```
+```bash
 npm test
 ```
 

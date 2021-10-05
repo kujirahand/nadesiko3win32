@@ -4,67 +4,68 @@
 # 入力: src/plugin_xxx.js
 # 出力: command.txt
 # -----------------------------------------------------
+!「jsplugin2text.nako3」を取り込む。
 
 # 基本パスを取得
 母艦パス取得してパス抽出して基本パスに代入。
 REPOSパス=基本パスを「../」で相対パス展開。
 
 基本プラグイン一覧は[
-    'src/plugin_system.js',
-    'src/plugin_browser.js',
-    'src/plugin_turtle.js',
-    'src/plugin_node.js',
-    'src/plugin_express.js',
-    'src/plugin_markup.js',
-    'src/plugin_math.js',
-    'src/plugin_csv.js',
-    'src/plugin_datetime.js',
-    'src/plugin_caniuse.js',
-    'src/plugin_kansuji.js',
-    'src/plugin_weykturtle3d.js',
-    'src/plugin_webworker.js',
-    'src/plugin_promise.js'
- ]
+    ['src/plugin_system.js', 'wnako,cnako,phpnako'],
+    ['src/plugin_browser.js','wnako'],
+    ['src/plugin_turtle.js', 'wnako'],
+    ['src/plugin_node.js', 'cnako,phpnako'],
+    ['src/plugin_express.js', 'cnako'],
+    ['src/plugin_markup.js', 'wnako,cnako'],
+    ['src/plugin_math.js', 'wnako,cnako'],
+    ['src/plugin_csv.js', 'wnako,cnako'],
+    ['src/plugin_datetime.js', 'wnako,cnako'],
+    ['src/plugin_caniuse.js', 'wnako,cnako'],
+    ['src/plugin_kansuji.js', 'wnako,cnako'],
+    ['src/plugin_weykturtle3d.js', 'wnako'],
+    ['src/plugin_webworker.js', 'wnako'],
+    ['src/plugin_promise.js', 'wnako']
+]
 拡張プラグイン一覧は[
-    'nadesiko3-sqlite3/src/nadesiko3-sqlite3.js',
-    'nadesiko3-sqlite3sync/nadesiko3-sqlite3sync.js',
-    'nadesiko3-drone/nadesiko3-drone.js'
-    'nadesiko3-htmlparser/nadesiko3-htmlparser.js',
-    'nadesiko3-websocket/nadesiko3-websocket.js',
-    'nadesiko3-ml/nadesiko3-ml.js',
-    'nadesiko3-odbc/src/plugin_odbc.js',
-    'nadesiko3-mssql/src/plugin_mssql.js',
-    'nadesiko3-mysql/src/plugin_mysql.js',
-    'nadesiko3-postgresql/src/plugin_postgresql.js',
+    ['nadesiko3-sqlite3/src/nadesiko3-sqlite3.js', 'cnako'],
+    ['nadesiko3-sqlite3sync/nadesiko3-sqlite3sync.js', 'cnako'],
+    ['nadesiko3-drone/nadesiko3-drone.js', 'cnako'],
+    ['nadesiko3-htmlparser/nadesiko3-htmlparser.js', 'cnako'],
+    ['nadesiko3-websocket/nadesiko3-websocket.js', 'cnako'],
+    ['nadesiko3-ml/nadesiko3-ml.js', 'cnako'],
+    ['nadesiko3-odbc/src/plugin_odbc.js', 'cnako'],
+    ['nadesiko3-mssql/src/plugin_mssql.js', 'cnako'],
+    ['nadesiko3-mysql/src/plugin_mysql.js', 'cnako'],
+    ['nadesiko3-postgresql/src/plugin_postgresql.js', 'cnako'],
+    ['nadesiko3php/src/plugin_php.php', 'phpnako'],
 ]
 # サポートしない
 # 'nadesiko3-firebase/plugin_firebase.js',
 # 'nadesiko3-googlehome/plugin_googlehome.js',
 
-関数定義とは変数=「」
-関数説明とは変数＝「」
-助詞定義JSONとは変数＝「」
-ヨミガナとは変数＝「」
-カレントプラグインとは変数＝「」
-可変引数とは変数＝「」
-結果＝「」
-
 #------------------------
-プラグイン種類＝「」
+結果データ＝「」
 基本プラグイン一覧を反復
-    カレントプラグイン＝それ
- 　　パスは「{基本パス}/{それ}」
- 　　パスをプラグイン要約作成
+　　カレントプラグイン＝それ@0
+　　ナコタイプ＝それ＠1
+　　パスは「{基本パス}/{カレントプラグイン}」
+　　パスを「(基本プラグイン,{ナコタイプ})」でプラグイン要約作成
+　　結果データ＝結果データ＆それ＆改行＆改行。
 ここまで
 #------------------------
-プラグイン種類＝「(拡張プラグイン)」
 拡張プラグイン一覧を反復
-　　カレントプラグイン＝それ
-　　パスは「{REPOSパス}/{それ}」
+　　カレントプラグイン＝それ@0
+　　ナコタイプ＝それ＠1
+　　パスは「{REPOSパス}/{カレントプラグイン}」
 　　パスが存在
 　　もし、そうならば
 　　　　 # パスを表示。
-　　　　パスをプラグイン要約作成。
+　　　　EX=「拡張プラグイン」
+　　　　もし、ナコタイプ＝「phpnako」ならば
+　　　　　EX=「基本プラグイン」
+　　　　ここまで
+　　　　パスを「({EX},{ナコタイプ})」でプラグイン要約作成。
+　　　　結果データ＝結果データ＆それ＆改行＆改行。
 　　違えば
 　　　　「REPORT_ERR」の環境変数取得
 　　　　もしそうならば
@@ -74,207 +75,5 @@ REPOSパス=基本パスを「../」で相対パス展開。
 　　ここまで。
 ここまで。
 #------------------------
-結果を「{基本パス}/batch/command.txt」に保存。
+結果データを「{基本パス}/batch/command.txt」に保存。
 
-●(Fを)プラグインREQUIRE読み込み
-　　SS=「」
-　　Fを開いて改行で区切る
-　　反復
-　　　　それを「/require\(\'\.\/(.+?)\'\)/」で正規表現マッチ。
-　　　　もし、それならば
-　　　　　　FNAME=抽出文字列[0]
-　　　　　　「{基本パス}/src/{FNAME}」を開く
-　　　　　　SS=SS&それ＆改行
-　　　　ここまで
-　　ここまで
-　　それはSS
-ここまで
-
-●プラグイン要約作成(Fを)
-　　Ｆからファイル名抽出して「.js」を空に置換してプラグイン名に代入。
-　　結果＝結果＆「{改行}■{プラグイン名}{プラグイン種類}{改行}」
-　　もし、プラグイン名＝「plugin_browser」ならば
-　　　　FをプラグインREQUIRE読み込み。
-　　違えば
-　　　　Ｆを開く
-　　ここまで。
-　　改行で区切る
-　　ここから反復
-　　　　毎行処理。
-　　ここまで
-ここまで。
-
-●定数定義処理(抽出文字列で)
-　　定数定義＝トリム(抽出文字列[0])
-　　抽出文字列[1]をトリム。
-　　「const」を「定数」に置換
-　　「var」を「変数」に置換して、Fタイプに代入。
-　　定数値＝トリム（抽出文字列[2]）
-　　ヨミガナ＝トリム（抽出文字列[3]）
-　　もし、ヨミガナが空ならば
-　　　　「ヨミガナが空: {定数定義}」を表示。終わる。
-　　　　ヨミガナ＝定数定義。
-　　ここまで。
-　　結果＝結果＆「| {Fタイプ} | {定数定義} | | {定数値} | {ヨミガナ} |{改行}」
-ここまで。
-
-
-●(Sを)見出し語判定とは
-    # 見出し語？
-    Ｓを『/^\/\/ @(.+)/』で正規表現マッチ
-    もし、そうならば
-        それの「^\/\/\s*@」を「」に正規表現置換して見出しに代入
-        結果＝結果＆「●{見出}{改行}」
-        はいで、戻る
-    ここまで。
-    いいえで、戻る。
-ここまで
-
-●(Sを)定数判定とは
-    ＃定数でヨミガナ付き
-    Ｓを『/'(.+?)':.+'(const|var)'.+value:\s*(.+?)\}.+?\/\/\s?@?(.*)/』で正規表現マッチ
-    もし、そうならば
-    　　抽出文字列で定数定義処理
-    　　はいで戻る。
-    ここまで。
-    # 定数ヨミガナ抜け＞エラー
-    Ｓを『/"(.+?)".+(const|var).+value:\s*(.+)\}/』で正規表現マッチ
-    もし、そうならば
-        定数定義＝抽出文字列[0]
-        「--- [エラー] --- 『｛定数定義｝』でヨミガナがありません。」と表示。
-        終わる。
-    ここまで。
-    ＃定数でオブジェクト定義があったりする場合
-    Ｓを『/'(.+?)'\:.+?(const|var).+?\/\/(\s?)@?(.*)/』で正規表現マッチ
-    もし、そうならば
-        抽出文字列で定数定義処理。
-        はいで戻る。
-    ここまで。
-    いいえで戻る。
-ここまで
-
-●（Sを）関数判定
-    # 関数定義？ // (例えば) '空ハッシュ': { // @空のハッシュを返す // @からはっしゅ
-    Ｓを『/^\s*'(.+?)'\s*\:\s*\{\s*\/\/\s+\@(.+)$/』で正規表現マッチ
-    もし、そうならば
-        助詞定義JSON=[]
-        ヨミガナ＝「」
-        関数定義＝トリム(抽出文字列[0])
-        関数説明＝トリム(抽出文字列[1])
-        関数説明の「|」を「/」へ置換して、関数説明に代入。
-        # 関数定義を表示
-        可変引数＝オフ。
-        関数説明で「// @」が何文字目
-        もし、それ＞０ならば
-        　　関数説明を「// @」で区切って、Aに代入。
-        　　関数説明＝トリム(A[0])
-        　　ヨミガナ＝トリム(A[1])
-        ここまで。
-        もし、ヨミガナが空ならば
-        　　「--- [エラー] ---『{関数定義}』でヨミガナがありません」と表示。
-        　　終わる。
-        ここまで。
-        はいで戻る。
-    ここまで
-    いいえで戻る。
-ここまで。
-
-●（Sを）関数助詞定義判定とは
-　　Ｓを『/josi\s*\:\s*(.+),$/』で正規表現マッチ
-    もし、そうならば
-        それ＝抽出文字列[0]
-        トリム。
-        #「[]」を「['']」に置換。
-        「'」を「"」に置換。# '
-        JSONデコード。
-        助詞定義JSONに代入。
-        はいで、戻る。
-    ここまで
-    いいえで、戻る。
-ここまで
-
-●（Sを)毎行処理
-    S = トリム(S)
-　　Sを見出し語判定。
-　　もし、そうならば、戻る。
-  　Sを定数判定。
-  　もし、そうならば、戻る。
-  　Sを関数判定。
-  　もし、そうならば、戻る。
-    # 関数定義の続き
-    もし、関数定義≠空ならば
-        # typeの行なら次の行を読むようにする
-        Ｓを『/type\s*\:\s*'func'/』で正規表現マッチ
-        もし、そうならば、戻る。
-        Ｓを『/uses\s*\:/』で正規表現マッチ
-        もし、そうならば、戻る。
-        Ｓを『/pure\s*\:\s*(true|false)/』で正規表現マッチ
-        もし、そうならば、戻る。
-        Ｓを『/return_none\s*\:\s*(true|false)/』で正規表現マッチ
-        もし、そうならば、戻る。
-        # 助詞の定義があるか?
-        Sを関数助詞定義判定。
-        もし、そうならば、戻る。
-        Sを『/isVariableJosi\:\s*(true|false)/』で正規表現マッチ。
-        もし、そうならば
-        　　もし、抽出文字列[0]＝"true"ならば
-        　　　　可変引数＝オン。
-        　　　　関数説明＝関数説明＆「(可変引数)」
-        　　ここまで。
-        　　戻る。
-        ここまで。
-        # JS関数定義？ そうであれば、JSに対する引数名を得られる
-        Sを『/^fn\s*\:\s*function\s*\((.*?)\)/』で正規表現マッチ。
-        もし、そうならば
-            助詞定義＝「」
-            # システムオブジェクトへの参照は、なでしこ関数定義と関係ないので除去
-            それ＝抽出文字列[0]
-            「/(\,\s*sys|sys)$/」を「」に正規表現置換
-            トリム。
-            # JS引数の一覧を取得
-            引数一覧=[]
-            「,」で区切る
-            反復
-                大文字変換してトリムして、引数名に代入。
-                もし、引数名＝空ならば、続ける。
-                引数一覧に引数名を配列追加。
-            ここまで。
-            もし、要素数(引数一覧)≠要素数(助詞定義JSON)ならば
-              「*** [警告] {カレントプラグイン}:『{関数定義}』で助詞の定義がJS関数の定義と異なります」と表示。
-              引数一覧を表示。
-              終わる。
-            ここまで。
-            AA=[]
-            #「@@」&(引数一覧をJSONエンコード)を表示。
-            Iを0から9まで繰り返す
-                SS=「」
-                NOを0から9まで繰り返す
-                    もし、NO>=要素数(引数一覧)ならば、続ける。
-                    もし、NO>=要素数(助詞定義JSON)ならば、続ける。
-                    もし、I>=要素数(助詞定義JSON[NO])ならば、続ける。
-                    ARG＝引数一覧[NO]
-                    JOSI＝助詞定義JSON[NO][I]
-                    SS = SS & ARG & JOSI
-                ここまで;
-                もし、SS≠空ならば
-                  AAにSSを配列追加。
-                ここまで。
-            ここまで
-            助詞定義=AAを「/」で配列結合
-            もし、助詞定義="undefined"ならば
-              「*** [警告] {カレントプラグイン}:『{関数定義}』で助詞定義がundefinedです」と表示。
-              助詞定義JSONをJSONエンコードして表示。
-              AAを表示
-              終わる。
-            ここまで
-            結果＝結果＆「| 関数 | {関数定義} | {助詞定義} | {関数説明} | {ヨミガナ} |」&改行
-            関数定義＝「」
-            戻る。
-        ここまで。
-        # いずれにも合致しない場合
-        「[エラー]({カレントプラグイン}):『{関数定義}: {S}』で定義不明のエラー」を表示。
-        終わる。
-    ここまで
-    関数定義＝「」
-    定数定義＝「」
-ここまで。

@@ -147,7 +147,7 @@ describe('error_message', () => {
     })
     it('エラー位置をプロパティから取得 - repeatTimes', () => {
       assert.throws(
-        () => nako.run('3回\n1のエラー発生', 'main.nako3'),
+        () => nako.run('3回\n1のエラー発生\nここまで', 'main.nako3'),
         err => {
           assert(err instanceof NakoRuntimeError)
           assert.strictEqual(err.line, 1)  // 2行目
@@ -217,7 +217,7 @@ describe('error_message', () => {
       let log = ''
       compiler.logger.addListener('warn', ({ noColor }) => { log += noColor }, false)
       compiler.run(`xを表示`, 'main.nako3')
-      assert.strictEqual(log, `[警告]main.nako3(1行目): 変数『x』は定義されていません。`)
+      assert.strictEqual(log.split('。')[0], `[警告]main.nako3(1行目): 変数『x』は定義されていません`)
     })
     it('存在しない高速化オプションを指定したとき', () => {
       const compiler = new NakoCompiler()

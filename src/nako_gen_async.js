@@ -1,11 +1,12 @@
+// @ts-nocheck
 /**
  * file: nako_gen_async.js
  * パーサーが生成した中間オブジェクトを実際のJavaScriptのコードに変換する。
  * なお、扱いやすさ優先で、なでしこの一文を一つの関数として生成し、非同期実行する。
  */
 
- 'use strict'
- 
+'use strict'
+
 const { NakoSyntaxError, NakoError, NakoRuntimeError } = require('./nako_errors')
 const nakoVersion = require('./nako_version')
 const NakoGen = require('./nako_gen')
@@ -14,27 +15,29 @@ const NakoGen = require('./nako_gen')
  * @typedef {import("./nako3").Ast} Ast
  */
 
-
 /**
  * なでしこのインタプリタコード
  */
 const
-  NakoCodeNop = 'NOP',
-  NakoCodeLabel = 'LBL',
-  NakoCodeEOL = 'EOL',
-  NakoCodeJump = 'JMP', // JUMP addr
-  NakoCodeJumpIfTrue = 'JMP_T', // pop and jump addr
-  NakoCodeJumpIfFalse = 'JMP_F', // pop and jump addr
-  NakoCodeCall = 'CALL', // call addr
-  NakoCodeReturn = 'RET',
-  NakoCodeTry = 'TRY',
-  NakoCodeCode = 'CODE'
+  NakoCodeNop = 'NOP'
+const NakoCodeLabel = 'LBL'
+const NakoCodeEOL = 'EOL'
+const NakoCodeJump = 'JMP' // JUMP addr
+const NakoCodeJumpIfTrue = 'JMP_T' // pop and jump addr
+const NakoCodeJumpIfFalse = 'JMP_F' // pop and jump addr
+const NakoCodeCall = 'CALL' // call addr
+const NakoCodeCallObj = 'CALL_OBJ' // call addr
+const NakoCodeReturn = 'RET'
+const NakoCodeTry = 'TRY'
+const NakoCodeCode = 'CODE'
+const NakoCodeTagIsFuncpoint = 0x0F
+
 /**
  * なでしこのインタプリタが用いる簡易コードを表現するクラス
  */
 class NakoCode {
   /**
-   * @param {string} type 
+   * @param {string} type
    * @param {string} value
    */
   constructor (type, value) {
@@ -42,7 +45,7 @@ class NakoCode {
      * @type {string}
      */
     this.type = type
-     /** Codeの値 / ラベルならラベル名
+    /** Codeの値 / ラベルならラベル名
      * @type {string}
      */
     this.value = value
@@ -50,6 +53,10 @@ class NakoCode {
      * @type {number}
      */
     this.no = -1
+    /** タグ
+     * @type {number}
+     */
+    this.tag = 0
   }
 }
 
@@ -62,7 +69,7 @@ class NakoGenAsync {
    * @param {Ast} ast
    * @param {boolean | string} isTest 文字列なら1つのテストだけを実行する
    */
-  static generate(com, ast, isTest) {
+  static generate (com, ast, isTest) {
     const gen = new NakoGenAsync(com)
 
     // ユーザー定義関数をシステムに登録する
@@ -80,8 +87,10 @@ class NakoGenAsync {
       js += '\n__self._runTests(__tests);\n'
     }
     return {
-      runtimeEnv: js,  // なでしこの実行環境ありの場合
-      standalone:      // JavaScript単体で動かす場合
+      // なでしこの実行環境ありの場合
+      runtimeEnv: js,
+      // JavaScript単体で動かす場合
+      standalone:
         `\
 const nakoVersion = ${JSON.stringify(nakoVersion)};
 ${NakoError.toString()}
@@ -109,7 +118,7 @@ try {
   this.logger.error(err);
   throw err;
 }`,
-      gen,  // コード生成に使ったNakoGenのインスタンス
+      gen // コード生成に使ったNakoGenのインスタンス
     }
   }
 
@@ -201,18 +210,18 @@ try {
     // 1以上のとき高速化する。
     // 実行速度優先ブロック内で1増える。
     this.speedMode = {
-      lineNumbers: 0,          // 行番号を出力しない
-      implicitTypeCasting: 0,  // 数値加算でparseFloatを出力しない
-      invalidSore: 0,          // 「それ」を用いない
-      forcePure: 0,            // 全てのシステム命令をpureとして扱う。命令からローカル変数への参照が出来なくなる。
+      lineNumbers: 0, // 行番号を出力しない
+      implicitTypeCasting: 0, // 数値加算でparseFloatを出力しない
+      invalidSore: 0, // 「それ」を用いない
+      forcePure: 0 // 全てのシステム命令をpureとして扱う。命令からローカル変数への参照が出来なくなる。
     }
 
     // 1以上のとき測定をinjectする。
     // パフォーマンスモニタのブロック内で1増える。
     this.performanceMonitor = {
-      userFunction: 0,         // 呼び出されたユーザ関数
-      systemFunction: 0,       // システム関数(呼び出しコードを含む)
-      systemFunctionBody: 0,   // システム関数(呼び出しコードを除く)
+      userFunction: 0, // 呼び出されたユーザ関数
+      systemFunction: 0, // システム関数(呼び出しコードを含む)
+      systemFunctionBody: 0 // システム関数(呼び出しコードを除く)
     }
   }
 
@@ -235,7 +244,7 @@ try {
 
     // 強制的に行番号をアップデートするか
     if (!forceUpdate) {
-      if (lineNo == this.lastLineNo) return ''
+      if (lineNo === this.lastLineNo) { return '' }
       this.lastLineNo = lineNo
     }
     // 例: __v0.line='l1:main.nako3'
@@ -263,11 +272,7 @@ try {
     for (const key of Array.from(this.used_func.values())) {
       const f = this.__self.__varslist[0][key]
       const name = `this.__varslist[0]["${key}"]`
-      if (typeof (f) === 'function')
-        {code += name + '=' + f.toString() + ';\n'}
-       else
-        {code += name + '=' + JSON.stringify(f) + ';\n'}
-
+      if (typeof (f) === 'function') { code += name + '=' + f.toString() + ';\n' } else { code += name + '=' + JSON.stringify(f) + ';\n' }
     }
     return code
   }
@@ -278,7 +283,7 @@ try {
    * @param {boolean | string} isTest テストかどうか。stringの場合は1つのテストのみ。
    * @returns {string}
    */
-  getDefFuncCode(isTest) {
+  getDefFuncCode (isTest) {
     let code = ''
     // よく使う変数のショートカット
     code += 'const __self = this.__self = this;\n'
@@ -298,8 +303,7 @@ try {
         `__v1["${key}"]=${f};\n;` +
         `//[/DEF_FUNC name='${key}']\n`
     }
-    if (nakoFuncCode !== '')
-      {code += '__v0.line=\'関数の定義\';\n' + nakoFuncCode}
+    if (nakoFuncCode !== '') { code += '__v0.line=\'関数の定義\';\n' + nakoFuncCode }
 
     // プラグインの初期化関数を実行する
     let pluginCode = ''
@@ -310,8 +314,7 @@ try {
         pluginCode += `__v0["!${name}:初期化"](__self);\n`
       }
     }
-    if (pluginCode !== '')
-      {code += '__v0.line=\'プラグインの初期化\';\n' + pluginCode}
+    if (pluginCode !== '') { code += '__v0.line=\'プラグインの初期化\';\n' + pluginCode }
 
     // テストの定義を行う
     if (isTest) {
@@ -392,8 +395,7 @@ try {
    * 関数を先に登録してしまう
    */
   registerFunction (ast) {
-    if (ast.type !== 'block')
-      {throw NakoSyntaxError.fromNode('構文解析に失敗しています。構文は必ずblockが先頭になります', ast)}
+    if (ast.type !== 'block') { throw NakoSyntaxError.fromNode('構文解析に失敗しています。構文は必ずblockが先頭になります', ast) }
 
     const registFunc = (node) => {
       for (let i = 0; i < node.block.length; i++) {
@@ -443,7 +445,7 @@ try {
   convGen (node, isTest) {
     // convert
     this._convGen(node, true)
-    
+
     // ラベルアドレスの解決が必要なコード一覧
     const needToFixAddr = new Set([
       NakoCodeJump, NakoCodeJumpIfTrue, NakoCodeJumpIfFalse, NakoCodeCall, NakoCodeTry
@@ -458,7 +460,7 @@ try {
       codes = codes.filter(code => {
         return code.type !== NakoCodeNop
       })
-      // 未参照のラベルを探す
+      // 未参照のラベルを探す - ただし関数呼び出しは削除しない
       const usedLabels = new Set()
       codes.forEach((code, index, list) => {
         if (needToFixAddr.has(code.type)) {
@@ -467,14 +469,15 @@ try {
       })
       // 未参照のラベルを削除
       codes = codes.filter((code, index) => {
-        if (code.type !== NakoCodeLabel) {return true}
+        if (code.type !== NakoCodeLabel) { return true }
+        if (code.tag === NakoCodeTagIsFuncpoint) { return true }
         return usedLabels.has(code.value)
       })
       // EOLが連続していたら削除する
       let i = 0
       while (i < codes.length - 1) {
-        if (codes[i].type === NakoCodeEOL && codes[i+1].type === NakoCodeEOL) {
-          codes.splice(i+1, 1)
+        if (codes[i].type === NakoCodeEOL && codes[i + 1].type === NakoCodeEOL) {
+          codes.splice(i + 1, 1)
           continue
         }
         i++
@@ -483,7 +486,7 @@ try {
     }
     // ラベルアドレスの解決
     codes.forEach((code, index) => { // ラベルのアドレスを調べる
-      if (code.type == NakoCodeLabel) {
+      if (code.type === NakoCodeLabel) {
         this.labels[code.value] = index
       }
     })
@@ -522,21 +525,19 @@ try {
         case NakoCodeCall:
           result += `case ${index}: sys.__call(${code.no}, sys); break; // ${code.value}\n`
           break
+        case NakoCodeCallObj:
+          result += `case ${index}: sys.__callObj('${code.value}', ${index}, sys); break; // ${code.value}\n`
+          break
         case NakoCodeTry:
           result += `case ${index}: sys.tryIndex = ${code.no}; break; // TRY \n`
           break
         case NakoCodeCode:
+        {
           // trim last
-          let s = code.value.replace(/\s+$/, '')
-          const a = code.value.split('\n')
-          if (a.length >= 2) {
-            result += `case ${index}: {\n${s}\n};break;\n`
-          } else {
-            // 末尾にコメントがあれば範囲コメントに変更
-            s = s.replace(/\/\/(.+$)/, '/* $1 */')
-            result += `case ${index}: ${s};break;\n`
-          }
+          const s = code.value.replace(/\s+$/, '')
+          result += `case ${index}: {\n${s}\n};break;\n`
           break
+        }
         default:
           throw new Error('invalid code type')
       }
@@ -544,14 +545,17 @@ try {
     result = `
     //-------------------------
     // main_code
+    this.__labels = ${JSON.stringify(this.labels)};
     this.nextAsync = (sys) => {
-      if (sys.index >= sys.codeSize) {return}
+      if (sys.index >= sys.codeSize || sys.index < 0) {return}
       const __v0 = sys.__v0
       try {
-        while (sys.index < sys.codeSize) {
+        while (sys.index < sys.codeSize || sys.index < 0) {
           // console.log('@@[run]', sys.index)
           switch (sys.index) {
+            // --- CODE.BEGIN ---
             ${result}
+            // --- CODE.END ---
             default:
               console.log(sys.index, sys.__stack)
               throw new Error('Invalid sys.index:' + sys.index)
@@ -567,13 +571,20 @@ try {
           if (sys.async) { sys.async = false; break}
         } // end of while
       } catch (e) {
-        sys.__v0["エラーメッセージ"] = e.message;
-        if (sys.tryIndex >= 0) {
-          sys.index = sys.tryIndex;
-          setTimeou(() => {sys.nextAsync(sys)}, 1)
-        } else {
-          throw e
-        }
+        sys.__errorAsync(e, sys)
+      }
+    }
+    this.__errorAsync = (e, sys) => { // エラーが起きた時呼び出す
+      sys.__v0["エラーメッセージ"] = e.message;
+      if (e.message == '__終わる__') {
+        sys.__stopAsync(sys)
+        return
+      }
+      if (sys.tryIndex >= 0) {
+        sys.index = sys.tryIndex;
+        setTimeout(() => {sys.nextAsync(sys)}, 1)
+      } else {
+        throw e
       }
     }
     this.__call = (no, sys) => {
@@ -589,11 +600,46 @@ try {
       const info = sys.__callstack.pop();
       sys.nextIndex = info.backNo;
       sys.__vars = info.lastVars;
+      sys.__vars['それ'] = sore
       sys.__stack.push(sore);
     }
-    this.index = 0;
-    this.codeSize = ${codes.length};
-    this.async = false; this.nextIndex = -1; this.tryIndex = -1
+    this.__resetAsync = sys => {
+      sys.index = 0
+      sys.codeSize = ${codes.length};
+      sys.async = false
+      sys.nextIndex = -1
+      sys.tryIndex = -1
+    }
+    this.__stopAsync = sys => {
+      sys.__resetAsync(sys)
+      sys.index = -1 // force stop!!
+    }
+    this.__callNakoCode = (no, backNo, sys) => {
+      this.__call(backNo, sys)
+      sys.async = true
+      setTimeout(() => {
+        // console.log('//__callNakoCode, back=', backNo, 'no=', no)
+        sys.async = false
+        sys.nextIndex = -1
+        sys.index = no
+        sys.nextAsync(sys)
+      } ,1)
+    }
+    this.__callObj = (vname, curNo, sys) => {
+      if (sys.__vars[vname]) {
+        const fname = sys.__vars[vname]
+        // console.log(sys.__labels)
+        if (fname && sys.__labels[fname]) {
+          const no = sys.__labels[fname]
+          sys.__call(no, sys)
+          return
+        } else {
+          console.log('vname=', vname, 'label=', fname)
+        }
+      }
+      throw new Error('async error in __callObj::', vname)
+    }
+    this.__resetAsync(this)
     this.nextAsync(this)
     //-------------------------
     `
@@ -608,7 +654,7 @@ try {
    * @param {Ast} node
    * @param {boolean} isExpression
    */
-  _convGen(node, isExpression) {
+  _convGen (node, isExpression) {
     let code = ''
     if (node instanceof Array) {
       for (let i = 0; i < node.length; i++) {
@@ -617,22 +663,22 @@ try {
       }
       return code
     }
-    if (node === null) {return 'null'}
-    if (node === undefined) {return 'undefined'}
-    if (typeof (node) !== 'object') {return '' + node}
+    if (node === null) { return 'null' }
+    if (node === undefined) { return 'undefined' }
+    if (typeof (node) !== 'object') { return '' + node }
     // switch
     switch (node.type) {
       // === NOP ===
       case 'nop':
         break
       case 'comment':
-        if (!node.value) {node.value = ''}
+        if (!node.value) { node.value = '' }
         this.addCode(new NakoCode(NakoCodeNop, node.value))
         break
       case 'eol':
         this.addCode(new NakoCode(NakoCodeEOL, this.convLineno(node, true)))
         break
-      
+
       // === 単純なコード変換 ===
       case 'number':
         this.addCodeStr(`sys.__stack.push(${node.value});//number`)
@@ -654,8 +700,8 @@ try {
       case 'not':
         this._convGen(node.value, true)
         this.addCodeStr(
-          `if (sys.__stack.length==0) throw new Error('NOTでスタックに値がありません');` +
-          `sys.__stack[sys.__stack.length-1] = (sys.__stack[sys.__stack.length-1]) ? 0:1`)
+          'if (sys.__stack.length==0) throw new Error(\'NOTでスタックに値がありません\');' +
+          'sys.__stack[sys.__stack.length-1] = (sys.__stack[sys.__stack.length-1]) ? 0:1')
         break
       case '配列参照':
         this.convRefArray(node)
@@ -667,18 +713,20 @@ try {
         this.convJsonObj(node)
         break
       case 'bool':
+      {
         const b = (node.value) ? 'true' : 'false'
         this.addCodeStr(`sys.__stack.push(${b})`)
         break
+      }
       case 'null':
-        this.addCodeStr(`sys.__stack.push(null)`)
+        this.addCodeStr('sys.__stack.push(null)')
         break
       case 'func':
       case 'func_pointer':
       case 'calc_func':
-        this.convFunc(node, isExpression)
+        this.convFunc(node, isExpression) // 関数の呼び出し
         break
-      
+
       // === 文の変換 ===
       case 'let':
         this.convLet(node)
@@ -697,7 +745,7 @@ try {
         break
       case 'repeat_times':
         this.convRepeatTimes(node)
-        break 
+        break
       case 'break':
         this.addCodeStr(this.convCheckLoop(node, 'break'))
         break
@@ -712,7 +760,7 @@ try {
         break
       case 'while':
         this.convWhile(node)
-        break          
+        break
       case 'switch':
         this.convSwitch(node)
         break
@@ -726,15 +774,12 @@ try {
         this.convDefLocalVar(node)
         break
       case 'def_local_varlist':
-        //todo
         code += this.addCodeStr(this.convDefLocalVarlist(node))
         break
       case 'tikuji':
-        throw NakoSyntaxError.fromNode(`「逐次実行」構文は「!非同期モード」では使えません。`, node)
-        break
+        throw NakoSyntaxError.fromNode('「逐次実行」構文は「!非同期モード」では使えません。', node)
       case 'speed_mode':
-        throw NakoSyntaxError.fromNode(`「速度有線」構文は「!非同期モード」では使えません。`, node)
-        break
+        throw NakoSyntaxError.fromNode('「速度有線」構文は「!非同期モード」では使えません。', node)
       case 'performance_monitor':
         this.convPerformanceMonitor(node, isExpression)
         break
@@ -766,7 +811,7 @@ try {
    * @returns {string}
    */
   addCodeStr (codeStr) {
-    if (codeStr == '') {return ''}
+    if (codeStr === '') { return '' }
     const a = codeStr.split('\n')
     const a2 = a.map(row => '  ' + row.replace(/\s+$/, ''))
     const c = new NakoCode(NakoCodeCode, a2.join('\n'))
@@ -778,7 +823,7 @@ try {
    * @param {NakoCode} code
    * @returns {string}
    */
-   addCode (code) {
+  addCode (code) {
     this.codeArray[this.codeId] = code
     this.codeId++
     return ''
@@ -786,45 +831,49 @@ try {
 
   /**
    * make label for jump
-   * @param {string} name 
+   * @param {string} name
    * @returns {NakoCode}
    */
   makeLabel (name) {
     const uniqLabel = name + '_' + (this.loopId++)
     return this.makeLabelDirectly(uniqLabel)
   }
+
   /**
    * make label for function
-   * @param {string} labelName 
+   * @param {string} labelName
    * @returns {NakoCode}
    */
-   makeLabelDirectly (labelName) {
+  makeLabelDirectly (labelName) {
     const c = new NakoCode(NakoCodeLabel, labelName)
     this.labels[labelName] = -1
     return c
   }
+
   /**
-   * make Jump 
+   * make Jump
    * @param {NakoCode} label
    * @returns {NakoCode}
    */
   makeJump (label) {
     return new NakoCode(NakoCodeJump, label.value)
   }
+
   /**
    * make Jump if true
    * @param {NakoCode} label
    * @returns {NakoCode}
    */
-   makeJumpIfTrue (label) {
+  makeJumpIfTrue (label) {
     return new NakoCode(NakoCodeJumpIfTrue, label.value)
   }
+
   /**
    * make Jump if false
    * @param {NakoCode} label
    * @returns {NakoCode}
    */
-   makeJumpIfFalse (label) {
+  makeJumpIfFalse (label) {
     return new NakoCode(NakoCodeJumpIfFalse, label.value)
   }
 
@@ -861,7 +910,7 @@ try {
     this.loopId++
     this._convGen(node.value, true)
     this.addCodeStr(`${loopCount} = sys.__stack.pop(); ${loopVar} = 0;`)
-    
+
     const labelCheck = this.makeLabel('回:条件チェック')
     this.addCode(labelCheck)
     const labelEnd = this.makeLabel('回:ここまで')
@@ -870,18 +919,17 @@ try {
 
     // 繰り返し判定
     const kaisu = 'sys.__vars["回数"]'
-    const cond = 
+    const cond =
       `${kaisu} = ++${loopVar}\n` +
       `sys.__stack.push(${loopVar} > ${loopCount})\n`
     this.addCodeStr(cond)
     this.addCode(this.makeJumpIfTrue(labelEnd))
-    const block = this.convGenLoop(node.block)
+    this.convGenLoop(node.block) // read block
     this.addCode(this.makeJump(labelCheck))
     this.addCode(labelEnd)
     this.flagLoop = false
     return ''
   }
-
 
   /**
    * @param {string} name
@@ -898,7 +946,7 @@ try {
         return { i, name, isTop: false, js: `sys.__varslist[${i}][${JSON.stringify(name)}]` }
       }
     }
-    
+
     return null
   }
 
@@ -915,24 +963,23 @@ try {
       // 多くの場合はundefined値を持つ変数であり分かりづらいバグを引き起こすが、
       // 「ナデシコする」などの命令の中で定義された変数の参照の場合があるため警告に留める。
       // ただし、自動的に定義される変数『引数』『それ』などは例外 #952
-      if (name == '引数' || name == 'それ' || name == '対象' || name == '対象キー' || name == '回数') {
+      if (name === '引数' || name === 'それ' || name === '対象' || name === '対象キー' || name === '回数') {
         // デフォルト定義されている変数名
       } else {
         this.__self.logger.warn(`変数『${name}』は定義されていません。`, position)
       }
       this.varsSet.names.add(name)
       return this.varname(name)
-  }
+    }
 
     const i = res.i
     // システム関数・変数の場合
     if (i === 0) {
       const pv = this.__self.funclist[name]
-      if (!pv) {return `${res.js}/*err:${lno}*/`}
-      if (pv.type === 'const' || pv.type === 'var') {return res.js}
+      if (!pv) { return `${res.js}/*err:${lno}*/` }
+      if (pv.type === 'const' || pv.type === 'var') { return res.js }
       if (pv.type === 'func') {
-        if (pv.josi.length === 0)
-          {return `(${res.js}())`}
+        if (pv.josi.length === 0) { return `(${res.js}())` }
 
         throw NakoSyntaxError.fromNode(`『${name}』が複文で使われました。単文で記述してください。(v1非互換)`, position)
       }
@@ -945,7 +992,7 @@ try {
     const name = node.value
     let varName = `sys.__vars[${JSON.stringify(name)}]`
     const o = this.findVar(name)
-    if (o != null) {varName = o.js}
+    if (o != null) { varName = o.js }
     this.addCodeStr(`sys.__stack.push(${varName});`)
   }
 
@@ -962,12 +1009,11 @@ try {
 
   convReturn (node) {
     // 関数の中であれば利用可能
-    if (this.varsSet.names.has('!関数'))
-      {throw NakoSyntaxError.fromNode('『戻る』がありますが、関数定義内のみで使用可能です。', node)}
+    if (this.varsSet.names.has('!関数')) { throw NakoSyntaxError.fromNode('『戻る』がありますが、関数定義内のみで使用可能です。', node) }
 
     if (node.value) {
       this._convGen(node.value, true)
-      this.addCodeStr(`sys.__vars["それ"] = sys.__stack.pop()`)
+      this.addCodeStr('sys.__vars["それ"] = sys.__stack.pop()')
     }
     this.addCode(new NakoCode(NakoCodeReturn, ''))
     return ''
@@ -979,20 +1025,26 @@ try {
       const cmdj = (cmd === 'continue') ? '続ける' : '抜ける'
       throw NakoSyntaxError.fromNode(`『${cmdj}』文がありますが、それは繰り返しの中で利用してください。`, node)
     }
-    if (cmd == 'continue') {
-      if (this.labelContinue) {this.addCode(this.makeJump(this.labelContinue))}
+    if (cmd === 'continue') {
+      if (this.labelContinue) { this.addCode(this.makeJump(this.labelContinue)) }
     } else {
-      if (this.labelBreak) {this.addCode(this.makeJump(this.labelBreak))}
+      if (this.labelBreak) { this.addCode(this.makeJump(this.labelBreak)) }
     }
     return ''
   }
 
   convDefFuncCommon (node, name) {
-    const labelEnd = this.makeLabel(`関数「${name}」:ここまで`)
+    // deffunc_code
+    const isMumeiFunc = (name === '')
+    let funcName = name
+    if (isMumeiFunc) { funcName = `無名関数:${this.loopId++}` }
+
+    const labelEnd = this.makeLabel(`関数「${funcName}」:ここまで`)
     this.addCode(this.makeJump(labelEnd))
-    const labelBegin = this.makeLabelDirectly(name)
+    const labelBegin = this.makeLabelDirectly(funcName)
+    labelBegin.tag = NakoCodeTagIsFuncpoint // 削除対象からはずすため
     this.addCode(labelBegin)
-    
+
     //
     const initialNames = new Set()
     this.varsSet = { isFunction: true, names: initialNames, readonly: new Set() }
@@ -1000,51 +1052,57 @@ try {
     // ローカル変数をPUSHする
     this.varslistSet.push(this.varsSet)
     // JSの引数と引数をバインド
+    const meta = isMumeiFunc ? node.meta : node.name.meta
     let code = ''
-    code += `//関数『${name}』の初期化処理\n`
+    let codeCall = ''
+    code += `//関数『${funcName}』の初期化処理\n`
     // 宣言済みの名前を保存
-    const varsDeclared = Array.from(this.varsSet.names.values())
+    // const varsDeclared = Array.from(this.varsSet.names.values())
     // 引数をローカル変数に設定 (スタックの末尾から取得する必要があるので、逆順に値を得る)
     code += '// 引数をローカル変数として登録\n'
-    let meta = (!name) ? node.meta : node.name.meta
-    for (let i = meta.varnames.length-1; i >= 0; i--) {
+    for (let i = meta.varnames.length - 1; i >= 0; i--) {
       const word = meta.varnames[i]
       code += `  ${this.varname(word)} = sys.__stack.pop();\n`
       this.varsSet.names.add(word)
+      codeCall += '' //  sys.__stack.push(arguments[${i}]);\n
     }
+    code += '// ここまで:引数をローカル変数として登録\n'
     this.addCodeStr(code)
-    
+
     // 関数定義は、グローバル領域で。
-    if (name) {
-      this.used_func.add(name)
-      this.varslistSet[1].names.add(name)
-      this.nako_func[name] = {
-        josi: node.name.meta.josi,
-        fn: '',
-        type: 'func'
-      }
-      this.nako_func[name].fn = `(function(){ throw new Error("ユーザー関数『${name}』の呼出はできません") })`
+    this.used_func.add(funcName)
+    this.varslistSet[1].names.add(funcName)
+    this.nako_func[funcName] = {
+      josi: meta.josi,
+      fn: '(function(){\n' +
+        '  const sys = (arguments.length > 0) ? arguments[arguments.length-1] : {}; \n' +
+        '  ' + codeCall + '\n' +
+        `  sys.__callNakoCode(sys.__labels['${funcName}'], sys.nextIndex, sys);  })`,
+      type: 'func'
     }
 
     // ブロックを解析
     this._convGen(node.block, false)
-    
-    
+
     this.varslistSet.pop()
     this.varsSet = this.varslistSet[this.varslistSet.length - 1]
-    if (name) {this.__self.__varslist[1][name] = '(function(){})'}
+    this.__self.__varslist[1][funcName] = function () {}
 
     this.addCode(new NakoCode(NakoCodeReturn, ''))
     this.addCode(labelEnd)
+
+    // 無名関数の定義であれば無名関数をPUSH
+    if (!name) {
+      this.addCodeStr(`sys.__stack.push('${funcName}')`)
+    }
     return ''
   }
 
-  convDefTest(node) {
-    throw NakoSyntaxError.fromNode(`テスト構文は!非同期モードでは使えません。`, node)
-    return ''
+  convDefTest (node) {
+    throw NakoSyntaxError.fromNode('テスト構文は!非同期モードでは使えません。', node)
   }
 
-  convDefFunc(node) {
+  convDefFunc (node) {
     const name = NakoGen.getFuncName(node.name.value)
     this.convDefFuncCommon(node, name)
     // ★この時点では関数のコードを生成しない★
@@ -1059,8 +1117,8 @@ try {
   convJsonObj (node) {
     const list = node.value
     const objName = `sys.__tmp_obj${this.loopId++}`
-    this.addCodeStr(`${objName}={};　// convJsonObj::ここから`)
-    list.map((e) => {
+    this.addCodeStr(objName + '={}; // convJsonObj::ここから')
+    list.forEach((e) => {
       this._convGen(e.value, true)
       this._convGen(e.key, true)
       this.addCodeStr(`${objName}[sys.__stack.pop()]=sys.__stack.pop()`)
@@ -1078,7 +1136,7 @@ try {
     return ''
   }
 
-  convRefArray(node) {
+  convRefArray (node) {
     // 名前をPUSH
     this._convGen(node.name, true)
     const list = node.index
@@ -1087,14 +1145,14 @@ try {
       this._convGen(list[i], true)
       // pop index & push value
       this.addCodeStr(
-        `const idx = sys.__stack.pop();\n` +
-        `const obj = sys.__stack.pop();\n` +
-        `sys.__stack.push(obj[idx]);`)
+        'const idx = sys.__stack.pop();\n' +
+        'const obj = sys.__stack.pop();\n' +
+        'sys.__stack.push(obj[idx]);')
     }
     return ''
   }
 
-  convLetArray(node) {
+  convLetArray (node) {
     // 代入する値をPUSH
     this._convGen(node.value, true)
 
@@ -1103,21 +1161,21 @@ try {
     const list = node.index
     for (let i = 0; i < list.length; i++) {
       this._convGen(list[i], true)
-      if (i == list.length - 1) { // 代入
+      if (i === list.length - 1) { // 代入
         this.addCodeStr(
-          `const idx = this.__stack.pop();` +
-          `const obj = this.__stack.pop();` +
-          `const val = this.__stack.pop();` +
-          `obj[idx]=val;`)
+          'const idx = this.__stack.pop();' +
+          'const obj = this.__stack.pop();' +
+          'const val = this.__stack.pop();' +
+          'obj[idx]=val;')
         break
       }
       // index アクセス
       this.addCodeStr(
-        `const idx = sys.__stack.pop();\n` +
-        `const obj = sys.__stack.pop();\n` +
-        `sys.__stack.push(obj[idx]);`)
+        'const idx = sys.__stack.pop();\n' +
+        'const obj = sys.__stack.pop();\n' +
+        'sys.__stack.push(obj[idx]);')
     }
-    return ``
+    return ''
   }
 
   convGenLoop (node) {
@@ -1163,7 +1221,7 @@ try {
     this.labelContinue = labelInc
     this.labelBreak = labelEnd
     // ループ内のブロック内容を得る
-    const block = this.convGenLoop(node.block)
+    this.convGenLoop(node.block) // block
     this.addCode(labelInc)
     this.addCodeStr(`${sore} = ++${word};`)
     this.addCode(this.makeJump(labelCheck))
@@ -1177,15 +1235,15 @@ try {
     this.flagLoop = true
     // 対象を用意する
     let taisyo = '__v0["対象"]'
-    const taisyoKey = `__v0["対象キー"]`
+    const taisyoKey = '__v0["対象キー"]'
     if (node.name) {
       taisyo = this.varname(node.name.value)
       this.varsSet.names.add(node.name.value)
     }
     // 反復対象を調べる
-    let target = node.target
+    const target = node.target
     if (target === null) {
-        throw NakoSyntaxError.fromNode(`『反復』の対象がありません。`, node)
+      throw NakoSyntaxError.fromNode('『反復』の対象がありません。', node)
     }
 
     const sore = this.varname('それ')
@@ -1198,19 +1256,19 @@ try {
     this._convGen(node.target, true)
     // どのように反復するか判定
     const initCode =
-      `// 反復: 初期化\n` +
-      `${targetArray} = sys.__stack.pop();\n` + 
+      '// 反復: 初期化\n' +
+      `${targetArray} = sys.__stack.pop();\n` +
       `${loopVar} = 0;\n` +
       // 文字列や数値なら反復できるように配列に入れる
-      `if (typeof(${targetArray}) == 'string' || typeof(${targetArray}) == 'number') { ${targetArray} = [${targetArray}]; }\n` + 
+      `if (typeof(${targetArray}) == 'string' || typeof(${targetArray}) == 'number') { ${targetArray} = [${targetArray}]; }\n` +
       // Objectならキー一覧を得る
       `if (${targetArray} instanceof Array) { ${loopCount} = ${targetArray}.length; }\n` +
-      `else { // キーの一覧を得る\n` +
-      `  ${targetKeys} = Object.keys(${targetArray}); \n` + 
-      `  // hasOwnPropertyがfalseならばkeyを消す処理\n` +
+      'else { // キーの一覧を得る\n' +
+      `  ${targetKeys} = Object.keys(${targetArray}); \n` +
+      '  // hasOwnPropertyがfalseならばkeyを消す処理\n' +
       `  ${targetKeys} = ${targetKeys}.filter((key)=>{ return ${targetArray}.hasOwnProperty(key) })\n` +
       `  ${loopCount} = ${targetKeys}.length;\n` +
-      `}\n`
+      '}\n'
     this.addCodeStr(initCode)
     const labelCheck = this.makeLabel('反復:条件確認')
     const labelInc = this.makeLabel('反復:加算')
@@ -1218,16 +1276,17 @@ try {
     this.labelBreak = labelEnd
     this.labelContinue = labelInc
     this.addCode(labelCheck)
-    const setTarget = 
+    const setTarget =
       `if (${targetArray} instanceof Array) {\n` +
+      // eslint-disable-next-line no-irregular-whitespace
       `  ${taisyo} = ${sore} = ${targetArray}[${loopVar}];　${taisyoKey} = ${loopVar};\n` +
-      `} else {\n` +
+      '} else {\n' +
       `  ${taisyoKey} = ${targetKeys}[${loopVar}]; ${taisyo} = ${sore} = ${targetArray}[${taisyoKey}];\n` +
-      `}\n`
+      '}\n'
     this.addCodeStr(`${setTarget}\nsys.__stack.push(${loopVar} < ${loopCount});`)
     this.addCode(this.makeJumpIfFalse(labelEnd))
     // 反復ブロックを定義
-    const block = this.convGenLoop(node.block)
+    this.convGenLoop(node.block) // block
     // 加算
     this.addCode(labelInc)
     this.addCodeStr(`${loopVar}++`)
@@ -1236,7 +1295,6 @@ try {
     this.flagLoop = false
     return ''
   }
-
 
   convWhile (node) {
     this.flagLoop = true
@@ -1251,7 +1309,7 @@ try {
     // ブロックを追加
     this.convGenLoop(node.block)
     this.addCode(this.makeJump(labelBegin))
-    this.addCode(labelEnd) 
+    this.addCode(labelEnd)
     this.flagLoop = false
     return ''
   }
@@ -1290,10 +1348,9 @@ try {
     this.addCodeStr(`${varValue} = sys.__stack.pop()`)
     const labelEnd = this.makeLabel('条件分岐:ここまで')
     const cases = node.cases
-    let body = ''
     for (let i = 0; i < cases.length; i++) {
       const cvalue = cases[i][0]
-      if (cvalue.type == '違えば') {
+      if (cvalue.type === '違えば') {
         this.convGenLoop(cases[i][1])
       } else {
         const nextLabel = this.makeLabel('条件分岐:次')
@@ -1309,14 +1366,14 @@ try {
     this.addCodeStr(`delete ${varValue}//条件分岐:掃除`)
     return ''
   }
-  
+
   convFuncGetArgsCalcType (funcName, func, node) {
     const opts = {}
     for (let i = 0; i < node.args.length; i++) {
       const arg = node.args[i]
       if (i === 0 && arg === null) {
-        this.addCodeStr(`sys.__stack.push(sys.__vars['それ'])`)
-        opts['sore'] = true
+        this.addCodeStr('sys.__stack.push(sys.__vars[\'それ\'])')
+        opts.sore = true
       } else {
         // 関数の引数を評価
         this._convGen(arg, true)
@@ -1327,7 +1384,7 @@ try {
 
   getPluginList () {
     const r = []
-    for (const name in this.__self.__module) {r.push(name)}
+    for (const name in this.__self.__module) { r.push(name) }
     return r
   }
 
@@ -1339,6 +1396,7 @@ try {
    */
   convFunc (node, isExpression) {
     let isJSFunc = false
+    let isMumeiFunc = false
     const funcName = NakoGen.getFuncName(node.name)
     const res = this.findVar(funcName)
     if (res === null) {
@@ -1354,7 +1412,10 @@ try {
     } else {
       func = this.nako_func[funcName]
       // 無名関数の可能性
-      if (func === undefined) {func = {return_none: false}}
+      if (func === undefined) {
+        isMumeiFunc = true
+        func = { return_none: false }
+      }
     }
     // 関数の参照渡しか？
     if (node.type === 'func_pointer') {
@@ -1368,12 +1429,12 @@ try {
     let funcBegin = ''
     let funcEnd = ''
     // setter?
-    if (node['setter']) {
+    if (node.setter) {
       funcBegin += ';__self.isSetter = true;\n'
       funcEnd += ';__self.isSetter = false;\n'
     }
     // 変数「それ」が補完されていることをヒントとして出力
-    if (argsOpts['sore']){funcBegin += '/*[sore]*/'}
+    if (argsOpts.sore) { funcBegin += '/*[sore]*/' }
 
     // 引数をスタックに積む
     const arcCount = node.args.length
@@ -1382,26 +1443,30 @@ try {
     if (isJSFunc) {
       code += funcBegin
       code += `const args = sys.__stack.splice(sys.__stack.length - ${arcCount}, ${arcCount});\n`
-      //code += `console.log("call:${funcName}", args, 'sys');\n`
-      code += `args.push(sys);\n`
+      // code += `console.log("call:${funcName}", args, 'sys');\n`
+      code += 'args.push(sys);\n'
       code += `const ret = ${res.js}.apply(sys, args);\n`
       if (!func.return_none) {
-        code += `sys.__vars['それ'] = ret;\n`
+        code += 'sys.__vars[\'それ\'] = ret;\n'
         if (isExpression) {
-          code += `sys.__stack.push(ret);\n`
+          code += 'sys.__stack.push(ret);\n'
         }
       }
       code += funcEnd
       this.addCodeStr(code)
     } else {
-      this.addCode(new NakoCode(NakoCodeCall, funcName))
-      if (!isExpression) {
-        this.addCodeStr(`sys.__stack.pop();// 戻り値を利用しない関数呼出`)
+      if (isMumeiFunc) {
+        this.addCode(new NakoCode(NakoCodeCallObj, funcName))
+      } else {
+        this.addCode(new NakoCode(NakoCodeCall, funcName))
       }
-  }
+      if (!isExpression) {
+        this.addCodeStr('sys.__stack.pop();// 戻り値を利用しない関数呼出')
+      }
+    }
   }
 
-  convRenbun(node) {
+  convRenbun (node) {
     this._convGen(node.left, false)
     this._convGen(node.right, true)
   }
@@ -1409,30 +1474,30 @@ try {
   convOp (node) {
     const OP_TBL = { // トークン名からJS演算子
       '&': '+""+',
-      'eq': '==',
-      'noteq': '!=',
+      eq: '==',
+      noteq: '!=',
       '===': '===',
       '!==': '!==',
-      'gt': '>',
-      'lt': '<',
-      'gteq': '>=',
-      'lteq': '<=',
-      'and': '&&',
-      'or': '||',
-      'shift_l': '<<',
-      'shift_r': '>>',
-      'shift_r0': '>>>'
+      gt: '>',
+      lt: '<',
+      gteq: '>=',
+      lteq: '<=',
+      and: '&&',
+      or: '||',
+      shift_l: '<<',
+      shift_r: '>>',
+      shift_r0: '>>>'
     }
-    let op = node.operator // 演算子
+    const op = node.operator // 演算子
     // 値はスタックに載せられる
     // left
     this._convGen(node.left, true)
     // right
     this._convGen(node.right, true)
     // calc
-    let code = 
-      `const rv = sys.__stack.pop();\n` +
-      `const lv = sys.__stack.pop();\n`
+    let code =
+      'const rv = sys.__stack.pop();\n' +
+      'const lv = sys.__stack.pop();\n'
     if (op === '^') {
       code += 'const v = (Math.pow(lv, rv))\n'
     } else {
@@ -1449,7 +1514,7 @@ try {
     // 値をスタックに載せる
     if (node.value === null) {
       // 値が省略されたら「それ」を載せる
-      this.addCodeStr(`sys.__stack.push(sys.__vars['それ'])`)
+      this.addCodeStr('sys.__stack.push(sys.__vars[\'それ\'])')
     } else {
       // 値がある場合
       this._convGen(node.value, true)
@@ -1473,15 +1538,14 @@ try {
 
   convDefLocalVar (node) {
     if (node.value === null) {
-      this.addCodeStr(`sys.__stack.push(null)`)
+      this.addCodeStr('sys.__stack.push(null)')
     } else {
       this._convGen(node.value, true)
     }
     const name = node.name.value
     const vtype = node.vartype // 変数 or 定数
     // 二重定義？
-    if (this.varsSet.names.has(name))
-      {throw NakoSyntaxError.fromNode(`${vtype}『${name}』の二重定義はできません。`, node)}
+    if (this.varsSet.names.has(name)) { throw NakoSyntaxError.fromNode(`${vtype}『${name}』の二重定義はできません。`, node) }
     this.varsSet.names.add(name)
     // 定数?
     if (vtype === '定数') {
@@ -1490,29 +1554,28 @@ try {
     this.addCodeStr(`${this.varname(name)}=sys.__stack.pop()`)
     return ''
   }
-  
+
   // #563 複数変数への代入
   convDefLocalVarlist (node) {
     const vtype = node.vartype // 変数 or 定数
     if (node.value === null) {
-      this.addCodeStr(`sys.__stack.push(null)`)
+      this.addCodeStr('sys.__stack.push(null)')
     } else {
       this._convGen(node.value, true)
     }
-    let varI = `sys.__tmp_i${this.loopId}`
+    const varI = `sys.__tmp_i${this.loopId}`
     this.loopId++
     this.addCodeStr(`${varI}=sys.__stack.pop();if (!(${varI} instanceof Array)) { ${varI}=[${varI}] }`)
-    for (let nameObj of node.names) {
+    for (const nameObj of node.names) {
       const name = nameObj.value
       // 二重定義？
-      if (this.varsSet.names.has(name))
-        {throw NakoSyntaxError.fromNode(`${vtype}『${name}』の二重定義はできません。`, node)}
+      if (this.varsSet.names.has(name)) { throw NakoSyntaxError.fromNode(`${vtype}『${name}』の二重定義はできません。`, node) }
       //
       this.varsSet.names.add(name)
       if (vtype === '定数') {
         this.varsSet.readonly.add(name)
       }
-      let vname = this.varname(name)
+      const vname = this.varname(name)
       this.addCodeStr(`${vname}=${varI}.pop()`)
     }
     this.addCodeStr(`delete ${varI}//複数代入:掃除`)
@@ -1521,7 +1584,7 @@ try {
 
   convString (node) {
     let value = '' + node.value
-    let mode = node.mode
+    const mode = node.mode
     value = value.replace(/\\/g, '\\\\')
     value = value.replace(/"/g, '\\"')
     value = value.replace(/\r/g, '\\r')
@@ -1533,30 +1596,27 @@ try {
     return '"' + value + '"'
   }
 
-  convTryExcept(node) {
+  convTryExcept (node) {
     const labelExcept = this.makeLabel('エラー監視:ならば')
     const labelEnd = this.makeLabel('エラー監視:ここまで')
 
     // エラーをひっかけるように設定
     this.addCode(new NakoCode(NakoCodeTry, labelExcept.value))
 
-    const block = this._convGen(node.block, false)
-    const errBlock = this._convGen(node.errBlock, false)
-    return this.convLineno(node, false) +
-      `try {\n${block}\n} catch (e) {\n` +
-      '  __v0["エラーメッセージ"] = e.message;\n' +
-      ';\n' +
-      `${errBlock}}\n`
+    this._convGen(node.block, false)
+    this.addCode(this.makeJump(labelEnd))
+    this.addCode(labelExcept)
+    this._convGen(node.errBlock, false)
+    this.addCode(labelEnd)
   }
 }
 
 // ブラウザに登録する
-if (typeof(navigator) === 'object' && typeof(navigator.nako3) === 'object') {
+if (typeof (navigator) === 'object' && typeof (navigator.nako3) === 'object') {
   // Webブラウザの場合
   const nako3 = navigator.nako3
-  if (nako3.addCodeGenerator) {nako3.addCodeGenerator('非同期モード', NakoGenAsync)}
+  if (nako3.addCodeGenerator) { nako3.addCodeGenerator('非同期モード', NakoGenAsync) }
 } else {
   // モジュールモード
   module.exports = NakoGenAsync
 }
-
