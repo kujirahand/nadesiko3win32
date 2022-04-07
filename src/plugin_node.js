@@ -882,7 +882,7 @@ const PluginNode = {
       if (sys.__genMode !== '非同期モード') {
         throw new Error('『AJAX受信』を使うには、プログラムの冒頭で「!非同期モード」と宣言してください。')
       }
-      sys.async = true
+      const sysenv = sys.setAsync(sys)
       let options = sys.__v0['AJAXオプション']
       if (options === '') { options = { method: 'GET' } }
       // fetch 実行
@@ -894,13 +894,42 @@ const PluginNode = {
         }
       }).then(text => {
         sys.__v0['対象'] = text
-        sys.nextAsync(sys)
+        sys.compAsync(sys, sysenv)
       }).catch(err => {
         console.error('[AJAX受信のエラー]', err)
         sys.__errorAsync(err, sys)
       })
     },
     return_none: true
+  },
+  // @新AJAX
+  'AJAXテキスト取得': { // @AJAXでURLにアクセスしテキスト形式で結果を得る。送信時AJAXオプションの値を参照。 // @AJAXてきすとしゅとく
+    type: 'func',
+    josi: [['から']],
+    pure: true,
+    asyncFn: true,
+    fn: async function (url, sys) {
+      let options = sys.__v0['AJAXオプション']
+      if (options === '') { options = { method: 'GET' } }
+      const res = await fetch(url, options)
+      const txt = await res.text()
+      return txt
+    },
+    return_none: false
+  },
+  'AJAX_JSON取得': { // @AJAXでURLにアクセスしJSONの結果を得て、送信時AJAXオプションの値を参照。 // @AJAX_JSONしゅとく
+    type: 'func',
+    josi: [['から']],
+    pure: true,
+    asyncFn: true,
+    fn: async function (url, sys) {
+      let options = sys.__v0['AJAXオプション']
+      if (options === '') { options = { method: 'GET' } }
+      const res = await fetch(url, options)
+      const txt = await res.json()
+      return txt
+    },
+    return_none: false
   },
   // @文字コード
   '文字コード変換サポート判定': { // @文字コードCODEをサポートしているか確認 // @もじこーどさぽーとはんてい

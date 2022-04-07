@@ -124,7 +124,6 @@ npm start
 コマンドラインから以下を実行して、以下のファイルを生成。
 
 * [doc/browsers.md](browsers.md): 対応機器/ブラウザ (マークダウン形式)
-* [src/browsers.md](../src/browsers.md): 対応機器/ブラウザ (マークダウン形式, cnako3用)
 * [demo/browsers.html](../demo/browsers.html): 対応機器/ブラウザ (HTML形式, なでしこ3エディタ用)
 
 ```bash
@@ -136,29 +135,8 @@ npm run build:browsers
 コマンドラインから以下を実行して、Node.jsのパッケージを更新。
 
 ```bash
-npm-check-updates -u
+npx npm-check-updates -u
 npm update --no-optional
-```
-
-### Electron
-
-モジュールをインストールする。
-
-```bash
-npm install electron
-npm install electron-packager
-```
-
-以下のコマンドを実行することで、Electronによるなでしこが起動。
-
-```bash
-npm run electron
-```
-
-ビルドは以下のコマンドで行う。
-
-```bash
-npm run build:electron
 ```
 
 ## Gitからリポジトリを取得して利用する場合
@@ -170,3 +148,10 @@ git clone https://github.com/kujirahand/nadesiko3.git
 cd nadesiko3
 npm install --production
 ```
+
+## (メモ)Electronの利用に関して
+
+以前は、本リポジトリでElectronにも対応していたが別リポジトリを用意した。
+
+- [なでしこ3配布パック(Electron)](https://github.com/kujirahand/nadesiko3electron)
+

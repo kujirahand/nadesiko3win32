@@ -47,6 +47,60 @@ const PluginSystem = {
       // タイマーに関する処理(タイマーは「!クリア」で全部停止する)
       sys.__timeout = []
       sys.__interval = []
+      // 日付処理などに使う
+      const z2 = sys.__zero2 = (s) => {
+        s = '00' + s
+        return s.substring(s.length - 2)
+      }
+      sys.__zero = (s, keta) => {
+        let zeroS = ''
+        for (let i = 0; i < keta; i++) {zeroS += '0'}
+        s = zeroS + s
+        return s.substring(s.length - keta)
+      }
+      sys.__formatDate = (t) => {
+        return t.getFullYear() + '/' + z2(t.getMonth() + 1) + '/' + z2(t.getDate())
+      }
+      sys.__formatTime = (t) => {
+        return z2(t.getHours()) + ':' + z2(t.getSeconds()) + ':' + z2(t.getMinutes())
+      }
+      sys.__formatDateTime = (t, fmt) => {
+        const dateStr = t.getFullYear() + '/' + z2(t.getMonth() + 1) + '/' + z2(t.getDate())
+        const timeStr = z2(t.getHours()) + ':' + z2(t.getMinutes()) + ':' + z2(t.getSeconds())
+        if (fmt.match(/^\d+\/\d+\/\d+\s+\d+:\d+:\d+$/)) {
+          return dateStr + ' ' + timeStr
+        }
+        if (fmt.match(/^\d+\/\d+\/\d+$/)) {
+          return dateStr
+        }
+        if (fmt.match(/^\d+:\d+:\d+$/)) {
+          return timeStr
+        }
+        return dateStr + ' ' + timeStr
+      }
+      sys.__str2date = (s) => {
+        // trim
+        s = ('' + s).replace(/(^\s+|\s+$)/, '')
+        // is unix time
+        if (s.match(/^(\d+|\d+\.\d+)$/)) {
+          return new Date(parseFloat(s) * 1000);
+        }
+        // is time ?
+        if (s.match(/^\d+\:\d+(\:\d+)?$/)) {
+          const t = new Date()
+          const a = (s + ':0').split(':')
+          return new Date(
+            t.getFullYear(), t.getMonth(), t.getDate(), 
+            a[0], a[1], a[2])
+        }
+        // replace splitter to '/'
+        s = s.replace(/[\-\s\:]/g, '/')
+        s += '/0/0/0' // 日付だけのときのために時間分を足す
+        const a = s.split('/')
+        return new Date(a[0], a[1]-1, a[2], a[3], a[4],a[5])
+      }
+      // 『継続表示』のための一時変数(『表示』実行で初期化)
+      sys.__printPool = ''
     }
   },
   '!クリア': {
@@ -131,8 +185,45 @@ const PluginSystem = {
     josi: [['を', 'と']],
     pure: true,
     fn: function (s, sys) {
+      // 継続表示の一時プールを出力
+      s = sys.__printPool + s
+      sys.__printPool = ''
+      // 
       sys.__varslist[0]['表示ログ'] += (s + '\n')
       sys.logger.send('stdout', s + '')
+    },
+    return_none: true
+  },
+  '継続表示': { // @Sを改行なしで表示(ただし「表示」命令を使うことで画面出力される) // @けいぞくひょうじ
+    type: 'func',
+    josi: [['を', 'と']],
+    pure: true,
+    fn: function (s, sys) {
+      sys.__printPool += s
+    },
+    return_none: true
+  },
+  '連続表示': { // @引数に指定した引数を全て表示する // @れんぞく表示
+    type: 'func',
+    josi: [['と', 'を']],
+    isVariableJosi: true,
+    pure: true,
+    fn: function (...a) {
+      const sys = a.pop()
+      const v = a.join('')
+      sys.__exec('表示', [v, sys])
+    },
+    return_none: true
+  },
+  '連続無改行表示': { // @引数に指定した引数を全て表示する（改行しない) // @れんぞくむかいぎょうひょうじ
+    type: 'func',
+    josi: [['と', 'を']],
+    isVariableJosi: true,
+    pure: true,
+    fn: function (...a) {
+      const sys = a.pop()
+      const v = a.join('')
+      sys.__exec('継続表示', [v, sys])
     },
     return_none: true
   },
@@ -213,6 +304,38 @@ const PluginSystem = {
     pure: true,
     fn: function (a, b) {
       return a % b
+    }
+  },
+  '偶数': { // @Aが偶数なら真を返す // @ぐうすう
+    type: 'func',
+    josi: [['が']],
+    pure: true,
+    fn: function (a) {
+      return (a % 2 == 0)
+    }
+  },
+  '奇数': { // @Aが奇数なら真を返す // @きすう
+    type: 'func',
+    josi: [['が']],
+    pure: true,
+    fn: function (a) {
+      return (a % 2 == 1)
+    }
+  },
+  '二乗': { // @Aを二乗する // @にじょう
+    type: 'func',
+    josi: [['の', 'を']],
+    pure: true,
+    fn: function (a) {
+      return a * a
+    }
+  },
+  'べき乗': { // @AのB乗を求める // @べきじょう
+    type: 'func',
+    josi: [['の'], ['の']],
+    pure: true,
+    fn: function (a, b) {
+      return Math.pow(a, b)
     }
   },
   '以上': { // @AがB以上か // @いじょう
@@ -352,6 +475,15 @@ const PluginSystem = {
     },
     return_none: true
   },
+  '敬具': { // @ソースコードを読む人を気持ちよくする // @けいぐ
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      sys.__reisetu += 100 // bonus point
+    },
+    return_none: true
+  },
   '礼節レベル取得': { // @(お遊び)敬語を何度使ったか返す // @おねがいします
     type: 'func',
     josi: [],
@@ -420,7 +552,11 @@ const PluginSystem = {
   'ナデシコ': { // @なでしこのコードCODEを実行する // @なでしこする
     type: 'func',
     josi: [['を', 'で']],
+    pure: false,
     fn: function (code, sys) {
+      if (sys.__genMode === '非同期モード') {
+        throw new Error('非同期モードでは「ナデシコ」は利用できません。')
+      }
       sys.__varslist[0]['表示ログ'] = ''
       sys.__self.runEx(code, 'immediate-code.nako3', { resetEnv: false, resetLog: true })
       const out = sys.__varslist[0]['表示ログ'] + ''
@@ -434,6 +570,9 @@ const PluginSystem = {
     type: 'func',
     josi: [['を', 'で']],
     fn: function (code, sys) {
+      if (sys.__genMode === '非同期モード') {
+        throw new Error('非同期モードでは「ナデシコ続」は利用できません。')
+      }
       sys.__self.runEx(code, 'immediate-code.nako3', { resetEnv: false, resetLog: false })
       const out = sys.__varslist[0]['表示ログ'] + ''
       if (out) {
@@ -563,12 +702,21 @@ const PluginSystem = {
       return parseFloat(v)
     }
   },
-  'NAN判定': { // @値VがNaNかどうかを判定 // @NANはんてい
+  'NAN判定': { // @値VがNaNかどうかを判定(命令『非数判定』を使う事を推奨) // @NANはんてい
     type: 'func',
     josi: [['を']],
     pure: true,
     fn: function (v) {
       return isNaN(v)
+    }
+  },
+  '非数判定': { // @値Vが非数かどうかを判定(NAN判定より堅牢) // @ひすうはんてい
+    type: 'func',
+    josi: [['を']],
+    pure: true,
+    fn: function (v) {
+      // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
+      return Number.isNaN(v)
     }
   },
   'HEX': { // @値Vを16進数に変換 // @HEX
@@ -585,6 +733,23 @@ const PluginSystem = {
     pure: true,
     fn: function (v, n) {
       return parseInt(v).toString(n)
+    }
+  },
+  '二進': { // @値Vを2進数に変換 // @にしん
+    type: 'func',
+    josi: [['を', 'の', 'から']],
+    pure: true,
+    fn: function (v) {
+      return parseInt(v).toString(2)
+    }
+  },
+  '二進表示': { // @値Vを2進数に変換して表示 // @にしんひょうじ
+    type: 'func',
+    josi: [['を', 'の', 'から']],
+    pure: true,
+    fn: function (v, sys) {
+        const s = parseInt(v).toString(2)
+        sys.__exec('表示', [s, sys])
     }
   },
   'RGB': { // @HTML用のカラーコードを返すRGB(R,G,B)で各値は0-255 // @RGB
@@ -784,12 +949,9 @@ const PluginSystem = {
     josi: [['で'], ['の']],
     pure: true,
     fn: function (s, a) {
-      let cnt = 0
-      const re = new RegExp(a.replace(/(.)/g, '\\$1'), 'g')
-      String(s).replace(re, m => {
-        cnt++
-      })
-      return cnt
+      s = '' + s
+      a = '' + a
+      return s.split(a).length - 1
     }
   },
   'MID': { // @文字列SのA文字目からCNT文字を抽出する // @MID
@@ -852,14 +1014,32 @@ const PluginSystem = {
       return ('' + s).split('' + a)
     }
   },
-  '切取': { // @文字列Sから文字列Aまでの部分を抽出する(v1非互換) // @きりとる
+  '文字列分割': { // @文字列Sを区切り文字Aで分割して配列で返す // @もじれつぶんかつ
+    type: 'func',
+    josi: [['を'], ['で']],
+    pure: true,
+    fn: function (s, a) {
+      s = '' + s
+      a = '' + a
+      const i = s.indexOf(a)
+      if (i < 0) {
+        return [s]
+      }
+      return [s.substr(0, i), s.substr(i + a.length)]
+    }
+  },
+  '切取': { // @文字列Sから文字列Aまでの部分を抽出する。切り取った残りは特殊変数『対象』に代入される。(v1非互換) // @きりとる
     type: 'func',
     josi: [['から', 'の'], ['まで', 'を']],
     pure: true,
-    fn: function (s, a) {
+    fn: function (s, a, sys) {
       s = String(s)
       const i = s.indexOf(a)
-      if (i < 0) { return s }
+      if (i < 0) {
+          sys.__v0['対象'] = '';
+          return s
+      }
+      sys.__v0['対象'] = s.substr(i + a.length);
       return s.substr(0, i)
     }
   },
@@ -889,9 +1069,8 @@ const PluginSystem = {
     josi: [['の', 'で'], ['を'], ['に', 'へ']],
     pure: true,
     fn: function (s, a, b) {
-      s = String(s)
-      const re = new RegExp(a.replace(/(.)/g, '\\$1'), '')
-      return s.replace(re, b)
+        // replaceは最初の一度だけ置換する
+        return String(s).replace(a, b)
     }
   },
   'トリム': { // @文字列Sの前後にある空白を削除する // @とりむ
@@ -1587,7 +1766,7 @@ const PluginSystem = {
         const row = []
         res.push(row)
         for (let c = 0; c < rows; c++) {
-          row[c] = a[c][r] ? a[c][r] : ''
+          row[c] = (a[c][r] !== undefined) ? a[c][r] : ''
         }
       }
       return res
@@ -1789,20 +1968,34 @@ const PluginSystem = {
     }
   },
   // @タイマー
+  '秒待': { // @ N秒の間待機する // @びょうまつ
+    type: 'func',
+    josi: [['']],
+    pure: true,
+    asyncFn: true,
+    fn: function (n, sys) {
+      return new Promise((resolve, reject) => {
+        setTimeout(()=>{ resolve() }, n * 1000)
+      })
+    },
+    return_none: true
+  },
   '秒待機': { // @ 「!非同期モード」または「逐次実行構文」にて、N秒の間待機する // @びょうたいき
     type: 'func',
     josi: [['']],
-    pure: false,
+    pure: true,
     fn: function (n, sys) {
       if (sys.__genMode === '非同期モード') {
-        sys.async = true
+        const sysenv = sys.setAsync(sys)
         setTimeout(() => {
-          sys.nextAsync(sys)
+          sys.compAsync(sys, sysenv)
         }, n * 1000)
-      } else {
-        if (sys.resolve === undefined) { throw new Error('『秒待機』命令は『!非同期モード』で使ってください。') }
-        sys.__exec('秒逐次待機', [n, sys])
+        return
       }
+      if (sys.resolve === undefined) {
+        throw new Error('『秒待機』命令は『!非同期モード』で使ってください。') 
+      }
+      sys.__exec('秒逐次待機', [n, sys])
     },
     return_none: true
   },
@@ -1836,6 +2029,7 @@ const PluginSystem = {
         // 使用中リストに追加したIDを削除
         const i = sys.__timeout.indexOf(timerId)
         if (i >= 0) { sys.__timeout.splice(i, 1) }
+        if (sys.__genMode === '非同期モード') { sys.newenv = true }
         try {
           f(timerId, sys)
         } catch (e) {
@@ -1860,6 +2054,7 @@ const PluginSystem = {
       if (typeof f === 'string') { f = sys.__findFunc(f, '秒毎') }
       // タイマーをセット
       const timerId = setInterval(() => {
+        if (sys.__genMode === '非同期モード') { sys.newenv = true }
         f(timerId, sys)
       }, parseFloat(n) * 1000)
       // タイマーIDを追加
@@ -1918,6 +2113,7 @@ const PluginSystem = {
     return_none: true
   },
   // @日時処理(簡易)
+  '元号データ': { type: 'const', value: [{ '元号': '令和', '改元日': '2019/05/01' }, { '元号': '平成', '改元日': '1989/01/08' }, { '元号': '昭和', '改元日': '1926/12/25' }, { '元号': '大正', '改元日': '1912/07/30' }, { '元号': '明治', '改元日': '1868/10/23' }] }, // @げんごうでーた
   '今': { // @現在時刻を「HH:mm:ss」の形式で返す // @いま
     type: 'func',
     josi: [],
@@ -1937,20 +2133,99 @@ const PluginSystem = {
     pure: true,
     fn: function () {
       const now = new Date()
-      return now.getTime() / 1000
+      return Math.floor(now.getTime() / 1000)
+    }
+  },
+  'システム時間ミリ秒': { // @現在のUNIX時間 (UTC(1970/1/1)からの経過秒数) をミリ秒で返す // @しすてむじかんみりびょう
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      const now = new Date()
+      return now.getTime()
     }
   },
   '今日': { // @今日の日付を「YYYY/MM/DD」の形式で返す // @きょう
     type: 'func',
     josi: [],
     pure: true,
+    fn: function (sys) {
+      return sys.__formatDate(new Date())
+    }
+  },
+  '明日': { // @明日の日付を「YYYY/MM/DD」の形式で返す // @あした
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      const t = Date.now() + (24 * 60 * 60 * 1000)
+      return sys.__formatDate(new Date(t))
+    }
+  },
+  '昨日': { // @昨日の日付を「YYYY/MM/DD」の形式で返す // @きのう
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function (sys) {
+      const t = Date.now() - (24 * 60 * 60 * 1000)
+      return sys.__formatDate(new Date(t))
+    }
+  },
+  '今年': { // @今年が何年かを西暦で返す // @ことし
+    type: 'func',
+    josi: [],
+    pure: true,
     fn: function () {
-      const z2 = (n) => {
-        n = '00' + n
-        return n.substr(n.length - 2, 2)
-      }
-      const t = new Date()
-      return t.getFullYear() + '/' + z2(t.getMonth() + 1) + '/' + z2(t.getDate())
+      return (new Date()).getFullYear()
+    }
+  },
+  '来年': { // @来年が何年かを西暦で返す // @らいねん
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      return (new Date()).getFullYear() + 1
+    }
+  },
+  '去年': { // @去年が何年かを西暦で返す // @きょねん
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      return (new Date()).getFullYear() - 1
+    }
+  },
+  '今月': { // @今月が何月かを返す // @こんげつ
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      return (new Date()).getMonth() + 1
+    }
+  },
+  '来月': { // @来月が何月かを返す // @らいげつ
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      return (new Date()).getMonth() + 2
+    }
+  },
+  '先月': { // @先月が何月かをかえす // @せんげつ
+    type: 'func',
+    josi: [],
+    pure: true,
+    fn: function () {
+      return (new Date()).getMonth()
+    }
+  },
+  '曜日': { // @Sに指定した日付の曜日をで返す。不正な日付の場合は今日の曜日番号を返す。 // @ようび
+    type: 'func',
+    josi: [['の']],
+    pure: true,
+    fn: function (s, sys) {
+      const d = sys.__str2date(s)
+      return '日月火水木金土'.charAt(d.getDay() %  7)
     }
   },
   '曜日番号取得': { // @Sに指定した日付の曜日番号をで返す。不正な日付の場合は今日の曜日番号を返す。(0=日/1=月/2=火/3=水/4=木/5=金/6=土) // @ようびばんごうしゅとく
@@ -1961,6 +2236,223 @@ const PluginSystem = {
       const a = s.split('/')
       const t = new Date(a[0], a[1] - 1, a[2])
       return t.getDay()
+    }
+  },
+  'UNIXTIME変換': { // @日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す(v1非互換) // @UNIXTIMEへんかん
+    type: 'func',
+    josi: [['の','を','から']],
+    pure: true,
+    fn: function (s, sys) {
+      const d = sys.__str2date(s)
+      return d.getTime() / 1000;
+    }
+  },
+  'UNIX時間変換': { // @日時SをUNIX時間 (UTC(1970/1/1)からの経過秒数) に変換して返す(v1非互換) // @UNIXじかんへんかん
+    type: 'func',
+    josi: [['の','を','から']],
+    pure: true,
+    fn: function (s, sys) {
+      const d = sys.__str2date(s)
+      return d.getTime() / 1000;
+    }
+  },
+  '日時変換': { // @UNIX時間 (UTC(1970/1/1)からの経過秒数) を「YYYY/MM/DD HH:mm:ss」の形式に変換 // @にちじへんかん
+    type: 'func',
+    josi: [['を', 'から']],
+    pure: true,
+    fn: function (tm, sys) {
+      const t = tm * 1000
+      return sys.__formatDateTime(new Date(t), '2022/01/01 00:00:00')
+    }
+  },
+  '日時書式変換': { // @UNIX時間TM(または日付文字列)を「YYYY/MM/DD HH:mm:ss」または「YY-M-D H:m:s」その他、W:曜日、WWW:曜日英、MMM:月英、ccc:ミリ秒の書式に変換 // @にちじしょしきへんかん
+    type: 'func',
+    josi: [['を'], ['で']],
+    pure: true,
+    fn: function (tm, fmt, sys) {
+      const t = sys.__str2date(tm)
+      fmt = fmt.replace(/(YYYY|ccc|WWW|MMM|YY|MM|DD|HH|mm|ss|[MDHmsW])/g, (m) => {
+        switch (m) {
+          case 'YYYY': return t.getFullYear()
+          case 'YY': return ('' + t.getFullYear()).substring(2)
+          case 'MM': return sys.__zero2(t.getMonth() + 1)
+          case 'DD': return sys.__zero2(t.getDate())
+          case 'M': return (t.getMonth() + 1)
+          case 'D': return (t.getDate())
+          case 'HH': return sys.__zero2(t.getHours())
+          case 'mm': return sys.__zero2(t.getMinutes())
+          case 'ss': return sys.__zero2(t.getSeconds())
+          case 'ccc': return sys.__zero(t.getMilliseconds(), 3)
+          case 'H': return (t.getHours())
+          case 'm': return (t.getMinutes())
+          case 's': return (t.getSeconds())
+          case 'W': return '日月火水木金土'.charAt(t.getDay() % 7)
+          case 'WWW': return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][t.getDay() % 7]
+          case 'MMM': return ['Jan','Feb','Mar','Apr','May','Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][t.getMonth()]
+        }
+        return m
+      })
+     return fmt
+    }
+  },
+  '和暦変換': { // @Sを和暦に変換する。Sは明治以降の日付が有効。 // @われきへんかん
+    type: 'func',
+    josi: [['を']],
+    pure: true,
+    fn: function (s, sys) {
+      const d = sys.__str2date(s)
+      const t = d.getTime()
+      for (const era of sys.__v0['元号データ']) {
+        const gengo = era['元号']
+        const d2 = sys.__str2date(era['改元日'])
+        const t2 = d2.getTime()
+        if (t2 <= t) {
+          let y = (d.getFullYear() - d2.getFullYear()) + 1
+          if (y == 1) {y = '元'}
+          return gengo + y + '年' + sys.__zero2(d.getMonth() + 1) + '月' + sys.__zero2(d.getDate()) + '日'
+        }
+      }
+      throw new Error('『和暦変換』は明示以前の日付には対応していません。')
+    }
+  },
+  '年数差': { // @日付AとBの差を年数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。 // @ねんすうさ
+    type: 'func',
+    josi: [['と', 'から'], ['の', 'までの']],
+    pure: true,
+    fn: function (a, b, sys) {
+      const t1 = sys.__str2date(a)
+      const t2 = sys.__str2date(b)
+      return (t2.getFullYear() - t1.getFullYear())
+    }
+  },
+  '月数差': { // @日付AとBの差を月数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。 // @げっすうさ
+    type: 'func',
+    josi: [['と', 'から'], ['の', 'までの']],
+    pure: true,
+    fn: function (a, b, sys) {
+      const t1 = sys.__str2date(a)
+      const t2 = sys.__str2date(b)
+      return ((t2.getFullYear() * 12 + t2.getMonth()) - 
+        (t1.getFullYear() * 12 + t1.getMonth()))
+    }
+  },
+  '日数差': { // @日付AとBの差を日数で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。 // @にっすうさ
+    type: 'func',
+    josi: [['と', 'から'], ['の', 'までの']],
+    pure: true,
+    fn: function (a, b, sys) {
+      const t1 = Math.ceil(sys.__str2date(a).getTime() / 1000)
+      const t2 = Math.ceil(sys.__str2date(b).getTime() / 1000)
+      const days = Math.ceil((t2 - t1) / (60 * 60 * 24))
+      return days
+    }
+  },
+  '時間差': { // @時間AとBの時間の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。 // @じかんさ
+    type: 'func',
+    josi: [['と', 'から'], ['の', 'までの']],
+    pure: true,
+    fn: function (a, b, sys) {
+      const t1 = Math.ceil(sys.__str2date(a).getTime() / 1000)
+      const t2 = Math.ceil(sys.__str2date(b).getTime() / 1000)
+      const hours = Math.ceil((t2 - t1) / (60 * 60))
+      return hours
+    }
+  },
+  '分差': { // @時間AとBの分数の差を求めて返す。A<Bなら正の数、そうでないなら負の数を返す。 // @ふんさ
+    type: 'func',
+    josi: [['と', 'から'], ['の', 'までの']],
+    pure: true,
+    fn: function (a, b, sys) {
+      const t1 = Math.ceil(sys.__str2date(a).getTime() / 1000)
+      const t2 = Math.ceil(sys.__str2date(b).getTime() / 1000)
+      const min = Math.ceil((t2 - t1) / (60))
+      return min
+    }
+  },
+  '秒差': { // @時間AとBの差を秒差で求めて返す。A<Bなら正の数、そうでないなら負の数を返す。 // @びょうさ
+    type: 'func',
+    josi: [['と', 'から'], ['の', 'までの']],
+    pure: true,
+    fn: function (a, b, sys) {
+      const t1 = Math.ceil(sys.__str2date(a).getTime() / 1000)
+      const t2 = Math.ceil(sys.__str2date(b).getTime() / 1000)
+      const sec = Math.ceil((t2 - t1))
+      return sec
+    }
+  },
+  '日時差': { // @日時AとBの差を種類unitで返す。A<Bなら正の数、そうでないなら負の数を返す (v1非互換)。 // @にちじさ
+    type: 'func',
+    josi: [['と', 'から'], ['の', 'までの'], ['による']],
+    pure: true,
+    fn: function (a, b, unit, sys) {
+      switch (unit) {
+        case '年': return sys.__exec('年数差', [a, b, sys]) 
+        case '月': return sys.__exec('月数差', [a, b, sys]) 
+        case '日': return sys.__exec('日数差', [a, b, sys])
+        case '時間': return sys.__exec('時間差', [a, b, sys])
+        case '分': return sys.__exec('分差', [a, b, sys])
+        case '秒': return sys.__exec('秒差', [a, b, sys])
+      }
+      throw new Error('『日時差』で不明な単位です。')
+    }
+  },
+  '時間加算': { // @時間SにAを加えて返す。Aには「(+｜-)hh:nn:dd」で指定する。 // @じかんかさん
+    type: 'func',
+    josi: [['に'], ['を']],
+    pure: true,
+    fn: function (s, a, sys) {
+      let op = a.charAt(0)
+      if (op === '-' || op === '+') {
+        a = a.substring(1)
+      }
+      const d = sys.__str2date(s)
+      const aa = (a + ':0:0').split(':')
+      let sec = parseInt(aa[0]) * 60 * 60 +
+        parseInt(aa[1]) * 60 +
+        parseInt(aa[2])
+      if (op === '-') {sec *= -1}
+      const rd = new Date(d.getTime() + (sec * 1000))
+      return sys.__formatDateTime(rd, s)
+    }
+  },
+  '日付加算': { // @日付SにAを加えて返す。Aには「(+｜-)yyyy/mm/dd」で指定する。 // @ひづけかさん
+    type: 'func',
+    josi: [['に'], ['を']],
+    pure: true,
+    fn: function (s, a, sys) {
+      let op = 1
+      let opc = a.charAt(0)
+      if (opc === '-' || opc === '+') {
+        a = a.substring(1)
+        if (opc === '-') {op *= -1}
+      }
+      const d = sys.__str2date(s)
+      const aa = (a + '/0/0').split('/')
+      const addY = parseInt(aa[0]) * op
+      const addM = parseInt(aa[1]) * op
+      const addD = parseInt(aa[2]) * op
+      d.setFullYear(d.getFullYear() + addY)
+      d.setMonth(d.getMonth() + addM)
+      d.setDate(d.getDate() + addD)
+      return sys.__formatDateTime(d, s)      
+    }
+  },
+  '日時加算': { // @日時SにAを加えて返す。Aは「(+｜-)1(年|ヶ月|日|週|時間|分|秒)」のように指定する (v1非互換)。 // @にちじかさん
+    type: 'func',
+    josi: [['に'], ['を']],
+    pure: true,
+    fn: function (s, a, sys) {
+      const r = ('' + a).match(/([+|-]?)(\d+)(年|ヶ月|日|週間|時間|分|秒)$/)
+      if (!r) {throw new Error('『日付加算』は『(+｜-)1(年|ヶ月|日|時間|分|秒)』の書式で指定します。')}
+      switch (r[3]) {
+        case '年': return sys.__exec('日付加算', [s, `${r[1]}${r[2]}/0/0`, sys])
+        case 'ヶ月': return sys.__exec('日付加算', [s, `${r[1]}0/${r[2]}/0`, sys])
+        case '週間': return sys.__exec('日付加算', [s, `${r[1]}0/0/${r[2]*7}`, sys])
+        case '日': return sys.__exec('日付加算', [s, `${r[1]}0/0/${r[2]}`, sys])
+        case '時間': return sys.__exec('時間加算', [s, `${r[1]}${r[2]}:0:0`, sys])
+        case '分': return sys.__exec('時間加算', [s, `${r[1]}0:${r[2]}:0`, sys])
+        case '秒': return sys.__exec('時間加算', [s, `${r[1]}0:0:${r[2]}`, sys])
+      }
     }
   },
   '時間ミリ秒取得': { // @ミリ秒単位の時間を数値で返す。結果は実装に依存する。 // @じかんみりびょうしゅとく
@@ -2057,7 +2549,7 @@ const PluginSystem = {
   'プラグイン名設定': { // @プラグイン名をSに変更する // @プラグインめいせってい
     type: 'func',
     josi: [['に', 'へ']],
-    pure: false,
+    pure: true,
     fn: function (s, sys) {
       sys.__v0['プラグイン名'] = s
     },
@@ -2084,7 +2576,7 @@ const PluginSystem = {
   'URLパラメータ解析': { // @URLパラメータを解析してハッシュで返す // @URLぱらめーたかいせき
     type: 'func',
     josi: [['を', 'の', 'から']],
-    pure: false,
+    pure: true,
     fn: function (url, sys) {
       const res = {}
       if (typeof url !== 'string') {
@@ -2102,6 +2594,35 @@ const PluginSystem = {
         res[k] = sys.__exec('URLデコード', [kv[1]])
       }
       return res
+    }
+  },
+  // @BASE64
+  'BASE64エンコード': { // @BASE64エンコードして返す // @BASE64えんこーど
+    type: 'func',
+    josi: [['を', 'から']],
+    pure: true,
+    fn: function (text) {
+      // browser?
+      if (window.btoa) {
+        const utf8str = String.fromCharCode.apply(null, new TextEncoder('UTF-8').encode(text))
+        return btoa(utf8str)
+      } else {
+        return Buffer.from(text).toString('base64')
+      }
+    }
+  },
+  'BASE64デコード': { // @BASE64デコードして返す // @BASE64でこーど
+    type: 'func',
+    josi: [['を', 'へ', 'に']],
+    pure: true,
+    fn: function (text) {
+      if (window.atob) {
+        const decodedUtf8str = atob(text)
+        const decodedArray = new Uint8Array(Array.prototype.map.call(decodedUtf8str, c => c.charCodeAt()))
+        return new TextDecoder('UTF-8').decode(decodedArray)
+      } else {
+        return Buffer.from(text, 'base64').toString()
+      }
     }
   }
 }

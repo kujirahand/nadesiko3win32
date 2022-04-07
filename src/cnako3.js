@@ -3,14 +3,6 @@
 /**
  * コマンドライン版のなでしこ3
  */
-const fetch = require('node-fetch')
-if (typeof globalThis !== 'undefined' && typeof globalThis.fetch === 'undefined') {
-  globalThis.fetch = fetch
-} else
-if (typeof global !== 'undefined' && typeof global.fetch === 'undefined') {
-  global.fetch = fetch
-}
-
 const fs = require('fs')
 const exec = require('child_process').exec
 
@@ -295,7 +287,8 @@ class CNako3 extends NakoCompiler {
 
   // 対応機器/Webブラウザを表示する
   cnakoBrowsers () {
-    console.log(fs.readFileSync(path.join(__dirname, 'browsers.md'), 'utf-8'))
+    const fileMD = path.resolve(__dirname, '../doc', 'browsers.md')
+    console.log(fs.readFileSync(fileMD, 'utf-8'))
   }
 
   /**

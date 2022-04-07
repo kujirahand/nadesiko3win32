@@ -62,40 +62,54 @@ class NakoParser extends NakoParserBase {
   yEOL () {
     // 行末のチェック #1009
     const eol = this.get()
-    // スタックの確認
+    // 余剰スタックの確認
     if (this.stack.length > 0) {
+      // 余剰スタックのレポートを作る
       const words = []
       this.stack.forEach((t) => {
-        words.push(this.nodeToStr(t, { depth: 1 }, false))
+        let w = this.nodeToStr(t, { depth: 1 }, false)
+        if (t.josi) { w += t.josi }
+        words.push(w)
       })
       const desc = words.join(',')
+      // 最近使った関数の使い方レポートを作る #1093
+      let descFunc = ''
+      let chA = 'A'.charCodeAt(0)
+      for (let f of this.recentlyCalledFunc) {
+        descFunc += ' - '
+        let no = 0
+        for (let arg of f.josi) {
+          const ch = String.fromCharCode(chA + no)
+          descFunc += ch
+          if (arg.length == 1) { descFunc += arg[0] } else { descFunc += `(${arg.join('|')})` }
+          no++
+        }
+        descFunc += f.name + '\n'
+      }
       throw NakoSyntaxError.fromNode(
-        `未解決の単語があります: [${desc}]`, eol)
+        `未解決の単語があります: [${desc}]\n次の命令の可能性があります:\n${descFunc}`, eol)
     }
+    this.recentlyCalledFunc = []
     return eol
   }
 
   /** @returns {Ast | null} */
   ySentence () {
     const map = this.peekSourceMap()
+    
     // 最初の語句が決まっている構文
     if (this.check('eol')) { return this.yEOL() }
     if (this.check('もし')) { return this.yIF() }
+    if (this.check('後判定')) { return this.yAtohantei() }
     if (this.check('エラー監視')) { return this.yTryExcept() }
     if (this.check('逐次実行')) { return this.yTikuji() }
     if (this.accept(['抜ける'])) { return { type: 'break', josi: '', ...map, end: this.peekSourceMap() } }
     if (this.accept(['続ける'])) { return { type: 'continue', josi: '', ...map, end: this.peekSourceMap() } }
-    if (this.accept(['require', 'string', '取込'])) {
-      return {
-        type: 'require',
-        value: this.y[1].value,
-        josi: '',
-        ...map,
-        end: this.peekSourceMap()
-      }
-    }
+    if (this.accept(['require', 'string', '取込'])) { return { type: 'require', value: this.y[1].value, josi: '', ...map, end: this.peekSourceMap() } }
     if (this.accept(['not', '非同期モード'])) { return this.yASyncMode() }
+    if (this.accept(['not', 'DNCLモード'])) { return this.yDNCLMode() }
     if (this.accept(['not', 'string', 'モード設定'])) { return this.ySetGenMode(this.y[1].value) }
+    
     // 関数呼び出し演算子
     if (this.check2(['func', '←'])) { return this.yCallOp() }
     if (this.check2(['func', 'eq'])) {
@@ -109,7 +123,9 @@ class NakoParser extends NakoParserBase {
     if (this.accept([this.yLet])) { return this.y[0] }
     if (this.accept([this.yDefTest])) { return this.y[0] }
     if (this.accept([this.yDefFunc])) { return this.y[0] }
-    if (this.accept([this.yCall])) { // 関数呼び出しの他、各種構文の実装
+    
+    // 関数呼び出しの他、各種構文の実装
+    if (this.accept([this.yCall])) {
       const c1 = this.y[0]
       if (c1.josi === 'して') { // 連文をblockとして接続する(もし構文、逐次実行構文などのため)
         const c2 = this.ySentence()
@@ -132,6 +148,18 @@ class NakoParser extends NakoParserBase {
   yASyncMode () {
     const map = this.peekSourceMap()
     this.genMode = '非同期モード'
+    return { type: 'eol', ...map, end: this.peekSourceMap() }
+  }
+
+  /** @returns {Ast} */
+  yDNCLMode () {
+    const map = this.peekSourceMap()
+    // 配列インデックスは1から
+    this.arrayIndexFrom = 1
+    // 配列アクセスをJSと逆順で指定する
+    this.flagReverseArrayIndex = true
+    // 配列代入時自動で初期化チェックする
+    this.flagCheckArrayInit = true
     return { type: 'eol', ...map, end: this.peekSourceMap() }
   }
 
@@ -250,12 +278,13 @@ class NakoParser extends NakoParserBase {
     let a = this.yGetArg()
     if (!a) { return null }
     // console.log('yIFCond=', a, this.peek())
+    
     // チェック : AがBならば
     if (a.josi === 'が') {
       const tmpI = this.index
       const b = this.yGetArg()
       const naraba = this.get()
-      if (b && b.type !== 'func' && naraba && naraba.type === 'ならば') {
+      if ((b && b.type !== 'func') && (naraba && naraba.type === 'ならば')) {
         return {
           type: 'op',
           operator: (naraba.value === 'でなければ') ? 'noteq' : 'eq',
@@ -644,7 +673,7 @@ class NakoParser extends NakoParserBase {
     if (!this.check('回')) { return null }
     this.get() // skip '回'
     if (this.check('comma')) { this.get() } // skip comma
-    if (this.check('繰り返す')) { this.get() } // skip 'N回、繰り返す' (#924)
+    if (this.check('繰返')) { this.get() } // skip 'N回、繰り返す' (#924)
     let num = this.popStack([])
     let multiline = false
     let block = null
@@ -680,7 +709,7 @@ class NakoParser extends NakoParserBase {
     if (!this.check('間')) { return null }
     this.get() // skip '間'
     while (this.check('comma')) { this.get() } // skip ','
-    if (this.check('繰り返す')) { this.get() } // skip '繰り返す' #927
+    if (this.check('繰返')) { this.get() } // skip '繰り返す' #927
     const cond = this.popStack([])
     if (cond === null) {
       throw NakoSyntaxError.fromNode('『間』で条件がありません。', cond)
@@ -703,17 +732,71 @@ class NakoParser extends NakoParserBase {
   }
 
   /** @returns {Ast | null} */
+  yAtohantei () {
+    const map = this.peekSourceMap()
+    if (this.check('後判定')) { this.get() } // skip 後判定
+    if (this.check('繰返')) { this.get() } // skip 繰り返す
+    if (this.check('ここから')) { this.get() }
+    const block = this.yBlock()
+    if (this.check('ここまで')) { this.get() }
+    if (this.check('comma')) { this.get() }
+    let cond = this.yGetArg() // 条件
+    let bUntil = false
+    const t = this.peek()
+    if (t && t.value === 'なる' && (t.josi === 'まで' || t.josi === 'までの')) {
+      this.get() // skip なるまで
+      bUntil = true
+    }
+    if (this.check('間')) { this.get() } // skip 間
+    if (bUntil) { // 条件を反転する
+      cond = {
+        type: 'not',
+        value: cond,
+        josi: '',
+        ...map,
+        end: this.peekSourceMap()
+      }
+    }
+    return {
+      type: 'atohantei',
+      cond,
+      block,
+      josi: '',
+      ...map,
+      end: this.peekSourceMap()
+    }
+  }
+  
+  /** @returns {Ast | null} */
   yFor () {
     const map = this.peekSourceMap()
-    if (!this.check('繰り返す')) { return null }
-    const kurikaesu = this.get()
+    if (this.check('繰返') || this.check('増繰返') || this.check('減繰返')) { 
+      // pass
+    } else {
+      return null
+    }
+    const kurikaesu = this.get() // skip 繰り返す
+    // スタックに(増や|減ら)してがある？
+    const incdec = this.stack.pop()
+    if (incdec.type == 'word' && (incdec.value === '増' || incdec.value === '減')) {
+      kurikaesu.type = incdec.value + kurikaesu.type
+      // ↑ typeを増繰返 | 減繰返 に変換 
+    }
+    // 普通の繰り返しの場合
+    else {
+      this.stack.push(incdec) // 違ったので改めて追加
+    }
+    let vInc = null
+    if (kurikaesu.type === '増繰返' || kurikaesu.type === '減繰返') {
+      vInc = this.popStack(['ずつ'])
+    }
     const vTo = this.popStack(['まで'])
     const vFrom = this.popStack(['から'])
     const word = this.popStack(['を', 'で'])
     if (vFrom === null || vTo === null) {
       throw NakoSyntaxError.fromNode('『繰り返す』文でAからBまでの指定がありません。', kurikaesu)
     }
-
+    if (this.check('comma')) { this.get() } // skip comma
     let multiline = false
     if (this.check('ここから')) {
       multiline = true
@@ -736,6 +819,7 @@ class NakoParser extends NakoParserBase {
       type: 'for',
       from: vFrom,
       to: vTo,
+      inc: vInc,
       word,
       block,
       josi: '',
@@ -897,51 +981,106 @@ class NakoParser extends NakoParserBase {
   }
 
   /** @returns {import('./nako3').Ast | null | undefined} */
+  yDainyu () {
+    const map = this.peekSourceMap()
+    const dainyu = this.get() // 代入
+    if (dainyu === null) { return null }
+    const value = this.popStack(['を'])
+    const word = this.popStack(['へ', 'に'])
+    if (!word || (word.type !== 'word' && word.type !== 'func' && word.type !== '配列参照')) {
+      throw NakoSyntaxError.fromNode('代入文で代入先の変数が見当たりません。『(変数名)に(値)を代入』のように使います。', dainyu)
+    }
+    // 配列への代入
+    if (word.type === '配列参照') {
+      return {
+          type: 'let_array', 
+          name: word.name, 
+          index: word.index, 
+          value: value, 
+          josi: '', 
+          checkInit: this.flagCheckArrayInit, 
+          ...map, end: this.peekSourceMap()
+      };
+    }
+    // 一般的な変数への代入
+    return {
+      type: 'let', name: word, 
+      value: value, josi: '', 
+      ...map, end: this.peekSourceMap()
+    }
+  }
+
+  /** @returns {import('./nako3').Ast | null | undefined} */
+  ySadameru () {
+    const map = this.peekSourceMap()
+    const sadameru = this.get() // 定める
+    if (sadameru === null) { return null }
+    const word = this.popStack(['を'])
+    const value = this.popStack(['へ', 'に'])
+    console.log(word)
+    if (!word || (word.type !== 'word' && word.type !== 'func' && word.type !== '配列参照')) {
+      throw NakoSyntaxError.fromNode('『定める』文で定数が見当たりません。『(定数名)を(値)に定める』のように使います。', sadameru)
+    }
+    return {
+      type: 'def_local_var', name: word, vartype: '定数', 
+      value: value, josi: '', 
+      ...map, end: this.peekSourceMap()
+    };
+  }
+
+  /** @returns {import('./nako3').Ast | null | undefined} */
+  yIncDec () {
+    const map = this.peekSourceMap()
+    const action = this.get() // (増やす|減らす)
+    if (action === null) { return null }
+    
+    // 『Nずつ増やして繰り返す』文か？
+    if (this.check('繰返')) { 
+      this.pushStack({type: 'word', value: action.value, josi: action.josi, ...map, end: this.peekSourceMap})
+      return this.yFor();
+    }
+    
+    // スタックから引数をポップ
+    let value = this.popStack(['だけ', '']);
+    const word = this.popStack(['を'])
+    if (!word || (word.type !== 'word' && word.type !== '配列参照')) {
+      throw NakoSyntaxError.fromNode(
+        `『${action.type}』文で定数が見当たりません。『(変数名)を(値)だけ${action.type}』のように使います。`, 
+        action)
+    }
+
+    // 減らすなら-1かける
+    if (action.value === '減') {
+      value = { type: 'op', operator: '*', left: value, right: {type: 'number', value: -1, line: action.line}, josi: '', ...map }
+    }
+
+    return {
+      type: 'inc',
+      name: word, 
+      value: value,
+      josi: action.josi,
+      ...map, end: this.peekSourceMap()
+    };
+  }
+
+  /** @returns {import('./nako3').Ast | null | undefined} */
   yCall () {
     if (this.isEOF()) { return null }
+    
+    // スタックに積んでいく
     while (!this.isEOF()) {
-      const map = this.peekSourceMap()
-      // 代入
-      if (this.check('代入')) {
-        const dainyu = this.get()
-        const value = this.popStack(['を'])
-        const word = this.popStack(['へ', 'に'])
-        if (!word || (word.type !== 'word' && word.type !== 'func' && word.type !== '配列参照')) {
-          throw NakoSyntaxError.fromNode('代入文で代入先の変数が見当たりません。', dainyu)
-        }
-
-        switch (word.type) {
-          case '配列参照': // 配列への代入
-            return { type: 'let_array', name: word.name, index: word.index, value: value, josi: '', ...map, end: this.peekSourceMap() }
-          default:
-            return { type: 'let', name: word, value: value, josi: '', ...map, end: this.peekSourceMap() }
-        }
-      }
-      if (this.check('定める')) {
-        const dainyu = this.get()
-        const word = this.popStack(['を'])
-        const value = this.popStack(['に'])
-        if (!word || word.type !== 'word') {
-          throw NakoSyntaxError.fromNode('代入文で代入先の変数が見当たりません。', dainyu)
-        }
-        return {
-          type: 'def_local_var',
-          name: word,
-          vartype: '定数',
-          value: value,
-          ...map,
-          end: this.peekSourceMap()
-        }
-      }
-      // 制御構文
       if (this.check('ここから')) { this.get() }
+      // 代入
+      if (this.check('代入')) { return this.yDainyu(); }
+      if (this.check('定める')) { return this.ySadameru(); }
+      // 制御構文
       if (this.check('回')) { return this.yRepeatTime() }
       if (this.check('間')) { return this.yWhile() }
-      if (this.check('繰り返す')) { return this.yFor() }
+      if (this.check('繰返') || this.check('増繰返') || this.check('減繰返')) { return this.yFor() }
       if (this.check('反復')) { return this.yForEach() }
       if (this.check('条件分岐')) { return this.ySwitch() }
-      // 戻す
       if (this.check('戻る')) { return this.yReturn() }
+      if (this.check('増') || this.check('減')) { return this.yIncDec() }
       // C言語風関数
       if (this.check2([['func', 'word'], '(']) && this.peek().josi === '') { // C言語風
         const t = this.yValue()
@@ -972,6 +1111,7 @@ class NakoParser extends NakoParserBase {
       }
       break
     } // end of while
+    
     // 助詞が余ってしまった場合
     if (this.stack.length > 0) {
       this.logger.debug('--- stack dump ---\n' + JSON.stringify(this.stack, null, 2) + '\npeek: ' + JSON.stringify(this.peek(), null, 2))
@@ -1013,11 +1153,16 @@ class NakoParser extends NakoParserBase {
     }
     if (!f || typeof f.josi === 'undefined') { throw NakoSyntaxError.fromNode('関数の定義でエラー。', t) }
 
+    // 最近使った関数を記録
+    this.recentlyCalledFunc.push({name: t.value, ...f})
+
+    // 関数の引数を取り出す処理
     const args = []
     let nullCount = 0
     let valueCount = 0
     for (let i = 0; i < f.josi.length; i++) {
       while (true) {
+        // スタックから任意の助詞を持つ値を一つ取り出す、助詞がなければ末尾から得る
         let popArg = this.popStack(f.josi[i])
         if (popArg !== null) {
           valueCount++
@@ -1143,6 +1288,7 @@ class NakoParser extends NakoParserBase {
           if (this.y[2].type === 'eol') {
             throw new Error('値が空です。')
           }
+          if (this.check('comma')) { this.get() } // skip comma (ex) name1=val1, name2=val2
           return {
             type: 'let',
             name: this.y[0],
@@ -1167,11 +1313,19 @@ class NakoParser extends NakoParserBase {
     // let_array ?
     if (this.check2(['word', '@'])) {
       const la = this.yLetArrayAt(map)
-      if (la) { return la }
+      if (this.check('comma')) { this.get() } // skip comma (ex) name1=val1, name2=val2
+      if (la) { 
+        la.checkInit = this.flagCheckArrayInit
+        return la
+      }
     }
     if (this.check2(['word', '['])) {
       const lb = this.yLetArrayBracket(map)
-      if (lb) { return lb }
+      if (this.check('comma')) { this.get() } // skip comma (ex) name1=val1, name2=val2
+      if (lb) {
+        lb.checkInit = this.flagCheckArrayInit
+        return lb
+      }
     }
 
     // ローカル変数定義
@@ -1188,6 +1342,7 @@ class NakoParser extends NakoParserBase {
         this.get()
         value = this.yCalc()
       }
+      if (this.check('comma')) { this.get() } // skip comma (ex) name1=val1, name2=val2
       return {
         type: 'def_local_var',
         name: word,
@@ -1315,6 +1470,40 @@ class NakoParser extends NakoParserBase {
     return null
   }
 
+  /**
+   * 配列のインデックスが1から始まる場合を考慮するか
+   * @param {Ast | null} node 
+   * @returns 
+   */
+  checkArrayIndex (node) {
+    // 配列が0から始まるのであればそのまま返す
+    if (this.arrayIndexFrom == 0 ) { return node }
+    // 配列が1から始まるのであれば演算を加えて返す
+    return {
+      ...node,
+      'type': 'op',
+      'operator': '-',
+      'left': node,
+      'right': {
+        ...node,
+        'type': 'number',
+        'value': this.arrayIndexFrom,
+      },
+    }
+  }
+
+  /**
+   * 配列のインデックスを逆順にするのを考慮するか
+   * @param {Array<Ast> | null} ary 
+   * @returns {Array<Ast>}
+   */
+   checkArrayReverse (ary) {
+    if (!this.flagReverseArrayIndex) { return ary }
+    // 二次元以上の配列変数のアクセスを[y][x]ではなく[x][y]と順序を変更する
+    if (ary.length <= 1) { return ary }
+    return ary.reverse()
+  }
+
   /** @returns {Ast | null} */
   yLetArrayAt (map) {
     // 一次元配列
@@ -1322,7 +1511,7 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2]],
+        index: [this.checkArrayIndex(this.y[2])],
         value: this.y[4],
         ...map,
         end: this.peekSourceMap()
@@ -1334,7 +1523,7 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2], this.y[4]],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[4])]),
         value: this.y[6],
         ...map,
         end: this.peekSourceMap()
@@ -1346,7 +1535,7 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2], this.y[4], this.y[6]],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[4]), this.checkArrayIndex(this.y[6])]),
         value: this.y[8],
         ...map,
         end: this.peekSourceMap()
@@ -1358,7 +1547,7 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2], this.y[4]],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[4])]),
         value: this.y[6],
         ...map,
         end: this.peekSourceMap()
@@ -1370,7 +1559,7 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2], this.y[4], this.y[6]],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[4]), this.checkArrayIndex(this.y[6])]),
         value: this.y[8],
         ...map,
         end: this.peekSourceMap()
@@ -1386,7 +1575,7 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2]],
+        index: [this.checkArrayIndex(this.y[2])],
         value: this.y[5],
         ...map,
         end: this.peekSourceMap()
@@ -1398,8 +1587,19 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2], this.y[5]],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[5])]),
         value: this.y[8],
+        tag: '2',
+        ...map,
+        end: this.peekSourceMap()
+      }
+    }
+    if (this.accept(['word', '[', this.yCalc, 'comma', this.yCalc, ']', 'eq', this.yCalc])) {
+      return {
+        type: 'let_array',
+        name: this.y[0],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[4])]),
+        value: this.y[7],
         tag: '2',
         ...map,
         end: this.peekSourceMap()
@@ -1411,8 +1611,18 @@ class NakoParser extends NakoParserBase {
       return {
         type: 'let_array',
         name: this.y[0],
-        index: [this.y[2], this.y[5], this.y[8]],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[5]), this.checkArrayIndex(this.y[8])]),
         value: this.y[11],
+        ...map,
+        end: this.peekSourceMap()
+      }
+    }
+    if (this.accept(['word', '[', this.yCalc, 'comma', this.yCalc, 'comma', this.yCalc, ']', 'eq', this.yCalc])) {
+      return {
+        type: 'let_array',
+        name: this.y[0],
+        index: this.checkArrayReverse([this.checkArrayIndex(this.y[2]), this.checkArrayIndex(this.y[4]), this.checkArrayIndex(this.y[6])]),
+        value: this.y[9],
         ...map,
         end: this.peekSourceMap()
       }
@@ -1557,20 +1767,22 @@ class NakoParser extends NakoParserBase {
     // word @ a, b, c
     if (this.check('@')) {
       if (this.accept(['@', this.yValue, 'comma', this.yValue, 'comma', this.yValue])) {
-        ast.index.push(this.y[1])
-        ast.index.push(this.y[3])
-        ast.index.push(this.y[5])
+        ast.index.push(this.checkArrayIndex(this.y[1]))
+        ast.index.push(this.checkArrayIndex(this.y[3]))
+        ast.index.push(this.checkArrayIndex(this.y[5]))
+        ast.index = this.checkArrayReverse(ast.index)
         ast.josi = this.y[5].josi
         return true
       }
       if (this.accept(['@', this.yValue, 'comma', this.yValue])) {
-        ast.index.push(this.y[1])
-        ast.index.push(this.y[3])
+        ast.index.push(this.checkArrayIndex(this.y[1]))
+        ast.index.push(this.checkArrayIndex(this.y[3]))
+        ast.index = this.checkArrayReverse(ast.index)
         ast.josi = this.y[3].josi
         return true
       }
       if (this.accept(['@', this.yValue])) {
-        ast.index.push(this.y[1])
+        ast.index.push(this.checkArrayIndex(this.y[1]))
         ast.josi = this.y[1].josi
         return true
       }
@@ -1578,8 +1790,31 @@ class NakoParser extends NakoParserBase {
     }
     if (this.check('[')) {
       if (this.accept(['[', this.yCalc, ']'])) {
-        ast.index.push(this.y[1])
+        ast.index.push(this.checkArrayIndex(this.y[1]))
         ast.josi = this.y[2].josi
+        return true
+      }
+    }
+    if (this.check('[')) {
+      if (this.accept(['[', this.yCalc, 'comma', this.yCalc, ']'])) {
+        const index = [
+          this.checkArrayIndex(this.y[1]),
+          this.checkArrayIndex(this.y[3]),
+        ]
+        ast.index = this.checkArrayReverse(index)
+        ast.josi = this.y[4].josi
+        return true
+      }
+    }
+    if (this.check('[')) {
+      if (this.accept(['[', this.yCalc, 'comma', this.yCalc, 'comma', this.yCalc, ']'])) {
+        const index = [
+          this.checkArrayIndex(this.y[1]),
+          this.checkArrayIndex(this.y[3]),
+          this.checkArrayIndex(this.y[5]),
+        ]
+        ast.index = this.checkArrayReverse(index)
+        ast.josi = this.y[6].josi
         return true
       }
     }

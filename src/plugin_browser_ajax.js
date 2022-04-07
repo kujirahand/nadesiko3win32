@@ -13,7 +13,8 @@ module.exports = {
         return res.text()
       }).then(text => {
         sys.__v0['対象'] = text
-        callback(text)
+        if (sys.__genMode === '非同期モード') { sys.newenv = true }
+        callback(text, sys)
       }).catch(err => {
         console.log('[fetch.error]', err)
         sys.__v0['AJAX:ONERROR'](err)
@@ -29,7 +30,7 @@ module.exports = {
       if (sys.__genMode !== '非同期モード') {
         throw new Error('『AJAX受信』を使うには、プログラムの冒頭で「!非同期モード」と宣言してください。')
       }
-      sys.async = true
+      const sysenv = sys.setAsync(sys)
       let options = sys.__v0['AJAXオプション']
       if (options === '') { options = { method: 'GET' } }
       // fetch 実行
@@ -41,7 +42,7 @@ module.exports = {
         }
       }).then(text => {
         sys.__v0['対象'] = text
-        sys.nextAsync(sys)
+        sys.compAsync(sys, sysenv)
       }).catch(err => {
         console.error('[AJAX受信のエラー]', err)
         sys.__errorAsync(err, sys)
@@ -67,7 +68,7 @@ module.exports = {
     },
     return_none: true
   },
-  'POSTデータ生成': { // @連想配列をkey=value&key=value...の形式に変換する // @POSTでーたせいせい
+  'POSTデータ生成': { // @辞書形式のデータPARAMSをkey=value&key=value...の形式に変換する // @POSTでーたせいせい
     type: 'func',
     josi: [['の', 'を']],
     pure: true,
@@ -135,12 +136,29 @@ module.exports = {
     }
   },
   'AJAXオプション': { type: 'const', value: '' }, // @AJAXおぷしょん
-  'AJAXオプション設定': { // @Ajax命令でオプションを設定 // @AJAXおぷしょんせってい
+  'AJAXオプション設定': { // @AJAX命令でオプションを設定 // @AJAXおぷしょんせってい
     type: 'func',
     josi: [['に', 'へ', 'と']],
     pure: true,
     fn: function (option, sys) {
       sys.__v0['AJAXオプション'] = option
+    },
+    return_none: true
+  },
+  'AJAXオプションPOST設定': { // @AJAXオプションにPOSTメソッドとパラメータPARAMSを設定 // @AJAXおぷしょんPOSTせってい
+    type: 'func',
+    josi: [['を', 'で']],
+    pure: true,
+    fn: function (params, sys) {
+      const bodyData = sys.__exec('POSTデータ生成', [params, sys])
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: bodyData
+      }
+      sys.__v0['AJAXオプション'] = options
     },
     return_none: true
   },
@@ -348,5 +366,34 @@ module.exports = {
       return res.body()
     },
     return_none: false
-  }
+  },
+  // @新AJAX
+  'AJAXテキスト取得': { // @AJAXでURLにアクセスしテキスト形式で結果を得る。送信時AJAXオプションの値を参照。 // @AJAXてきすとしゅとく
+    type: 'func',
+    josi: [['から']],
+    pure: true,
+    asyncFn: true,
+    fn: async function (url, sys) {
+      let options = sys.__v0['AJAXオプション']
+      if (options === '') { options = { method: 'GET' } }
+      const res = await fetch(url, options)
+      const txt = await res.text()
+      return txt
+    },
+    return_none: false
+  },
+  'AJAX_JSON取得': { // @AJAXでURLにアクセスしJSONの結果を得て、送信時AJAXオプションの値を参照。 // @AJAX_JSONしゅとく
+    type: 'func',
+    josi: [['から']],
+    pure: true,
+    asyncFn: true,
+    fn: async function (url, sys) {
+      let options = sys.__v0['AJAXオプション']
+      if (options === '') { options = { method: 'GET' } }
+      const res = await fetch(url, options)
+      const txt = await res.json()
+      return txt
+    },
+    return_none: false
+  },
 }

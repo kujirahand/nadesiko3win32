@@ -69,6 +69,19 @@ const PluginBrowser = {
       sys.__v0['DOM親要素'] = document.body
       sys.__v0['ブラウザURL'] = window.location.href
 
+      // 便利なメソッドを定義
+      sys.__tohtml = (text) => {
+        return ('' + text)
+          .replace(/&/g, '&amp;')
+          .replace(/>/g, '&gt;')
+          .replace(/</g, '&lt;')
+      }
+      sys.__tohtmlQ = (text) => {
+        return sys.__tohtml(text)
+          .replace(/\"/g, '&#34;')
+          .replace(/\'/g, '&#39;')
+      }
+
       // 「!クリア」でDOMイベントを削除するため
       sys.__dom_events = [] // [{}, {}, {} ...]
       // DOM追加イベント
@@ -89,6 +102,7 @@ const PluginBrowser = {
           sys.__v0['対象イベント'] = e
           // 追加データが得られる場合
           if (setHandler) { setHandler(e, sys) }
+          if (sys.__genMode === '非同期モード') { sys.newenv = true }
           return func(e, sys)
         }
         // add

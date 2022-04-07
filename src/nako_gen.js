@@ -37,6 +37,28 @@ class NakoGen {
     if (js && isTest) {
       js += '\n__self._runTests(__tests);\n'
     }
+    // async method
+    if (gen.numAsyncFn > 0) {
+      let canAsync = true
+      if (typeof(window) == 'object' && window.navigator && window.navigator.userAgent) {
+        const ua = window.navigator.userAgent
+        canAsync = (ua.indexOf('MSIE') === -1)
+      }
+      if (canAsync) {
+        js = `
+// <nadesiko3::gen::async>
+(async () => { // async::main
+${js}
+}).call(this).catch(err => {
+  if (!(err instanceof this.NakoRuntimeError)) {
+    err = new this.NakoRuntimeError(err, this.__varslist[0].line);
+  }
+  this.logger.error(err);
+  throw err;
+}); // async::main
+// <nadesiko3::gen::async>\n`
+      }
+    }
 
     // デバッグメッセージ
     com.logger.trace('--- generate ---\n' + js)
@@ -102,6 +124,12 @@ try {
      * @type {number}
      */
     this.loop_id = 1
+
+    /**
+     * 非同関数を何回使ったか
+     * @type {number}
+     */
+    this.numAsyncFn = 0
 
     /**
      * 変換中の処理が、ループの中かどうかを判定する
@@ -476,6 +504,9 @@ try {
       case 'let':
         code += this.convLet(node)
         break
+      case 'inc':
+        code += this.convInc(node)
+        break
       case 'word':
       case 'variable':
         code += this.convGetVar(node)
@@ -518,6 +549,9 @@ try {
         break
       case 'while':
         code += this.convWhile(node)
+        break
+      case 'atohantei':
+        code += this.convAtohantei(node)
         break
       case 'switch':
         code += this.convSwitch(node)
@@ -703,6 +737,7 @@ try {
     const topOfFunction = '(function(){\n'
     const endOfFunction = '})'
     let variableDeclarations = ''
+    let popStack = ''
     const initialNames = new Set()
     if (this.speedMode.invalidSore === 0) {
       initialNames.add('それ')
@@ -712,6 +747,8 @@ try {
     this.varslistSet.push(this.varsSet)
     // JSの引数と引数をバインド
     variableDeclarations += '  var 引数 = arguments;\n'
+    // ローカル変数を生成
+    variableDeclarations += '  var __vars = {};\n'
     // 宣言済みの名前を保存
     const varsDeclared = Array.from(this.varsSet.names.values())
     let code = ''
@@ -749,7 +786,6 @@ try {
     // パフォーマンスモニタ:ユーザ関数のinject
     code += performanceMonitorInjectAtEnd
     // 関数の末尾に、ローカル変数をPOP
-    code += endOfFunction
 
     // 関数内で定義されたローカル変数の宣言
     let needsVarsObject = false
@@ -765,10 +801,6 @@ try {
     if (!NakoGen.isValidIdentifier('それ') && this.speedMode.invalidSore === 0) {
       needsVarsObject = true
     }
-    // 一度でも__varsを使ったら、それも宣言する。
-    if (needsVarsObject) {
-      variableDeclarations += '  var __vars = {};\n'
-    }
     if (this.speedMode.invalidSore === 0) {
       if (NakoGen.isValidIdentifier('それ')) {
         variableDeclarations += '  var それ = \'\';\n'
@@ -776,7 +808,8 @@ try {
         variableDeclarations += `  ${this.varname('それ')} = '';`
       }
     }
-    code = topOfFunction + performanceMonitorInjectAtStart + variableDeclarations + code
+    code = topOfFunction + performanceMonitorInjectAtStart + variableDeclarations + code + popStack
+    code += endOfFunction
 
     if (name) { this.nako_func[name].fn = code }
 
@@ -852,14 +885,31 @@ try {
   convLetArray (node) {
     const name = this._convGen(node.name, true)
     const list = node.index
+    let codeInit = ''
     let code = name
+    let codeArray = ''
+    // codeInit?
+    if (node.checkInit) {
+      const arrayDefCode = '[0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]'
+      codeInit += `\n/*配列初期化*/if (!(${name} instanceof Array)) { ${name} = ${arrayDefCode}; console.log('初期化:${name}') };`
+      for (let i = 0; i < list.length - 1; i++) {
+        const idx = this._convGen(list[i], true)
+        codeArray += `[${idx}]`
+        codeInit += `\n/*配列初期化${i}*/if (!(${name}${codeArray} instanceof Array)) { ${name}${codeArray} = ${arrayDefCode}; };`
+        // codeInit += `\n/*配列初期化${i}*/if (!(${name}${codeArray} instanceof Array)) { ${name}${codeArray} = ${arrayDefCode}; console.log('初期化:${i}:${name}${codeArray}',JSON.stringify(${name})) }; `
+      }
+      codeInit += '\n'
+    }
+    // array
     for (let i = 0; i < list.length; i++) {
       const idx = this._convGen(list[i], true)
       code += '[' + idx + ']'
     }
     const value = this._convGen(node.value, true)
     code += ' = ' + value + ';\n'
-    return this.convLineno(node, false) + code
+    // generate code
+    const src = this.convLineno(node, false) + codeInit + code
+    return src
   }
 
   convGenLoop (node) {
@@ -888,6 +938,8 @@ try {
     // ループ条件を確認
     const kara = this._convGen(node.from, true)
     const made = this._convGen(node.to, true)
+    let inc = this._convGen(node.inc, true)
+    if (inc == null || inc == undefined || inc == 'null') { inc = 1 }
     // ループ内のブロック内容を得る
     const block = this.convGenLoop(node.block)
     // ループ条件を変数に入れる用
@@ -902,12 +954,12 @@ try {
       `const ${varFrom} = ${kara};\n` +
       `const ${varTo} = ${made};\n` +
       `if (${varFrom} <= ${varTo}) { // up\n` +
-      `  for (let ${varI} = ${varFrom}; ${varI} <= ${varTo}; ${varI}++) {\n` +
+      `  for (let ${varI} = ${varFrom}; ${varI} <= ${varTo}; ${varI}+= ${inc}) {\n` +
       `    ${sorePrefex}${word} = ${varI};\n` +
       `    ${block}\n` +
       '  };\n' +
       '} else { // down\n' +
-      `  for (let ${varI} = ${varFrom}; ${varI} >= ${varTo}; ${varI}--) {\n` +
+      `  for (let ${varI} = ${varFrom}; ${varI} >= ${varTo}; ${varI}-= ${inc}) {\n` +
       `    ${sorePrefex}${word} = ${varI};` + '\n' +
       `    ${block}\n` +
       '  };\n' +
@@ -1022,6 +1074,20 @@ try {
       `while (${cond})` + '{\n' +
       `  ${block}` + '\n' +
       '}\n'
+    return this.convLineno(node, false) + code
+  }
+
+  convAtohantei (node) {
+    const id = this.loop_id++
+    const varId = `$nako_i${id}`
+    const cond = this._convGen(node.cond, true)
+    const block = this.convGenLoop(node.block)
+    const code =
+      `for(;;) {\n` +
+      `  ${block}\n` +
+      `  let ${varId} = ${cond};\n` +
+      `  if (${varId}) { continue } else { break }\n` +
+      '}\n\n'
     return this.convLineno(node, false) + code
   }
 
@@ -1161,7 +1227,7 @@ try {
 
     // 関数呼び出しで、引数の末尾にthisを追加する-システム情報を参照するため
     args.push('__self')
-    const funcDef = 'function'
+    let funcDef = 'function'
     let funcBegin = ''
     let funcEnd = ''
     // setter?
@@ -1234,7 +1300,11 @@ try {
     }
 
     let funcCall = `${res.js}(${argsCode})`
-
+    if (func.asyncFn) {
+      funcDef = `async ${funcDef}`
+      funcCall = `await ${funcCall}`
+      this.numAsyncFn++
+    }
     if (res.i === 0 && this.performanceMonitor.systemFunctionBody !== 0) {
       let key = funcName
       if (!key) {
@@ -1265,6 +1335,7 @@ try {
 
     let code = ''
     if (func.return_none) {
+      // 戻り値のない関数の場合
       if (funcEnd === '') {
         if (funcBegin === '') {
           code = `${funcCall};\n`
@@ -1275,6 +1346,7 @@ try {
         code = `${funcBegin}try {\n${indent(funcCall, 1)};\n} finally {\n${indent(funcEnd, 1)}}\n`
       }
     } else {
+      // 戻り値のある関数の場合
       let sorePrefex = ''
       if (this.speedMode.invalidSore === 0) {
         sorePrefex = `${this.varname('それ')} = `
@@ -1336,7 +1408,8 @@ try {
       or: '||',
       shift_l: '<<',
       shift_r: '>>',
-      shift_r0: '>>>'
+      shift_r0: '>>>',
+      '÷': '/'
     }
     let op = node.operator // 演算子
     let right = this._convGen(node.right, true)
@@ -1350,12 +1423,37 @@ try {
       }
     }
     // 階乗
-    if (op === '^') { return '(Math.pow(' + left + ',' + right + '))' }
+    if (op === '^') { return `(Math.pow(${left}, ${right}))` }
+    // 整数の割り算 #1152
+    if (op === '÷÷') { return `(Math.floor(${left} / ${right}))` }
 
     // 一般的なオペレータに変換
     if (OP_TBL[op]) { op = OP_TBL[op] }
     //
     return `(${left} ${op} ${right})`
+  }
+
+  convInc (node) {
+    // もし値が省略されていたら、変数「それ」に代入する
+    let value = null
+    if (this.speedMode.invalidSore === 0) { value = this.varname('それ') }
+    if (node.value) { value = this._convGen(node.value, true) }
+    if (value == null) {
+      throw NakoSyntaxError.fromNode('加算する先の変数名がありません。', node)
+    }
+    // 変数名
+    const name = node.name.value
+    let res = this.findVar(name)
+    let code = ''
+    if (res === null) {
+        this.varsSet.names.add(name)
+        res = this.findVar(name)
+    }
+    const jsName = res.js
+    // 自動初期化するか
+    code += `if (typeof(${jsName}) === 'undefined') { ${jsName} = 0; }`
+    code += `${jsName} += ${value}`
+    return ';' + this.convLineno(node, false) + code + '\n'
   }
 
   convLet (node) {

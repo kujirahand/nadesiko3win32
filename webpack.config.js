@@ -1,5 +1,5 @@
 const path = require('path')
-// const StatsPlugin = require('stats-webpack-plugin') // バンドルサイズ解析のため
+const StatsPlugin = require('stats-webpack-plugin') // バンドルサイズ解析のため
 const TerserPlugin = require('terser-webpack-plugin') // サイズ縮小プラグイン
 const { NormalModuleReplacementPlugin } = require('webpack')
 const { AggressiveMergingPlugin } = require('webpack').optimize
@@ -13,25 +13,6 @@ process.noDeprecation = true
 
 // [args] --mode=(production|development)
 const mode_ = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'development'
-
-/**
- * caniuse-db/data.json のうち、なでしこ3の関数内で実際に使用しているのは agents だけなので、
- * caniuse-db/data.json の中身を agents のみにすることで生成物のサイズ削減を図る
- */
-class CanIUseDBDataReplacementPlugin extends NormalModuleReplacementPlugin {
-  constructor () {
-    super(/caniuse-db\/data\.json/, path.join(__dirname, 'tmp', 'caniuse-db', 'data.json'))
-  }
-
-  apply (compiler) {
-    const fs = require('fs')
-    const data = require('caniuse-db/data.json')
-
-    fs.mkdirSync(path.dirname(this.newResource), { recursive: true })
-    fs.writeFileSync(this.newResource, JSON.stringify({ agents: data.agents }))
-    return super.apply(compiler)
-  }
-}
 
 module.exports = {
   mode: mode_,
@@ -50,7 +31,6 @@ module.exports = {
     editor: [path.join(editorPath, 'edit_main.jsx')],
     version: [path.join(editorPath, 'version_main.jsx')]
   },
-
   output: {
     path: releasePath,
     filename: '[name].js'
@@ -58,9 +38,8 @@ module.exports = {
 
   // devtool: 'cheap-module-eval-source-map',
   plugins: [
-    // new StatsPlugin('stats.json', {chunkModules: true}, null) // バンドルサイズ解析
-    new AggressiveMergingPlugin(),
-    new CanIUseDBDataReplacementPlugin()
+    new StatsPlugin('stats.json', { chunkModules: true }, null), // バンドルサイズ解析
+    new AggressiveMergingPlugin()
   ],
 
   module: {
@@ -92,7 +71,17 @@ module.exports = {
 
   resolve: {
     extensions: ['*', '.webpack.js', '.web.js', '.js', '.jsx'],
-    mainFields: ['browser', 'main', 'module']
+    mainFields: ['browser', 'main', 'module'],
+    fallback: {
+      "crypto": require.resolve('crypto-browserify'),
+      "buffer": require.resolve("buffer/"),
+      "os": require.resolve("os-browserify/browser"),
+      "path": require.resolve("path-browserify"),
+      "constants": require.resolve("constants-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      "assert": false,
+      "util": require.resolve("util/")
+    }
   },
   optimization: {
     minimize: true,

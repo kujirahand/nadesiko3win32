@@ -97,9 +97,15 @@ module.exports = {
     pure: true,
     fn: function (dom) {
       if (typeof (dom) === 'string') { dom = document.querySelector(dom) }
-
+      if (!dom.tagName) {
+        console.log('[DOMテキスト取得]でタグ名が取得できません。', dom)
+        return ''
+      }
       const tag = dom.tagName.toUpperCase()
-      if (tag === 'INPUT' || tag === 'TEXTAREA') { return dom.value } else if (tag === 'SELECT') {
+      // input or textarea
+      if (tag === 'INPUT' || tag === 'TEXTAREA') { return dom.value }
+      // select
+      if (tag === 'SELECT') {
         const idx = dom.selectedIndex
         if (idx < 0) { return null }
         return dom.options[idx].value
@@ -141,8 +147,6 @@ module.exports = {
     josi: [['の', 'から']],
     pure: false,
     fn: function (dom, sys) {
-      console.log(dom)
-      console.log(sys)
       return sys.__exec('DOMテキスト取得', [dom, sys])
     }
   },
@@ -318,5 +322,15 @@ module.exports = {
       if (typeof pa === 'string') { pa = document.querySelector(pa) }
       pa.removeChild(el)
     }
+  },
+  '注目': { // @DOMの要素Aにフォーカスする(カーソルを移動する) // @ちゅうもく
+    type: 'func',
+    josi: [['を', 'へ', 'に']],
+    pure: true,
+    fn: function (el) {
+      if (typeof el === 'string') { el = document.querySelector(el) }
+      if (el.focus) { el.focus() }
+    },
+    return_none: true
   }
 }
