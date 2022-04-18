@@ -8,6 +8,17 @@
 
 const { NakoSyntaxError, NakoError, NakoRuntimeError } = require('./nako_errors')
 const nakoVersion = require('./nako_version')
+const isIE11 = () => {
+  if (typeof(window) == 'object' && window.navigator && window.navigator.userAgent) {
+    return (window.navigator.userAgent.indexOf('MSIE') >= 0)
+  }
+  return false
+}
+
+// なでしこで定義した関数の開始コードと終了コード
+const topOfFunction = '(function(){\n'
+const endOfFunction = '})'
+const topOfFunctionAsync = '(async function(){\n'
 
 /**
  * @typedef {import("./nako3").Ast} Ast
@@ -24,13 +35,18 @@ class NakoGen {
   static generate (com, ast, isTest) {
     const gen = new NakoGen(com)
 
-    // ユーザー定義関数をシステムに登録する
+    // ※ [関数定義に関するコード生成のヒント]
+    // ※ 関数の名前だけを(1)で登録して、(2)で実際に関数のコードを生成する。
+    // ※ ただし(2)では生成するだけなので、(3)でプログラム冒頭に関数定義のコードを記述する。
+    // この順番を変えることはできない (グローバル変数が認識できなくなったり、関数定義のタイミングがずれる)
+
+    // (1) ユーザー定義関数をシステムに登録する
     gen.registerFunction(ast)
 
-    // JSコードを生成する
+    // (2) JSコードを生成する
     let js = gen.convGen(ast, !!isTest)
-
-    // JSコードを実行するための事前ヘッダ部分の生成
+    
+    // (3) JSコードを実行するための事前ヘッダ部分の生成
     js = gen.getDefFuncCode(isTest) + js
 
     // テストの実行
@@ -39,11 +55,7 @@ class NakoGen {
     }
     // async method
     if (gen.numAsyncFn > 0) {
-      let canAsync = true
-      if (typeof(window) == 'object' && window.navigator && window.navigator.userAgent) {
-        const ua = window.navigator.userAgent
-        canAsync = (ua.indexOf('MSIE') === -1)
-      }
+      let canAsync = !isIE11()
       if (canAsync) {
         js = `
 // <nadesiko3::gen::async>
@@ -130,6 +142,12 @@ try {
      * @type {number}
      */
     this.numAsyncFn = 0
+    /** 
+     * 関数定義の際、関数の中でasyncFn=trueの関数を呼び出したかどうかを調べる
+     * @type {boolean} 
+     * @see convDefFuncCommon
+     */
+    this.usedAsyncFn = false
 
     /**
      * 変換中の処理が、ループの中かどうかを判定する
@@ -182,9 +200,13 @@ try {
     }
 
     // 暫定変数
+    /** @type { number }  */
     this.warnUndefinedReturnUserFunc = 1
-    this.warnUndefinedCallingUserFuncArgs = 1
-    this.warnUndefinedCallingSystemFuncArgs = 1
+    /** @type { number }  */
+    this.warnUndefinedCallingUserFunc = 1
+    /** @type { number }  */
+    this.warnUndefinedCallingSystemFunc = 1
+    /** @type { number }  */
     this.warnUndefinedCalledUserFuncArgs = 1
   }
 
@@ -297,8 +319,9 @@ try {
     let nakoFuncCode = ''
     for (const key in this.nako_func) {
       const f = this.nako_func[key].fn
+      const isAsync = this.nako_func[key].asyncFn ? 'true' : 'false'
       nakoFuncCode += '' +
-        `//[DEF_FUNC name='${key}']\n` +
+        `//[DEF_FUNC name='${key}' asyncFn=${isAsync}]\n` +
         `__v1["${key}"]=${f};\n;` +
         `//[/DEF_FUNC name='${key}']\n`
     }
@@ -396,6 +419,11 @@ try {
   registerFunction (ast) {
     if (ast.type !== 'block') { throw NakoSyntaxError.fromNode('構文解析に失敗しています。構文は必ずblockが先頭になります', ast) }
 
+    /** 関数一覧
+     * @type {Array<{name: string, node: Object}>}
+     */
+    const funcList = []
+    // なでしこ関数を定義して this.nako_func[name] に定義する
     const registFunc = (node) => {
       for (let i = 0; i < node.block.length; i++) {
         const t = node.block[i]
@@ -403,20 +431,24 @@ try {
           const name = t.name.value
           this.used_func.add(name)
           this.__self.__varslist[1][name] = function () { } // 事前に適当な値を設定
+          this.varslistSet[1].names.add(name) // global
           this.nako_func[name] = {
             josi: t.name.meta.josi,
             fn: '',
-            type: 'func'
+            type: 'func',
+            asyncFn: false
           }
-        } else
-        if (t.type === 'speed_mode') {
+          funcList.push({name: name, node: t})
+        }
+        // 実行速度優先 などのオプションが付いている場合の処理
+        else if (t.type === 'speed_mode') {
           if (t.block.type === 'block') {
             registFunc(t.block)
           } else {
             registFunc(t)
           }
-        } else
-        if (t.type === 'performance_monitor') {
+        }
+        else if (t.type === 'performance_monitor') {
           if (t.block.type === 'block') {
             registFunc(t.block)
           } else {
@@ -425,6 +457,7 @@ try {
         }
       }
     }
+    // 関数の登録
     registFunc(ast)
 
     // __self.__varslistの変更を反映
@@ -435,6 +468,11 @@ try {
     this.varsSet = { isFunction: false, names: initialNames, readonly: new Set() }
     this.varslistSet = this.__self.__varslist.map((v) => ({ isFunction: false, names: new Set(Object.keys(v)), readonly: new Set() }))
     this.varslistSet[2] = this.varsSet
+    
+    // 非同期関数(asyncFn)があるかどうかテストする --- 後ほど改めて再度同じ関数を呼ぶ      
+    for (let ff of funcList) {
+      this.convDefFuncCommon(ff.node, ff.name)
+    }
   }
 
   /**
@@ -524,7 +562,7 @@ try {
       case 'func':
       case 'func_pointer':
       case 'calc_func':
-        code += this.convFunc(node, isExpression)
+        code += this.convCallFunc(node, isExpression)
         break
       case 'if':
         code += this.convIf(node)
@@ -734,8 +772,6 @@ try {
         'try {\n'
       performanceMonitorInjectAtEnd = '} finally { performanceMonitorEnd(); }\n'
     }
-    const topOfFunction = '(function(){\n'
-    const endOfFunction = '})'
     let variableDeclarations = ''
     let popStack = ''
     const initialNames = new Set()
@@ -756,7 +792,7 @@ try {
     const meta = (!name) ? node.meta : node.name.meta
     for (let i = 0; i < meta.varnames.length; i++) {
       const word = meta.varnames[i]
-      if (this.warnUndefinedCalledUserFunc === 0) {
+      if (this.warnUndefinedCalledUserFuncArgs === 0) {
         code += `  ${this.varname(word)} = arguments[${i}];\n`
       } else
       if (name) {
@@ -770,13 +806,19 @@ try {
     if (name) {
       this.used_func.add(name)
       this.varslistSet[1].names.add(name)
-      this.nako_func[name] = {
-        josi: node.name.meta.josi,
-        fn: '',
-        type: 'func'
+      if (this.nako_func[name] === undefined) {
+        // 既に generate で作成済みのはず(念のため)
+        this.nako_func[name] = {
+          josi: node.name.meta.josi,
+          fn: '',
+          type: 'func',
+          asyncFn: false
+        }
       }
     }
     // ブロックを解析
+    const oldUsedAsyncFn = this.usedAsyncFn
+    this.usedAsyncFn = false
     const block = this._convGen(node.block, false)
     code += block.split('\n').map((line) => '  ' + line).join('\n') + '\n'
     // 関数の最後に、変数「それ」をreturnするようにする
@@ -785,6 +827,10 @@ try {
     }
     // パフォーマンスモニタ:ユーザ関数のinject
     code += performanceMonitorInjectAtEnd
+    // ブロックでasyncFnを使ったか
+    if (name && this.usedAsyncFn) {
+      this.nako_func[name].asyncFn = true
+    }
     // 関数の末尾に、ローカル変数をPOP
 
     // 関数内で定義されたローカル変数の宣言
@@ -808,15 +854,23 @@ try {
         variableDeclarations += `  ${this.varname('それ')} = '';`
       }
     }
-    code = topOfFunction + performanceMonitorInjectAtStart + variableDeclarations + code + popStack
+    // usedAsyncFnの値に応じて関数定義の方法を変更
+    const tof = (this.usedAsyncFn) ? topOfFunctionAsync : topOfFunction
+    // 関数コード全体を構築
+    code = tof + performanceMonitorInjectAtStart + variableDeclarations + code + popStack
     code += endOfFunction
 
-    if (name) { this.nako_func[name].fn = code }
+    // 名前があれば、関数を登録する
+    if (name) {
+      this.nako_func[name].fn = code
+      this.nako_func[name].asyncFn = this.usedAsyncFn
+      meta.asyncFn = this.usedAsyncFn
+    }
+    this.usedAsyncFn = oldUsedAsyncFn // 以前の値を戻す
 
     this.varslistSet.pop()
     this.varsSet = this.varslistSet[this.varslistSet.length - 1]
-    if (name) { this.__self.__varslist[1][name] = code }
-
+    if (name) {this.__self.__varslist[1][name] = code }
     return code
   }
 
@@ -842,10 +896,12 @@ try {
   }
 
   convDefFunc (node) {
+    // ※ [関数定義のメモ]
+    // ※ 関数の定義はプログラムの冒頭に移される。
+    // ※ そのため、生成されたコードはここでは返さない
+    // ※ registerFunction を参照
     const name = NakoGen.getFuncName(node.name.value)
     this.convDefFuncCommon(node, name)
-    // ★この時点では関数のコードを生成しない★
-    // プログラム冒頭でコード生成時に関数定義を行う
     return ''
   }
 
@@ -1192,12 +1248,14 @@ try {
    * @param {boolean} isExpression
    * @returns string コード
    */
-  convFunc (node, isExpression) {
+  convCallFunc (node, isExpression) {
     const funcName = NakoGen.getFuncName(node.name)
     const res = this.findVar(funcName)
     if (res === null) {
       throw NakoSyntaxError.fromNode(`関数『${funcName}』が見当たりません。有効プラグイン=[` + this.getPluginList().join(', ') + ']', node)
     }
+    // どの関数を呼び出すのか関数を特定する
+    /** @type {import('./nako3').NakoFunction} */
     let func
     if (res.i === 0) { // plugin function
       func = this.__self.funclist[funcName]
@@ -1213,9 +1271,6 @@ try {
     if (node.type === 'func_pointer') {
       return res.js
     }
-    // なでしこで定義した関数？
-    // const isUserFunc = (typeof(func.fn) === 'string')
-    // console.log('@@@', funcName, typeof(func.fn))
 
     // 関数の参照渡しでない場合
     // 関数定義より助詞を一つずつ調べる
@@ -1280,6 +1335,7 @@ try {
     }
 
     // 関数呼び出しコードの構築
+    /** @type {string} */
     let argsCode
     if ((this.warnUndefinedCallingUserFunc === 0 && res.i !== 0) || (this.warnUndefinedCallingSystemFunc === 0 && res.i === 0)) {
       argsCode = args.join(',')
@@ -1304,6 +1360,7 @@ try {
       funcDef = `async ${funcDef}`
       funcCall = `await ${funcCall}`
       this.numAsyncFn++
+      this.usedAsyncFn = true
     }
     if (res.i === 0 && this.performanceMonitor.systemFunctionBody !== 0) {
       let key = funcName
