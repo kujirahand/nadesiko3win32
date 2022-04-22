@@ -18,6 +18,15 @@ function convert (code, filename) {
   return { code, insertedLines: [], deletedLines: [] }
 }
 
+/**
+ * インデント構文指定があるかチェックする
+ * @param {string} code
+ * @returns {boolean}
+ */
+ function isIndentSyntaxEnabled(code) {
+  return checkNakoMode(code, INDENT_MODE_KEYWORDS)
+}
+
 // ありえない改行マークを定義
 const SpecialRetMark = '🌟🌟改行🌟🌟s4j#WjcSb😀/FcX3🌟🌟'
 
@@ -196,9 +205,10 @@ function convertGo (code, filename) {
       // |
       lastIndent = indent
       while (indentStack.length > 0) {
+        /** @type {number} */
         const n = indentStack.pop()
         if (n === indent) {
-          if (lineTrimed.substr(0, 3) !== '違えば') {
+          if (lineTrimed.substring(0, 3) !== '違えば') {
             insertedLines.push(lines2.length)
             lines2.push(makeIndent(n) + END)
           }
@@ -248,6 +258,11 @@ function convertGo (code, filename) {
   return { code: lines3.join('\n'), insertedLines, deletedLines }
 }
 
+/**
+ * count分だけ字下げする
+ * @param {number} count 
+ * @returns {string}
+ */
 function makeIndent (count) {
   let s = ''
   for (let i = 0; i < count; i++) {
@@ -296,6 +311,10 @@ function countIndent (line) {
   return cnt
 }
 
+/**
+ * @param {string} src 
+ * @returns {string}
+ */
 function replaceRetMark (src) {
   const prepare = NakoPrepare.getInstance(null) // `※`, `／/`, `／＊` といったパターン全てに対応するために必要
   const len = src.length
@@ -462,4 +481,5 @@ export default {
   getBlockStructure,
   getIndent,
   countIndent,
+  isIndentSyntaxEnabled,
 }

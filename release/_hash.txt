@@ -54,15 +54,15 @@ plugin_weykturtle3d.js:
   sha256(base64): ND/1JqYrFVGTIPYsbBk+tScnF8RVzgYPM0/E2aE8GRw=
   sha512(base64): T4B8Cvhn9j5YdMGk4rwPInfqmcXtGEjD2g6X6wSqXvYyIXuSy+t1RVf1viZ2zljHlk3wN6pwKvvg/NIJvfMAzw==
 version.js:
-  md5(hex): 968a338e41a60728cac0a9c6943509fb
-  sha256(hex): ece64b1d2c9920e74a4312d9de1f03881a7cd573e0970a5137f6234ca31e5609
-  sha256(base64): 7OZLHSyZIOdKQxLZ3h8DiBp81XPglwpRN/YjTKMeVgk=
-  sha512(base64): sy+hPYANgwl9xpei1J7iecDirg9Ysxp/fzgyzTMoigrNOcwTdf595fHe0jyvRXf2usDWkl9QG1gcA7GbcbDSGg==
+  md5(hex): 5dea373e75714902893980f0d29ddf6d
+  sha256(hex): f77614794b4c956cf974d4bc2b75031d6e9c0bc9689421cef2488d5bd4decaaa
+  sha256(base64): 93YUeUtMlWz5dNS8K3UDHW6cC8lolCHO8kiNW9Teyqo=
+  sha512(base64): NErco2AppUaCuam3md6CHg3ZcEMvOdipqe49sL9JLr4wdt2+fZALeNfijH6mNtFjAJzyQdPhN+y1WVgAguWPEg==
 wnako3.js:
-  md5(hex): c15cbc16b2c549c0d4cfbf1f78b6a30b
-  sha256(hex): b6da46f6e9024441ebe83480ef6001a42ee39dba0fe437410ddd426f2a78e23e
-  sha256(base64): ttpG9ukCREHr6DSA72ABpC7jnboP5DdBDd1Cbyp44j4=
-  sha512(base64): 12dPoiall9LVGAmiJDu5gWI2Btve24S51WJz12IqoY6xpJWwYWSQqA/myHQHI6HCb0jEGeHeRvcgyrCFMkTkBg==
+  md5(hex): 58479ff0651dac7e25dd9031f6472c35
+  sha256(hex): cd758dce7b2bf9a3d5d82105049f5aa43f3a621f2b899a554c9ec9a2ab38411c
+  sha256(base64): zXWNznsr+aPV2CEFBJ9apD86Yh8riZpVTJ7Joqs4QRw=
+  sha512(base64): JAiNGF7SKTvGFxgEr8pgQDWuCMC09JrOz4HPMgZ+wVbj57WmWjkolRtswglKVvQpBMSHp392Xba8gfWzaKp7gQ==
 wnako3webworker.js:
   md5(hex): 7aa8cfb6b64151f7a0c69f3d81c1bc39
   sha256(hex): 7bc83938434df12595551f2787806a345152bf3e27586606f5c01f95dbee234c
