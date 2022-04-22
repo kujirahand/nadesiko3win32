@@ -319,7 +319,7 @@
 | 定数 | ブラウザURL | |  '' } | NぶらうざURL |
 ●AJAXとHTTP
 | 関数 | AJAX送信時 | CALLBACKのURLまで/URLへ/URLに | 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。『AJAXオプション』を指定できる。 | AJAXそうしんしたとき |
-| 関数 | AJAX受信 | URLから/URLを | 「!非同期モード」で非同期通信(Ajax)でURLからデータを受信する。『AJAXオプション』を指定できる。結果は変数『対象』に入る | AJAXじゅしん |
+| 関数 | AJAX受信 | URLから/URLを | (非推奨)『AJAXテキスト取得』をご利用ください。-「!非同期モード」で非同期通信(Ajax)でURLからデータを受信する。『AJAXオプション』を指定できる。結果は変数『対象』に入る | AJAXじゅしん |
 | 関数 | AJAX受信時 | CALLBACKでURLから/URLを | 非同期通信(Ajax)を利用してURLからデータを受信した時callbackが実行される。その際『対象』にデータが代入される。『AJAXオプション』を指定できる。 | AJAXじゅしんしたとき |
 | 関数 | GET送信時 | CALLBACKのURLまで/URLへ/URLに | 非同期通信(Ajax)でURLにデータを送信し、成功するとcallbackが実行される。その際『対象』にデータが代入される。 | GETそうしんしたとき |
 | 関数 | POSTデータ生成 | PARAMSの/PARAMSを | 辞書形式のデータPARAMSをkey=value&key=value...の形式に変換する | POSTでーたせいせい |
@@ -329,11 +329,11 @@
 | 定数 | AJAXオプション | |  ''  | AJAXおぷしょん |
 | 関数 | AJAXオプション設定 | OPTIONに/OPTIONへ/OPTIONと | AJAX命令でオプションを設定 | AJAXおぷしょんせってい |
 | 関数 | AJAXオプションPOST設定 | PARAMSを/PARAMSで | AJAXオプションにPOSTメソッドとパラメータPARAMSを設定 | AJAXおぷしょんPOSTせってい |
-| 関数 | AJAX送信 | URLまで/URLへ/URLに | 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。 | AJAXそうしん |
-| 関数 | AJAX逐次送信 | URLまで/URLへ/URLに | 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。 | AJAXちくじそうしん |
+| 関数 | AJAX送信 | URLまで/URLへ/URLに | (非推奨)『AJAXテキスト取得』をご利用ください。- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。 | AJAXそうしん |
+| 関数 | AJAX逐次送信 | URLまで/URLへ/URLに | (非推奨)『AJAXテキスト取得』をご利用ください。- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。 | AJAXちくじそうしん |
 | 関数 | AJAX保障送信 | URLまで/URLへ/URLに | 非同期通信(Ajax)でURLにデータの送信を開始する非同期処理オブジェクト(Promise)を作成する。 | AJAXほしょうそうしん |
-| 関数 | HTTP取得 | URLの/URLから/URLを | 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。 | HTTPしゅとく |
-| 関数 | HTTP逐次取得 | URLの/URLから/URLを | 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。 | HTTPちくじしゅとく |
+| 関数 | HTTP取得 | URLの/URLから/URLを | (非推奨)『AJAXテキスト取得』をご利用ください。- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。 | HTTPしゅとく |
+| 関数 | HTTP逐次取得 | URLの/URLから/URLを | (非推奨)『AJAXテキスト取得』をご利用ください。- 逐次実行構文にて、非同期通信(Ajax)でURLにデータを送信する。成功すると『対象』にデータが代入される。失敗すると『AJAX失敗時』を実行。 | HTTPちくじしゅとく |
 | 関数 | HTTP保障取得 | URLの/URLから/URLを | 非同期通信(Ajax)でURLにデータの送信を開始する非同期処理オブジェクト(Promise)を作成する。 | HTTPほしょうしゅとく |
 | 関数 | POST逐次送信 | URLまでPARAMSを/URLへ/URLに | 逐次実行構文にて、AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。 | POSTちくじそうしん |
 | 関数 | POST送信 | URLまでPARAMSを/URLへ/URLに | 逐次実行構文にて、AjaxでURLにPARAMSをPOST送信し『対象』にデータを設定。失敗すると『AJAX失敗時』を実行。 | POSTそうしん |
@@ -621,7 +621,6 @@
 | 関数 | 終 |  | Nodeでプログラム実行を強制終了する | おわる |
 | 関数 | 強制終了時 | FUNCを | Nodeでctrl+cでプログラムの実行が終了した時FUNCを実行する。もしFUNCが偽を返すと終了しない。非同期処理のとき動作する(#1010) | きょうせいしゅうりょうしたとき |
 | 関数 | 終了 |  | Nodeでプログラム実行を強制終了する | しゅうりょう |
-| 関数 | 秒待 | SEC | NodeでN秒待つ | びょうまつ |
 | 関数 | OS取得 |  | OSプラットフォームを返す(darwin/win32/linux) | OSしゅとく |
 | 関数 | OSアーキテクチャ取得 |  | OSアーキテクチャを返す | OSあーきてくちゃしゅとく |
 ●クリップボード操作
@@ -750,7 +749,7 @@
 
 ■plugin_datetime(基本プラグイン,wnako,cnako)
 ●日時処理
-| 定数 | 元号データ | |  require('./era.json')  | げんごうでーた |
+| 定数 | 元号データ | |  era  | げんごうでーた |
 | 関数 | 今 |  | 現在時刻を「HH:mm:ss」の形式で返す | いま |
 | 関数 | システム時間 |  | 現在のUNIX時間 (UTC(1970/1/1)からの経過秒数) を返す | しすてむじかん |
 | 関数 | 今日 |  | 今日の日付を「YYYY/MM/DD」の形式で返す | きょう |
@@ -782,7 +781,7 @@
 
 ■plugin_caniuse(基本プラグイン,wnako,cnako)
 ●ブラウザサポート
-| 定数 | ブラウザ名変換表 | |  require('./browsers_agents.json')  | ぶらうざめいへんかんひょう |
+| 定数 | ブラウザ名変換表 | |  agents  | ぶらうざめいへんかんひょう |
 | 関数 | 対応ブラウザ一覧取得 |  | 対応しているブラウザの一覧を取得する | たいおうぶらうざいちらんしゅとく |
 
 
@@ -876,49 +875,6 @@
 | 関数 | 失敗時 | CALLBACKをPROMISEの/PROMISEが/PROMISEに | 非同期処理で失敗したときにcallbackが実行される。その際『対象』にエラーが代入される。 | しっぱいしたとき |
 | 関数 | 終了時 | CALLBACKをPROMISEの/PROMISEが/PROMISEに | 非同期処理で終了したときにcallbackが実行される。成功時・失敗時・処理時とは別に実行される。 | しゅうりょうしたとき |
 | 関数 | 束 | ...ARGSと/...ARGSを | 非同期処理をまとめる。 | たばねる |
-
-
-■nadesiko3-sqlite3(拡張プラグイン,cnako)
-●SQLite3
-| 定数 | SQLITE3今挿入ID | |  '?' | SQLITE3いまそうにゅうID |
-| 関数 | SQLITE3開 | Sを/Sの | SQlite3のデータベースを開いて、データベースオブジェクトを返す | SQLITE3ひらく |
-| 関数 | SQLITE3閉 |  | アクティブなSQlite3のデータベースを閉じる | SQLITE3とじる |
-| 関数 | SQLITE3切替 | DBに/DBへ | アクティブなSQlite3のデータベースをDB(SQLITE3開くで開いたもの)に切り替える | SQLITE3きりかえる |
-| 関数 | SQLITE3実行時 | FにSQLをPARAMSで | SQLをパラメータPARAMSで実行する。完了するとコールバック関数Fを実行する。 | SQLITE3じっこうしたとき |
-| 関数 | SQLITE3取得時 | FにSQLをPARAMSで | SQLをパラメータPARAMSで取得実行する。完了するとコールバック関数Fが実行され、結果は第一引数に与えられる。 | SQLITE3しゅとくしたとき |
-| 関数 | SQLITE3実行 | SQLをPARAMSで | SQLをパラメータPARAMSで実行する。 | SQLITE3じっこう |
-| 関数 | SQLITE3取得 | SQLをPARAMSで | SQLをパラメータPARAMSで取得する。 | SQLITE3しゅとく |
-| 関数 | SQLITE3全取得 | SQLをPARAMSで | SQLをパラメータPARAMSで全部取得する。 | SQLITE3ぜんしゅとく |
-| 関数 | SQLITE3逐次実行 | SQLをPARAMSで | (非推奨) 逐次実行構文にて、SQLとパラメータPARAMSでSQLを実行し、変数『対象』に結果を得る。 | SQLITE3ちくじじっこう |
-| 関数 | SQLITE3逐次全取得 | SQLをPARAMSで | (非推奨)逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。 | SQLITE3ちくじぜんしゅとく |
-| 関数 | SQLITE3逐次取得 | SQLをPARAMSで | (非推奨)逐次実行構文内で、SQLとパラメータPARAMSでSQLを実行して結果を得る。 | SQLITE3ちくじしゅとく |
-
-
-■nadesiko3-sqlite3sync(拡張プラグイン,cnako)
-●SQLite3同期
-| 関数 | SQLITE3開 | Fを/Fの | SQlite3のデータベースFを開いて、データベースオブジェクトを返す | SQLITE3ひらく |
-| 関数 | SQLITE3閉 |  | アクティブなSQlite3のデータベースを閉じる | SQLITE3とじる |
-| 関数 | SQLITE3同期切替 | DBに/DBへ | 操作対象のデータベースをDB(『SQLITE3同期開』を使用)に切り替える | SQLITE3どうききりかえる |
-| 関数 | SQLITE3実行 | SQLをPARAMSで | SQLをパラメータPARAMSで実行する。 | SQLITE3じっこう |
-| 関数 | INSERT | TBLにPARAMSを/TBLへ | INSERT文を実行。TBLへハッシュPARAMSを挿入。 | INSERT |
-| 関数 | SQLITE3挿入 | TBLにPARAMSを/TBLへ | INSERT文を実行。TBLへハッシュPARAMSを挿入。 | SQLITE3そうにゅう |
-| 関数 | UPDATE | TBLのWHEREをPARAMSに/PARAMSへ | UPDATE文を実行。TBLのWHEREをPARAMSに更新。 | UPDATE |
-| 関数 | SQLITE3更新 | TBLのWHEREをPARAMSに/PARAMSへ | UPDATE文を実行。TBLのWHEREをPARAMSに更新。 | SQLITE3こうしん |
-
-
-■nadesiko3-drone(拡張プラグイン,cnako)
-●ドローン
-| 関数 | ドローン接続 |  | ドローンに接続する | どろーんせつぞく |
-| 関数 | ドローン緊急停止 |  | ドローン緊急停止する | どろーんきんきゅうていし |
-| 関数 | ドローン送信 | CMDを/CMDの | コマンドをドローンに送信する | どろーんそうしん |
-| 関数 | ドローン接続時 | Fを | ドローンに接続した時にFを実行する | どろーんせつぞくしたとき |
-| 関数 | ドローン受信時 | Fを | ドローンからデータを受信した時にFを実行する | どろーんじゅしんしたとき |
-| 関数 | ドローン離陸 |  | 離陸コマンドをドローンに送信する | どろーんりりく |
-| 関数 | ドローン着陸 |  | 着陸コマンドをドローンに送信する | どろーんちゃくりく |
-| 関数 | ドローン移動 | DIRにNだけ/DIRへ | ドローンを方向(上下左右前後)にN(20-500cm)だけ動かす | どろーんいどう |
-| 関数 | ドローン回転 | Nだけ | ドローンをN(1から360/-1から-360)度だけ右回転させる | どろーんかいてん |
-| 関数 | ドローン速度設定 | Nに/Nへ | ドローンの速度をN(10-100)に設定 | どろーんそくどせってい |
-| 関数 | ドローンWIFI設定 | SSIDのPASSに/PASSへ | ドローンのWi-FiをSSIDのPASSに設定 | どろーんWIFIせってい |
 
 
 ■nadesiko3-htmlparser(拡張プラグイン,cnako)
