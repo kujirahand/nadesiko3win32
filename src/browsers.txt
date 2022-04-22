@@ -16,7 +16,6 @@ firefox 98
 firefox 97
 firefox 96
 firefox 91
-ie 11
 ios_saf 15.4
 ios_saf 15.2-15.3
 ios_saf 15.0-15.1
