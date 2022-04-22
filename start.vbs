@@ -26,4 +26,4 @@ path = _
 env.Item("NAKO_HOME") = home
 env.Item("PATH") = path
 
-shell.Run("node " & home & "\src\nako3server.js")
+shell.Run("node " & home & "\src\nako3server.mjs")
