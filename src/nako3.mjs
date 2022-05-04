@@ -5,7 +5,7 @@
 import { NakoParser } from './nako_parser3.mjs'
 import { NakoLexer } from './nako_lexer.mjs'
 import { NakoPrepare } from './nako_prepare.mjs'
-import { NakoGen, generateJS } from './nako_gen.mjs'
+import { generateJS } from './nako_gen.mjs'
 import { NakoGenASync } from './nako_gen_async.mjs'
 import NakoIndent from './nako_indent.mjs'
 import { convertDNCL } from './nako_from_dncl.mjs'
@@ -67,6 +67,7 @@ const cloneAsJSON = (x) => JSON.parse(JSON.stringify(x))
  *     line?: number
  *     column?: number
  *   }
+ *   tag?: string
  *   genMode?: string
  *   checkInit?: boolean
  * }} Ast
@@ -97,7 +98,7 @@ export class NakoCompiler {
     /**
      * @type {NakoGlobal[]}
      */
-    this.__globals = [] // 生成した NakoGlobalのインスタンスを保持
+    this.__globals = [] // 生成した NakoGlobal のインスタンスを保持
     /** @type {Record<string, Record<string, NakoFunction>>} */
     this.__module = {} // requireなどで取り込んだモジュールの一覧
     /** @type {Record<string, NakoFunction>} */
@@ -178,8 +179,7 @@ export class NakoCompiler {
    * プログラムが依存するファイルを再帰的に取得する。
    * - .jsであれば評価してthis.addPluginFileを呼び出し、.nako3であればファイルをfetchしてdependenciesに保存し再帰する。
    * - resolvePathはファイルを検索して正規化する必要がある。
-   * - needNako3やneedJsがPromiseを返すなら並列処理し、処理の終了を知らせるためのPromiseを返す。そうでなければ同期的に処理する。
-   *   （`instanceof Promise` はpolyfillで動作しない場合があるため、Promiseかどうかを明示する必要がある。）
+   * - readNako3やreadJsのsyncを確認してfalseならPromiseを返すので並列処理し、そうでなければ同期的に処理する。
    * - readNako3はソースコードを返す。readJsはrequireあるいはevalする関数を返す。
    * @param {string} code
    * @param {string} filename
@@ -196,9 +196,50 @@ export class NakoCompiler {
     /** @type {NakoCompiler['dependencies']} */
     const dependencies = {}
     const compiler = new NakoCompiler({ useBasicPlugin: true })
+    
+    const loadJS = (item, tasks) => {
+      // jsならプラグインとして読み込む。
+      const obj = tools.readJs(item.filePath, item.firstToken)
+      if (obj.sync) {
+        dependencies[item.filePath].addPluginFile = () => {
+          this.addPluginFile(item.value, item.filePath, dependencies[item.filePath].funclist = obj.value(), false) 
+        }
+      } else {
+        tasks.push(obj.value.then((res) => {
+          dependencies[item.filePath].addPluginFile = () => { 
+            this.addPluginFile(item.value, item.filePath, dependencies[item.filePath].funclist = res(), false) 
+          }
+        }))
+      }
+    }
+    const loadNako3 = (item, tasks) => {
+      // nako3ならファイルを読んでdependenciesに保存する。
+      const content = tools.readNako3(item.filePath, item.firstToken)
+      /** @param {string} code */
+      const registerFile = (code) => {
+        // シンタックスハイライトの高速化のために、事前にファイルが定義する関数名のリストを取り出しておく。
+        // preDefineFuncはトークン列に変更を加えるため、事前にクローンしておく。
+        // 「プラグイン名設定」を行う (#956)
+        const modName = NakoLexer.filenameToModName(item.filePath)
+        code = `『${modName}』にプラグイン名設定;` + code + ';『メイン』にプラグイン名設定;'
+        const tokens = this.rawtokenize(code, 0, item.filePath)
+        dependencies[item.filePath].tokens = tokens
+        /** @type {import('./nako_lexer.mjs').FuncList} */
+        const funclist = {}
+        NakoLexer.preDefineFunc(cloneAsJSON(tokens), this.logger, funclist)
+        dependencies[item.filePath].funclist = funclist
 
+        // 再帰
+        return loadRec(code, item.filePath, '')
+      }
+      if (content.sync) {
+        registerFile(content.value)
+      } else {
+        tasks.push(content.value.then((res) => registerFile(res)))
+      }
+    }
     /** @param {string} code @param {string} filename @param {string} preCode @returns {Promise<unknown> | void} */
-    const inner = (code, filename, preCode) => {
+    const loadRec = (code, filename, preCode) => {
       /** @type {Promise<unknown>[]} */
       const tasks = []
       // 取り込みが必要な情報一覧を調べる(トークン分割して、取り込みタグを得る)
@@ -217,55 +258,21 @@ export class NakoCompiler {
         // 初回の読み込み
         dependencies[item.filePath] = { tokens: [], alias: new Set([item.value]), addPluginFile: () => {}, funclist: {} }
         if (item.type === 'js' || item.type === 'mjs') {
-          // jsならプラグインとして読み込む。
-          const obj = tools.readJs(item.filePath, item.firstToken)
-          if (obj.sync) {
-            dependencies[item.filePath].addPluginFile = () => {
-              this.addPluginFile(item.value, item.filePath, dependencies[item.filePath].funclist = obj.value(), false) 
-            }
-          } else {
-            tasks.push(obj.value.then((res) => {
-              dependencies[item.filePath].addPluginFile = () => { 
-                this.addPluginFile(item.value, item.filePath, dependencies[item.filePath].funclist = res(), false) 
-              }
-            }))
-          }
+          loadJS(item, tasks)
         } else if (item.type === 'nako3') {
-          // nako3ならファイルを読んでdependenciesに保存する。
-          const content = tools.readNako3(item.filePath, item.firstToken)
-          /** @param {string} code */
-          const registerFile = (code) => {
-            // シンタックスハイライトの高速化のために、事前にファイルが定義する関数名のリストを取り出しておく。
-            // preDefineFuncはトークン列に変更を加えるため、事前にクローンしておく。
-            // 「プラグイン名設定」を行う (#956)
-            code = `『${item.filePath}』にプラグイン名設定;` + code + ';『メイン』にプラグイン名設定;'
-            const tokens = this.rawtokenize(code, 0, item.filePath)
-            dependencies[item.filePath].tokens = tokens
-            /** @type {import('./nako_lexer').FuncList} */
-            const funclist = {}
-            NakoLexer.preDefineFunc(cloneAsJSON(tokens), this.logger, funclist)
-            dependencies[item.filePath].funclist = funclist
-
-            // 再帰
-            return inner(code, item.filePath, '')
-          }
-          if (content.sync) {
-            registerFile(content.value)
-          } else {
-            tasks.push(content.value.then((res) => registerFile(res)))
-          }
+          loadNako3(item, tasks)
         } else {
           throw new NakoImportError(`ファイル『${item.value}』を読み込めません。ファイルが存在しないか未対応の拡張子です。`, item.firstToken.file, item.firstToken.line)
         }
       }
-
       if (tasks.length > 0) {
         return Promise.all(tasks)
       }
+      return undefined
     }
 
     try {
-      const result = inner(code, filename, preCode)
+      const result = loadRec(code, filename, preCode)
 
       // 非同期な場合のエラーハンドリング
       if (result !== undefined) {
@@ -303,7 +310,6 @@ export class NakoCompiler {
     const { code: code2, insertedLines, deletedLines } = NakoIndent.convert(code, filename)
     // DNCL構文 (#1140)
     const code3 = convertDNCL(code2, filename)
-
     // 全角半角の統一処理
     const preprocessed = this.prepare.convert(code3)
 
@@ -312,15 +318,14 @@ export class NakoCompiler {
     const offsetToLineColumn = new OffsetToLineColumn(code)
 
     // トークン分割
-    /** @type {import('./nako_lexer').Token[]} */
+    /** @type {import('./nako_lexer.mjs').Token[]} */
     let tokens
     try {
-      tokens = this.lexer.setInput(preprocessed.map((v) => v.text).join(''), line, filename)
+      tokens = this.lexer.tokenize(preprocessed.map((v) => v.text).join(''), line, filename)
     } catch (err) {
       if (!(err instanceof InternalLexerError)) {
         throw err
       }
-
       // エラー位置をソースコード上の位置に変換して返す
       const dest = indentationSyntaxSourceMapping.map(tokenizationSourceMapping.map(err.preprocessedCodeStartOffset), tokenizationSourceMapping.map(err.preprocessedCodeEndOffset))
       /** @type {number | undefined} */
@@ -360,10 +365,12 @@ export class NakoCompiler {
    * 単語の属性を構文解析に先立ち補正する
    * @param {TokenWithSourceMap[]} tokens トークンのリスト
    * @param {boolean} isFirst 最初の呼び出しかどうか
+   * @param {string} filename
    * @returns コード (なでしこ)
    */
-  converttoken (tokens, isFirst) {
-    return this.lexer.setInput2(tokens, isFirst)
+  converttoken (tokens, isFirst, filename) {
+    const tok = this.lexer.replaceTokens(tokens, isFirst, filename)
+    return tok
   }
 
   /**
@@ -430,7 +437,7 @@ export class NakoCompiler {
     const commentTokens = tokens.filter((t) => t.type === 'line_comment' || t.type === 'range_comment')
       .map((v) => ({ ...v })) // clone
 
-    tokens = this.converttoken(tokens, false)
+    tokens = this.converttoken(tokens, false, filename)
 
     return { tokens, commentTokens }
   }
@@ -502,13 +509,23 @@ export class NakoCompiler {
         t.type = 'require'
       }
     }
+    if (requireStatementTokens.length >= 3) {
+      // modList を更新
+      for (let i = 0; i < requireStatementTokens.length; i += 3) {
+        let modName = requireStatementTokens[i + 1].value
+        modName = NakoLexer.filenameToModName(modName)
+        if (this.lexer.modList.indexOf(modName) < 0) {
+          this.lexer.modList.push(modName)
+        }
+      }
+    }
 
     // convertTokenで消されるコメントのトークンを残す
     /** @type {TokenWithSourceMap[]} */
     const commentTokens = tokens.filter((t) => t.type === 'line_comment' || t.type === 'range_comment')
       .map((v) => ({ ...v })) // clone
 
-    tokens = this.converttoken(tokens, true)
+    tokens = this.converttoken(tokens, true, filename)
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i].type === 'code') {
@@ -543,7 +560,7 @@ export class NakoCompiler {
     let ast
     try {
       this.parser.genMode = 'sync' // set default
-      ast = this.parser.parse(lexerOutput.tokens)
+      ast = this.parser.parse(lexerOutput.tokens, filename)
     } catch (err) {
       if (typeof err.startOffset !== 'number') {
         throw NakoSyntaxError.fromNode(err.message, lexerOutput.tokens[this.parser.index])
@@ -643,6 +660,7 @@ export class NakoCompiler {
    * @param {boolean} isReset
    * @param {boolean | string} isTest テストかどうか。stringの場合は1つのテストのみ。
    * @param {string} [preCode]
+   * @returns {nakoGlobal}
    */
   _run (code, fname, isReset, isTest, preCode = '') {
     const opts = {
@@ -665,6 +683,7 @@ export class NakoCompiler {
    * @param {Partial<CompilerOptions>} opts
    * @param {string} [preCode]
    * @param {NakoGlobal} [nakoGlobal] ナデシコ命令でスコープを共有するため
+   * @returns {nakoGlobal}
    */
   _runEx (code, fname, opts, preCode = '', nakoGlobal) {
     // コンパイル
