@@ -269,14 +269,19 @@ export class NakoParser extends NakoParserBase {
     if (this.check('とは')) { this.get() }
     let block = null
     let multiline = false
-    let funcFn = false
+    let asyncFn = false
     if (this.check('ここから')) { multiline = true }
     if (this.check('eol')) { multiline = true }
     try {
       this.funcLevel++
-      this.usedFuncFn = false
+      this.usedAsyncFn = false
       if (multiline) {
         this.saveStack()
+        // 関数の引数をローカル変数として登録する
+        for (const arg of defArgs) {
+          const fnName = arg.value
+          this.localvars[fnName] = {'type': 'var', 'value': ''}
+        }
         block = this.yBlock()
         if (this.check('ここまで')) { this.get() } else { throw NakoSyntaxError.fromNode('『ここまで』がありません。関数定義の末尾に必要です。', def) }
         this.loadStack()
@@ -286,7 +291,7 @@ export class NakoParser extends NakoParserBase {
         this.loadStack()
       }
       this.funcLevel--
-      funcFn = this.usedFuncFn
+      asyncFn = this.usedAsyncFn
     } catch (err) {
       this.logger.debug(this.nodeToStr(funcName, { depth: 0, typeName: '関数' }, true) +
         'の定義で以下のエラーがありました。\n' + err.message, def)
@@ -299,7 +304,7 @@ export class NakoParser extends NakoParserBase {
       name: funcName,
       args: defArgs,
       block,
-      funcFn,
+      asyncFn,
       josi: '',
       ...map,
       end: this.peekSourceMap()
@@ -1209,7 +1214,7 @@ export class NakoParser extends NakoParserBase {
     this.recentlyCalledFunc.push({name: t.value, ...f})
 
     // 呼び出す関数が非同期呼び出しが必要(asyncFn)ならマーク
-    if (f && f.asyncFn) { this.usedFuncFn = true }
+    if (f && f.asyncFn) { this.usedAsyncFn = true }
 
     // 関数の引数を取り出す処理
     const args = []
