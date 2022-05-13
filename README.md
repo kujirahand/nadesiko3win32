@@ -1,4 +1,4 @@
-# 日本語プログラミング言語「なでしこ3」
+# 日本語プログラミング言語「なでしこ3」(Windowsバージョン)
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 [![npm version](https://badge.fury.io/js/nadesiko3.svg)](https://www.npmjs.com/package/nadesiko3)
@@ -6,104 +6,38 @@
 
 ## 「なでしこ3」とは
 
-「なでしこ3」とは、日本語のプログラミング言語です。HTML5/JavaScriptをベースとしているので、PC/スマホ/タブレットなど、さまざまな環境で動作させることができます。
-
-日本語プログラミング言語は、読みやすく理解しやすいのが特徴で、初めてでも楽しくプログラミングを覚えることができます。また、バッチ処理や定型処理などを手軽に記述できます。
+「なでしこ3」とは、日本語のプログラミング言語です。HTML5/JavaScriptをベースとしているので、PC/スマホ/タブレットなど、さまざまな環境で動作させることができます。日本語プログラミング言語は、読みやすく理解しやすいのが特徴で、初めてでも楽しくプログラミングを覚えることができます。また、バッチ処理や定型処理などを手軽に記述できます。
 
 - [なでしこのWebサイト](https://nadesi.com/top/)
-  - [なでしこ3のWebサイト](https://nadesi.com/doc3/)
-  - [なでしこ3(GitHub Pages)](https://kujirahand.github.io/nadesiko3/)
 
-## 対応機器/ブラウザ
+## 本ツールについて
 
-主要ブラウザ(Chrome/Safari/Edge/Firefox)に対応しています。詳しくは、[対応機器/ブラウザ](doc/browsers.md) をご覧ください。
+本ツールは、なでしこ3のPC版(Node.js版)をWindowsで手軽に使うことができるようにしたパッケージです。実行エンジンのNode.jsや手軽にコマンドを実行できるツール一式を同梱しています。そのため、マウス操作で各種ツールを実行できて便利です。
 
-## ブラウザで利用する場合
+### (1) ダウンロードしよう
 
-以下、Webエディタ上で、なでしこを実行できます。
+[こちら](https://github.com/kujirahand/nadesiko3win32/releases)から最新版をダウンロードできます。「Source code (zip)」と書かれているリンクをクリックしてください。
 
-- [なでしこ3簡易エディタ](https://nadesi.com/doc3/index.php?%E3%81%AA%E3%81%A7%E3%81%97%E3%81%933%E7%B0%A1%E6%98%93%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF)
-  - [なでしこ3貯蔵庫(プログラム一覧)](https://n3s.nadesi.com/)
-  - [なでしこエディタの一覧](https://nadesi.com/doc3/index.php?%E3%81%AA%E3%81%A7%E3%81%97%E3%81%933%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%81%AE%E4%B8%80%E8%A6%A7)
+### (2) セットアップしよう
 
-## 各OSごとに利用する方法
+ダウンロードしたら最初にZIPファイルを解凍します。ZIPファイルを解凍すると「start.exe」という実行ファイルがあります。このファイルをダブルクリックして実行してください。なお、初回実行時には、Windowsのセキュリティ保護の機能が働きますので、「詳細 > 実行」と順にクリックして実行してください。
 
-なでしこ3をPC向けにローカル環境で動作させることも可能です。
+すると、初回実行時のみセットアップが行われます。DOSプロンプトの画面が表示されますが、これは、圧縮されている各種ランタイムが専用の解凍ツールで解凍するものです。
 
-- [OS別のインストール方法](https://nadesi.com/doc3/index.php?OS%E5%88%A5)
+### (3) 実行しよう
 
-外部リポジトリに個別の配布パッケージを用意しています（ただし、最新版とは限りません）
+セットアップが終わるとメニューが表示されます。このメニューは次の機能を実行します。
 
-- [なでしこ3配布キット(webkit版)](https://github.com/kujirahand/nadesiko3webkit)
-- [なでしこ3配布キット(electron版)](https://github.com/kujirahand/nadesiko3electron)
-- [なでしこ3(コンソール版)のWindows配布パッケージ](https://github.com/kujirahand/nadesiko3win32/releases)
+- 「`Web版を実行`」ボタンを押すと、PC上でWebサーバーが実行されて、ブラウザ上にエディタが表示されます。この画面では、Web版のなでしこ3を作成できます。
+- 「`PC版(Node.jsランタイム)を実行`」ボタンを押すと、PC上でWebサーバーが実行されて、ブラウザ上にエディタが表示されます。この画面では、PC版のなでしこ3を作成できます。PC版のなでしこでは、ファイルの読み書きやWebサーバーの作成など、様々な処理が可能です。
+- 「`拡張プラグインのインストール`」ボタンを押すと、プラグインのインストールダイアログが出ます。プラグインの名前を入力すると、`npm`を利用してなでしこ3のJSプラグインを追加できます。[こちら](https://www.npmjs.com/search?q=nadesiko3-)からプラグインの一覧を確認できます。
 
-## その他のなでしこ3について
+### (4) コマンドラインから実行しよう
 
-実験的な意味合いもありますが、各プログラミング言語で実装したなでしこ3があります。なでしこ3PHPでは掲示板、チャットなど、それなりに実用的なプログラムも作れます。
+本ツールの`<インストールフォルダ>\nodejs`と`<インストールフォルダ>\bin`に環境変数PATHを通しておくと、コマンドラインから手軽になでしこを実行できます。(分からない場合は、検索エンジンで「環境変数 PATH 追加」と調べてみましょう。)
 
-- [なでしこ3PHP](https://github.com/kujirahand/nadesiko3php)
-- [なでしこ3Rust](https://github.com/kujirahand/nadesiko3rust)
-- [なでしこ3Go言語](https://github.com/kujirahand/nadesiko3go)
+そして、PowerShellで、`cnako3 (プログラム).nako3`と実行することで、なでしこのプログラムを実行できます。PowerShellやコマンドプロンプトの使い方に慣れていないと、面倒に感じるかもしれませんが、PowerShellやコマンドプロンプトでコマンドを実行する方法を覚えると、なでしこ3(cnako3)がとても便利になります。
 
-## npm でなでしこ3コマンドライン版をインストール
 
-先にNode.jsをインストールします。
-次いで、コマンドラインから以下のコマンドを実行します。
 
-```bash
-npm install -g nadesiko3
-```
 
-すると、cnako3というコマンドで、なでしこを利用できます。
-
-```bash
-# なでしこのサーバーを起動
-npm start
-# なでしこエディタ(PC版)を起動
-npm run nako3edit
-# なでしこエディタ(WEB版)を起動
-npm run nako3server
-```
-
-## Gitからインストール
-
-また、以下のコマンドを実行すると、ブラウザ上になでしこの簡易エディタが起動します。
-
-```bash
-git clone https://github.com/kujirahand/nadesiko3.git
-cd nadesiko3
-npm install
-```
-
-## 追加インストール(macOS/Linux)
-
-必要に応じて以下のコマンドをインストールします。
-
-macOS:
-
-```bash
-# 『圧縮』『解凍』命令のために
-brew install p7zip
-```
-
-Ubuntu/Debian:
-
-```bash
-# 『圧縮』『解凍』命令のために
-sudo apt install p7zip-full
-# 『キー送信』命令のために
-sudo apt install xdotool
-```
-
-全てのコマンドが正しく動くかを確認するには、以下のコマンドを実行します。
-
-```bash
-npm test
-npm run test:all
-```
-
-## なでしこ3の開発に参加する
-
-なでしこ3自身を開発するために、開発環境を整えようという方は、 [doc/SETUP.md](doc/SETUP.md) をご覧ください。
-また、なでしこ3開発者向けの[Gitter](https://gitter.im/nadesiko3/community)への参加も可能です。
