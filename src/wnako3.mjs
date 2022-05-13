@@ -53,17 +53,15 @@ class WebNakoCompiler extends NakoCompiler {
         // eslint-disable-next-line no-prototype-builtins
         if (localFiles.hasOwnProperty(filePath)) {
           return {
-            sync: true,
-            value: () => {
+            task: (async () => () => {
               // eslint-disable-next-line no-new-func
               Function(localFiles[filePath])()
               return {}
-            }
+            })()
           }
         }
         return {
-          sync: false,
-          value: (async () => {
+          task: (async () => {
             const res = await fetch(filePath)
             if (!res.ok) {
               throw new NakoImportError(`ファイル『${filePath}』のダウンロードに失敗しました: ${res.status} ${res.statusText}`, token.file, token.line)
@@ -93,11 +91,10 @@ class WebNakoCompiler extends NakoCompiler {
       readNako3: (filePath, token) => {
         // eslint-disable-next-line no-prototype-builtins
         if (localFiles.hasOwnProperty(filePath)) {
-          return { sync: true, value: localFiles[filePath] }
+          return {task: (async () => { return localFiles[filePath] })}
         }
         return {
-          sync: false,
-          value: (async () => {
+          task: (async () => {
             const res = await fetch(filePath)
             if (!res.ok) {
               throw new NakoImportError(`ファイル ${filePath} のダウンロードに失敗しました: ${res.status} ${res.statusText}`, token.file, token.line)
@@ -106,32 +103,42 @@ class WebNakoCompiler extends NakoCompiler {
           })()
         }
       },
-      resolvePath: (name, token) => {
-        // ローカルにファイルが存在するならそれを使う。そうでなければURLとして解釈する。
+      resolvePath: (name, token, fromFile) => {
         let pathname = name
-        // eslint-disable-next-line no-prototype-builtins
-        if (!localFiles.hasOwnProperty(name)) {
-          try {
-            pathname = new URL(name).pathname
-          } catch (e) {
-            // 単純にパスに変換できなければ、loccation.hrefを参考にパスを組み立てる
+        // http から始まっていれば解決は不要
+        if (pathname.startsWith('http://') || pathname.startsWith('https://')) {
+          // fullpath
+        } else {
+          // eslint-disable-next-line no-prototype-builtins
+          // ローカルにファイルが存在するならそれを使う。そうでなければURLとして解釈する。
+          if (!localFiles.hasOwnProperty(name)) {
             try {
-              const href_a = window.location.href.split('/')
-              const href_dir = href_a.splice(0, href_a.length - 1).join('/');
-              const href = href_dir + '/' + name
-              pathname = new URL(href).pathname
+              pathname = new URL(name).pathname
             } catch (e) {
-              throw new NakoImportError(`取り込み文の引数でパスが解決できません。https:// か http:// で始まるアドレスを指定してください。\n${e}`, token.file, token.line)
+              // 単純にパスに変換できなければ、loccation.hrefを参考にパスを組み立てる
+              try {
+                let baseDir = dirname(fromFile)
+                if (baseDir === '') {
+                  // https://2/3/4.html
+                  const a = window.location.href.split('/')
+                  baseDir = '/' + a.slice(3,a.length - 1).join('/')
+                }
+                pathname = resolveURL(baseDir, name)
+              } catch (e) {
+                throw new NakoImportError(`取り込み文の引数でパスが解決できません。https:// か http:// で始まるアドレスを指定してください。\n${e}`, token.file, token.line)
+              }
             }
+          } else {
+            pathname = localFiles[name]
           }
         }
         // .js および .mjs なら JSプラグイン
         if (pathname.endsWith('.js') || pathname.endsWith('.js.txt') || pathname.endsWith('.mjs') || pathname.endsWith('.mjs.txt')) {
-          return { filePath: name, type: 'js' }
+          return { filePath: pathname, type: 'js' }
         }
         // .nako3 なら なでしこ3プラグイン
         if (pathname.endsWith('.nako3') || pathname.endsWith('.nako3.txt')) {
-          return { filePath: name, type: 'nako3' }
+          return { filePath: pathname, type: 'nako3' }
         }
         // ファイル拡張子が未指定の場合
         throw new NakoImportError(`ファイル『${name}』は拡張子が(.nako3|.js|.js.txt|.mjs|.mjs.txt)以外なので取り込めません。`, token.file, token.line)
@@ -164,6 +171,29 @@ class WebNakoCompiler extends NakoCompiler {
   setupEditor (idOrElement) {
     return setupEditor(idOrElement, this, /** @type {any} */(window).ace)
   }
+}
+
+function dirname(s) {
+  const a = s.split('/')
+  if (a && a.length > 1) {
+    return a.slice(0, a.length - 1).join('/')
+  }
+  return ''
+}
+
+function resolveURL(base, s) {
+  const baseA = base.split('/')
+  const sA = s.split('/')
+  for (let p of sA) {
+    if (p === '') {continue}
+    if (p === '.') {continue}
+    if (p === '..') {
+      baseA.pop()
+      continue
+    }
+    baseA.push(p)
+  }
+  return baseA.join('/')
 }
 
 // ブラウザなら navigator.nako3 になでしこを登録

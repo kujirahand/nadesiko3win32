@@ -1,5 +1,4 @@
 /**
- * file: nako_gen.js
  * パーサーが生成した中間オブジェクトを実際のJavaScriptのコードに変換する。
  * なお速度優先で忠実にJavaScriptのコードを生成する。
  */
@@ -7,12 +6,6 @@
 import { NakoSyntaxError, NakoError, NakoRuntimeError } from './nako_errors.mjs'
 import { NakoLexer } from './nako_lexer.mjs'
 import  nakoVersion from './nako_version.mjs'
-const isIE11 = () => {
-  if (typeof(window) == 'object' && window.navigator && window.navigator.userAgent) {
-    return (window.navigator.userAgent.indexOf('MSIE') >= 0)
-  }
-  return false
-}
 
 // なでしこで定義した関数の開始コードと終了コード
 const topOfFunction = '(function(){\n'
@@ -188,8 +181,18 @@ export class NakoGen {
     }
   }
 
-  /** @param {string} name */
+  /** 
+   * @param {string} name
+   * @returns {string}
+  */
   static getFuncName (name) {
+    if (name.indexOf('__') >= 0) { // スコープがある場合
+      const a = name.split('__')
+      let scope = a[0]
+      const name3 = NakoGen.getFuncName(a[1])
+      return `${scope}__${name3}`
+
+    }
     let name2 = name.replace(/[ぁ-ん]+$/, '')
     if (name2 === '') { name2 = name }
     return name2
@@ -1536,7 +1539,7 @@ export class NakoGen {
 
 
 /**
- * @param {import('./nako3')} com
+ * @param {import('./nako3.mjs').NakoCompiler} com
  * @param {Ast} ast
  * @param {boolean | string} isTest 文字列なら1つのテストだけを実行する
  */
@@ -1563,21 +1566,19 @@ export function generateJS (com, ast, isTest) {
   }
   // async method
   if (gen.numAsyncFn > 0) {
-    let canAsync = !isIE11()
-    if (canAsync) {
-      js = `
+    js = `
 // <nadesiko3::gen::async>
 (async () => { // async::main
 ${js}
 }).call(this).catch(err => {
-if (!(err instanceof this.NakoRuntimeError)) {
-  err = new this.NakoRuntimeError(err, this.__varslist[0].line);
-}
-this.logger.error(err);
-throw err;
+  if (typeof(NakoRuntimeError) === 'undefined') { NakoRuntimeError = this.NakoRuntimeError }
+  if (!(err instanceof NakoRuntimeError)) {
+    err = new NakoRuntimeError(err, this.__varslist[0].line);
+  }
+  this.logger.error(err);
+  throw err;
 }); // async::main
 // <nadesiko3::gen::async>\n`
-    }
   }
 
   // デバッグメッセージ
@@ -1585,36 +1586,37 @@ throw err;
   // todo: 将来的に mjs のコードを履くように修正する
   const standaloneJSCode = `\
 // <standaloneCode>
+// 将来的に ESModule に対応する #1217
+// import path from 'path'
+// import PluginNode from './nako3runtime/plugin_node.mjs'
+// import {NakoRuntimeError} from './nako3runtime/nako_errors.mjs'
+
 const path = require('path')
-const nakoVersion = ${JSON.stringify(nakoVersion)};
 ${NakoError.toString()}
-${NakoRuntimeError.toString()}
-function __nako3safunc() {
-this.logger = {
+${NakoRuntimeError.toString()} 
+const nakoVersion = ${JSON.stringify(nakoVersion)};
+const self = this
+self.logger = {
   error: (message) => { console.error(message) },
   send: (level, message) => { console.log(message) },
 };
-this.__varslist = [{}, {}, {}];
-this.__vars = this.__varslist[2];
-this.__module = {};
-this.__locals = {};
-this.__genMode = 'sync';
+self.__varslist = [{}, {}, {}];
+self.__vars = self.__varslist[2];
+self.__module = {};
+self.__locals = {};
+self.__genMode = 'sync';
 try {
 ${gen.getVarsCode()}
 ${js}
 } catch (err) {
   if (!(err instanceof NakoRuntimeError)) {
-    err = new NakoRuntimeError(err, __varslist[0].line);
+    err = new NakoRuntimeError(err, self.__varslist[0].line);
   }
-  this.logger.error(err);
+  self.logger.error(err);
   throw err;
 }
-//
-} // end of __nako3safunc function
-__nako3safunc();
 // </standaloneCode>
-`
-  
+`  
   return {
     // なでしこの実行環境ありの場合
     runtimeEnv: js,
