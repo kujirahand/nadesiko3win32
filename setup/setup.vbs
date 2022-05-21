@@ -48,5 +48,5 @@ if not fso.FolderExists(home & "\node_modules\fs-extra") then
          "もし、ネットワークパス上で実行する場合、" & _
          "一度、Cドライブにコピーしてから実行してください。"
 else
-  MsgBox "お疲れまでした。セットアップ完了です。"
+  MsgBox "お疲れさまでした。セットアップ完了です。"
 end if
