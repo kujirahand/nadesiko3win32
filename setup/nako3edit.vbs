@@ -20,9 +20,10 @@ path = _
 env.Item("NAKO_HOME") = home
 env.Item("PATH") = path
 
-node = """" & home & "\nodejs\node" & """"
-cnako = """" & home & "\src\cnako3.mjs" & """"
-nako3edit = """" & home & "\tools\nako3edit\index.nako3" & """"
+nodePath = home & "\nodejs\node.exe"
+nako3Path = home & "\node_modules\nadesiko3"
+cnakoPath = nako3Path & "\src\cnako3.mjs"
+scriptPath = nako3Path & "\tools\nako3edit\index.mjs"
 
-cmd = node & " " & cnako & " " & nako3edit
-shell.Run cmd, 2
+cmd = """" & nodePath & """ """ & scriptPath & """"
+shell.Run cmd, 1

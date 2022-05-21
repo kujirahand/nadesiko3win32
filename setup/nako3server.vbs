@@ -19,4 +19,17 @@ path = _
 env.Item("NAKO_HOME") = home
 env.Item("PATH") = path
 
-shell.Run "node " & home & "\src\nako3server.mjs", 2, False
+nodePath = home & "\nodejs\node.exe"
+cnakoPath = home & "\node_modules\nadesiko3\src\cnako3.mjs"
+batchPath = home & "\node_modules\nadesiko3\batch\download-extlib.nako3"
+scriptPath = home & "\node_modules\nadesiko3\src\nako3server.mjs"
+cssPath = home & "\node_modules\nadesiko3\demo\extlib\pure-min.css"
+
+If Not fso.FileExists(cssPath) Then
+  cmd = """" & nodePath & """ """ & cnakoPath & """ """ & batchPath & """"
+  shell.Run cmd, 1, True
+End If
+
+cmd = """" & nodePath & """ """ & scriptPath & """"
+shell.Run cmd, 2, True
+

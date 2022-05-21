@@ -4,7 +4,7 @@ pushd %~dp0..
 set ROOT_DIR=%CD%
 popd
 
-SET SRC_DIR=%ROOT_DIR%\src
+SET SRC_DIR=%ROOT_DIR%\node_modules\nadesiko3\src
 SET CNAKO_JS=%SRC_DIR%\cnako3.mjs
 if exist %ROOT_DIR%\nodejs\node.exe (
     SET NODE_EXE=%ROOT_DIR%\nodejs\node.exe
