@@ -22,7 +22,7 @@ env.Item("PATH") = path
 nodePath = home & "\nodejs\node.exe"
 cnakoPath = home & "\node_modules\nadesiko3\src\cnako3.mjs"
 batchPath = home & "\node_modules\nadesiko3\batch\download-extlib.nako3"
-scriptPath = home & "\node_modules\nadesiko3\src\nako3server.mjs"
+scriptPath = home & "\node_modules\nadesiko3\tools\nako3server\index.mjs"
 cssPath = home & "\node_modules\nadesiko3\demo\extlib\pure-min.css"
 
 If Not fso.FileExists(cssPath) Then
