@@ -1,8 +1,8 @@
 {
   "name": "nadesiko3win32",
-  "version": "3.3.47",
+  "version": "3.3.49",
   "description": "Nadesiko - Japanese Programming Language - win32",
-  "main": "src/index.mjs",
+  "main": "node_modules/nadesiko3/src/index.mjs",
   "bin": {
     "cnako3": "node node_modules/nadesiko3/src/cnako3.mjs",
     "nako3server": "node node_modules/nadesiko3/src/nako3server.mjs",
@@ -35,6 +35,6 @@
   },
   "homepage": "https://github.com/kujirahand/nadesiko3win32#readme",
   "dependencies": {
-    "nadesiko3": "^3.3.47"
+    "nadesiko3": "^3.3.49"
   }
 }
