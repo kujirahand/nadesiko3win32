@@ -40,16 +40,18 @@ WEB版起動とはボタン
 そのW=300
 そのテキスト＝「なでしこ３のWeb版を実行」
 そのクリックした時は～
-　　SVR=「{NADESIKO3_DIR}tools\nako3server\index.mjs」
-　　「"{NODE_EXE}" "{SVR}"」を起動。
+　　#SVR=「{NADESIKO3_DIR}tools\nako3server\index.mjs」
+　　#「"{NODE_EXE}" "{SVR}"」を起動。
+　　「"{BASEDIR}bin\nako3server.bat"」を起動
 
 # ------------------------------------------------------
 PC版起動とはボタン
 そのW=300
 そのテキスト＝「なでしこ３のPC版(Node.jsランタイム)を実行」
 そのクリックした時は～
-　　SVR=「{NADESIKO3_DIR}tools\nako3edit\index.mjs」
-　　「"{NODE_EXE}" "{SVR}"」を起動。
+　　#SVR=「{NADESIKO3_DIR}tools\nako3edit\index.mjs」
+　　#「"{NODE_EXE}" "{SVR}"」を起動。
+　　「"{BASEDIR}bin\nako3edit.bat"」を起動
 
 
 # ------------------------------------------------------
