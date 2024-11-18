@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/kujirahand/nadesiko3win32#readme",
   "dependencies": {
-    "nadesiko3": "^3.6.16",
-    "npm-check-updates": "^17.1.0"
+    "nadesiko3": "^3.6.28",
+    "npm-check-updates": "^17.1.11"
   }
 }
